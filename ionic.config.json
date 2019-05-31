@@ -1,0 +1,8 @@
+{
+  "name": "pharmarack",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,23 @@
+GET http://ec2-35-182-41-7.ca-central-1.compute.amazonaws.com:3000/api/GetRegions
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://ec2-35-182-41-7.ca-central-1.compute.amazonaws.com:3000/api/GetBusinessTypes
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+POST http://ec2-35-182-41-7.ca-central-1.compute.amazonaws.com:3000/api/CheckMobileNumberExists?MobileNumber=1234567890
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://192.168.1.10:8080/pharmarackapi/public/GetBusinessTypes?pagingsize=999&page=1
+Accept: */*
+Cache-Control: no-cache
+
+###

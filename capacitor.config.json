@@ -1,0 +1,7 @@
+{
+  "appId": "com.pharmarack.app",
+  "appName": "Pharmarack",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

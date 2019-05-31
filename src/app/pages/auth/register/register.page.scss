@@ -1,0 +1,20 @@
+ion-checkbox{
+    --checkmark-color: black !important;
+    --background: white !important;
+    --background-checked: white !important;
+    --border-color-checked: white !important;
+}
+
+ion-content {
+    --background: #373536 !important;
+    --color: white !important;
+    --ion-padding: 8% !important;
+  }
+
+  ion-label {
+    color: white;
+  }
+
+  ion-icon {
+    color: white;
+  }
