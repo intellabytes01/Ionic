@@ -22,7 +22,7 @@ export class ToolbarPage implements OnInit {
         let data = null;
         let route = event['state'].root;
 
-        if (event['url'] !== '/home' && event['url'] !== '/' && event['url'] !== '/login'
+        if (event['url'] !== '/dashboard' && event['url'] !== '/' && event['url'] !== '/login'
         && event['url'] !== '/register' && event['url'] !== '/forgot-password') {
           this.showBackButton = true;
         } else {

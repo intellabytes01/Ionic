@@ -1,0 +1,15 @@
+<ion-row>
+  <ion-col>
+    <div class="ionic-selectable-border">
+      <ion-label *ngIf="!storeSelected" class="ionic-selectable-label">Select Store</ion-label>
+      <ionic-selectable
+        [(ngModel)]="storeSelected"
+        [items]="stores"
+        itemValueField="storeId"
+        itemTextField="storeName"
+        [canSearch]="true"
+      >
+      </ionic-selectable>
+    </div>
+  </ion-col>
+</ion-row>

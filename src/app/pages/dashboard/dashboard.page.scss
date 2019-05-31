@@ -1,0 +1,30 @@
+ion-content {
+  --background: white !important;
+}
+
+.dashboard-icon {
+  width: 6rem;
+  margin: 0 auto;
+}
+
+ion-footer {
+  margin-top: 0%;
+}
+
+//searchbar
+
+.searchbar-input{
+  border-radius: 20px !important;
+  height: 2.1rem !important;
+}
+
+ion-searchbar {
+    ::placeholder {
+      font-size: 1rem !important; 
+    }
+    height: 2rem;
+}
+
+ion-icon {
+  color: white;
+}
