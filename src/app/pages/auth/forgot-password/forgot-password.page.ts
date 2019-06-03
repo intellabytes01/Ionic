@@ -64,4 +64,8 @@ export class ForgotPasswordPage implements OnInit {
 
   ngOnDestroy() {
   }
+
+  trackByFn(index, item) {
+    return index; 
+  }
 }

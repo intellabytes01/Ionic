@@ -133,4 +133,8 @@ export class RegisterPage implements OnInit {
     if (this.registerStore) { this.registerStore.unsubscribe(); }
     if (this.validateuserStore) { this.validateuserStore.unsubscribe(); }
   }
+
+  trackByFn(index, item) {
+    return index; 
+  }
 }

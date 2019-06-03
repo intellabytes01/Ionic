@@ -21,14 +21,14 @@
         </ion-row>
       </div>
       <ion-list class="sidemenu">
-        <ion-menu-toggle auto-hide="false" *ngFor="let page of leftMenuPages">
+        <ion-menu-toggle auto-hide="false" *ngFor="let page of leftMenuPages; trackBy: trackByFn">
           <ion-item [routerDirection]="'root'" (click)="openPage(page)">
             <ion-icon
               style="color: black !important"
               slot="start"
               [name]="page.icon"
             ></ion-icon>
-            <ion-label>
+            <ion-label translate>
               {{ page.title }}
             </ion-label>
           </ion-item>
@@ -40,7 +40,7 @@
   <ion-menu side="end" type="overlay" menuId="menuRight">
     <ion-content>
       <ion-list class="sidemenu">
-        <ion-menu-toggle auto-hide="false" *ngFor="let page of rightMenuPages">
+        <ion-menu-toggle auto-hide="false" *ngFor="let page of rightMenuPages; trackBy: trackByFn">
           <ion-item [routerDirection]="'root'" (click)="openPage(page)">
             <!-- [routerLink]="[p.url]" -->
             <ion-icon
@@ -48,7 +48,7 @@
               slot="start"
               [name]="page.icon"
             ></ion-icon>
-            <ion-label>
+            <ion-label translate>
               {{ page.title }}
             </ion-label>
           </ion-item>

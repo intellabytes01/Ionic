@@ -28,7 +28,7 @@
   </ion-row>
 
   <div class="validation-errors">
-    <ng-container *ngFor="let validation of validation_messages.username">
+    <ng-container *ngFor="let validation of validation_messages.username; trackBy: trackByFn">
       <div class="error-message" *ngIf="loginForm.get('username').hasError(validation.type) && (loginForm.get('username').dirty || loginForm.get('username').touched)">
         {{ validation.message }}
       </div>
@@ -54,7 +54,7 @@
   </ion-row>
 
   <div class="validation-errors">
-    <ng-container *ngFor="let validation of validation_messages.password">
+    <ng-container *ngFor="let validation of validation_messages.password; trackBy: trackByFn">
       <div class="error-message" *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
         {{ validation.message }}
       </div>

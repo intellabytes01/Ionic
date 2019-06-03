@@ -24,7 +24,7 @@
     </ion-row>
 
     <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.businessType">
+      <ng-container *ngFor="let validation of validation_messages.businessType; trackBy: trackByFn">
         <div
           class="error-message"
           *ngIf="
@@ -51,7 +51,7 @@
     </ion-row>
 
     <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.mobile">
+      <ng-container *ngFor="let validation of validation_messages.mobile; trackBy: trackByFn">
         <div
           class="error-message"
           *ngIf="
@@ -84,7 +84,7 @@
     </ion-row>
 
     <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.password">
+      <ng-container *ngFor="let validation of validation_messages.password; trackBy: trackByFn">
         <div
           class="error-message"
           *ngIf="
@@ -115,7 +115,7 @@
     </ion-row>
 
     <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.region">
+      <ng-container *ngFor="let validation of validation_messages.region; trackBy: trackByFn">
         <div
           class="error-message"
           *ngIf="

@@ -42,22 +42,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-row>
-    <ion-col text-center size="6" *ngFor="let page of pages">
-      <ion-card [routerLink]="[page.link]">
-        <ion-row>
-          <ion-col text-center>
-            <img class="dashboard-icon" src="{{page.icon}}" />
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col text-center>
-            {{page.name}}
-          </ion-col>
-        </ion-row>
-      </ion-card>
-    </ion-col>
-  </ion-row>  
+  <pr-card [arrayList]="pages"></pr-card>
 
   <ion-row>
     <ion-col text-center> </ion-col>

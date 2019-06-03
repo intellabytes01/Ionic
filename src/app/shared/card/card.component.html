@@ -1,0 +1,16 @@
+<ion-row>
+  <ion-col text-center size="6" *ngFor="let page of pages; trackBy: trackByFn">
+    <ion-card [routerLink]="[page.link]">
+      <ion-row>
+        <ion-col text-center>
+          <img class="dashboard-icon" src="{{page.icon}}" />
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <span translate>{{page.name}}</span>  
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </ion-col>
+</ion-row>
