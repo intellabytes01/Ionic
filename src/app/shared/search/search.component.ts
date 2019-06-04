@@ -8,13 +8,13 @@ import { Events } from '@ionic/angular';
 })
 export class SearchComponent implements OnInit {
 
-  @Input('searchType')
+  @Input()
   searchType: string;
 
-  @Input('searchPlaceholder')
+  @Input()
   searchPlaceholder: string;
 
-  @Input('searchList')
+  @Input()
   searchList: any[];
 
   searchText = '';

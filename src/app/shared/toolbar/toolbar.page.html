@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary"> 
+  <ion-toolbar [hidden]="!showHeader"> 
     <ion-buttons slot="start">
         <div *ngIf="showBackButton== true">
           <ion-back-button defaultHref="/dashboard"></ion-back-button>

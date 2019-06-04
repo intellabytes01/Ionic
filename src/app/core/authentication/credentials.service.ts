@@ -16,6 +16,7 @@ const credentialsKey = 'credentials';
  */
 @Injectable()
 export class CredentialsService {
+// tslint:disable-next-line: variable-name
   private _credentials: Credentials | null = null;
 
   constructor(private storage: Storage) {

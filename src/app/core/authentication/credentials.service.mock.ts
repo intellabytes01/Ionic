@@ -11,6 +11,7 @@ export class MockCredentialsService {
     return !!this.credentials;
   }
 
+// tslint:disable-next-line: variable-name
   setCredentials(credentials?: Credentials, _remember?: boolean) {
     this.credentials = credentials || null;
   }

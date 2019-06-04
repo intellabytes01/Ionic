@@ -40,6 +40,11 @@ const routes: Routes = [
     loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule',
     data: {title: 'Home', preload: true, delay: false},
     canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'add-distributor',
+    loadChildren: './pages/Retailer/add-distributor/add-distributor.module#AddDistributorPageModule',
+    data: {title: 'Add Distributor', preload: false, delay: true}
   }
 ];
 
