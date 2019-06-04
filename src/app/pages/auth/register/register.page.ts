@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { MenuController } from '@ionic/angular';
+import { MenuController, Events } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { AlertService } from '@app/shared/services/alert.service';
 import { AuthState } from '@app/core/authentication/auth.states';
@@ -22,7 +22,7 @@ export class RegisterPage implements OnInit {
       { type: 'required', message: 'Mobile number is required.' },
       {
         type: 'pattern',
-        message: 'Mobile number must be at least 10 characters long.'
+        message: 'Mobile number must be 10 characters long.'
       }
     ],
     password: [
@@ -46,8 +46,13 @@ export class RegisterPage implements OnInit {
     private alertService: AlertService,
     public formBuilder: FormBuilder,
     public menuCtrl: MenuController,
-    private store: Store<AuthState>
+    private store: Store<AuthState>,
+    private events: Events
   ) {
+    this.events.subscribe('businessTypeChange', (businessTypeValue)=>{
+      this.registerForm.value.businessType.BusinessTypeId = businessTypeValue.BusinessTypeId;
+      this.registerForm.value.businessType.BusinessTypeName = businessTypeValue.BusinessTypeName;
+    })
   }
 
   ionViewWillEnter() {

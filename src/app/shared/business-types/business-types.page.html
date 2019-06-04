@@ -1,0 +1,16 @@
+<ion-row>
+  <ion-col>
+    <div class="white-border white-color">
+      <ion-label *ngIf="!selectedForm.value.businessType.BusinessTypeId" class="ionic-selectable-label">Select Type of Business</ion-label>
+      <ionic-selectable
+        formControlName="businessType"
+        [items]="businessTypes"
+        itemValueField="BusinessTypeId"
+        itemTextField="BusinessTypeName"
+        [canSearch]="true" 
+        (onChange)="valueChange($event)"
+      >
+      </ionic-selectable>
+    </div>
+  </ion-col>
+</ion-row>

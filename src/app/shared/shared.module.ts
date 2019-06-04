@@ -17,9 +17,11 @@ import { HeaderComponent } from './header/header.component';
 import { CardComponent } from './card/card.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { UtilityService } from './services/utility.service';
+import { BusinessTypesPage } from './business-types/business-types.page';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 @NgModule({
-  imports: [IonicModule, CommonModule, RouterModule, TranslateModule],
+  imports: [IonicModule, CommonModule, RouterModule, TranslateModule, IonicSelectableModule],
   declarations: [
     LoaderComponent,
     TabsPage,
@@ -31,7 +33,8 @@ import { UtilityService } from './services/utility.service';
     BackButtonComponent,
     SidemenuComponent,
     SubmitButtonComponent,
-    CardComponent
+    CardComponent,
+    BusinessTypesPage
   ],
   exports: [
     LoaderComponent,
@@ -44,7 +47,8 @@ import { UtilityService } from './services/utility.service';
     BackButtonComponent,
     SidemenuComponent,
     SubmitButtonComponent,
-    CardComponent
+    CardComponent,
+    BusinessTypesPage
   ],
   providers: [AlertService, UtilityService]
 })
