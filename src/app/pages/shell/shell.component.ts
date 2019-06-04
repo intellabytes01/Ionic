@@ -57,7 +57,7 @@ export class ShellComponent implements OnDestroy {
 
     const actionSheetOptions: ActionSheetOptions = {
       header: this.username || undefined,
-      buttons: buttons
+      buttons
     };
 
     createdActionSheet = await this.actionSheetController.create(actionSheetOptions);

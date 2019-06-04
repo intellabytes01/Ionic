@@ -120,7 +120,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   trackByFn(index, item) {
-    return index; 
+    return index;
   }
 
 }

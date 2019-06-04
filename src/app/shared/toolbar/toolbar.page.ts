@@ -16,27 +16,27 @@ export class ToolbarPage implements OnInit {
 
   ngOnInit() {
     // Display page title when page navigate
-    this.title$ = this.router.events.pipe(
-      filter(event => event instanceof ResolveStart),
-      map(event => {
-        let data = null;
-        let route = event['state'].root;
+    // this.title$ = this.router.events.pipe(
+    //   filter(event => event instanceof ResolveStart),
+    //   map(event => {
+    //     let data = null;
+    //     let route = event.state.root;
 
-        if (event['url'] !== '/dashboard' && event['url'] !== '/' && event['url'] !== '/login'
-        && event['url'] !== '/register' && event['url'] !== '/forgot-password') {
-          this.showBackButton = true;
-        } else {
-          this.showBackButton = false;
-        }
+    //     if (event.url !== '/dashboard' && event.url !== '/' && event.url !== '/login'
+    //     && event.url !== '/register' && event.url !== '/forgot-password') {
+    //       this.showBackButton = true;
+    //     } else {
+    //       this.showBackButton = false;
+    //     }
 
-        while (route) {
-          data = route.data || data;
-          route = route.firstChild;
-        }
+    //     while (route) {
+    //       data = route.data || data;
+    //       route = route.firstChild;
+    //     }
 
-        return data.title;
-      }),
-    );
+    //     return data.title;
+    //   }),
+    // );
 
   }
 

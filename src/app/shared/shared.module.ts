@@ -16,6 +16,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { CardComponent } from './card/card.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { UtilityService } from './services/utility.service';
 
 @NgModule({
   imports: [IonicModule, CommonModule, RouterModule, TranslateModule],
@@ -45,6 +46,6 @@ import { TranslateModule } from '@ngx-translate/core';
     SubmitButtonComponent,
     CardComponent
   ],
-  providers: [AlertService]
+  providers: [AlertService, UtilityService]
 })
 export class SharedModule {}

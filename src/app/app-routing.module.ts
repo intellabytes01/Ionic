@@ -36,8 +36,8 @@ const routes: Routes = [
     data: {title: 'About', preload: false, delay: true}
   },
   {
-    path: "dashboard",
-    loadChildren: "./pages/dashboard/dashboard.module#DashboardPageModule",
+    path: 'dashboard',
+    loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule',
     data: {title: 'Home', preload: true, delay: false},
     canActivate: [AuthenticationGuard]
   }

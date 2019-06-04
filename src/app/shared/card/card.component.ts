@@ -13,7 +13,7 @@ export class CardComponent implements OnInit {
   ngOnInit() {}
 
   trackByFn(index, item) {
-    return index; 
+    return index;
   }
 
 }

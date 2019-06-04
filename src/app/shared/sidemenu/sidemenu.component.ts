@@ -150,6 +150,6 @@ export class SidemenuComponent implements OnInit {
   }
 
   trackByFn(index, item) {
-    return index; 
+    return index;
   }
 }

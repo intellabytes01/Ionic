@@ -62,11 +62,14 @@
 
   "MYOUTSTANDING_NAME": "My Outstanding",
   "MYPAYMENTS_NAME": "My Payments",
-  "NewOrder": "New Order",
-  "Payments": "Payments",
-  "DraftOrder": "Draft Order",
-  "AddDistributor": "Add Distributor",
-  "ProductSearch": "Product Search",
-  "Schemes": "Schemes",
-  "PrLogo": "assets/icon/logo.png"
+  
+  "DASHBOARD": {
+    "NEWORDER": "New Order",
+    "PAYMENTS": "Payments",
+    "DRAFTORDER": "Draft Order",
+    "ADDDISTRIBUTOR": "Add Distributor",
+    "PRODUCTSEARCH": "Product Search",
+    "SCHEMES": "Schemes",
+    "PRLOGO": "assets/icon/logo.png"
+  }
 }

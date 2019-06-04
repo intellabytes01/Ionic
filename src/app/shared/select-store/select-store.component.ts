@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class SelectStoreComponent implements OnInit {
 
   stores: any[] = [{storeId: '1', storeName: 'Demo Store 1'}];
-  storeSelected: string = '';
+  storeSelected = '';
   constructor() { }
 
   ngOnInit() {}
