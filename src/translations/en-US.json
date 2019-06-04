@@ -1,6 +1,6 @@
 {
   "APP_NAME": "Pharmarack",
-  "About": "About",
+"About": "About",
   "Hello world !": "Hello world !",
   "Home": "Home",
   "Cancel": "Cancel",
@@ -15,5 +15,68 @@
   "Username is required": "Username is required",
   "Username or password incorrect.": "Username or password incorrect.",
   "Remember me": "Remember me",
-  "Version": "Version"
+  "Version": "Version",
+  "USER_DATA": "userData",
+  "USER_PASSWORD": "userPassword",
+
+  "PRODUCT_NAME": "Product",
+  "GENERIC_NAME": "Generic",
+  "COMPANY_NAME": "Company",
+  "DISTRIBUTOR_NAME": "Distributor",
+
+  "PRODUCT_PLACEHOLDER": "Product name",
+  "GENERIC_PLACEHOLDER": "Generic name",
+  "COMPANY_PLACEHOLDER": "Company name",
+  "DISTRIBUTOR_PLACEHOLDER": "Distributor name",
+
+  "DASHBOARD_ROUTE": "dashboard",
+  "LOGIN_ROUTE": "login",
+  "REGISTER_ROUTE": "register",
+  "FORGOT_PASSWORD_ROUTE": "forgot-password",
+  "CHANGE_PASSWORD_ROUTE": "change-password",
+  "PROFILE_ROUTE": "profile",
+  "REFER_ROUTE": "refer-earn",
+  "FEEDBACK_ROUTE": "feedback",
+  "PRODUCT_SEARCH_ROUTE": "product-search",
+
+  "DASHBOARD_TITLE": "Dashboard",
+  "LOGOUT_TITLE": "Logout",
+  "REGISTER_TITLE": "Register",
+  "FORGOT_PASSWORD_TITLE": "Forgot Password",
+  "CHANGE_PASSWORD_TITLE": "Change Password",
+  "PROFILE_TITLE": "My Profile",
+  "REFER_TITLE": "Refer and Earn",
+  "FEEDBACK_TITLE": "Feedback",
+  "NOTIFICATION_TITLE": "Notification",
+  "TERMS_TITLE": "Terms & Conditions",
+
+  "TERMS_URL": "http://oldfish.ragabh.com/termsandconditions",
+
+  "DRAFT_NAME": "Draft",
+  "CONFIRMED_NAME": "Confirmed",
+  "DELETED_NAME": "Deleted",
+
+  "PAYLATER_NAME": "PAY LATER",
+  "MAKEPAYMENT_NAME": "MAKE PAYMENT",
+  "HISTORY_NAME": "HISTORY",
+
+  "MYOUTSTANDING_NAME": "My Outstanding",
+  "MYPAYMENTS_NAME": "My Payments",
+  
+  "DASHBOARD": {
+    "NEWORDER": "New Order",
+    "PAYMENTS": "Payments",
+    "DRAFTORDER": "Draft Order",
+    "ADDDISTRIBUTOR": "Add Distributor",
+    "PRODUCTSEARCH": "Product Search",
+    "SCHEMES": "Schemes",
+    "PRLOGO": "assets/icon/logo.png"
+  },
+  "ADD_DISTRIBUTOR": {
+    "REQUEST_TAB_MESSAGE_1": "Please enter Party Code for faster Mapping.",
+    "NOTE": "Note:",
+    "REQUEST_TAB_MESSAGE_2": "Party code can be found in Distributor's Sales Inovoice / Bill.",
+
+    "ADD_TAB_MESSAGE": "Distributor you would like to see on Pharmarack"
+  }
 }

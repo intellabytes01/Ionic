@@ -6,13 +6,14 @@ import { filter, map } from 'rxjs/operators';
 @Component({
   selector: 'pr-toolbar',
   templateUrl: './toolbar.page.html',
-  styleUrls: ['./toolbar.page.scss'],
+  styleUrls: ['./toolbar.page.scss']
 })
 export class ToolbarPage implements OnInit {
   @Input() showBackButton = false;
+  showHeader = false;
   title$: Observable<string>;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   ngOnInit() {
     // Display page title when page navigate
@@ -22,22 +23,29 @@ export class ToolbarPage implements OnInit {
         let data = null;
         let route = event['state'].root;
 
-        if (event['url'] !== '/home' && event['url'] !== '/' && event['url'] !== '/login'
-        && event['url'] !== '/register' && event['url'] !== '/forgot-password') {
-          this.showBackButton = true;
+        if (
+          event['url'] !== '/dashboard' &&
+          event['url'] !== '/login' &&
+          event['url'] !== '/register' &&
+          event['url'] !== '/forgot-password'
+        ) {
+          this.showHeader = true;
+          if (event['url'] !== '/dashboard') {
+            this.showBackButton = true;
+          } else {
+            this.showBackButton = false;
+          }
         } else {
+          this.showHeader = false;
           this.showBackButton = false;
         }
-
         while (route) {
           data = route.data || data;
           route = route.firstChild;
         }
 
         return data.title;
-      }),
+      })
     );
-
   }
-
 }

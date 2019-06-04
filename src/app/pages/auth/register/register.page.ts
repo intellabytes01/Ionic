@@ -14,8 +14,8 @@ import { SignUp } from '@app/core/authentication/actions/auth.actions';
 export class RegisterPage implements OnInit {
   businessTypes: any[];
   regions: any[];
-  passwordType: string = 'password';
-  passwordIcon: string = 'eye-off';
+  passwordType = 'password';
+  passwordIcon = 'eye-off';
   public registerForm: FormGroup;
   validation_messages = {
     mobile: [
@@ -107,7 +107,7 @@ export class RegisterPage implements OnInit {
       this.alertService.presentToast('Please accept terms and conditions.');
     }
   }
-  //Custom validation for Region
+  // Custom validation for Region
 
   validateRegion(control: AbstractControl): { [key: string]: boolean } | null {
     if (!control.value.RegionId) {
@@ -116,7 +116,7 @@ export class RegisterPage implements OnInit {
     return null;
   }
 
-  //Custom validation for BusinessType
+  // Custom validation for BusinessType
 
   validateBusinessType(
     control: AbstractControl
@@ -132,5 +132,9 @@ export class RegisterPage implements OnInit {
     if (this.regionStore) { this.regionStore.unsubscribe(); }
     if (this.registerStore) { this.registerStore.unsubscribe(); }
     if (this.validateuserStore) { this.validateuserStore.unsubscribe(); }
+  }
+
+  trackByFn(index, item) {
+    return index;
   }
 }

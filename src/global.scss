@@ -1,11 +1,210 @@
 // http://ionicframework.com/docs/theming/
-@import '~@ionic/angular/css/core.css';
-@import '~@ionic/angular/css/normalize.css';
-@import '~@ionic/angular/css/structure.css';
-@import '~@ionic/angular/css/typography.css';
-@import '~@ionic/angular/css/display.css';
-@import '~@ionic/angular/css/padding.css';
-@import '~@ionic/angular/css/float-elements.css';
-@import '~@ionic/angular/css/text-alignment.css';
-@import '~@ionic/angular/css/text-transformation.css';
-@import '~@ionic/angular/css/flex-utils.css';
+@import "~@ionic/angular/css/core.css";
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+// White border
+
+.white-border {
+  border: 1px solid white;
+}
+
+ion-content{
+  --background: white;
+  --color: black;
+}
+
+.white-color {
+  color: white;
+}
+
+ion-input {
+  --placeholder-color: white;
+  --placeholder-opacity: 1;
+  margin-top: 2%;
+}
+
+ion-button{
+  height: 53px;
+  font-size: 0.8rem;
+  text-transform: inherit;
+}
+
+.mustard {
+  background: #fb9010;
+}
+
+.mustard-color{
+  color: #fb9010;
+}
+
+.blue {
+  background: #4592d6;
+}
+
+.blue-color{
+  color: #3880ff;
+}
+
+ion-footer {
+  background: #FCA43A;
+}
+
+.padding0 {
+  padding: 0% !important;
+}
+
+.alert-head.sc-ion-alert-md {
+  padding: 0% !important;
+}
+
+.select-label {
+  position: absolute;
+  padding: 3%;
+}
+
+//pr logo
+
+.prlogo {
+  width: 11rem;
+}
+
+//view password icon
+
+.eye {
+  float: right;
+  margin: 0% 0% 0% 92%;
+  position: absolute;
+}
+
+//signin button
+
+.signin {
+  margin-left: 2%;
+}
+
+//create button
+
+.create {
+  margin-left: -4%;
+}
+
+//ionic selectable
+
+.ionic-selectable {
+  height: 2.5rem;
+}
+
+ion-modal {
+  --height: 26rem !important;
+}
+
+.ionic-selectable-value-item {
+  padding-left: 3%;
+}
+
+ionic-selectable-modal{
+  ion-content{
+    --background: white !important;
+  }
+}
+
+//validation error message
+
+.error-message{
+  color: red;
+  padding-left: 3%;
+}
+
+//sidemenu 
+
+.sidemenu{
+  background: white !important;
+  color: black !important;
+  height: 100% !important;
+}
+
+.sidemenu-header{
+  background: #4592D6 !important;
+  color: white !important;
+}
+
+.sidemenu-name{
+  font-size: 1.4rem;
+}
+
+.sidemenu-version{
+  color: #81BBE9;
+}
+
+//header
+
+ion-toolbar {
+  --background: #FCA43A;
+}
+
+ion-header {
+  --background: #FCA43A;
+}
+
+//sidemenu icon
+
+ion-menu-button {
+  color: white !important;
+}
+
+ion-title{
+  color: white;
+}
+
+//header icon
+
+.header-icon{
+  font-size: 1.7rem;
+  padding-top: 0.2rem;
+}
+
+//header title
+
+.header-title{
+  padding-top: 0.4rem;
+  font-size: 1.1rem;
+}
+
+pre {
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  font-family: unset;
+  text-align: start;
+}
+
+//selected tab
+
+.tab-selected{
+  border-bottom: 1px solid #fb9010 !important;
+}
+
+ion-list{
+  overflow-y: scroll;
+}
+
+.ionic-selectable-label{
+  position: absolute;
+  margin: 0.7rem 0rem 0rem 0.7rem;
+}
+
+.ionic-selectable-border{
+  border: 1px solid grey;
+}
+
+.dashboard-icon {
+  width: 6rem !important;
+  margin: 0 auto;
+}

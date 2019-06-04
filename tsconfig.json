@@ -17,10 +17,25 @@
       "es2018",
       "dom"
     ],
-    "baseUrl": "src",
+    "baseUrl": "./",
     "paths": {
-      "@app/*": ["app/*"],
-      "@env/*": ["environments/*"]
+      "@app/*": ["src/app/*"],
+      "@env/*": ["src/environments/*"],
+      "@login-page/*": ["src/app/pages/auth/login/*"],
+			"@reset-password-page/*": ["src/app/pages/auth/reset-password/*"],
+			"@sign-up-page/*": ["src/app/pages/auth/sign-up/*"],
+			"@auth-store/*": ["src/app/pages/auth/store/*"],
+			"@home-store/*": ["src/app/pages/dashboard/store/*"],
+			"@home-page/*": ["src/app/pages/dashboard/*"],
+			"@not-found-page/*": ["src/app/pages/page-not-found/*"],
+			"@core-components/*": ["src/app/core/components/*"],
+			"@shared-components/*": ["src/app/shared/components/*"],
+			"@app-store/*": ["src/app/store/*"],
+			"@auth/*": ["src/app/pages/auth/*"],
+			"@pages/*": ["src/app/pages/*"],
+			"@app-core/*": ["src/app/core/*"],
+			"@app-shared/*": ["src/app/shared/*"],
+			"@constants/*": ["src/constants/*"]
     }
   }
 }

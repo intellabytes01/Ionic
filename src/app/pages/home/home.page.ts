@@ -9,7 +9,7 @@ import { untilDestroyed } from '@app/core/until-destroyed';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit, OnDestroy{
+export class HomePage implements OnInit, OnDestroy {
   constructor(private store: Store<AuthState>) {
   }
 

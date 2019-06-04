@@ -45,7 +45,7 @@ describe('ErrorHandlerInterceptor', () => {
       () => fail('should error'),
       () => {
         // Assert
-        expect(ErrorHandlerInterceptor.prototype['errorHandler']).toHaveBeenCalled();
+        expect(ErrorHandlerInterceptor.prototype.errorHandler).toHaveBeenCalled();
       }
     );
 

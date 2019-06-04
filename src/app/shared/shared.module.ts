@@ -9,11 +9,43 @@ import { ToolbarPage } from './toolbar/toolbar.page';
 import { BackButtonComponent } from './back-button/back-button.component';
 import { AlertService } from './services/alert.service';
 import { RouterModule } from '@angular/router';
+import { SidemenuComponent } from './sidemenu/sidemenu.component';
+import { SubmitButtonComponent } from './submit-button/submit-button.component';
+import { SkeletonLoaderComponent } from './skeleton-loader/skeleton-loader.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { CardComponent } from './card/card.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { UtilityService } from './services/utility.service';
 
 @NgModule({
-  imports: [IonicModule, CommonModule, RouterModule],
-  declarations: [LoaderComponent, TabsPage, TopLoaderPage, ToolbarPage, BackButtonComponent],
-  exports: [LoaderComponent, TabsPage, TopLoaderPage, ToolbarPage, BackButtonComponent],
-  providers: [AlertService]
+  imports: [IonicModule, CommonModule, RouterModule, TranslateModule],
+  declarations: [
+    LoaderComponent,
+    TabsPage,
+    TopLoaderPage,
+    ToolbarPage,
+    SkeletonLoaderComponent,
+    FooterComponent,
+    HeaderComponent,
+    BackButtonComponent,
+    SidemenuComponent,
+    SubmitButtonComponent,
+    CardComponent
+  ],
+  exports: [
+    LoaderComponent,
+    TabsPage,
+    TopLoaderPage,
+    ToolbarPage,
+    SkeletonLoaderComponent,
+    FooterComponent,
+    HeaderComponent,
+    BackButtonComponent,
+    SidemenuComponent,
+    SubmitButtonComponent,
+    CardComponent
+  ],
+  providers: [AlertService, UtilityService]
 })
 export class SharedModule {}

@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
-import { HttpClient, HttpEvent } from "@angular/common/http";
-import { map, catchError, tap } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { HttpClient, HttpEvent } from '@angular/common/http';
+import { map, catchError, tap } from 'rxjs/operators';
 
-import { Credentials, CredentialsService } from "./credentials.service";
-import * as fromRoot from "../../app.reducer";
-import * as UI from "../../shared/ui.actions";
-import { Store } from "@ngrx/store";
-import { Logger } from "../logger.service";
+import { Credentials, CredentialsService } from './credentials.service';
+import * as fromRoot from '../../app.reducer';
+import * as UI from '../../shared/ui.actions';
+import { Store } from '@ngrx/store';
+import { Logger } from '../logger.service';
 
-const log = new Logger("AuthenticationGuard");
+const log = new Logger('AuthenticationGuard');
 
 export interface LoginContext {
   username: string;
@@ -26,7 +26,7 @@ export interface SignupContext {
 
 const routes = {
   login: (c: LoginContext) => `/login`,
-  signup: (c: SignupContext) => "/register/retailer"
+  signup: (c: SignupContext) => '/register/retailer'
 };
 
 /**
@@ -70,7 +70,7 @@ export class AuthenticationService {
   signUp(context: SignupContext): Observable<Credentials> {
     return (
       this.httpClient
-        //.cache()
+        // .cache()
         .post(routes.signup(context), JSON.stringify(context))
         .pipe(
           map((data: any) => ({
@@ -101,7 +101,7 @@ export class AuthenticationService {
   private errorHandler(response: HttpEvent<any>): Observable<HttpEvent<any>> {
     // if (!environment.production) {
     // Do something with the error
-    log.error("Request error", response);
+    log.error('Request error', response);
     this.store.dispatch(new UI.StopLoading());
     // }
     throw response;

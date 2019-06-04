@@ -119,5 +119,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     return !this.platform.is('cordova');
   }
 
+  trackByFn(index, item) {
+    return index;
+  }
 
 }

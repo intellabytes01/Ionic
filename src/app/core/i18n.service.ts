@@ -28,7 +28,7 @@ export class I18nService {
   private langChangeSubscription!: Subscription;
 
   constructor(private translateService: TranslateService,
-    private storage: Storage) {
+              private storage: Storage) {
     // Embed languages to avoid extra HTTP requests
     translateService.setTranslation('en-US', enUS);
     translateService.setTranslation('fr-FR', frFR);

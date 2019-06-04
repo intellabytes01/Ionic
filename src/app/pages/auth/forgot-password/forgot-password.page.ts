@@ -54,14 +54,18 @@ export class ForgotPasswordPage implements OnInit {
   verifyOtp() {
   }
 
-  //Custom validation for Mobile
+  // Custom validation for Mobile
 
   validationMobile(value) {
-    this.forgotPasswordForm.controls['mobile'].setValue(
+    this.forgotPasswordForm.controls.mobile.setValue(
       value.length > 10 ? value.substring(0, 10) : value
     );
   }
 
   ngOnDestroy() {
+  }
+
+  trackByFn(index, item) {
+    return index;
   }
 }
