@@ -18,6 +18,7 @@ import { SharedModule } from './shared';
 import { AuthEffects } from './core/authentication/effects/auth.effects';
 import { authReducers } from './core/authentication/auth.states';
 import { AppPreloadingStrategy } from './app-preloading.module';
+import { Camera } from '@ionic-native/camera/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,7 +43,8 @@ driverOrder: ['sqlite', 'indexeddb', 'websql', 'localstorage']
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AppPreloadingStrategy
+    AppPreloadingStrategy,
+    Camera
   ],
   bootstrap: [AppComponent]
 })

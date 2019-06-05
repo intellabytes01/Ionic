@@ -45,7 +45,18 @@ const routes: Routes = [
     path: 'add-distributor',
     loadChildren: './pages/Retailer/add-distributor/add-distributor.module#AddDistributorPageModule',
     data: {title: 'Add Distributor', preload: false, delay: true}
+  },
+  {
+    path: "feedback",
+    loadChildren: "./pages/Retailer/feedback/feedback.module#FeedbackPageModule",
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: "profile",
+    loadChildren: "./pages/Retailer/profile/profile.module#ProfilePageModule",
+    canActivate: [AuthenticationGuard]
   }
+
 ];
 
 @NgModule({

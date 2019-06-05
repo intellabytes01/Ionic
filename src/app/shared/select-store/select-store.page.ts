@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-select-store',
-  templateUrl: './select-store.component.html',
-  styleUrls: ['./select-store.component.scss'],
+  selector: 'pr-select-store',
+  templateUrl: './select-store.page.html',
+  styleUrls: ['./select-store.page.scss'],
 })
-export class SelectStoreComponent implements OnInit {
+export class SelectStorePage implements OnInit {
 
   stores: any[] = [{storeId: '1', storeName: 'Demo Store 1'}];
   storeSelected = '';

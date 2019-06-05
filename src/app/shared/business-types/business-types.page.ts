@@ -20,11 +20,12 @@ export class BusinessTypesPage implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new GetBusinessType());
-    // this.businesstypeStore = this.store
-    //   .select(selectBusinessTypeState)
-    //   .subscribe((state: any) => {
-    //     this.businessTypes = state;
-    //   });
+    this.businesstypeStore = this.store
+      .select(selectBusinessTypeState)
+      .subscribe((state: any) => {
+        this.businessTypes = state;
+        console.log(state);
+      });
   }
 
   trackByFn(index, item) {

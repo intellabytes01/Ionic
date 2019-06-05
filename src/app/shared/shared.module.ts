@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
@@ -19,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UtilityService } from './services/utility.service';
 import { BusinessTypesPage } from './business-types/business-types.page';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { SelectStorePage } from './select-store/select-store.page';
 
 @NgModule({
   imports: [IonicModule, CommonModule, RouterModule, TranslateModule, IonicSelectableModule],
@@ -34,7 +35,8 @@ import { IonicSelectableModule } from 'ionic-selectable';
     SidemenuComponent,
     SubmitButtonComponent,
     CardComponent,
-    BusinessTypesPage
+    BusinessTypesPage,
+    SelectStorePage
   ],
   exports: [
     LoaderComponent,
@@ -48,8 +50,10 @@ import { IonicSelectableModule } from 'ionic-selectable';
     SidemenuComponent,
     SubmitButtonComponent,
     CardComponent,
-    BusinessTypesPage
+    BusinessTypesPage,
+    SelectStorePage
   ],
-  providers: [AlertService, UtilityService]
+  providers: [AlertService, UtilityService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class SharedModule {}

@@ -26,14 +26,14 @@ export class BusinessTypeService {
 
   getBusinessTypes(): Observable<Credentials> {
     return this.httpClient
+      .cache()
       .get(routes.getBusinessTypes())
       .pipe(
         map((data: any) => ({
           data
         })),
         tap((data: any) => {
-          // this.store.dispatch(new Auth.SetAuthenticated());
-          this.credentialsService.setCredentials(data, true);
+
         }),
         catchError(error => this.errorHandler(error))
       );
