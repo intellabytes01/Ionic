@@ -47,13 +47,13 @@ const routes: Routes = [
     data: {title: 'Add Distributor', preload: false, delay: true}
   },
   {
-    path: "feedback",
-    loadChildren: "./pages/Retailer/feedback/feedback.module#FeedbackPageModule",
+    path: 'feedback',
+    loadChildren: './pages/Retailer/feedback/feedback.module#FeedbackPageModule',
     canActivate: [AuthenticationGuard]
   },
   {
-    path: "profile",
-    loadChildren: "./pages/Retailer/profile/profile.module#ProfilePageModule",
+    path: 'profile',
+    loadChildren: './pages/Retailer/profile/profile.module#ProfilePageModule',
     canActivate: [AuthenticationGuard]
   }
 

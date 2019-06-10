@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   passwordIcon = 'eye-off';
   loginForm: FormGroup;
 
+// tslint:disable-next-line: variable-name
   validation_messages = {
     username: [
       { type: 'required', message: 'Username is required.' },

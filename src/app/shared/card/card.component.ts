@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CardComponent implements OnInit {
 
-  @Input('arrayList') pages: any[];
+  @Input() pages: any[];
   constructor() { }
 
   ngOnInit() {}

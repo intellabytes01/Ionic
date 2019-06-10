@@ -6,6 +6,10 @@ import { IonicModule } from '@ionic/angular';
 import { RegisterPage } from './register.page';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { SharedModule } from '@app/shared';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { RegisterEffects } from './store/register.effects';
+import * as fromregisterReducer from './store/register.reducers';
 
 const routes: Routes = [
   {
@@ -23,7 +27,9 @@ const routes: Routes = [
     IonicSelectableModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature('register', fromregisterReducer.registerReducer),
+    EffectsModule.forRoot([RegisterEffects])
   ],
   declarations: [RegisterPage]
 })

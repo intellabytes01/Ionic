@@ -1,21 +1,21 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
-import { Router } from "@angular/router";
-import { Store } from "@ngrx/store";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
-  selector: "app-profile",
-  templateUrl: "./profile.page.html",
-  styleUrls: ["./profile.page.scss"]
+  selector: 'app-profile',
+  templateUrl: './profile.page.html',
+  styleUrls: ['./profile.page.scss']
 })
 export class ProfilePage implements OnInit, OnDestroy {
 
   public profileForm: FormGroup;
-  disable: boolean = true;
+  disable = true;
   businessTypes: any[];
   regions: any[];
-  imgPreview: string = '';
+  imgPreview = '';
   businesstypeStore: any;
   regionStore: any;
   constructor(
@@ -91,12 +91,12 @@ export class ProfilePage implements OnInit, OnDestroy {
     // this.store.dispatch(new fromauth.GetAllRegions());
   }
 
-  editProfile(val){
+  editProfile(val) {
     this.disable = val;
   }
 
-  //photo library - this.takePhoto(0);
-  //camera - this.takePhoto(1);
+  // photo library - this.takePhoto(0);
+  // camera - this.takePhoto(1);
 
   takePhoto(sourceType) {
     const options: CameraOptions = {
@@ -105,19 +105,19 @@ export class ProfilePage implements OnInit, OnDestroy {
       encodingType: this.camera.EncodingType.PNG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
-      sourceType: sourceType,
+      sourceType,
       targetWidth: 500,
       targetHeight: 500
-    }
-    
-    this.camera.getPicture(options).then((imageData) => {      
+    };
+
+    this.camera.getPicture(options).then((imageData) => {
       this.imgPreview = imageData;
     }, (err) => {
     });
   }
 
-  updateProfile(){
-    
+  updateProfile() {
+
   }
 
   ngOnDestroy() {

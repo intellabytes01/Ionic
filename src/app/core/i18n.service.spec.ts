@@ -23,6 +23,7 @@ class MockTranslateService {
     return 'en-US';
   }
 
+// tslint:disable-next-line: ban-types
   setTranslation(lang: string, translations: Object, shouldMerge?: boolean) {}
 }
 

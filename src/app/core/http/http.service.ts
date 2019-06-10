@@ -92,6 +92,7 @@ export class HttpService extends HttpClient {
     return new HttpClient(handler).request(method, url, options);
   }
 
+// tslint:disable-next-line: ban-types
   private removeInterceptor(interceptorType: Function): HttpService {
     return new HttpService(
       this.httpHandler,

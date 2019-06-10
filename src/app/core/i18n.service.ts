@@ -66,6 +66,7 @@ export class I18nService {
    * @param language The IETF language code to set.
    */
   set language(language: string) {
+// tslint:disable-next-line: variable-name
     let default_language;
     this.storage.get(languageKey).then((val) => {
       if (val) {

@@ -6,13 +6,15 @@ import { CacheInterceptor } from './cache.interceptor';
 import { HttpCacheService } from './http-cache.service';
 
 describe('CacheInterceptor', () => {
+// tslint:disable-next-line: ban-types
   let interceptorOptions: Object | null = {};
   let httpCacheService: HttpCacheService;
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
+// tslint:disable-next-line: variable-name
   function createInterceptor(_httpCacheService: HttpCacheService) {
-    return new CacheInterceptor(_httpCacheService).configure(interceptorOptions);
+    return new CacheInterceptor(_httpCacheService, null).configure(interceptorOptions);
   }
 
   beforeEach(() => {

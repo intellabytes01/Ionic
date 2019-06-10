@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MenuController } from '@ionic/angular';
 
@@ -7,12 +7,13 @@ import { MenuController } from '@ionic/angular';
   templateUrl: './forgot-password.page.html',
   styleUrls: ['./forgot-password.page.scss']
 })
-export class ForgotPasswordPage implements OnInit {
+export class ForgotPasswordPage implements OnInit, OnDestroy {
   otpData: any = {
     otp: '',
     expiredIn: ''
   };
   public forgotPasswordForm: FormGroup;
+// tslint:disable-next-line: variable-name
   validation_messages = {
     mobile: [
       { type: 'required', message: 'Mobile number is required.' },

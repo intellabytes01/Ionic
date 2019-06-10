@@ -17,8 +17,7 @@ import { authReducer } from './authentication/reducers/auth.reducers';
 import { StoreModule } from '@ngrx/store';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, TranslateModule, RouterModule,
-    StoreModule.forFeature('authentication', authReducer)],
+  imports: [CommonModule, HttpClientModule, TranslateModule, RouterModule],
   providers: [
     AuthenticationService,
     CredentialsService,

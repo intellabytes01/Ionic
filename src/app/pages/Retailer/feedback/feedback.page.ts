@@ -1,55 +1,56 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   Validators,
   FormBuilder,
   AbstractControl
-} from "@angular/forms";
-import { Router } from "@angular/router";
-import { Store } from "@ngrx/store";
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 @Component({
-  selector: "app-feedback",
-  templateUrl: "./feedback.page.html",
-  styleUrls: ["./feedback.page.scss"]
+  selector: 'app-feedback',
+  templateUrl: './feedback.page.html',
+  styleUrls: ['./feedback.page.scss']
 })
-export class FeedbackPage implements OnInit {
+export class FeedbackPage implements OnInit, OnDestroy {
   public feedbackForm: FormGroup;
   feedbackTypes: any[] = [];
   feedbackTos: any[] = [
     {
       Fid: 1,
-      Types: "Pharmarack"
+      Types: 'Pharmarack'
     },
     {
       Fid: 2,
-      Types: "Distributor"
+      Types: 'Distributor'
     },
     {
       Fid: 3,
-      Types: "Both (Pharmarack / Distributor)"
+      Types: 'Both (Pharmarack / Distributor)'
     }
   ];
   toStoreIds: any[] = [
     {
       Fid: 1,
-      Types: "Demo Store 1"
+      Types: 'Demo Store 1'
     },
     {
       Fid: 2,
-      Types: "Demo Store 2"
+      Types: 'Demo Store 2'
     },
     {
       Fid: 3,
-      Types: "Demo Store 3"
+      Types: 'Demo Store 3'
     }
   ];
   feedbacktypeStore: any;
+// tslint:disable-next-line: variable-name
   validation_messages = {
-    message: [{ type: "required", message: "Value is required for Remarks." }],
-    feedbackType: [{ type: "validValue", message: "It's required." }],
-    feedbackTo: [{ type: "validValue", message: "It's required." }],
-    toStoreId: [{ type: "validValue", message: "It's required." }]
+    message: [{ type: 'required', message: 'Value is required for Remarks.' }],
+    feedbackType: [{ type: 'validValue', message: 'It\'s required.' }],
+    feedbackTo: [{ type: 'validValue', message: 'It\'s required.' }],
+    toStoreId: [{ type: 'validValue', message: 'It\'s required.' }]
   };
   constructor(
     private router: Router,
@@ -64,30 +65,30 @@ export class FeedbackPage implements OnInit {
 
   ngOnInit() {
     this.feedbackForm = this.formBuilder.group({
-      message: ["", Validators.compose([Validators.required])],
+      message: ['', Validators.compose([Validators.required])],
       feedbackType: [
         {
           typeId: null,
-          typeName: ""
+          typeName: ''
         },
         Validators.compose([this.validateType])
       ],
       feedbackTo: [
         {
-          typeId: "",
-          typeName: ""
+          typeId: '',
+          typeName: ''
         },
         Validators.compose([this.validateType])
       ],
       toStoreId: [
         {
           typeId: null,
-          typeName: ""
+          typeName: ''
         },
         Validators.compose([this.validateType])
       ]
     });
-    //this.store.dispatch(new fromfeedback.GetAllFeedbackTypes());
+    // this.store.dispatch(new fromfeedback.GetAllFeedbackTypes());
   }
 
   sendFeedback() {
@@ -97,7 +98,7 @@ export class FeedbackPage implements OnInit {
     }
   }
 
-  //Custom validation for feedback type
+  // Custom validation for feedback type
 
   validateType(control: AbstractControl): { [key: string]: boolean } | null {
     if (!control.value.Fid) {
@@ -107,6 +108,6 @@ export class FeedbackPage implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.feedbacktypeStore) this.feedbacktypeStore.unsubscribe();
+    if (this.feedbacktypeStore) { this.feedbacktypeStore.unsubscribe(); }
   }
 }

@@ -1,5 +1,4 @@
 <ion-content padding>
-
   <ion-row>
     <ion-col text-center>
       <img class="prlogo" src="assets/icon/pr-logo.png" />
@@ -7,10 +6,29 @@
   ><br /><br />
 
   <form [formGroup]="registerForm">
-    <pr-business-types [selectedForm]="registerForm"></pr-business-types>
-
+    <ion-row>
+      <ion-col>
+        <div class="white-border white-color">
+          <pr-select
+            [placeHolder] = "'Type of Business'"
+            [ctrName]="'formCtrName'"
+            [items]="businessTypes$ | async"
+            [id]="'BusinessTypeId'"
+            [name]="'BusinessTypeName'"
+            [canSearch]="true"
+            (valueChange)="displayCounter($event)"
+          ></pr-select>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- <pr-business-types [selectedForm]="registerForm"></pr-business-types> -->
     <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.businessType; trackBy: trackByFn">
+      <ng-container
+        *ngFor="
+          let validation of validation_messages.businessType;
+          trackBy: trackByFn
+        "
+      >
         <div
           class="error-message"
           *ngIf="
@@ -26,17 +44,23 @@
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">Mobile Number</ion-label>
+        <!-- <ion-label position="floating">Mobile Number</ion-label> -->
         <ion-input
+          placeholder="Mobile Number"
           formControlName="mobile"
           class="white-border white-color"
-          type="number" 
+          type="number"
         ></ion-input>
       </ion-col>
     </ion-row>
 
     <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.mobile; trackBy: trackByFn">
+      <ng-container
+        *ngFor="
+          let validation of validation_messages.mobile;
+          trackBy: trackByFn
+        "
+      >
         <div
           class="error-message"
           *ngIf="
@@ -52,8 +76,9 @@
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">Password</ion-label>
+        <!-- <ion-label position="floating">Password</ion-label> -->
         <ion-input
+          placeholder="Password"
           formControlName="password"
           class="white-border white-color"
           [type]="passwordType"
@@ -69,7 +94,12 @@
     </ion-row>
 
     <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.password; trackBy: trackByFn">
+      <ng-container
+        *ngFor="
+          let validation of validation_messages.password;
+          trackBy: trackByFn
+        "
+      >
         <div
           class="error-message"
           *ngIf="
@@ -86,21 +116,26 @@
     <ion-row>
       <ion-col>
         <div class="white-border white-color">
-          <ion-label *ngIf="!registerForm.value.region.RegionId" class="ionic-selectable-label">Select Region</ion-label>
-          <ionic-selectable
-            formControlName="region"
-            [items]="regions"
-            itemValueField="RegionId"
-            itemTextField="RegionName"
+          <!-- <pr-select
+            [placeHolder] = "'Region'"
+            [ctrName]="'formCtrName1'"
+            [items]="ports1"
+            [id]="'id1'"
+            [name]="'name1'"
             [canSearch]="true"
-          >
-          </ionic-selectable>
+            (valueChange)="displayCounter($event)"
+          ></pr-select> -->
         </div>
       </ion-col>
     </ion-row>
 
     <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.region; trackBy: trackByFn">
+      <ng-container
+        *ngFor="
+          let validation of validation_messages.region;
+          trackBy: trackByFn
+        "
+      >
         <div
           class="error-message"
           *ngIf="

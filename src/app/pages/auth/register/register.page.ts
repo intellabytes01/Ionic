@@ -1,22 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { MenuController, Events } from '@ionic/angular';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AlertService } from '@app/shared/services/alert.service';
 import { AuthState } from '@app/core/authentication/auth.states';
 import { SignUp } from '@app/core/authentication/actions/auth.actions';
+import { BusinessTypes } from './store/register.actions';
+import { businessTypesData } from './store/register.reducers';
+import { untilDestroyed } from '@app/core';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss']
 })
-export class RegisterPage implements OnInit {
-  businessTypes: any[];
-  regions: any[];
+export class RegisterPage implements OnInit, OnDestroy {
+
+  businessTypes$: any;
+
   passwordType = 'password';
   passwordIcon = 'eye-off';
   public registerForm: FormGroup;
+// tslint:disable-next-line: variable-name
   validation_messages = {
     mobile: [
       { type: 'required', message: 'Mobile number is required.' },
@@ -49,10 +54,13 @@ export class RegisterPage implements OnInit {
     private store: Store<AuthState>,
     private events: Events
   ) {
-    this.events.subscribe('businessTypeChange', (businessTypeValue)=>{
+    this.events.subscribe('businessTypeChange', (businessTypeValue) => {
       this.registerForm.value.businessType.BusinessTypeId = businessTypeValue.BusinessTypeId;
       this.registerForm.value.businessType.BusinessTypeName = businessTypeValue.BusinessTypeName;
-    })
+    }), untilDestroyed(this);
+
+    this.getBusinessTypes();
+    this.businessTypes$ = this.store.pipe(select(businessTypesData));
   }
 
   ionViewWillEnter() {
@@ -96,13 +104,15 @@ export class RegisterPage implements OnInit {
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
 
+  async getBusinessTypes() {
+    this.store.dispatch(new BusinessTypes());
+  }
+
   register() {
     // stop here if form is invalid
     if (this.registerForm.invalid) {
       return;
     }
-
-
     if (this.registerForm.value.agree) {
       const payload = {
         cred: this.registerForm.value
@@ -133,13 +143,13 @@ export class RegisterPage implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.businesstypeStore) { this.businesstypeStore.unsubscribe(); }
-    if (this.regionStore) { this.regionStore.unsubscribe(); }
-    if (this.registerStore) { this.registerStore.unsubscribe(); }
-    if (this.validateuserStore) { this.validateuserStore.unsubscribe(); }
   }
 
   trackByFn(index, item) {
     return index;
   }
+
+  displayCounter(count) {
+    // console.log(count);
+}
 }

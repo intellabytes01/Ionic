@@ -34,6 +34,7 @@ const untilDestroyedSymbol = Symbol('untilDestroyed');
  * }
  * ```
  */
+// tslint:disable-next-line: ban-types
 export function untilDestroyed(instance: Object, destroyMethodName: string = 'ngOnDestroy') {
   return <T>(source: Observable<T>) => {
     const originalDestroy = instance[destroyMethodName];

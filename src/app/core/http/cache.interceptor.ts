@@ -44,6 +44,7 @@ export class CacheInterceptor implements HttpInterceptor {
       const cachedData = this.forceUpdate ? null : this.httpCacheService.getCacheData(request.urlWithParams);
       if (cachedData !== null) {
         // Create new response to avoid side-effects
+// tslint:disable-next-line: ban-types
         subscriber.next(new HttpResponse(cachedData as Object));
         subscriber.complete();
         this.removeRequest();

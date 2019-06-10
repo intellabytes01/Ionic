@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { FeedbackPage } from './feedback.page';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { SharedModule } from '@app-shared/shared.module';
+import { SelectStorePageModule } from '@app/shared/select-store/select-store.module';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     IonicSelectableModule,
     ReactiveFormsModule,
+    SelectStorePageModule,
     SharedModule
   ],
   declarations: [FeedbackPage]

@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { SelectStorePage } from './select-store.page';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 const routes: Routes = [
   {
@@ -19,8 +20,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    IonicSelectableModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [SelectStorePage]
+  declarations: [SelectStorePage],
+  exports: [SelectStorePage]
 })
 export class SelectStorePageModule {}

@@ -3,6 +3,7 @@ import { Logger, LogLevel, LogOutput } from './logger.service';
 const logMethods = ['log', 'info', 'warn', 'error'];
 
 describe('Logger', () => {
+// tslint:disable-next-line: ban-types
   let savedConsole: Function[];
   let savedLevel: LogLevel;
   let savedOutputs: LogOutput[];
