@@ -60,14 +60,6 @@ export class RegisterPage implements OnInit, OnDestroy {
     private store: Store<AuthState>,
     private events: Events
   ) {
-    this.events.subscribe('businessTypeChange', businessTypeValue => {
-      this.registerForm.value.businessType.BusinessTypeId =
-        businessTypeValue.BusinessTypeId;
-      this.registerForm.value.businessType.BusinessTypeName =
-        businessTypeValue.BusinessTypeName;
-    }),
-      untilDestroyed(this);
-
     this.getBusinessTypes();
     this.businessTypes$ = this.store.pipe(select(businessTypesData));
 
