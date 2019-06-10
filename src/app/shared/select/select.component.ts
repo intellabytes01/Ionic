@@ -27,7 +27,6 @@ export class SelectComponent implements OnInit {
     value: any
   }) {
     this.valueChange.emit(event.value);
-    // console.log('port:', event.value);
   }
 
 }

@@ -11,12 +11,12 @@
         <div class="white-border white-color">
           <pr-select
             [placeHolder] = "'Type of Business'"
-            [ctrName]="'formCtrName'"
+            [ctrName]="'businessType'"
             [items]="businessTypes$ | async"
             [id]="'BusinessTypeId'"
             [name]="'BusinessTypeName'"
             [canSearch]="true"
-            (valueChange)="displayCounter($event)"
+            (valueChange)="updateBussinessType($event)"
           ></pr-select>
         </div>
       </ion-col>
@@ -116,15 +116,15 @@
     <ion-row>
       <ion-col>
         <div class="white-border white-color">
-          <!-- <pr-select
-            [placeHolder] = "'Region'"
-            [ctrName]="'formCtrName1'"
-            [items]="ports1"
-            [id]="'id1'"
-            [name]="'name1'"
+          <pr-select
+            [placeHolder] = "'Regions'"
+            [ctrName]="'region'"
+            [items]="regions$ | async"
+            [id]="'RegionId'"
+            [name]="'RegionName'"
             [canSearch]="true"
-            (valueChange)="displayCounter($event)"
-          ></pr-select> -->
+            (valueChange)="updateRegion($event)"
+          ></pr-select>
         </div>
       </ion-col>
     </ion-row>
