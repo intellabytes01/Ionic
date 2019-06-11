@@ -1,6 +1,6 @@
 {
   "APP_NAME": "Pharmarack",
-"About": "About",
+  "About": "About",
   "Hello world !": "Hello world !",
   "Home": "Home",
   "Cancel": "Cancel",
@@ -62,7 +62,7 @@
 
   "MYOUTSTANDING_NAME": "My Outstanding",
   "MYPAYMENTS_NAME": "My Payments",
-  
+
   "DASHBOARD": {
     "NEWORDER": "New Order",
     "PAYMENTS": "Payments",
@@ -72,11 +72,18 @@
     "SCHEMES": "Schemes",
     "PRLOGO": "assets/icon/logo.png"
   },
+
   "ADD_DISTRIBUTOR": {
     "REQUEST_TAB_MESSAGE_1": "Please enter Party Code for faster Mapping.",
     "NOTE": "Note:",
     "REQUEST_TAB_MESSAGE_2": "Party code can be found in Distributor's Sales Inovoice / Bill.",
 
     "ADD_TAB_MESSAGE": "Distributor you would like to see on Pharmarack"
+  },
+
+  "VALIDATIONS": {
+    "MOBILEREQUIRED": "Mobile number is required.",
+    "MOBILEPATTERN": "Mobile number must be at least 10 characters long.",
+    "OTPREQUIRED": "Otp is required."
   }
 }

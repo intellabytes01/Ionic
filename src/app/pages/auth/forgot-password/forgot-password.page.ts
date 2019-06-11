@@ -7,6 +7,8 @@ import { SendOtp, VerifyOtp } from './store/forgot-password.actions';
 import { Router } from '@angular/router';
 import { sendOtpData, verifyOtpData } from './store/forgot-password.reducers';
 import { AlertService } from '@app/shared/services/alert.service';
+import { untilDestroyed } from '@app/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-forgot-password',
@@ -19,10 +21,10 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
   // tslint:disable-next-line: variable-name
   validation_messages = {
     mobile: [
-      { type: 'required', message: 'Mobile number is required.' },
+      { type: 'required', message: 'VALIDATIONS.MOBILEREQUIRED' },
       {
         type: 'pattern',
-        message: 'Mobile number must be at least 10 characters long.'
+        message: 'VALIDATIONS.MOBILEPATTERN'
       }
     ]
   };
@@ -32,7 +34,8 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
     public menuCtrl: MenuController,
     private store: Store<OtpState>,
     private router: Router,
-    private alert: AlertService
+    private alert: AlertService,
+    private translateService: TranslateService
   ) {}
 
   ionViewWillEnter() {
@@ -57,12 +60,21 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
     const sendOtpBody = {
       mobile: this.forgotPasswordForm.value.mobile
     };
+    if (!sendOtpBody.mobile) {
+      this.alert.presentToast(this.translateService.instant('VALIDATIONS.MOBILEREQUIRED'));
+      return;
+    }
+    if (sendOtpBody.mobile.length < 10) {
+      this.alert.presentToast(this.translateService.instant('VALIDATIONS.MOBILEPATTERN'));
+      return;
+    }
     this.store.dispatch(new SendOtp(sendOtpBody));
     this.store.pipe(select(sendOtpData)).subscribe(data => {
       if (data && data.otp) {
         this.showVerify = true;
       }
-    });
+    }),
+      untilDestroyed(this);
   }
 
   verifyOtp() {
@@ -70,12 +82,19 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
       mobile: this.forgotPasswordForm.value.mobile,
       otp: this.forgotPasswordForm.value.otp
     };
+    if (!verifyOtpBody.otp) {
+      this.alert.presentToast(
+        this.translateService.instant('VALIDATIONS.OTPREQUIRED')
+      );
+      return;
+    }
     this.store.dispatch(new VerifyOtp(verifyOtpBody));
     this.store.pipe(select(verifyOtpData)).subscribe(data => {
       if (data && data.password) {
         this.router.navigate(['/login']);
       }
-    });
+    }),
+      untilDestroyed(this);
   }
 
   // Custom validation for Mobile

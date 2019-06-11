@@ -11,6 +11,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { OtpEffects } from './store/forgot-password.effects';
 import * as fromOtpReducer from './store/forgot-password.reducers';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    TranslateModule,
     StoreModule.forFeature('otp', fromOtpReducer.otpReducer),
     EffectsModule.forRoot([OtpEffects])
   ],

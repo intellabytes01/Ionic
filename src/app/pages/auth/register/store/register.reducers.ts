@@ -1,5 +1,5 @@
-import { RegisterActionTypes, All } from "./register.actions";
-import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { RegisterActionTypes, All } from './register.actions';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface RegisterState {
   businessTypesArray: any;
@@ -18,7 +18,7 @@ export function registerReducer(
   action: All
 ): RegisterState {
   switch (action.type) {
-    //Business Types
+    // Business Types
 
     case RegisterActionTypes.BUSINESSTYPES_SUCCESS: {
       return {
@@ -35,7 +35,7 @@ export function registerReducer(
       };
     }
 
-    //Regions
+    // Regions
 
     case RegisterActionTypes.REGIONS_SUCCESS: {
       return {
@@ -57,9 +57,9 @@ export function registerReducer(
   }
 }
 
-const businessTypesState = createFeatureSelector<RegisterState>("register");
+const businessTypesState = createFeatureSelector<RegisterState>('register');
 
-const regionsState = createFeatureSelector<RegisterState>("register");
+const regionsState = createFeatureSelector<RegisterState>('register');
 
 export const businessTypesData = createSelector(
   businessTypesState,

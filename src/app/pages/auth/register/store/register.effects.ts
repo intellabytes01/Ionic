@@ -1,5 +1,5 @@
-import { Effect, Actions, ofType, createEffect } from "@ngrx/effects";
-import { Injectable } from "@angular/core";
+import { Effect, Actions, ofType, createEffect } from '@ngrx/effects';
+import { Injectable } from '@angular/core';
 import {
   BusinessTypesSuccess,
   BusinessTypesFailure,
@@ -8,11 +8,11 @@ import {
   Regions,
   RegionsSuccess,
   RegionsFailure
-} from "./register.actions";
-import { Observable, of } from "rxjs";
-import { map, switchMap, catchError, tap } from "rxjs/operators";
-import { Action } from "@ngrx/store";
-import { RegisterService } from "../register.service";
+} from './register.actions';
+import { Observable, of } from 'rxjs';
+import { map, switchMap, catchError, tap } from 'rxjs/operators';
+import { Action } from '@ngrx/store';
+import { RegisterService } from '../register.service';
 
 @Injectable()
 export class RegisterEffects {
@@ -21,7 +21,7 @@ export class RegisterEffects {
     private registerService: RegisterService
   ) {}
 
-  //Business Types
+  // Business Types
 
   @Effect()
   BusinessTypes: Observable<Action> = this.actions.pipe(
@@ -30,7 +30,7 @@ export class RegisterEffects {
     switchMap(() => {
       return this.registerService.getBusinessTypes().pipe(
         map(data => {
-          return new BusinessTypesSuccess({ businessTypes: data["data"] });
+          return new BusinessTypesSuccess({ businessTypes: data['data'] });
         }),
         catchError(error => of(new BusinessTypesFailure({ error })))
       );
@@ -48,7 +48,7 @@ export class RegisterEffects {
     ofType(RegisterActionTypes.BUSINESSTYPES_FAILURE)
   );
 
-  //Regions
+  // Regions
 
   @Effect()
   Regions: Observable<Action> = this.actions.pipe(
@@ -57,7 +57,7 @@ export class RegisterEffects {
     switchMap(() => {
       return this.registerService.getRegions().pipe(
         map(data => {
-          return new RegionsSuccess({ regions: data["data"] });
+          return new RegionsSuccess({ regions: data['data'] });
         }),
         catchError(error => of(new RegionsFailure({ error })))
       );
