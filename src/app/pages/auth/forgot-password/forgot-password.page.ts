@@ -1,6 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MenuController } from '@ionic/angular';
+import { Store, select } from '@ngrx/store';
+import { OtpState } from './store/forgot-password.state';
+import { SendOtp, VerifyOtp } from './store/forgot-password.actions';
+import { Router } from '@angular/router';
+import { sendOtpData, verifyOtpData } from './store/forgot-password.reducers';
+import { AlertService } from '@app/shared/services/alert.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -8,12 +14,9 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['./forgot-password.page.scss']
 })
 export class ForgotPasswordPage implements OnInit, OnDestroy {
-  otpData: any = {
-    otp: '',
-    expiredIn: ''
-  };
+  showVerify = false;
   public forgotPasswordForm: FormGroup;
-// tslint:disable-next-line: variable-name
+  // tslint:disable-next-line: variable-name
   validation_messages = {
     mobile: [
       { type: 'required', message: 'Mobile number is required.' },
@@ -24,11 +27,12 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
     ]
   };
   mobnumPattern = '^((\\+91-?)|0)?[0-9]{10}$';
-  otpStore: any;
-  verifyotpStore: any;
   constructor(
     public formBuilder: FormBuilder,
-    public menuCtrl: MenuController
+    public menuCtrl: MenuController,
+    private store: Store<OtpState>,
+    private router: Router,
+    private alert: AlertService
   ) {}
 
   ionViewWillEnter() {
@@ -50,9 +54,28 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
   }
 
   sendOtp() {
+    const sendOtpBody = {
+      mobile: this.forgotPasswordForm.value.mobile
+    };
+    this.store.dispatch(new SendOtp(sendOtpBody));
+    this.store.pipe(select(sendOtpData)).subscribe(data => {
+      if (data && data.otp) {
+        this.showVerify = true;
+      }
+    });
   }
 
   verifyOtp() {
+    const verifyOtpBody = {
+      mobile: this.forgotPasswordForm.value.mobile,
+      otp: this.forgotPasswordForm.value.otp
+    };
+    this.store.dispatch(new VerifyOtp(verifyOtpBody));
+    this.store.pipe(select(verifyOtpData)).subscribe(data => {
+      if (data && data.password) {
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
   // Custom validation for Mobile
@@ -63,8 +86,7 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() {
-  }
+  ngOnDestroy() {}
 
   trackByFn(index, item) {
     return index;
