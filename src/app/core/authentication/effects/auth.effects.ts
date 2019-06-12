@@ -7,6 +7,7 @@ import { Action } from '@ngrx/store';
 import { Storage } from '@ionic/storage';
 import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure } from '../actions/auth.actions';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
+import { AlertService } from '@app/shared/services/alert.service';
 
 
 @Injectable()
@@ -16,7 +17,8 @@ export class AuthEffects {
     private actions: Actions,
     private authService: AuthenticationService,
     private router: Router,
-    private storage: Storage
+    private storage: Storage,
+    private alert: AlertService
   ) {}
 
   @Effect()
@@ -44,7 +46,10 @@ export class AuthEffects {
 
   @Effect({ dispatch: false })
   LogInFailure: Observable<any> = this.actions.pipe(
-    ofType(AuthActionTypes.LOGIN_FAILURE)
+    ofType(AuthActionTypes.LOGIN_FAILURE),
+    tap(() => {
+      this.alert.presentToast('Please provide valid credentials.');
+    })
   );
 
   @Effect()
@@ -65,14 +70,16 @@ export class AuthEffects {
     ofType(AuthActionTypes.SIGNUP_SUCCESS),
     tap((user) => {
       this.storage.set('token', user.payload.token);
-      // localStorage.setItem('token', user.payload.token);
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/dashboard');
     })
   );
 
   @Effect({ dispatch: false })
   SignUpFailure: Observable<any> = this.actions.pipe(
-    ofType(AuthActionTypes.SIGNUP_FAILURE)
+    ofType(AuthActionTypes.SIGNUP_FAILURE),
+    tap((user) => {
+      this.alert.presentToast('Please provide valid data.');
+    })
   );
 
   @Effect({ dispatch: false })

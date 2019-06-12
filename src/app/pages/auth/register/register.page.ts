@@ -5,7 +5,7 @@ import {
   Validators,
   AbstractControl
 } from '@angular/forms';
-import { MenuController, Events } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 import { Store, select } from '@ngrx/store';
 import { AlertService } from '@app/shared/services/alert.service';
 import { AuthState } from '@app/core/authentication/auth.states';
@@ -13,6 +13,7 @@ import { SignUp } from '@app/core/authentication/actions/auth.actions';
 import { BusinessTypes, Regions } from './store/register.actions';
 import { businessTypesData, regionsData } from './store/register.reducers';
 import { untilDestroyed } from '@app/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -58,7 +59,7 @@ export class RegisterPage implements OnInit, OnDestroy {
     public formBuilder: FormBuilder,
     public menuCtrl: MenuController,
     private store: Store<AuthState>,
-    private events: Events
+    private router: Router
   ) {
     this.getBusinessTypes();
     this.businessTypes$ = this.store.pipe(select(businessTypesData));
@@ -90,14 +91,14 @@ export class RegisterPage implements OnInit, OnDestroy {
           RegionId: null,
           RegionName: ''
         },
-        Validators.compose([this.validateRegion])
+        Validators.compose([])
       ],
       businessType: [
         {
           BusinessTypeId: null,
           BusinessTypeName: ''
         },
-        Validators.compose([this.validateBusinessType])
+        Validators.compose([])
       ],
       agree: [false, Validators.compose([Validators.required])]
     });
@@ -117,38 +118,27 @@ export class RegisterPage implements OnInit, OnDestroy {
   }
 
   register() {
-    console.log(this.registerForm.value);
     // stop here if form is invalid
-    if (this.registerForm.invalid) {
+    if (
+      this.registerForm.invalid ||
+      !this.registerForm.value.region.RegionId ||
+      !this.registerForm.value.businessType.BusinessTypeId
+    ) {
       return;
     }
     if (this.registerForm.value.agree) {
       const payload = {
-        cred: this.registerForm.value
+        cred: {
+          mobile: this.registerForm.value.mobile,
+          password: this.registerForm.value.password,
+          regionId: this.registerForm.value.region.RegionId,
+          businessTypeId: this.registerForm.value.businessType.BusinessTypeId
+        }
       };
       this.store.dispatch(new SignUp(payload));
     } else {
       this.alertService.presentToast('Please accept terms and conditions.');
     }
-  }
-  // Custom validation for Region
-
-  validateRegion(control: AbstractControl): { [key: string]: boolean } | null {
-    if (!control.value.RegionId) {
-      return { validValue: true };
-    }
-    return null;
-  }
-
-  // Custom validation for BusinessType
-
-  validateBusinessType(
-    control: AbstractControl
-  ): { [key: string]: boolean } | null {
-    if (!control.value.BusinessTypeId) {
-      return { validValue: true };
-    }
-    return null;
   }
 
   ngOnDestroy() {}
@@ -166,5 +156,11 @@ export class RegisterPage implements OnInit, OnDestroy {
   updateRegion(value) {
     this.registerForm.value.region.RegionId = value.RegionId;
     this.registerForm.value.region.RegionName = value.RegionName;
+  }
+
+  validationMobile(value) {
+    this.registerForm.controls.mobile.setValue(
+      value.length > 10 ? value.substring(0, 10) : value
+    );
   }
 }

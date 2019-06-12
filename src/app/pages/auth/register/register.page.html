@@ -10,7 +10,7 @@
       <ion-col>
         <div class="white-border white-color">
           <pr-select
-            [placeHolder] = "'Type of Business'"
+            [placeHolder]="'Type of Business'"
             [ctrName]="'businessType'"
             [items]="businessTypes$ | async"
             [id]="'BusinessTypeId'"
@@ -21,7 +21,7 @@
         </div>
       </ion-col>
     </ion-row>
-    <!-- <pr-business-types [selectedForm]="registerForm"></pr-business-types> -->
+
     <div class="validation-errors">
       <ng-container
         *ngFor="
@@ -32,9 +32,7 @@
         <div
           class="error-message"
           *ngIf="
-            registerForm.get('businessType').hasError(validation.type) &&
-            (registerForm.get('businessType').dirty ||
-              registerForm.get('businessType').touched)
+            !registerForm.value.businessType.BusinessTypeId
           "
         >
           {{ validation.message }}
@@ -50,6 +48,7 @@
           formControlName="mobile"
           class="white-border white-color"
           type="number"
+          (ionInput)="validationMobile($event.target.value)"
         ></ion-input>
       </ion-col>
     </ion-row>
@@ -117,7 +116,7 @@
       <ion-col>
         <div class="white-border white-color">
           <pr-select
-            [placeHolder] = "'Regions'"
+            [placeHolder]="'Regions'"
             [ctrName]="'region'"
             [items]="regions$ | async"
             [id]="'RegionId'"
@@ -139,9 +138,7 @@
         <div
           class="error-message"
           *ngIf="
-            registerForm.get('region').hasError(validation.type) &&
-            (registerForm.get('region').dirty ||
-              registerForm.get('region').touched)
+            !registerForm.value.region.RegionId
           "
         >
           {{ validation.message }}
@@ -153,7 +150,7 @@
     <ion-row>
       <ion-col>
         <ion-checkbox formControlName="agree"></ion-checkbox>
-        <ion-label style="font-size: 0.9rem;"
+        <ion-label class="message"
           >&nbsp;I Agree to Terms & Conditions of Pharmarack</ion-label
         >
       </ion-col>
