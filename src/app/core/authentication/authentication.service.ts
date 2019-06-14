@@ -50,8 +50,6 @@ export class AuthenticationService {
       .post(routes.login(context), JSON.stringify(context))
       .pipe(
         map((data: any) => ({
-          username: data.data.userData.userSummary.Username,
-          token: data.data.token,
           data
         })),
         tap((data: any) => {
@@ -74,8 +72,6 @@ export class AuthenticationService {
         .post(routes.signup(context), JSON.stringify(context))
         .pipe(
           map((data: any) => ({
-            username: data.data.userData.userSummary.Username,
-            token: data.data.token,
             data
           })),
           tap((data: any) => {

@@ -10,7 +10,9 @@ export class CardComponent implements OnInit {
   @Input() pages: any[];
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.pages);
+  }
 
   trackByFn(index, item) {
     return index;

@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getAuthState$.pipe(untilDestroyed(this)).subscribe((state) => {
-      if (state && state.isAuthenticated && state.user.token) {
+      if (state && state.isAuthenticated && state.userData.data.data.token) {
         this.router.navigate(['/']);
       }
     });

@@ -147,6 +147,7 @@ export class SidemenuComponent implements OnInit {
   logout() {
     this.storage.clear();
     localStorage.clear();
+    this.router.dispose();
   }
 
   trackByFn(index, item) {
