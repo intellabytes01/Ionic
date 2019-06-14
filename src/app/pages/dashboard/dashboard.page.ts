@@ -85,7 +85,6 @@ export class DashboardPage implements OnInit {
         this.userData = data['userData']['data']['data']['userData'];
         this.setDisable();
       }
-
     }),
       untilDestroyed(this);
   }
@@ -93,15 +92,34 @@ export class DashboardPage implements OnInit {
   setDisable() {
     console.log(this.userData);
     if (!this.userData['retailerSummary']['retailerInfo']) {
-        for (let i = 0; i <= 3; i++) {
-          this.pages[i]['disable'] = true;
+      this.pages.forEach((element, index) => {
+        switch (element.name) {
+          case 'DASHBOARD.NEWORDER':
+            element.disable = true;
+            break;
+
+          case 'DASHBOARD.PAYMENTS':
+            element.disable = true;
+            break;
+
+          case 'DASHBOARD.DRAFTORDER':
+            element.disable = true;
+            break;
+
+          case 'DASHBOARD.ADDDISTRIBUTOR':
+            element.disable = true;
+            break;
+
+          default:
+            break;
         }
-      }
+      });
+    }
     if (
-        this.userData['retailerSummary']['retailerInfo'] &&
-        this.userData['retailerSummary']['retailerStoreParties']
-      ) {
-        this.pages[0]['disable'] = true;
-      }
+      this.userData['retailerSummary']['retailerInfo'] &&
+      this.userData['retailerSummary']['retailerStoreParties']
+    ) {
+      this.pages[0]['disable'] = true;
+    }
   }
 }
