@@ -8,7 +8,10 @@ import { IonicModule } from '@ionic/angular';
 import { FeedbackPage } from './feedback.page';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { SharedModule } from '@app-shared/shared.module';
-import { SelectStorePageModule } from '@app/shared/select-store/select-store.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { FeedbackEffects } from './store/feedback.effects';
+import * as fromfeedbackReducer from './store/feedback.reducers';
 
 const routes: Routes = [
   {
@@ -25,8 +28,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     IonicSelectableModule,
     ReactiveFormsModule,
-    SelectStorePageModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature('feedback', fromfeedbackReducer.feedbackReducer),
+    EffectsModule.forRoot([FeedbackEffects])
   ],
   declarations: [FeedbackPage]
 })

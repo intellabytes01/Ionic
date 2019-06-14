@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
   Validators,
@@ -6,14 +6,17 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
+import { FeedbackState } from './store/feedback.state';
+import { feedbackTypesData } from './store/feedback.reducers';
+import { FeedbackTypes } from './store/feedback.actions';
 
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.page.html',
   styleUrls: ['./feedback.page.scss']
 })
-export class FeedbackPage implements OnInit, OnDestroy {
+export class FeedbackPage implements OnInit {
   public feedbackForm: FormGroup;
   feedbackTypes: any[] = [];
   feedbackTos: any[] = [
@@ -45,22 +48,17 @@ export class FeedbackPage implements OnInit, OnDestroy {
     }
   ];
   feedbacktypeStore: any;
-// tslint:disable-next-line: variable-name
   validation_messages = {
     message: [{ type: 'required', message: 'Value is required for Remarks.' }],
     feedbackType: [{ type: 'validValue', message: 'It\'s required.' }],
     feedbackTo: [{ type: 'validValue', message: 'It\'s required.' }],
     toStoreId: [{ type: 'validValue', message: 'It\'s required.' }]
   };
-  constructor(
-    private router: Router,
-    public formBuilder: FormBuilder
-  ) {
-    // this.feedbacktypeStore = this.store
-    //   .select(getAllFeedbackTypes)
-    //   .subscribe((state: any) => {
-    //     this.feedbackTypes = state;
-    //   });
+  feedbackTypes$: any;
+
+  constructor(private router: Router, public formBuilder: FormBuilder, private store: Store<FeedbackState>,) {
+    this.getFeedbackTypes();
+    this.feedbackTypes$ = this.store.pipe(select(feedbackTypesData));
   }
 
   ngOnInit() {
@@ -107,7 +105,16 @@ export class FeedbackPage implements OnInit, OnDestroy {
     return null;
   }
 
+  updateFeedbackTypes(value) {}
+
+  updateFeedbackTo(value) {}
+
+  updateStore(value) {}
+
+  getFeedbackTypes(){
+    this.store.dispatch(new FeedbackTypes());
+  }
+
   ngOnDestroy() {
-    if (this.feedbacktypeStore) { this.feedbacktypeStore.unsubscribe(); }
   }
 }

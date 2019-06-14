@@ -1,3 +1,5 @@
+<app-header title="Feedback"></app-header>
+
 <ion-content padding>
   <ion-row>
     <ion-col>
@@ -13,15 +15,20 @@
   <form [formGroup]="feedbackForm">
     <ion-row>
       <ion-col>
-        <ion-label *ngIf="!feedbackForm.value.feedbackType.Fid" class="ionic-selectable-label">Select feedback type</ion-label>
-        <ionic-selectable
-          formControlName="feedbackType"
-          [items]="feedbackTypes"
-          itemValueField="Fid"
-          itemTextField="Types"
-          [canSearch]="true"
+        <ion-label
+          *ngIf="!feedbackForm.value.feedbackType.Fid"
+          class="ionic-selectable-label"
+          >Select feedback type</ion-label
         >
-        </ionic-selectable>
+        <pr-select
+          [placeHolder]="''"
+          [ctrName]="'feedbackType'"
+          [items]="feedbackTypes$ | async"
+          [id]="'Fid'"
+          [name]="'Types'"
+          [canSearch]="true"
+          (valueChange)="updateFeedbackTypes($event)"
+        ></pr-select>
       </ion-col>
     </ion-row>
 
@@ -42,15 +49,20 @@
 
     <ion-row>
       <ion-col>
-        <ion-label *ngIf="!feedbackForm.value.feedbackTo.Fid" class="ionic-selectable-label">Select type</ion-label>
-        <ionic-selectable
-          formControlName="feedbackTo"
-          [items]="feedbackTos"
-          itemValueField="Fid"
-          itemTextField="Types"
-          [canSearch]="true"
+        <ion-label
+          *ngIf="!feedbackForm.value.feedbackTo.Fid"
+          class="ionic-selectable-label"
+          >Select type</ion-label
         >
-        </ionic-selectable>
+        <pr-select
+          [placeHolder]="''"
+          [ctrName]="'feedbackTo'"
+          [items]="feedbackTos"
+          [id]="'Fid'"
+          [name]="'Types'"
+          [canSearch]="true"
+          (valueChange)="updateFeedbackTo($event)"
+        ></pr-select>
       </ion-col>
     </ion-row>
 
@@ -69,7 +81,22 @@
       </ng-container>
     </div>
 
-    <pr-select-store></pr-select-store>
+    <ion-row>
+      <ion-col>
+        <ion-label *ngIf="!storeSelected" class="ionic-selectable-label"
+          >Select Store</ion-label
+        >
+        <pr-select
+          [placeHolder]="''"
+          [ctrName]="'storeSelected'"
+          [items]="stores"
+          [id]="'storeId'"
+          [name]="'storeName'"
+          [canSearch]="true"
+          (valueChange)="updateStore($event)"
+        ></pr-select>
+      </ion-col>
+    </ion-row>
 
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.toStoreId">
