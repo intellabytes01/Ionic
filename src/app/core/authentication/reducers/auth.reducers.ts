@@ -6,14 +6,14 @@ export interface State {
   // is a user authenticated?
   isAuthenticated: boolean;
   // if authenticated, there should be a user object
-  user: User | null;
+  userData: User | null;
   // error message
   errorMessage: string | null;
 }
 
 export const initialState: State = {
   isAuthenticated: false,
-  user: null,
+  userData: null,
   errorMessage: null
 };
 
@@ -23,10 +23,7 @@ export function authReducer(state = initialState, action: All): State {
       return {
         ...state,
         isAuthenticated: true,
-        user: {
-          token: action.payload.token,
-          email: action.payload.email
-        },
+        userData: action.payload,
         errorMessage: null
       };
     }
@@ -40,10 +37,7 @@ export function authReducer(state = initialState, action: All): State {
       return {
         ...state,
         isAuthenticated: true,
-        user: {
-          token: action.payload.token,
-          email: action.payload.email
-        },
+        userData: action.payload,
         errorMessage: null
       };
     }

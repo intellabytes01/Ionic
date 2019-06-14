@@ -1,14 +1,14 @@
 <ion-row>
   <ion-col text-center size="6" *ngFor="let page of pages; trackBy: trackByFn">
-    <ion-card [routerLink]="[page.link]">
+    <ion-card [routerLink]="!page.disable ? [page.link] : []">
       <ion-row>
         <ion-col text-center>
-          <img class="dashboard-icon" src="{{page.icon}}" />
+          <img class="dashboard-icon" src="{{page.icon}}" [ngClass]="{ 'disable' : page.disable }" />
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col text-center>
-          <span translate>{{page.name}}</span>  
+          <span [ngClass]="{ 'disable' : page.disable }" translate>{{page.name}}</span>  
         </ion-col>
       </ion-row>
     </ion-card>
