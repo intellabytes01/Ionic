@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppPreloadingStrategy } from './app-preloading.module';
 import { AuthenticationGuard } from './core';
+import { NgxPermissionsGuard } from 'ngx-permissions';
 
 const routes: Routes = [
   {
@@ -41,6 +42,18 @@ const routes: Routes = [
     data: {title: 'Home', preload: true, delay: false},
     canActivate: [AuthenticationGuard]
   },
+
+  // {
+  //   path: 'dashboard',
+  //   loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule',
+  //   data: {title: 'Home', preload: true, delay: false, permissions: {
+  //     only: 'ADMIN',
+  //     redirectTo: '/add-distributor'
+  //   }},
+  //   canActivate: [AuthenticationGuard, NgxPermissionsGuard]
+  // },
+
+
   {
     path: 'add-distributor',
     loadChildren: './pages/Retailer/add-distributor/add-distributor.module#AddDistributorPageModule',
@@ -56,6 +69,7 @@ const routes: Routes = [
     loadChildren: './pages/Retailer/profile/profile.module#ProfilePageModule',
     canActivate: [AuthenticationGuard]
   }
+
 
 ];
 
