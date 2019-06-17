@@ -10,6 +10,7 @@ import {
 import { Store, select } from '@ngrx/store';
 import { untilDestroyed } from '@app/core';
 import { Storage } from '@ionic/storage';
+import * as fromModel from './dashboard-data.json';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,57 +18,14 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['./dashboard.page.scss']
 })
 export class DashboardPage implements OnInit {
-  slideOpts = {
-    initialSlide: 1,
-    speed: 400
-  };
-  pages: Page[] = [
-    {
-      name: 'DASHBOARD.NEWORDER',
-      link: '/',
-      icon: 'assets/icon/logo.png',
-      disable: false
-    },
-    {
-      name: 'DASHBOARD.PAYMENTS',
-      link: '/payments',
-      icon: 'assets/icon/logo.png',
-      disable: false
-    },
-    {
-      name: 'DASHBOARD.DRAFTORDER',
-      link: '/draft-order',
-      icon: 'assets/icon/logo.png',
-      disable: false
-    },
-    {
-      name: 'DASHBOARD.ADDDISTRIBUTOR',
-      link: '/add-distributor',
-      icon: 'assets/icon/logo.png',
-      disable: false
-    },
-    {
-      name: 'DASHBOARD.PRODUCTSEARCH',
-      link: '/product-search',
-      icon: 'assets/icon/logo.png',
-      disable: false
-    },
-    {
-      name: 'DASHBOARD.SCHEMES',
-      link: '/schemes',
-      icon: 'assets/icon/logo.png',
-      disable: false
-    }
-  ];
-
+  pages = [];
   userData: object;
-  constructor(
-    public menuCtrl: MenuController,
-    private translateService: TranslateService,
-    private utilityService: UtilityService,
-    private store: Store<AuthState>,
-    private storage: Storage
-  ) {}
+
+  constructor(public menuCtrl: MenuController,
+              private translateService: TranslateService,
+              private utilityService: UtilityService,
+              private store: Store<AuthState>,
+              private storage: Storage) {}
 
   ionViewWillEnter() {
     this.menuCtrl.enable(true, 'menuLeft');
@@ -75,6 +33,7 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit() {
+    this.pages = fromModel.data;
     this.store.pipe(select(selectAuthState)).subscribe(data => {
       if (!data['userData']) {
         this.storage.get('userData').then((value: any) => {
@@ -90,7 +49,6 @@ export class DashboardPage implements OnInit {
   }
 
   setDisable() {
-    console.log(this.userData);
     if (!this.userData['retailerSummary']['retailerInfo']) {
       this.pages.forEach((element, index) => {
         switch (element.name) {

@@ -1,0 +1,88 @@
+{ 
+    "data" : [
+        {
+          "name": "DASHBOARD.NEWORDER",
+          "link": "/",
+          "icon": "assets/icon/logo.png",
+          "disable": true,
+          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
+        },
+        {
+          "name": "DASHBOARD.PAYMENTS",
+          "link": "/payments",
+          "icon": "assets/icon/logo.png",
+          "disable": true,
+          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
+        },
+        {
+          "name": "DASHBOARD.MYORDER",
+          "link": "/draft-order",
+          "icon": "assets/icon/logo.png",
+          "disable": true,
+          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
+        },
+        {
+          "name": "DASHBOARD.INVOICE",
+          "link": "/draft-order",
+          "icon": "assets/icon/logo.png",
+          "disable": true,
+          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
+        },
+        {
+          "name": "DASHBOARD.TRACKER",
+          "link": "/draft-order",
+          "icon": "assets/icon/logo.png",
+          "disable": true,
+          "permissions": [{ "perm" : ["Guest"]}]
+        },
+        {
+          "name": "DASHBOARD.MALL",
+          "link": "/draft-order",
+          "icon": "assets/icon/logo.png",
+          "disable": true,
+          "permissions": [{ "perm" : ["GUEST"]}]
+        },
+        {
+          "name": "DASHBOARD.DRAFTORDER",
+          "link": "/draft-order",
+          "icon": "assets/icon/logo.png",
+          "disable": true,
+          "permissions": [{ "perm" : ["GUEST"]}]
+        },
+        {
+          "name": "DASHBOARD.NEWSALESRETURN",
+          "link": "/draft-order",
+          "icon": "assets/icon/logo.png",
+          "disable": true,
+          "permissions": [{ "perm" : ["GUEST"]}]
+        },
+        {
+          "name": "DASHBOARD.VIEWSALESRETURN",
+          "link": "/draft-order",
+          "icon": "assets/icon/logo.png",
+          "disable": true,
+          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
+        },
+        {
+          "name": "DASHBOARD.ADDDISTRIBUTOR",
+          "link": "/add-distributor",
+          "icon": "assets/icon/logo.png",
+          "disable": true,
+          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
+        },
+        {
+          "name": "DASHBOARD.PRODUCTSEARCH",
+          "link": "/product-search",
+          "icon": "assets/icon/logo.png",
+          "disable": false,
+          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
+        },
+        {
+          "name": "DASHBOARD.SCHEMES",
+          "link": "/schemes",
+          "icon": "assets/icon/logo.png",
+          "disable": false,
+          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
+        }
+      ]
+}

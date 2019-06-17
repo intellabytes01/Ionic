@@ -19,6 +19,7 @@ import { AuthEffects } from './core/authentication/effects/auth.effects';
 import { authReducers } from './core/authentication/auth.states';
 import { AppPreloadingStrategy } from './app-preloading.module';
 import { Camera } from '@ionic-native/camera/ngx';
+import { NgxPermissionsModule, NgxPermissionsService } from 'ngx-permissions';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,14 +38,15 @@ import { Camera } from '@ionic-native/camera/ngx';
       name: '__prdb',
 driverOrder: ['sqlite', 'indexeddb', 'websql', 'localstorage']
     }),
-    EffectsModule.forRoot([AuthEffects])
+    EffectsModule.forRoot([AuthEffects]),
+    NgxPermissionsModule.forRoot()
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AppPreloadingStrategy,
-    Camera
+    Camera, NgxPermissionsService
   ],
   bootstrap: [AppComponent]
 })
