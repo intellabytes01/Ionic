@@ -1,15 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { environment } from '@env/environment';
 import { merge } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Logger, I18nService, untilDestroyed } from './core';
 import { TranslateService } from '@ngx-translate/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 const log = new Logger('App');
 
@@ -25,7 +23,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private titleService: Title,
     private translateService: TranslateService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
+    private permissionsService: NgxPermissionsService
   ) {
     this.initializeApp();
   }
@@ -37,7 +36,7 @@ export class AppComponent implements OnInit, OnDestroy {
       Logger.enableProductionMode();
     }
 
-    log.debug('init');
+    // log.debug('init');
 
     // Setup translations
     this.i18nService.init(
@@ -45,25 +44,8 @@ export class AppComponent implements OnInit, OnDestroy {
       environment.supportedLanguages
     );
 
-    // // Display page title when page navigate
-    // this.title$ = this.router.events.pipe(
-    //   filter(event => event instanceof ResolveStart),
-    //   map(event => {
-    //     let data = null;
-    //     let route = event['state'].root;
-
-    //     while (route) {
-    //       data = route.data || data;
-    //       route = route.firstChild;
-    //     }
-
-    //     return data.title;
-    //   }),
-    // );
-
-    // const onNavigationEnd = this.router.events.pipe(
-    //   filter(event => event instanceof NavigationEnd)
-    // );
+    const perm = ['ADMIN'];
+    this.permissionsService.loadPermissions(perm);
 
     // Change page title on navigation or language change, based on route data
     merge(this.translateService.onLangChange)
