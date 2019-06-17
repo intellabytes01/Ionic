@@ -1,34 +1,54 @@
-import { FeedbackActionTypes, All } from './feedback.actions';
+import { FeedbackAction, All } from './feedback.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface FeedbackState {
   feedbackTypesArray: any;
+  feedbackSubmitObject: any;
   errorMessage: string | null;
 }
 
 export const initialState: FeedbackState = {
   errorMessage: null,
-  feedbackTypesArray: []
+  feedbackTypesArray: [],
+  feedbackSubmitObject: {}
 };
 
 export function feedbackReducer(
   state = initialState,
   action: All
 ): FeedbackState {
-  switch (action.type) {
+  switch (action.type) {    
+
     // Feedback Types
 
-    case FeedbackActionTypes.FEEDBACKTYPES_SUCCESS: {
+    case FeedbackAction.FEEDBACKTYPES_SUCCESS: {
       return {
         ...state,
         feedbackTypesArray: action.payload.feedbackTypes.data,
         errorMessage: null
       };
     }
-    case FeedbackActionTypes.FEEDBACKTYPES_FAILURE: {
+    case FeedbackAction.FEEDBACKTYPES_FAILURE: {
       return {
         ...state,
         feedbackTypesArray: [],
+        errorMessage: null
+      };
+    }
+
+    // Feedback Submit
+
+    case FeedbackAction.FEEDBACKSUBMIT_SUCCESS: {
+      return {
+        ...state,
+        feedbackSubmitObject: action.payload.feedbackSubmit,
+        errorMessage: null
+      };
+    }
+    case FeedbackAction.FEEDBACKSUBMIT_FAILURE: {
+      return {
+        ...state,
+        feedbackSubmitObject: {},
         errorMessage: null
       };
     }

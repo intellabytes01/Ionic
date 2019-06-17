@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { FeedbackState } from './store/feedback.state';
 import { feedbackTypesData } from './store/feedback.reducers';
-import { FeedbackTypes } from './store/feedback.actions';
+import { FeedbackTypes, FeedbackSubmit } from './store/feedback.actions';
 
 @Component({
   selector: 'app-feedback',
@@ -21,15 +21,15 @@ export class FeedbackPage implements OnInit {
   feedbackTypes: any[] = [];
   feedbackTos: any[] = [
     {
-      Fid: 1,
+      Fid: '1',
       Types: 'Pharmarack'
     },
     {
-      Fid: 2,
+      Fid: '2',
       Types: 'Distributor'
     },
     {
-      Fid: 3,
+      Fid: '3',
       Types: 'Both (Pharmarack / Distributor)'
     }
   ];
@@ -56,7 +56,11 @@ export class FeedbackPage implements OnInit {
   };
   feedbackTypes$: any;
 
-  constructor(private router: Router, public formBuilder: FormBuilder, private store: Store<FeedbackState>,) {
+  constructor(
+    private router: Router,
+    public formBuilder: FormBuilder,
+    private store: Store<FeedbackState>
+  ) {
     this.getFeedbackTypes();
     this.feedbackTypes$ = this.store.pipe(select(feedbackTypesData));
   }
@@ -66,22 +70,22 @@ export class FeedbackPage implements OnInit {
       message: ['', Validators.compose([Validators.required])],
       feedbackType: [
         {
-          typeId: null,
-          typeName: ''
+          typeId: 1,
+          typeName: 'Test title'
         },
         Validators.compose([this.validateType])
       ],
       feedbackTo: [
         {
-          typeId: '',
-          typeName: ''
+          typeId: '1',
+          typeName: 'Pharmarack'
         },
         Validators.compose([this.validateType])
       ],
       toStoreId: [
         {
-          typeId: null,
-          typeName: ''
+          typeId: 1,
+          typeName: 'Demo Store 1'
         },
         Validators.compose([this.validateType])
       ]
@@ -93,6 +97,14 @@ export class FeedbackPage implements OnInit {
     if (this.feedbackForm.invalid) {
       return;
     }
+
+    const payload = {
+      subject: this.feedbackForm.value.feedbackType,
+      message: this.feedbackForm.value.message,
+      feedbackTo: this.feedbackForm.value.feedbackTo,
+      toStoreId: this.feedbackForm.value.toStoreId
+    };
+    this.store.dispatch(new FeedbackSubmit(payload));
   }
 
   // Custom validation for feedback type
@@ -104,16 +116,21 @@ export class FeedbackPage implements OnInit {
     return null;
   }
 
-  updateFeedbackTypes(value) {}
+  updateFeedbackTypes(value) {
+    this.feedbackForm.value.feedbackType.typeId = value.typeId;
+  }
 
-  updateFeedbackTo(value) {}
+  updateFeedbackTo(value) {
+    this.feedbackForm.value.feedbackTo.typeId = value.typeId;
+  }
 
-  updateStore(value) {}
+  updateStore(value) {
+    this.feedbackForm.value.toStoreId.typeId = value.typeId;
+  }
 
-  getFeedbackTypes(){
+  getFeedbackTypes() {
     this.store.dispatch(new FeedbackTypes());
   }
 
-  ngOnDestroy() {
-  }
+  ngOnDestroy() {}
 }

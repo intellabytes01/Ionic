@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Storage } from '@ionic/storage';
-import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure } from '../actions/auth.actions';
+import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure, SaveToken, SaveTokenSuccess, SaveTokenFail } from '../actions/auth.actions';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { AlertService } from '@app/shared/services/alert.service';
 
@@ -89,6 +89,32 @@ export class AuthEffects {
     ofType(AuthActionTypes.LOGOUT),
     tap((user) => {
       this.storage.clear();
+    })
+  );
+
+  @Effect()
+  public SaveToken: Observable<Action> = this.actions.pipe(
+    ofType(AuthActionTypes.SAVETOKEN),
+    map((action: SaveToken) => action.payload),
+    switchMap(payload => {
+      return this.authService.saveToken(payload).pipe(
+        map((user) => {
+          return new SaveTokenSuccess(user);
+        }), catchError((error) => of(new SaveTokenFail({ error }))));
+    })
+    );
+
+  @Effect({ dispatch: false })
+  public SaveTokenSuccess: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.SAVETOKEN_SUCCESS),
+    tap((user) => {
+    })
+  );
+
+  @Effect({ dispatch: false })
+  public SaveTokenFail: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.SAVETOKEN_FAIL),
+    tap(() => {
     })
   );
 

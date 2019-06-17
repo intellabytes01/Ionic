@@ -8,8 +8,16 @@ import { Logger } from '@app/core';
 
 const log = new Logger('FeedbackGuard');
 
+export interface FeedbackContext {
+  subject: string;
+  message: string;
+  feedbackTo: string;
+  toStoreId: number;
+}
+
 const routes = {
-  feedbacktypes: '/feedback/types'
+  feedbacktypes: '/feedback/types',
+  feedbacksubmit: '/feedback'
 };
 
 @Injectable()
@@ -25,6 +33,16 @@ export class FeedbackService {
    */
   getFeedbackTypes(): Observable<any> {
     return this.httpClient.get(routes.feedbacktypes).pipe(
+      map((data: any) => ({
+        data
+      })),
+      tap(data => {}),
+      catchError(error => this.errorHandler(error))
+    );
+  }
+
+  submitFeedback(context: FeedbackContext): Observable<any> {
+    return this.httpClient.post(routes.feedbacksubmit, context).pipe(
       map((data: any) => ({
         data
       })),

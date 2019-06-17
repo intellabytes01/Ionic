@@ -104,6 +104,7 @@ ion-footer {
 
 ion-modal {
   --height: 26rem !important;
+  --width: 95% !important;
 }
 
 .ionic-selectable-value-item {
@@ -203,10 +204,6 @@ ion-list{
 .dashboard-icon {
   width: 6rem !important;
   margin: 0 auto;
-}
-
-.sc-ion-modal-md-h {
-  --width: 95% !important;
 }
 
 .message{

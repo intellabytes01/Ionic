@@ -26,7 +26,8 @@ export interface SignupContext {
 
 const routes = {
   login: (c: LoginContext) => `/login`,
-  signup: (c: SignupContext) => '/register/retailer'
+  signup: (c: SignupContext) => '/register/retailer',
+  savetoken: ''
 };
 
 /**
@@ -81,6 +82,22 @@ export class AuthenticationService {
           catchError(error => this.errorHandler(error))
         )
     );
+  }
+
+
+  // Save Token
+
+  saveToken(userData): Observable<Credentials> {
+    return this.httpClient
+      .get('/businesstypes')
+      .pipe(
+        map((data: any) => ({
+          userData
+        })),
+        tap((data: any) => {
+        }),
+        catchError(error => this.errorHandler(error))
+      );
   }
 
   /**

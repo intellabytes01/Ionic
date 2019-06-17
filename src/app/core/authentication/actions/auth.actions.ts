@@ -9,7 +9,10 @@ export enum AuthActionTypes {
   SIGNUP_SUCCESS = '[Auth] Signup Success',
   SIGNUP_FAILURE = '[Auth] Signup Failure',
   LOGOUT = '[Auth] Logout',
-  GET_STATUS = '[Auth] GetStatus'
+  GET_STATUS = '[Auth] GetStatus',
+  SAVETOKEN = '[Auth] Save Token',
+  SAVETOKEN_SUCCESS = '[Auth] Save Token Success',
+  SAVETOKEN_FAIL = '[Auth] Save Token Fail'
 }
 
 export class LogIn implements Action {
@@ -50,6 +53,21 @@ export class GetStatus implements Action {
   readonly type = AuthActionTypes.GET_STATUS;
 }
 
+export class SaveToken implements Action {
+  readonly type = AuthActionTypes.SAVETOKEN;
+  constructor(public payload: any) {}
+}
+
+export class SaveTokenSuccess implements Action {
+  readonly type = AuthActionTypes.SAVETOKEN_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class SaveTokenFail implements Action {
+  readonly type = AuthActionTypes.SAVETOKEN_FAIL;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | LogIn
   | LogInSuccess
@@ -58,4 +76,7 @@ export type All =
   | SignUpSuccess
   | SignUpFailure
   | LogOut
-  | GetStatus;
+  | GetStatus
+  | SaveToken
+  | SaveTokenSuccess
+  | SaveTokenFail;
