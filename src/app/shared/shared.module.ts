@@ -1,5 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, SlicePipe } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
 import { LoaderComponent } from './loader/loader.component';
@@ -20,9 +20,12 @@ import { IonicSelectableModule } from 'ionic-selectable';
 import { SelectStorePageModule } from './select-store/select-store.module';
 import { SelectComponent } from './select/select.component';
 import { FormsModule } from '@angular/forms';
+import { SlidePage } from './slide/slide.page';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
-  imports: [IonicModule, CommonModule, RouterModule, TranslateModule, IonicSelectableModule, FormsModule],
+  imports: [IonicModule, CommonModule, RouterModule, TranslateModule, IonicSelectableModule, FormsModule,
+    NgxPermissionsModule],
   declarations: [
     LoaderComponent,
     TabsPage,
@@ -34,7 +37,8 @@ import { FormsModule } from '@angular/forms';
     SidemenuComponent,
     SubmitButtonComponent,
     CardComponent,
-    SelectComponent
+    SelectComponent,
+    SlidePage
   ],
   exports: [
     LoaderComponent,
@@ -47,7 +51,8 @@ import { FormsModule } from '@angular/forms';
     SidemenuComponent,
     SubmitButtonComponent,
     CardComponent,
-    SelectComponent
+    SelectComponent,
+    SlidePage
   ],
   providers: [AlertService, UtilityService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

@@ -58,9 +58,12 @@ export class AuthEffects {
     switchMap(payload => {
       return this.authService.signUp(payload.cred).pipe(
         map((user) => {
-          of(new SignUpSuccess(user));
-        }),
-        catchError((error) => of(new SignUpFailure({ error }))));
+          if(user.data['success']) {
+          return new SignUpSuccess(user);
+          } else {
+            return new SignUpFailure(user);
+          }
+        }), catchError((error) => of(new SignUpFailure({ error }))));
     })
     );
 

@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && gzipper --verbose ./www",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -35,7 +35,9 @@
     "@ngx-translate/core": "^11.0.1",
     "cordova-plugin-camera": "4.0.3",
     "core-js": "^2.5.4",
+    "gzipper": "^2.8.0",
     "ionic-selectable": "^4.4.1",
+    "ngx-permissions": "6.0.5",
     "rxjs": "^6.5.2",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.29"

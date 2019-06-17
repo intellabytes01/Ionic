@@ -24,13 +24,14 @@ export class ToolbarPage implements OnInit {
         let route = event['state'].root;
 
         if (
+          event['url'] !== '/' &&
           event['url'] !== '/dashboard' &&
           event['url'] !== '/login' &&
           event['url'] !== '/register' &&
           event['url'] !== '/forgot-password'
         ) {
           this.showHeader = true;
-          if (event['url'] !== '/dashboard') {
+          if (event['url'] !== '/dashboard' || event['url'] !== '/') {
             this.showBackButton = true;
           } else {
             this.showBackButton = false;
