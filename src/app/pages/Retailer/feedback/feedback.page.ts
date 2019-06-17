@@ -86,7 +86,6 @@ export class FeedbackPage implements OnInit {
         Validators.compose([this.validateType])
       ]
     });
-    // this.store.dispatch(new fromfeedback.GetAllFeedbackTypes());
   }
 
   sendFeedback() {

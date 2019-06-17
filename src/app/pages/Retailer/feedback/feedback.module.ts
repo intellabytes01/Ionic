@@ -12,6 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { FeedbackEffects } from './store/feedback.effects';
 import * as fromfeedbackReducer from './store/feedback.reducers';
+import { FeedbackService } from './feedback.service';
 
 const routes: Routes = [
   {
@@ -32,6 +33,7 @@ const routes: Routes = [
     StoreModule.forFeature('feedback', fromfeedbackReducer.feedbackReducer),
     EffectsModule.forRoot([FeedbackEffects])
   ],
-  declarations: [FeedbackPage]
+  declarations: [FeedbackPage],
+  providers: [FeedbackService]
 })
 export class FeedbackPageModule {}
