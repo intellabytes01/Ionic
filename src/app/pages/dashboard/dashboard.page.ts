@@ -37,8 +37,10 @@ export class DashboardPage implements OnInit {
     this.store.pipe(select(selectAuthState)).subscribe(data => {
       if (!data['userData']) {
         this.storage.get('userData').then((value: any) => {
-          this.userData = JSON.parse(value)['userData'];
-          this.setDisable();
+          if(value){
+            this.userData = JSON.parse(value)['userData'];
+            this.setDisable();
+          }          
         });
       } else {
         this.userData = data['userData']['data']['data']['userData'];
