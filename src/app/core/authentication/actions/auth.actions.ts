@@ -55,7 +55,7 @@ export class GetStatus implements Action {
 
 export class SaveToken implements Action {
   readonly type = AuthActionTypes.SAVETOKEN;
-  constructor(public payload: any) {}
+  constructor() {}
 }
 
 export class SaveTokenSuccess implements Action {

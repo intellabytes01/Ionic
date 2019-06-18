@@ -64,7 +64,7 @@ export function authReducer(state = initialState, action: All): State {
         errorMessage: 'Error'
       };
     }
-    
+
     default: {
       return state;
     }

@@ -70,22 +70,22 @@ export class FeedbackPage implements OnInit {
       message: ['', Validators.compose([Validators.required])],
       feedbackType: [
         {
-          typeId: 1,
-          typeName: 'Test title'
+          Fid: null,
+          Types: ''
         },
         Validators.compose([this.validateType])
       ],
       feedbackTo: [
         {
-          typeId: '1',
-          typeName: 'Pharmarack'
+          Fid: null,
+          Types: ''
         },
         Validators.compose([this.validateType])
       ],
       toStoreId: [
         {
-          typeId: 1,
-          typeName: 'Demo Store 1'
+          Fid: null,
+          Types: ''
         },
         Validators.compose([this.validateType])
       ]

@@ -28,7 +28,7 @@ export class AuthEffects {
     switchMap(payload => {
       return this.authService.login(payload.cred).pipe(
         map((user) => {
-          return new LogInSuccess(user);
+          return new LogInSuccess(user['data']['data']);
         }), catchError((error) => of(new LogInFailure({ error }))));
     })
     );
@@ -38,7 +38,7 @@ export class AuthEffects {
   LogInSuccess: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.LOGIN_SUCCESS),
     tap((user) => {
-      this.storage.set('userData', JSON.stringify(user.payload.data.data));
+      this.storage.set('userData', JSON.stringify(user.payload));
       this.router.navigateByUrl('/dashboard');
     })
   );
@@ -59,7 +59,7 @@ export class AuthEffects {
       return this.authService.signUp(payload.cred).pipe(
         map((user) => {
           if(user.data['success']) {
-          return new SignUpSuccess(user);
+          return new SignUpSuccess(user['data']['data']);
           } else {
             return new SignUpFailure(user);
           }
@@ -71,7 +71,7 @@ export class AuthEffects {
   SignUpSuccess: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.SIGNUP_SUCCESS),
     tap((user) => {
-      this.storage.set('userData', JSON.stringify(user.payload.data.data));
+      this.storage.set('userData', JSON.stringify(user.payload));
       this.router.navigateByUrl('/dashboard');
     })
   );
@@ -93,26 +93,26 @@ export class AuthEffects {
   );
 
   @Effect()
-  public SaveToken: Observable<Action> = this.actions.pipe(
+  SaveToken = this.actions.pipe(
     ofType(AuthActionTypes.SAVETOKEN),
-    map((action: SaveToken) => action.payload),
+    map((action: SaveToken) => {}),
     switchMap(payload => {
-      return this.authService.saveToken(payload).pipe(
-        map((user) => {
-          return new SaveTokenSuccess(user);
-        }), catchError((error) => of(new SaveTokenFail({ error }))));
+      return this.authService.saveToken().
+        then((user) => {
+          return new SaveTokenSuccess(JSON.parse(user));
+        },(error) => of(new SaveTokenFail({ error })));
     })
     );
 
   @Effect({ dispatch: false })
-  public SaveTokenSuccess: Observable<any> = this.actions.pipe(
+  SaveTokenSuccess: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.SAVETOKEN_SUCCESS),
     tap((user) => {
     })
   );
 
   @Effect({ dispatch: false })
-  public SaveTokenFail: Observable<any> = this.actions.pipe(
+  SaveTokenFail: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.SAVETOKEN_FAIL),
     tap(() => {
     })

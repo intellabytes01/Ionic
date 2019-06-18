@@ -13,13 +13,15 @@ import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { Action } from '@ngrx/store';
 import { FeedbackService } from '../feedback.service';
+import { AlertService } from '@app/shared/services/alert.service';
 
 @Injectable()
 export class FeedbackEffects {
   constructor(
     private actions: Actions,
-    private feedbackService: FeedbackService
-  ) {}  
+    private feedbackService: FeedbackService,
+    private alert: AlertService
+  ) {}
 
   // Feedback Types
 
@@ -30,7 +32,6 @@ export class FeedbackEffects {
     switchMap(() => {
       return this.feedbackService.getFeedbackTypes().pipe(
         map(data => {
-          console.log(data)
           return new FeedbackTypesSuccess({ feedbackTypes: data['data'] });
         }),
         catchError(error => of(new FeedbackTypesFailure({ error })))
@@ -53,12 +54,11 @@ export class FeedbackEffects {
 
   @Effect()
   FeedbackSubmit: Observable<Action> = this.actions.pipe(
-    ofType(FeedbackAction.FEEDBACKTYPES),
+    ofType(FeedbackAction.FEEDBACKSUBMIT),
     map((action: FeedbackSubmit) => action.payload),
     switchMap((payload) => {
       return this.feedbackService.submitFeedback(payload).pipe(
         map(data => {
-          console.log(data)
           return new FeedbackSubmitSuccess({ feedbackSubmit: data['data'] });
         }),
         catchError(error => of(new FeedbackSubmitFailure({ error })))
@@ -69,11 +69,16 @@ export class FeedbackEffects {
   @Effect({ dispatch: false })
   FeedbackSubmitSuccess: Observable<any> = this.actions.pipe(
     ofType(FeedbackAction.FEEDBACKSUBMIT_SUCCESS),
-    tap(() => {})
+    tap(() => {
+      this.alert.presentToast('Feedback submitted successfully.');
+    })
   );
 
   @Effect({ dispatch: false })
   FeedbackSubmitFailure: Observable<any> = this.actions.pipe(
-    ofType(FeedbackAction.FEEDBACKSUBMIT_FAILURE)
+    ofType(FeedbackAction.FEEDBACKSUBMIT_FAILURE),
+    tap(() => {
+      this.alert.presentToast('Something went wrong, Please try again later.');
+    })
   );
 }

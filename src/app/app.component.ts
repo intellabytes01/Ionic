@@ -82,9 +82,8 @@ export class AppComponent implements OnInit, OnDestroy {
     //   this.statusBar.styleDefault();
     //   this.splashScreen.hide();
     // });
-    this.storage.get('userData').then((data)=>{
-      //this.store.dispatch(new SaveToken(JSON.parse(data)));
-    })
+
+    this.store.dispatch(new SaveToken());
   }
 
   ngOnDestroy() {
