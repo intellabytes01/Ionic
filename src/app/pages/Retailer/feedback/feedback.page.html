@@ -13,15 +13,15 @@
   <form [formGroup]="feedbackForm">
     <ion-row>
       <ion-col>
-        <ion-label *ngIf="!feedbackForm.value.feedbackType.Fid" class="ionic-selectable-label">Select feedback type</ion-label>
-        <ionic-selectable
-          formControlName="feedbackType"
-          [items]="feedbackTypes"
-          itemValueField="Fid"
-          itemTextField="Types"
+        <pr-select
+          [placeHolder]="'FEEDBACKTYPE_PLACEHOLDER' | translate"
+          [ctrName]="'feedbackType'"
+          [items]="feedbackTypes$ | async"
+          [id]="'Fid'"
+          [name]="'Types'"
           [canSearch]="true"
-        >
-        </ionic-selectable>
+          (valueChange)="updateFeedbackTypes($event)"
+        ></pr-select>
       </ion-col>
     </ion-row>
 
@@ -42,15 +42,15 @@
 
     <ion-row>
       <ion-col>
-        <ion-label *ngIf="!feedbackForm.value.feedbackTo.Fid" class="ionic-selectable-label">Select type</ion-label>
-        <ionic-selectable
-          formControlName="feedbackTo"
+        <pr-select
+          [placeHolder]="'FEEDBACKTO_PLACEHOLDER' | translate"
+          [ctrName]="'feedbackTo'"
           [items]="feedbackTos"
-          itemValueField="Fid"
-          itemTextField="Types"
+          [id]="'Fid'"
+          [name]="'Types'"
           [canSearch]="true"
-        >
-        </ionic-selectable>
+          (valueChange)="updateFeedbackTo($event)"
+        ></pr-select>
       </ion-col>
     </ion-row>
 
@@ -69,7 +69,19 @@
       </ng-container>
     </div>
 
-    <pr-select-store></pr-select-store>
+    <ion-row>
+      <ion-col>
+        <pr-select
+          [placeHolder]="'FEEDBACKSTORE_PLACEHOLDER' | translate"
+          [ctrName]="'toStoreId'"
+          [items]="toStoreIds"
+          [id]="'Fid'"
+          [name]="'Types'"
+          [canSearch]="true"
+          (valueChange)="updateStore($event)"
+        ></pr-select>
+      </ion-col>
+    </ion-row>
 
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.toStoreId">
@@ -92,7 +104,7 @@
           formControlName="message"
           rows="6"
           cols="12"
-          placeholder="Type your message"
+          [placeholder]="'MESSAGE_PLACEHOLDER' | translate"
         ></ion-textarea>
       </ion-col>
     </ion-row>
@@ -124,5 +136,3 @@
     </ion-row>
   </form>
 </ion-content>
-
-<app-footer></app-footer>

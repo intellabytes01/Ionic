@@ -18,7 +18,6 @@ import { LogIn } from '@app/core/authentication/actions/auth.actions';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   version: string = environment.version;
-  getAuthState$: Observable<any>;
   passwordType = 'password';
   passwordIcon = 'eye-off';
   loginForm: FormGroup;
@@ -66,16 +65,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     private store: Store<AuthState>,
     public menuCtrl: MenuController,
   ) {
-    this.getAuthState$ = this.store.select(selectAuthState);
     this.createForm();
   }
 
   ngOnInit() {
-    this.getAuthState$.pipe(untilDestroyed(this)).subscribe((state) => {
-      if (state && state.isAuthenticated && state.userData.data.data.token) {
-        this.router.navigate(['/']);
-      }
-    });
   }
 
   ngOnDestroy() {}

@@ -1,7 +1,6 @@
 import { User } from '../models/user';
 import { AuthActionTypes, All } from '../actions/auth.actions';
 
-
 export interface State {
   // is a user authenticated?
   isAuthenticated: boolean;
@@ -59,6 +58,22 @@ export function authReducer(state = initialState, action: All): State {
     case AuthActionTypes.LOGOUT: {
       return initialState;
     }
+
+    case AuthActionTypes.SAVETOKEN_SUCCESS: {
+      return {
+        ...state,
+        isAuthenticated: true,
+        userData: action.payload,
+        errorMessage: null
+      };
+    }
+    case AuthActionTypes.SAVETOKEN_FAIL: {
+      return {
+        ...state,
+        errorMessage: 'Error'
+      };
+    }
+
     default: {
       return state;
     }

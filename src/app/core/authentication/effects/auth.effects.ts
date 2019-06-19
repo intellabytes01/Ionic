@@ -5,15 +5,8 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Storage } from '@ionic/storage';
-import {
-  AuthActionTypes,
-  LogIn,
-  LogInSuccess,
-  LogInFailure,
-  SignUp,
-  SignUpSuccess,
-  SignUpFailure
-} from '../actions/auth.actions';
+// tslint:disable-next-line: max-line-length
+import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure, SaveToken, SaveTokenSuccess, SaveTokenFail } from '../actions/auth.actions';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { AlertService } from '@app/shared/services/alert.service';
 
@@ -36,7 +29,7 @@ export class AuthEffects {
     switchMap(payload => {
       return this.authService.login(payload.cred).pipe(
         map((user) => {
-          return new LogInSuccess(user);
+          return new LogInSuccess(user['data']['data']);
         }), catchError((error) => of(new LogInFailure({ error }))));
     })
     );
@@ -46,7 +39,7 @@ export class AuthEffects {
   LogInSuccess: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.LOGIN_SUCCESS),
     tap((user) => {
-      this.storage.set('userData', JSON.stringify(user.payload.data.data));
+      this.storage.set('userData', JSON.stringify(user.payload));
       this.router.navigateByUrl('/dashboard');
     })
   );
@@ -66,8 +59,8 @@ export class AuthEffects {
     switchMap(payload => {
       return this.authService.signUp(payload.cred).pipe(
         map((user) => {
-          if(user.data['success']) {
-          return new SignUpSuccess(user);
+          if (user.data['success']) {
+          return new SignUpSuccess(user['data']['data']);
           } else {
             return new SignUpFailure(user);
           }
@@ -79,7 +72,7 @@ export class AuthEffects {
   SignUpSuccess: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.SIGNUP_SUCCESS),
     tap((user) => {
-      this.storage.set('userData', JSON.stringify(user.payload.data.data));
+      this.storage.set('userData', JSON.stringify(user.payload));
       this.router.navigateByUrl('/dashboard');
     })
   );
@@ -100,6 +93,27 @@ export class AuthEffects {
     })
   );
 
+  @Effect()
+  SaveToken = this.actions.pipe(
+    ofType(AuthActionTypes.SAVETOKEN),
+    map((action: SaveToken) => {}),
+    switchMap(payload => {
+      return this.authService.saveToken().
+        then((user) => {
+          return new SaveTokenSuccess(JSON.parse(user));
+        }, (error) => of(new SaveTokenFail({ error })));
+    })
+    );
+
+  @Effect({ dispatch: false })
+  SaveTokenSuccess: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.SAVETOKEN_SUCCESS)
+  );
+
+  @Effect({ dispatch: false })
+  SaveTokenFail: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.SAVETOKEN_FAIL)
+  );
   @Effect({ dispatch: false })
   public PreviousUrl: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.PREVIOUS_URL),

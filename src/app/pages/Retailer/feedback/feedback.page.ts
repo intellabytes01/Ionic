@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
   Validators,
@@ -6,61 +6,36 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
+import { FeedbackState } from './store/feedback.state';
+import { feedbackTypesData } from './store/feedback.reducers';
+import { FeedbackTypes, FeedbackSubmit } from './store/feedback.actions';
+import * as fromModel from './feedback-data.json';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.page.html',
   styleUrls: ['./feedback.page.scss']
 })
-export class FeedbackPage implements OnInit, OnDestroy {
+export class FeedbackPage implements OnInit {
   public feedbackForm: FormGroup;
   feedbackTypes: any[] = [];
-  feedbackTos: any[] = [
-    {
-      Fid: 1,
-      Types: 'Pharmarack'
-    },
-    {
-      Fid: 2,
-      Types: 'Distributor'
-    },
-    {
-      Fid: 3,
-      Types: 'Both (Pharmarack / Distributor)'
-    }
-  ];
-  toStoreIds: any[] = [
-    {
-      Fid: 1,
-      Types: 'Demo Store 1'
-    },
-    {
-      Fid: 2,
-      Types: 'Demo Store 2'
-    },
-    {
-      Fid: 3,
-      Types: 'Demo Store 3'
-    }
-  ];
+  feedbackTos: any[] = fromModel.feedbackTos;
+  toStoreIds: any[] = fromModel.toStoreIds;
   feedbacktypeStore: any;
 // tslint:disable-next-line: variable-name
-  validation_messages = {
-    message: [{ type: 'required', message: 'Value is required for Remarks.' }],
-    feedbackType: [{ type: 'validValue', message: 'It\'s required.' }],
-    feedbackTo: [{ type: 'validValue', message: 'It\'s required.' }],
-    toStoreId: [{ type: 'validValue', message: 'It\'s required.' }]
-  };
+  validation_messages = this.translateService.instant('VALIDATIONS.FEEDBACK');
+  feedbackTypes$: any;
+
   constructor(
     private router: Router,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    private store: Store<FeedbackState>,
+    private translateService: TranslateService
   ) {
-    // this.feedbacktypeStore = this.store
-    //   .select(getAllFeedbackTypes)
-    //   .subscribe((state: any) => {
-    //     this.feedbackTypes = state;
-    //   });
+    this.getFeedbackTypes();
+    this.feedbackTypes$ = this.store.pipe(select(feedbackTypesData));
   }
 
   ngOnInit() {
@@ -68,27 +43,26 @@ export class FeedbackPage implements OnInit, OnDestroy {
       message: ['', Validators.compose([Validators.required])],
       feedbackType: [
         {
-          typeId: null,
-          typeName: ''
+          Fid: null,
+          Types: ''
         },
         Validators.compose([this.validateType])
       ],
       feedbackTo: [
         {
-          typeId: '',
-          typeName: ''
+          Fid: null,
+          Types: ''
         },
         Validators.compose([this.validateType])
       ],
       toStoreId: [
         {
-          typeId: null,
-          typeName: ''
+          Fid: null,
+          Types: ''
         },
         Validators.compose([this.validateType])
       ]
     });
-    // this.store.dispatch(new fromfeedback.GetAllFeedbackTypes());
   }
 
   sendFeedback() {
@@ -96,6 +70,14 @@ export class FeedbackPage implements OnInit, OnDestroy {
     if (this.feedbackForm.invalid) {
       return;
     }
+
+    const payload = {
+      subject: this.feedbackForm.value.feedbackType,
+      message: this.feedbackForm.value.message,
+      feedbackTo: this.feedbackForm.value.feedbackTo,
+      toStoreId: this.feedbackForm.value.toStoreId
+    };
+    this.store.dispatch(new FeedbackSubmit(payload));
   }
 
   // Custom validation for feedback type
@@ -107,7 +89,22 @@ export class FeedbackPage implements OnInit, OnDestroy {
     return null;
   }
 
-  ngOnDestroy() {
-    if (this.feedbacktypeStore) { this.feedbacktypeStore.unsubscribe(); }
+  updateFeedbackTypes(value) {
+    this.feedbackForm.value.feedbackType.Fid = value.Fid;
   }
+
+  updateFeedbackTo(value) {
+    this.feedbackForm.value.feedbackTo.Fid = value.Fid;
+  }
+
+  updateStore(value) {
+    this.feedbackForm.value.toStoreId.Fid = value.Fid;
+  }
+
+  getFeedbackTypes() {
+    this.store.dispatch(new FeedbackTypes());
+  }
+
+// tslint:disable-next-line: use-life-cycle-interface
+  ngOnDestroy() {}
 }

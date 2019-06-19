@@ -113,6 +113,7 @@ ion-footer {
 
 ion-modal {
   --height: 26rem !important;
+  --width: 95% !important;
 }
 
 .ionic-selectable-value-item {
@@ -209,17 +210,9 @@ ion-list{
   margin: 0.7rem 0rem 0rem 0.7rem;
 }
 
-.ionic-selectable-border{
-  border: 1px solid grey;
-}
-
 .dashboard-icon {
   width: 6rem !important;
   margin: 0 auto;
-}
-
-.sc-ion-modal-md-h {
-  --width: 95% !important;
 }
 
 .message{
@@ -228,4 +221,12 @@ ion-list{
 
 .title{
   font-size: 1.1rem;
+}
+
+ionic-selectable {
+  border: 1px solid grey;
+}
+
+ion-back-button{
+  color: white !important;
 }

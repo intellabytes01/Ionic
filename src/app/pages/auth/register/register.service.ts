@@ -34,9 +34,6 @@ export class RegisterService {
       map((data: any) => ({
         data
       })),
-      tap(data => {
-        console.log(data);
-      }),
       catchError(error => this.errorHandler(error))
     );
   }
@@ -50,9 +47,6 @@ export class RegisterService {
       map((data: any) => ({
         data
       })),
-      tap(data => {
-        console.log(data);
-      }),
       catchError(error => this.errorHandler(error))
     );
   }

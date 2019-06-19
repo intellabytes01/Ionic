@@ -35,15 +35,16 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
     this.pages = fromModel.data;
     this.store.pipe(select(selectAuthState)).subscribe(data => {
+      console.log(data);
       if (!data['userData']) {
         this.storage.get('userData').then((value: any) => {
-          if(value){
+          if (value) {
             this.userData = JSON.parse(value)['userData'];
             this.setDisable();
-          }          
+          }
         });
       } else {
-        this.userData = data['userData']['data']['data']['userData'];
+        this.userData = data['userData']['userData'];
         this.setDisable();
       }
     }),
@@ -80,7 +81,7 @@ export class DashboardPage implements OnInit {
       this.userData['retailerSummary']['retailerStoreParties']
     ) {
       this.pages.forEach((element, index) => {
-        if (element.name == 'DASHBOARD.NEWORDER') {
+        if (element.name === 'DASHBOARD.NEWORDER') {
           element.disable = true;
         }
       });

@@ -3,11 +3,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { environment } from '@env/environment';
 import { merge } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
-import { Logger, I18nService, untilDestroyed } from './core';
+import { Logger, I18nService, untilDestroyed, AuthenticationService } from './core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { NgxPermissionsService } from 'ngx-permissions';
+import { Storage } from '@ionic/storage';
+import { SaveToken } from './core/authentication/actions/auth.actions';
+import { AuthState } from './core/authentication/auth.states';
+import { Store } from '@ngrx/store';
 
 const log = new Logger('App');
 
@@ -24,7 +28,10 @@ export class AppComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private translateService: TranslateService,
     private i18nService: I18nService,
-    private permissionsService: NgxPermissionsService
+    private permissionsService: NgxPermissionsService,
+    private storage: Storage,
+    private authService: AuthenticationService,
+    private store: Store<AuthState>
   ) {
     this.initializeApp();
   }
@@ -75,6 +82,8 @@ export class AppComponent implements OnInit, OnDestroy {
     //   this.statusBar.styleDefault();
     //   this.splashScreen.hide();
     // });
+
+    this.store.dispatch(new SaveToken());
   }
 
   ngOnDestroy() {

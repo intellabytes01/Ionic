@@ -72,7 +72,7 @@
     "MALL": "Pharma Mall",
     "DRAFTORDER": "Draft Order",
     "NEWSALESRETURN": "New Sales Return",
-    "VIEWSALESRETURN": "View Sales Return",    
+    "VIEWSALESRETURN": "View Sales Return",
     "ADDDISTRIBUTOR": "Add Distributor",
     "PRODUCTSEARCH": "Product Search",
     "SCHEMES": "Schemes",
@@ -90,7 +90,15 @@
   "VALIDATIONS": {
     "MOBILEREQUIRED": "Mobile number is required.",
     "MOBILEPATTERN": "Mobile number must be at least 10 characters long.",
-    "OTPREQUIRED": "Otp is required."
+    "OTPREQUIRED": "Otp is required.",
+    "FEEDBACK": {
+      "message": [
+        { "type": "required", "message": "Value is required for Remarks." }
+      ],
+      "feedbackType": [{ "type": "validValue", "message": "It's required." }],
+      "feedbackTo": [{ "type": "validValue", "message": "It's required." }],
+      "toStoreId": [{ "type": "validValue", "message": "It's required." }]
+    }
   },
 
   "MOBILE": "Mobile Number",
@@ -108,5 +116,10 @@
     "CURRENT_PASSWORD":"Current Password",
     "NEW_PASSWORD": "New Password",
     "CONFIRM_PASSWORD": "Confirm Password"
-  }
+  },
+
+  "FEEDBACKTYPE_PLACEHOLDER": "Select feedback type",
+  "FEEDBACKTO_PLACEHOLDER": "Select type",
+  "FEEDBACKSTORE_PLACEHOLDER": "Select Store",
+  "MESSAGE_PLACEHOLDER": "Type your message"
 }

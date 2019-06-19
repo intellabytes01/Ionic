@@ -8,6 +8,7 @@ import * as fromRoot from '../../app.reducer';
 import * as UI from '../../shared/ui.actions';
 import { Store } from '@ngrx/store';
 import { Logger } from '../logger.service';
+import { Storage } from '@ionic/storage';
 
 const log = new Logger('AuthenticationGuard');
 
@@ -26,7 +27,8 @@ export interface SignupContext {
 
 const routes = {
   login: (c: LoginContext) => `/login`,
-  signup: (c: SignupContext) => '/register/retailer'
+  signup: (c: SignupContext) => '/register/retailer',
+  savetoken: ''
 };
 
 /**
@@ -37,7 +39,8 @@ export class AuthenticationService {
   constructor(
     private credentialsService: CredentialsService,
     private httpClient: HttpClient,
-    private store: Store<fromRoot.State>
+    private store: Store<fromRoot.State>,
+    private storage: Storage
   ) {}
 
   /**
@@ -81,6 +84,13 @@ export class AuthenticationService {
           catchError(error => this.errorHandler(error))
         )
     );
+  }
+
+
+  // Save Token
+
+  saveToken() {
+    return this.storage.get('userData');
   }
 
   /**

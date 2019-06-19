@@ -39,8 +39,7 @@ export class RegisterEffects {
 
   @Effect({ dispatch: false })
   BusinessTypesSuccess: Observable<any> = this.actions.pipe(
-    ofType(RegisterActionTypes.BUSINESSTYPES_SUCCESS),
-    tap(() => {})
+    ofType(RegisterActionTypes.BUSINESSTYPES_SUCCESS)
   );
 
   @Effect({ dispatch: false })
@@ -66,8 +65,7 @@ export class RegisterEffects {
 
   @Effect({ dispatch: false })
   RegionsSuccess: Observable<any> = this.actions.pipe(
-    ofType(RegisterActionTypes.REGIONS_SUCCESS),
-    tap(() => {})
+    ofType(RegisterActionTypes.REGIONS_SUCCESS)
   );
 
   @Effect({ dispatch: false })

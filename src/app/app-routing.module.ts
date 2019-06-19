@@ -59,8 +59,19 @@ const routes: Routes = [
     path: 'add-distributor',
     loadChildren: './pages/Retailer/add-distributor/add-distributor.module#AddDistributorPageModule',
     data: {title: 'Add Distributor', preload: false, delay: true}
+  },
+  {
+    path: 'feedback',
+    loadChildren: './pages/Retailer/feedback/feedback.module#FeedbackPageModule',
+    canActivate: [AuthenticationGuard],
+    data: {title: 'Feedback', preload: false, delay: true}
+  },
+  {
+    path: 'profile',
+    loadChildren: './pages/Retailer/profile/profile.module#ProfilePageModule',
+    canActivate: [AuthenticationGuard],
+    data: {title: 'My Profile', preload: false, delay: true}
   }
-
 
 ];
 

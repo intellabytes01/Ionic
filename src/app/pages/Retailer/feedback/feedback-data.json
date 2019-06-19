@@ -1,0 +1,30 @@
+{
+  "feedbackTos": [
+    {
+      "Fid": "1",
+      "Types": "Pharmarack"
+    },
+    {
+      "Fid": "2",
+      "Types": "Distributor"
+    },
+    {
+      "Fid": "3",
+      "Types": "Both (Pharmarack / Distributor)"
+    }
+  ],
+  "toStoreIds": [
+    {
+      "Fid": 1,
+      "Types": "Demo Store 1"
+    },
+    {
+      "Fid": 2,
+      "Types": "Demo Store 2"
+    },
+    {
+      "Fid": 3,
+      "Types": "Demo Store 3"
+    }
+  ]
+}
