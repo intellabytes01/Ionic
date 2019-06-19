@@ -62,14 +62,15 @@ const routes: Routes = [
   {
     path: 'feedback',
     loadChildren: './pages/Retailer/feedback/feedback.module#FeedbackPageModule',
-    canActivate: [AuthenticationGuard]
+    canActivate: [AuthenticationGuard],
+    data: {title: 'Feedback', preload: false, delay: true}
   },
   {
     path: 'profile',
     loadChildren: './pages/Retailer/profile/profile.module#ProfilePageModule',
-    canActivate: [AuthenticationGuard]
+    canActivate: [AuthenticationGuard],
+    data: {title: 'My Profile', preload: false, delay: true}
   }
-
 
 ];
 

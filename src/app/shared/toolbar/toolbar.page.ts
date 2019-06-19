@@ -13,7 +13,9 @@ export class ToolbarPage implements OnInit {
   showHeader = false;
   title$: Observable<string>;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    console.log(this.router.url)
+  }
 
   ngOnInit() {
     // Display page title when page navigate
