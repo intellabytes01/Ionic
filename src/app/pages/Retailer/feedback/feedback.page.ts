@@ -10,6 +10,8 @@ import { Store, select } from '@ngrx/store';
 import { FeedbackState } from './store/feedback.state';
 import { feedbackTypesData } from './store/feedback.reducers';
 import { FeedbackTypes, FeedbackSubmit } from './store/feedback.actions';
+import * as fromModel from './feedback-data.json';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-feedback',
@@ -19,47 +21,17 @@ import { FeedbackTypes, FeedbackSubmit } from './store/feedback.actions';
 export class FeedbackPage implements OnInit {
   public feedbackForm: FormGroup;
   feedbackTypes: any[] = [];
-  feedbackTos: any[] = [
-    {
-      Fid: '1',
-      Types: 'Pharmarack'
-    },
-    {
-      Fid: '2',
-      Types: 'Distributor'
-    },
-    {
-      Fid: '3',
-      Types: 'Both (Pharmarack / Distributor)'
-    }
-  ];
-  toStoreIds: any[] = [
-    {
-      Fid: 1,
-      Types: 'Demo Store 1'
-    },
-    {
-      Fid: 2,
-      Types: 'Demo Store 2'
-    },
-    {
-      Fid: 3,
-      Types: 'Demo Store 3'
-    }
-  ];
+  feedbackTos: any[] = fromModel.feedbackTos;
+  toStoreIds: any[] = fromModel.toStoreIds;
   feedbacktypeStore: any;
-  validation_messages = {
-    message: [{ type: 'required', message: 'Value is required for Remarks.' }],
-    feedbackType: [{ type: 'validValue', message: 'It\'s required.' }],
-    feedbackTo: [{ type: 'validValue', message: 'It\'s required.' }],
-    toStoreId: [{ type: 'validValue', message: 'It\'s required.' }]
-  };
+  validation_messages = this.translateService.instant('VALIDATIONS.FEEDBACK');
   feedbackTypes$: any;
 
   constructor(
     private router: Router,
     public formBuilder: FormBuilder,
-    private store: Store<FeedbackState>
+    private store: Store<FeedbackState>,
+    private translateService: TranslateService
   ) {
     this.getFeedbackTypes();
     this.feedbackTypes$ = this.store.pipe(select(feedbackTypesData));
@@ -117,15 +89,15 @@ export class FeedbackPage implements OnInit {
   }
 
   updateFeedbackTypes(value) {
-    this.feedbackForm.value.feedbackType.typeId = value.typeId;
+    this.feedbackForm.value.feedbackType.Fid = value.Fid;
   }
 
   updateFeedbackTo(value) {
-    this.feedbackForm.value.feedbackTo.typeId = value.typeId;
+    this.feedbackForm.value.feedbackTo.Fid = value.Fid;
   }
 
   updateStore(value) {
-    this.feedbackForm.value.toStoreId.typeId = value.typeId;
+    this.feedbackForm.value.toStoreId.Fid = value.Fid;
   }
 
   getFeedbackTypes() {

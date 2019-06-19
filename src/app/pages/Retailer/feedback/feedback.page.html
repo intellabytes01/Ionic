@@ -16,7 +16,7 @@
     <ion-row>
       <ion-col>
         <pr-select
-          [placeHolder]="'Select feedback type'"
+          [placeHolder]="'FEEDBACKTYPE_PLACEHOLDER' | translate"
           [ctrName]="'feedbackType'"
           [items]="feedbackTypes$ | async"
           [id]="'Fid'"
@@ -45,7 +45,7 @@
     <ion-row>
       <ion-col>
         <pr-select
-          [placeHolder]="'Select type'"
+          [placeHolder]="'FEEDBACKTO_PLACEHOLDER' | translate"
           [ctrName]="'feedbackTo'"
           [items]="feedbackTos"
           [id]="'Fid'"
@@ -74,11 +74,11 @@
     <ion-row>
       <ion-col>
         <pr-select
-          [placeHolder]="'Select Store'"
-          [ctrName]="'storeSelected'"
-          [items]="stores"
-          [id]="'storeId'"
-          [name]="'storeName'"
+          [placeHolder]="'FEEDBACKSTORE_PLACEHOLDER' | translate"
+          [ctrName]="'toStoreId'"
+          [items]="toStoreIds"
+          [id]="'Fid'"
+          [name]="'Types'"
           [canSearch]="true"
           (valueChange)="updateStore($event)"
         ></pr-select>
@@ -106,7 +106,7 @@
           formControlName="message"
           rows="6"
           cols="12"
-          placeholder="Type your message"
+          [placeholder]="'MESSAGE_PLACEHOLDER' | translate"
         ></ion-textarea>
       </ion-col>
     </ion-row>

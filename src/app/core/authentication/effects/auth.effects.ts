@@ -58,7 +58,7 @@ export class AuthEffects {
     switchMap(payload => {
       return this.authService.signUp(payload.cred).pipe(
         map((user) => {
-          if(user.data['success']) {
+          if (user.data['success']) {
           return new SignUpSuccess(user['data']['data']);
           } else {
             return new SignUpFailure(user);
@@ -100,7 +100,7 @@ export class AuthEffects {
       return this.authService.saveToken().
         then((user) => {
           return new SaveTokenSuccess(JSON.parse(user));
-        },(error) => of(new SaveTokenFail({ error })));
+        }, (error) => of(new SaveTokenFail({ error })));
     })
     );
 

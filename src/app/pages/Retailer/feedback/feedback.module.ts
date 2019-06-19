@@ -13,6 +13,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { FeedbackEffects } from './store/feedback.effects';
 import * as fromfeedbackReducer from './store/feedback.reducers';
 import { FeedbackService } from './feedback.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -31,7 +32,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     SharedModule,
     StoreModule.forFeature('feedback', fromfeedbackReducer.feedbackReducer),
-    EffectsModule.forRoot([FeedbackEffects])
+    EffectsModule.forRoot([FeedbackEffects]),
+    TranslateModule
   ],
   declarations: [FeedbackPage],
   providers: [FeedbackService]

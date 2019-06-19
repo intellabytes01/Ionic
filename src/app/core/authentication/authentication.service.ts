@@ -89,7 +89,7 @@ export class AuthenticationService {
 
   // Save Token
 
-  saveToken(){
+  saveToken() {
     return this.storage.get('userData');
   }
 

@@ -17,7 +17,7 @@ export function feedbackReducer(
   state = initialState,
   action: All
 ): FeedbackState {
-  switch (action.type) {    
+  switch (action.type) {
 
     // Feedback Types
 
