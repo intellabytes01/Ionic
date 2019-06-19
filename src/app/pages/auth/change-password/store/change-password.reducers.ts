@@ -23,7 +23,7 @@ export function changePasswordReducer(
     case ChangePasswordTypes.CHANGEPASSWORD_SUCCESS: {
       return {
         ...state,
-        changePasswordObject: action.payload.changePassword.data,
+        changePasswordObject: action.payload,
         errorMessage: null
       };
     }

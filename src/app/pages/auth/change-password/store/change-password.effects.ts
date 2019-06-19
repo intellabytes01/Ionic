@@ -19,7 +19,7 @@ export class ChangePasswordEffects {
     ofType(ChangePasswordTypes.CHANGEPASSWORD),
     map((action: ChangePassword) => action.payload),
     switchMap(payload => {
-      return this.changePassword.changePassword(payload).pipe(
+      return this.changePassword.changePassword(payload.cred).pipe(
         map(data => {
           return new ChangePasswordSuccess({ sendChangePassword: data['data'] });
         }),

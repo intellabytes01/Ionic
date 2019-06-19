@@ -28,7 +28,7 @@ export class ChangePasswordService {
    */
   changePassword(context: ChangePasswordContext): Observable<any> {
     return this.httpClient
-      .post(routes.cPassword(context), JSON.stringify(context))
+      .patch(routes.cPassword(context), JSON.stringify(context))
       .pipe(
         map((data: any) => ({
           data

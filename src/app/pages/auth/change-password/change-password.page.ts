@@ -54,9 +54,15 @@ export class ChangePasswordPage implements OnInit {
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
 
-  async changePassword() {
+  async changePasswordClick() {
+    // const credentials = {
+    //   oldPassword: this.changePasswordForm.get('oldPassword'),
+    //   newPassword: this.changePasswordForm.get('newPassword')
+    // }
     const payload = {
-      cred: this.changePasswordForm.value
+      cred: {
+        oldPassword: this.changePasswordForm.get('oldPassword').value,
+        newPassword: this.changePasswordForm.get('newPassword').value}
     };
     this.store.dispatch(new ChangePassword(payload));
   }

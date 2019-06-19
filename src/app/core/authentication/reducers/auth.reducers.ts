@@ -32,7 +32,7 @@ export function authReducer(state = initialState, action: All): State {
     case AuthActionTypes.LOGIN_FAILURE: {
       return {
         ...state,
-        errorMessage: action.payload.data.message
+        errorMessage: action.payload.error.error.message
       };
     }
     case AuthActionTypes.SIGNUP_SUCCESS: {
