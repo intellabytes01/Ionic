@@ -67,9 +67,9 @@ export class DashboardPage implements OnInit {
             element.disable = true;
             break;
 
-          case 'DASHBOARD.ADDDISTRIBUTOR':
-            element.disable = true;
-            break;
+          // case 'DASHBOARD.ADDDISTRIBUTOR':
+          //   element.disable = true;
+          //   break;
 
           default:
             break;

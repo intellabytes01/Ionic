@@ -1,9 +1,13 @@
 <ion-tabs>
   <ion-tab-bar slot="top">
-    <ion-tab-button *ngFor="let tab of tabInfo" tab="tab/{{tab}}">
-      <!-- <ion-icon name="calendar"></ion-icon> -->
-      <ion-label translate>{{tab | uppercase}}</ion-label>
-      <!-- <ion-badge>6</ion-badge> -->
+    <ion-tab-button (click)="setActiveTab(tab)"
+      [ngClass]="{
+        'tab-selected': activeTab == tab
+      }"
+      *ngFor="let tab of tabInfo"
+      tab="tab/{{ tab }}"
+    >
+      <ion-label translate>{{ tab | uppercase }}</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
