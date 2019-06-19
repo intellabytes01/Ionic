@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Storage } from '@ionic/storage';
+// tslint:disable-next-line: max-line-length
 import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure, SaveToken, SaveTokenSuccess, SaveTokenFail } from '../actions/auth.actions';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { AlertService } from '@app/shared/services/alert.service';

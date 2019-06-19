@@ -24,6 +24,7 @@ export class FeedbackPage implements OnInit {
   feedbackTos: any[] = fromModel.feedbackTos;
   toStoreIds: any[] = fromModel.toStoreIds;
   feedbacktypeStore: any;
+// tslint:disable-next-line: variable-name
   validation_messages = this.translateService.instant('VALIDATIONS.FEEDBACK');
   feedbackTypes$: any;
 
@@ -104,5 +105,6 @@ export class FeedbackPage implements OnInit {
     this.store.dispatch(new FeedbackTypes());
   }
 
+// tslint:disable-next-line: use-life-cycle-interface
   ngOnDestroy() {}
 }

@@ -81,7 +81,7 @@ export class DashboardPage implements OnInit {
       this.userData['retailerSummary']['retailerStoreParties']
     ) {
       this.pages.forEach((element, index) => {
-        if (element.name == 'DASHBOARD.NEWORDER') {
+        if (element.name === 'DASHBOARD.NEWORDER') {
           element.disable = true;
         }
       });

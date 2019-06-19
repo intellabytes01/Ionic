@@ -14,7 +14,6 @@ export class ToolbarPage implements OnInit {
   title$: Observable<string>;
 
   constructor(private router: Router) {
-    console.log(this.router.url)
   }
 
   ngOnInit() {
