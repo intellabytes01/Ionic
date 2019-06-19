@@ -5,7 +5,15 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Storage } from '@ionic/storage';
-import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure } from '../actions/auth.actions';
+import {
+  AuthActionTypes,
+  LogIn,
+  LogInSuccess,
+  LogInFailure,
+  SignUp,
+  SignUpSuccess,
+  SignUpFailure
+} from '../actions/auth.actions';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { AlertService } from '@app/shared/services/alert.service';
 
@@ -89,6 +97,16 @@ export class AuthEffects {
     ofType(AuthActionTypes.LOGOUT),
     tap((user) => {
       this.storage.clear();
+    })
+  );
+
+  @Effect({ dispatch: false })
+  public PreviousUrl: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.PREVIOUS_URL),
+    tap(url => {
+      // console.log(url);
+      // this.storage.remove('token');
+      // localStorage.removeItem('token');
     })
   );
 

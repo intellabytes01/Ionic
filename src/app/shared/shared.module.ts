@@ -1,5 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { CommonModule, SlicePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
 import { LoaderComponent } from './loader/loader.component';
@@ -17,11 +17,12 @@ import { CardComponent } from './card/card.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { UtilityService } from './services/utility.service';
 import { IonicSelectableModule } from 'ionic-selectable';
-import { SelectStorePageModule } from './select-store/select-store.module';
 import { SelectComponent } from './select/select.component';
 import { FormsModule } from '@angular/forms';
 import { SlidePage } from './slide/slide.page';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { ShowHideInputDirective } from './directives/show-hide-input.directive';
+import { EqualValidatorDirective } from './directives/equal-validator.directive';
 
 @NgModule({
   imports: [IonicModule, CommonModule, RouterModule, TranslateModule, IonicSelectableModule, FormsModule,
@@ -38,7 +39,9 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     SubmitButtonComponent,
     CardComponent,
     SelectComponent,
-    SlidePage
+    SlidePage,
+    ShowHideInputDirective,
+    EqualValidatorDirective
   ],
   exports: [
     LoaderComponent,
@@ -52,7 +55,9 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     SubmitButtonComponent,
     CardComponent,
     SelectComponent,
-    SlidePage
+    SlidePage,
+    ShowHideInputDirective,
+    EqualValidatorDirective
   ],
   providers: [AlertService, UtilityService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

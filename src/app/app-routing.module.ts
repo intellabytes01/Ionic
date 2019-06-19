@@ -26,11 +26,12 @@ const routes: Routes = [
       './pages/auth/forgot-password/forgot-password.module#ForgotPasswordPageModule',
       data: {title: '', preload: false, delay: true}
   },
-  // {
-  //   path: 'home',
-  //   loadChildren: './pages/home/home.module#HomePageModule',
-  //   data: {title: 'Home', preload: true, delay: false}
-  // },
+  {
+    path: 'change-password',
+    loadChildren:
+      './pages/auth/change-password/change-password.module#ChangePasswordPageModule',
+      data: {title: 'Change Password', preload: false, delay: true}
+  },
   {
     path: 'about',
     loadChildren: './pages/about/about.module#AboutModule',
@@ -58,16 +59,6 @@ const routes: Routes = [
     path: 'add-distributor',
     loadChildren: './pages/Retailer/add-distributor/add-distributor.module#AddDistributorPageModule',
     data: {title: 'Add Distributor', preload: false, delay: true}
-  },
-  {
-    path: 'feedback',
-    loadChildren: './pages/Retailer/feedback/feedback.module#FeedbackPageModule',
-    canActivate: [AuthenticationGuard]
-  },
-  {
-    path: 'profile',
-    loadChildren: './pages/Retailer/profile/profile.module#ProfilePageModule',
-    canActivate: [AuthenticationGuard]
   }
 
 

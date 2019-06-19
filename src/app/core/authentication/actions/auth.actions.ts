@@ -9,7 +9,8 @@ export enum AuthActionTypes {
   SIGNUP_SUCCESS = '[Auth] Signup Success',
   SIGNUP_FAILURE = '[Auth] Signup Failure',
   LOGOUT = '[Auth] Logout',
-  GET_STATUS = '[Auth] GetStatus'
+  GET_STATUS = '[Auth] GetStatus',
+  PREVIOUS_URL = '[Route] Previous Url'
 }
 
 export class LogIn implements Action {
@@ -50,6 +51,11 @@ export class GetStatus implements Action {
   readonly type = AuthActionTypes.GET_STATUS;
 }
 
+export class GetPreviousUrl implements Action {
+  readonly type = AuthActionTypes.PREVIOUS_URL;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | LogIn
   | LogInSuccess
@@ -58,4 +64,5 @@ export type All =
   | SignUpSuccess
   | SignUpFailure
   | LogOut
-  | GetStatus;
+  | GetStatus
+  | GetPreviousUrl;
