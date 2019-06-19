@@ -107,16 +107,12 @@ export class AuthEffects {
 
   @Effect({ dispatch: false })
   SaveTokenSuccess: Observable<any> = this.actions.pipe(
-    ofType(AuthActionTypes.SAVETOKEN_SUCCESS),
-    tap((user) => {
-    })
+    ofType(AuthActionTypes.SAVETOKEN_SUCCESS)
   );
 
   @Effect({ dispatch: false })
   SaveTokenFail: Observable<any> = this.actions.pipe(
-    ofType(AuthActionTypes.SAVETOKEN_FAIL),
-    tap(() => {
-    })
+    ofType(AuthActionTypes.SAVETOKEN_FAIL)
   );
 
   // @Effect({ dispatch: false })

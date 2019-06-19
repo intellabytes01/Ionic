@@ -37,8 +37,7 @@ export class OtpEffects {
 
   @Effect({ dispatch: false })
   SendOtpSuccess: Observable<any> = this.actions.pipe(
-    ofType(OtpActionTypes.SENDOTP_SUCCESS),
-    tap(() => {})
+    ofType(OtpActionTypes.SENDOTP_SUCCESS)
   );
 
   @Effect({ dispatch: false })
@@ -67,8 +66,7 @@ export class OtpEffects {
 
   @Effect({ dispatch: false })
   VerifyOtpSuccess: Observable<any> = this.actions.pipe(
-    ofType(OtpActionTypes.VERIFYOTP_SUCCESS),
-    tap(() => {})
+    ofType(OtpActionTypes.VERIFYOTP_SUCCESS)
   );
 
   @Effect({ dispatch: false })

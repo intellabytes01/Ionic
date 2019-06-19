@@ -41,8 +41,7 @@ export class FeedbackEffects {
 
   @Effect({ dispatch: false })
   FeedbackTypesSuccess: Observable<any> = this.actions.pipe(
-    ofType(FeedbackAction.FEEDBACKTYPES_SUCCESS),
-    tap(() => {})
+    ofType(FeedbackAction.FEEDBACKTYPES_SUCCESS)
   );
 
   @Effect({ dispatch: false })
