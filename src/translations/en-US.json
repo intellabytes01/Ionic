@@ -84,7 +84,15 @@
     "NOTE": "Note:",
     "REQUEST_TAB_MESSAGE_2": "Party code can be found in Distributor's Sales Inovoice / Bill.",
     "ADD_TAB_MESSAGE": "Distributor you would like to see on Pharmarack",
-    "SEARCH_PLACEHOLDER": "Search Distributor"
+    "SEARCH_PLACEHOLDER": "Search Distributor",
+    "NOTFOUND": "No Distributor Found",
+    "STORE": "Store name",
+    "PARTY_CODE": "Party code",
+    "OPTIONAL_PLACEHOLDER": "Optional",
+    "DISTRIBUTOR_NAME": "Distributor Name",
+    "CONTACT": "Contact Number",
+    "STATUS": "Status",
+    "FILTER_TEXT": "Click here to filter Status"
   },
 
   "VALIDATIONS": {
