@@ -120,6 +120,13 @@
     "RESEND": "Resend Otp",
     "VERIFYOTPMESSAGE": "Please enter the OTP code which has been sent to your Mobile number."
   },
+  "CHANGE_PASSWORD": {
+    "CURRENT_PASSWORD":"Current Password",
+    "NEW_PASSWORD": "New Password",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "CHANGE_BUTTON": "Change",
+    "BACK_BUTTON": "Back"
+  },
 
   "FEEDBACKTYPE_PLACEHOLDER": "Select feedback type",
   "FEEDBACKTO_PLACEHOLDER": "Select type",

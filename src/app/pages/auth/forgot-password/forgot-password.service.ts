@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent } from '@angular/common/http';
-import { Store } from '@ngrx/store';
-import * as fromOtp from './store/forgot-password.reducers';
 import { Observable } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Logger } from '@app/core';
@@ -18,9 +16,7 @@ const routes = {
 })
 export class OtpService {
   constructor(
-    private httpClient: HttpClient,
-    private store: Store<fromOtp.OtpState>
-  ) {}
+    private httpClient: HttpClient  ) {}
 
   /**
    * Send Otp.
