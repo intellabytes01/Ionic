@@ -9,6 +9,11 @@ import { AddDistributorPage } from './add-distributor.page';
 import { AuthenticationGuard } from '@app/core';
 import { SharedModule } from '@app/shared';
 import { TranslateModule } from '@ngx-translate/core';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { AddDistributorEffects } from './store/add-distributor.effects';
+import * as fromAddDistributorReducer from './store/add-distributor.reducers';
+import { AddDistributorService } from './add-distributor.service';
 
 const routes: Routes = [
   {
@@ -50,8 +55,11 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     SharedModule,
-    TranslateModule
+    TranslateModule,
+    StoreModule.forFeature('AddDistributor', fromAddDistributorReducer.addDistributorReducer),
+    EffectsModule.forRoot([AddDistributorEffects])
   ],
-  declarations: [AddDistributorPage]
+  declarations: [AddDistributorPage],
+  providers: [AddDistributorService]
 })
 export class AddDistributorPageModule {}

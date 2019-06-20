@@ -22,31 +22,52 @@
 
   <ion-list *ngIf="searchList.length == 0 && searchText">
     <ion-item>
-      <ion-label>{{'ADD_DISTRIBUTOR.NOTFOUND' | translate}}</ion-label>
+      <ion-label>{{ "ADD_DISTRIBUTOR.NOTFOUND" | translate }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="searchList.length !== 0 && searchText">
+    <ion-item *ngFor="let store of searchList">
+      <ion-label>{{ store.StoreName }}</ion-label>
     </ion-item>
   </ion-list>
 
   <ion-row class="grey-bg">
     <ion-col size="2" text-start>
-      <ion-checkbox color="mustard"></ion-checkbox>
+      <ion-checkbox
+        [(ngModel)]="masterCheck"
+        (click)="checkMaster($event)"
+        color="mustard"
+      ></ion-checkbox>
     </ion-col>
     <ion-col size="6" text-start>
-      <ion-label><b>{{'ADD_DISTRIBUTOR.STORE' | translate}}</b></ion-label>
+      <ion-label
+        ><b>{{ "ADD_DISTRIBUTOR.STORE" | translate }}</b></ion-label
+      >
     </ion-col>
-    <ion-col size="4" text-end>
-      <ion-label><b>{{'ADD_DISTRIBUTOR.PARTY_CODE' | translate}}</b></ion-label>
+    <ion-col size="4" text-center>
+      <ion-label
+        ><b>{{ "ADD_DISTRIBUTOR.PARTY_CODE" | translate }}</b></ion-label
+      >
     </ion-col>
   </ion-row>
 
-  <ion-row>
+  <ion-row *ngFor="let store of stores$ | async">
     <ion-col class="padding" size="2" text-start>
-      <ion-checkbox color="mustard"></ion-checkbox>
+      <ion-checkbox
+        [(ngModel)]="store.isChecked"
+        [value]="store.StoreId"
+        (ionChange)="selectStore($event)"
+        color="mustard"
+      ></ion-checkbox>
     </ion-col>
     <ion-col class="padding" size="6" text-start>
-      <ion-label>Name</ion-label>
+      <ion-label>{{ store.StoreName }}</ion-label>
     </ion-col>
-    <ion-col size="4" text-end>
-      <ion-input [placeholder]="'ADD_DISTRIBUTOR.OPTIONAL_PLACEHOLDER' | translate"></ion-input>
+    <ion-col size="4" text-center>
+      <ion-input
+        [placeholder]="'ADD_DISTRIBUTOR.OPTIONAL_PLACEHOLDER' | translate"
+      ></ion-input>
     </ion-col>
   </ion-row>
 
@@ -56,10 +77,13 @@
       <app-back-button [link]="['/login']"></app-back-button>
     </ion-col>
     <ion-col size="6" class="create">
-      <ion-button (click)="sendOtp()" color="blue" expand="full" fill="solid">{{
-        "SUBMIT" | translate
-      }}</ion-button>
+      <ion-button
+        (click)="requestSubmit()"
+        color="blue"
+        expand="full"
+        fill="solid"
+        >{{ "SUBMIT" | translate }}</ion-button
+      >
     </ion-col>
   </ion-row>
-
 </ion-content>
