@@ -118,16 +118,5 @@ export class AuthEffects {
   public PreviousUrl: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.PREVIOUS_URL),
     tap(url => {
-      // console.log(url);
-      // this.storage.remove('token');
-      // localStorage.removeItem('token');
-    })
-  );
-
-  // @Effect({ dispatch: false })
-  // GetStatus: Observable<any> = this.actions.pipe(
-  //   ofType(AuthActionTypes.GET_STATUS),
-  //   switchMap(payload => {
-  //     return this.authService.getStatus();
-  //   }));
+    }));
 }

@@ -6,7 +6,8 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: "[prShowHideInput]"
+// tslint:disable-next-line: directive-selector
+  selector: '[prShowHideInput]'
 })
 export class ShowHideInputDirective {
   @Input() targetInput: any;

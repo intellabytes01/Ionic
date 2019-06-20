@@ -1,13 +1,14 @@
-import { Directive, forwardRef, Input } from "@angular/core";
+import { Directive, forwardRef, Input } from '@angular/core';
 import {
   AbstractControl,
   NG_VALIDATORS,
   FormGroup,
   ValidationErrors
-} from "@angular/forms";
+} from '@angular/forms';
 
 @Directive({
-  selector: "[prEqualValidator]",
+// tslint:disable-next-line: directive-selector
+  selector: '[prEqualValidator]',
   providers: [
     {
       provide: NG_VALIDATORS,
@@ -17,7 +18,7 @@ import {
   ]
 })
 export class EqualValidatorDirective {
-  @Input("prEqualValidator") matchValueFields: string[] = [];
+  @Input('prEqualValidator') matchValueFields: string[] = [];
 
   constructor() {}
 

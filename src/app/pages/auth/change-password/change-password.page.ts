@@ -25,7 +25,7 @@ export class ChangePasswordPage implements OnInit {
   };
   previousRouteUrl$: any;
 
-  constructor(public formBuilder: FormBuilder, private store: Store<AuthState>) { 
+  constructor(public formBuilder: FormBuilder, private store: Store<AuthState>) {
     this.previousRouteUrl$ = this.store.select(selectAuthState);
     // this.store.select(selectAuthState).subscribe(data => {
     //   this.previousRouteUrl$ = data['previousUrl'];
