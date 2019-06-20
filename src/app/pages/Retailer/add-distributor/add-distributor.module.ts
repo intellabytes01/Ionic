@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { AddDistributorPage } from './add-distributor.page';
 import { AuthenticationGuard } from '@app/core';
 import { SharedModule } from '@app/shared';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -48,7 +49,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    TranslateModule
   ],
   declarations: [AddDistributorPage]
 })

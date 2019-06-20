@@ -7,8 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RequestTabComponent implements OnInit {
 
+  searchList: any[] = [];
+  searchText = '';
   constructor() { }
 
   ngOnInit() {}
+
+  search(){
+
+  }
 
 }

@@ -83,8 +83,8 @@
     "REQUEST_TAB_MESSAGE_1": "Please enter Party Code for faster Mapping.",
     "NOTE": "Note:",
     "REQUEST_TAB_MESSAGE_2": "Party code can be found in Distributor's Sales Inovoice / Bill.",
-
-    "ADD_TAB_MESSAGE": "Distributor you would like to see on Pharmarack"
+    "ADD_TAB_MESSAGE": "Distributor you would like to see on Pharmarack",
+    "SEARCH_PLACEHOLDER": "Search Distributor"
   },
 
   "VALIDATIONS": {
