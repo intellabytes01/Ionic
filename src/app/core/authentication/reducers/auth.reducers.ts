@@ -8,12 +8,15 @@ export interface State {
   userData: User | null;
   // error message
   errorMessage: string | null;
+
+  previousUrl: string | null;
 }
 
 export const initialState: State = {
   isAuthenticated: false,
   userData: null,
-  errorMessage: null
+  errorMessage: null,
+  previousUrl: null
 };
 
 export function authReducer(state = initialState, action: All): State {
@@ -29,7 +32,7 @@ export function authReducer(state = initialState, action: All): State {
     case AuthActionTypes.LOGIN_FAILURE: {
       return {
         ...state,
-        errorMessage: action.payload.data.message
+        errorMessage: action.payload.error.error.message
       };
     }
     case AuthActionTypes.SIGNUP_SUCCESS: {
@@ -44,6 +47,12 @@ export function authReducer(state = initialState, action: All): State {
       return {
         ...state,
         errorMessage: 'That email is already in use.'
+      };
+    }
+    case AuthActionTypes.PREVIOUS_URL: {
+      return {
+        ...state,
+        previousUrl: action.payload.previousUrl
       };
     }
     case AuthActionTypes.LOGOUT: {

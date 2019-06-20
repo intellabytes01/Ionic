@@ -9,6 +9,7 @@ import { sendOtpData, verifyOtpData } from './store/forgot-password.reducers';
 import { AlertService } from '@app/shared/services/alert.service';
 import { untilDestroyed } from '@app/core';
 import { TranslateService } from '@ngx-translate/core';
+import { GetPreviousUrl } from '@app/core/authentication/actions/auth.actions';
 
 @Component({
   selector: 'app-forgot-password',
@@ -61,11 +62,15 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
       mobile: this.forgotPasswordForm.value.mobile
     };
     if (!sendOtpBody.mobile) {
-      this.alert.presentToast(this.translateService.instant('VALIDATIONS.MOBILEREQUIRED'));
+      this.alert.presentToast(
+        this.translateService.instant('VALIDATIONS.MOBILEREQUIRED')
+      );
       return;
     }
     if (sendOtpBody.mobile.length < 10) {
-      this.alert.presentToast(this.translateService.instant('VALIDATIONS.MOBILEPATTERN'));
+      this.alert.presentToast(
+        this.translateService.instant('VALIDATIONS.MOBILEPATTERN')
+      );
       return;
     }
     this.store.dispatch(new SendOtp(sendOtpBody));
@@ -89,9 +94,15 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
       return;
     }
     this.store.dispatch(new VerifyOtp(verifyOtpBody));
+
+    const payload = {
+      previousUrl: this.router.url
+    };
+    this.store.dispatch(new GetPreviousUrl(payload));
+
     this.store.pipe(select(verifyOtpData)).subscribe(data => {
       if (data && data.password) {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/change-password']);
       }
     }),
       untilDestroyed(this);
@@ -105,7 +116,9 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    console.log(this.router.url);
+  }
 
   trackByFn(index, item) {
     return index;

@@ -114,11 +114,9 @@ export class AuthEffects {
   SaveTokenFail: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.SAVETOKEN_FAIL)
   );
-
-  // @Effect({ dispatch: false })
-  // GetStatus: Observable<any> = this.actions.pipe(
-  //   ofType(AuthActionTypes.GET_STATUS),
-  //   switchMap(payload => {
-  //     return this.authService.getStatus();
-  //   }));
+  @Effect({ dispatch: false })
+  public PreviousUrl: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.PREVIOUS_URL),
+    tap(url => {
+    }));
 }
