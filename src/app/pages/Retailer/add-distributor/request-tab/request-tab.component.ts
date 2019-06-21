@@ -22,7 +22,7 @@ export class RequestTabComponent implements OnInit {
   searchText = '';
   stores$: any;
   requestSubmitBody: any = {
-    retailerId: 3,
+    retailerId: null,
     userId: null,
     storeIds: []
   };
@@ -36,11 +36,19 @@ export class RequestTabComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Set user id and retailer id
     this.storeAuth.pipe(select(selectAuthState)).subscribe(data => {
-      this.requestSubmitBody.userId = data['userData']['userData']['userSummary']['UserId'];
+      this.requestSubmitBody.userId =
+        data['userData']['userData']['userSummary']['UserId'];
+      this.requestSubmitBody.retailerId =
+        data['userData']['userData']['retailerSummary']['retailerInfo'][
+          'RetailerId'
+        ];
       this.getStores();
     }),
       untilDestroyed(this);
+
+    // Set isChecked false initially
     this.stores$ = this.storeAddDistributor.pipe(select(storesData));
     this.stores$.subscribe(data => {
       this.searchList = data;
@@ -54,12 +62,16 @@ export class RequestTabComponent implements OnInit {
       untilDestroyed(this);
   }
 
+  // Get Stores
+
   getStores() {
     const payload = {
       retailerId: this.requestSubmitBody.retailerId
     };
     this.storeAddDistributor.dispatch(new GetStores(payload));
   }
+
+  // Search in Store List
 
   search() {
     const list = [];
@@ -79,19 +91,27 @@ export class RequestTabComponent implements OnInit {
     }
   }
 
-  selectStore(event) {
-    this.checkEvent();
-    if (event.detail.checked) {
-      this.requestSubmitBody.storeIds.push(Number(event.detail.value));
+  // User selects store
+
+  selectStore(event, selectedFromSearchList?) {
+    if (selectedFromSearchList) {
+      this.checkEvent(Number(event.detail.value));
     } else {
-      const index = this.requestSubmitBody.storeIds.findIndex(element => {
-        return element === Number(event.detail.value);
-      });
-      if (index !== -1) {
-        this.requestSubmitBody.storeIds.splice(index, 1);
-      }
+      this.checkEvent();
+    }
+    this.searchText = '';
+    const index = this.requestSubmitBody.storeIds.findIndex(element => {
+      return element === Number(event.detail.value);
+    });
+    if (event.detail.checked && index === -1) {
+      this.requestSubmitBody.storeIds.push(Number(event.detail.value));
+    }
+    if (!event.detail.checked && index !== -1) {
+      this.requestSubmitBody.storeIds.splice(index, 1);
     }
   }
+
+  // Check for select all
 
   checkMaster() {
     this.stores$.subscribe(data => {
@@ -104,10 +124,15 @@ export class RequestTabComponent implements OnInit {
       untilDestroyed(this);
   }
 
-  checkEvent() {
+  // User selects store
+
+  checkEvent(storeId?: any) {
     const totalItems = this.storeList.length;
     let checked = 0;
     this.storeList.map(obj => {
+      if (storeId && obj.StoreId === storeId) {
+        obj.isChecked = true;
+      }
       if (obj.isChecked) {
         checked++;
       }
@@ -124,11 +149,17 @@ export class RequestTabComponent implements OnInit {
     }
   }
 
+  // Submit your request
+
   requestSubmit() {
-    if(this.requestSubmitBody.storeIds.length === 0){
-      this.alert.presentToast(this.translateService.instant('ADD_DISTRIBUTOR.REQUEST_TAB_MESSAGE_3'));
+    if (this.requestSubmitBody.storeIds.length === 0) {
+      this.alert.presentToast(
+        this.translateService.instant('ADD_DISTRIBUTOR.REQUEST_TAB_MESSAGE_3')
+      );
       return;
     }
-    this.storeAddDistributor.dispatch(new RequestSubmit(this.requestSubmitBody));
+    this.storeAddDistributor.dispatch(
+      new RequestSubmit(this.requestSubmitBody)
+    );
   }
 }

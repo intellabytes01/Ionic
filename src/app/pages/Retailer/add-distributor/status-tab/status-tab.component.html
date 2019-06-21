@@ -21,7 +21,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngFor="let status of status$ | async">
+  <ion-row *ngFor="let status of statusList">
     <ion-col size="4" text-start>
       <ion-label>{{status.StoreName}}</ion-label>
     </ion-col>
