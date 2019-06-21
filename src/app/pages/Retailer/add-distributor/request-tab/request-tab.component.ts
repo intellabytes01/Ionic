@@ -22,7 +22,7 @@ export class RequestTabComponent implements OnInit {
   searchText = '';
   stores$: any;
   requestSubmitBody: any = {
-    retailerId: 3,
+    retailerId: null,
     userId: null,
     storeIds: []
   };
@@ -36,12 +36,19 @@ export class RequestTabComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Set user id and retailer id
     this.storeAuth.pipe(select(selectAuthState)).subscribe(data => {
       this.requestSubmitBody.userId =
         data['userData']['userData']['userSummary']['UserId'];
+      this.requestSubmitBody.retailerId =
+        data['userData']['userData']['retailerSummary']['retailerInfo'][
+          'RetailerId'
+        ];
       this.getStores();
     }),
       untilDestroyed(this);
+
+    // Set isChecked false initially
     this.stores$ = this.storeAddDistributor.pipe(select(storesData));
     this.stores$.subscribe(data => {
       this.searchList = data;
@@ -55,12 +62,16 @@ export class RequestTabComponent implements OnInit {
       untilDestroyed(this);
   }
 
+  // Get Stores
+
   getStores() {
     const payload = {
       retailerId: this.requestSubmitBody.retailerId
     };
     this.storeAddDistributor.dispatch(new GetStores(payload));
   }
+
+  // Search in Store List
 
   search() {
     const list = [];
@@ -80,6 +91,8 @@ export class RequestTabComponent implements OnInit {
     }
   }
 
+  // User selects store
+
   selectStore(event, selectedFromSearchList?) {
     if (selectedFromSearchList) {
       this.checkEvent(Number(event.detail.value));
@@ -98,6 +111,8 @@ export class RequestTabComponent implements OnInit {
     }
   }
 
+  // Check for select all
+
   checkMaster() {
     this.stores$.subscribe(data => {
       if (data) {
@@ -108,6 +123,8 @@ export class RequestTabComponent implements OnInit {
     }),
       untilDestroyed(this);
   }
+
+  // User selects store
 
   checkEvent(storeId?: any) {
     const totalItems = this.storeList.length;
@@ -131,6 +148,8 @@ export class RequestTabComponent implements OnInit {
       this.masterCheck = false;
     }
   }
+
+  // Submit your request
 
   requestSubmit() {
     if (this.requestSubmitBody.storeIds.length === 0) {

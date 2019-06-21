@@ -20,7 +20,7 @@
   <ion-row>
     <ion-col>
       <ion-label position="floating">Select Status</ion-label>
-      <ion-select>
+      <ion-select [(ngModel)]="selectedStatus">
         <ion-select-option *ngFor="let item of statusList" [value]="item">{{item}}</ion-select-option>
       </ion-select>
     </ion-col>
@@ -32,7 +32,7 @@
       <app-back-button (click)="modalController.dismiss()"></app-back-button>
     </ion-col>
     <ion-col size="6" class="create">
-      <ion-button (click)="sendOtp()" color="blue" expand="full" fill="solid">{{
+      <ion-button (click)="filterStatus()" color="blue" expand="full" fill="solid">{{
         "SUBMIT" | translate
       }}</ion-button>
     </ion-col>
