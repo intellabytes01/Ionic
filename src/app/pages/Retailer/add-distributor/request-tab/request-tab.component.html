@@ -27,7 +27,10 @@
   </ion-list>
 
   <ion-list *ngIf="searchList.length !== 0 && searchText">
-    <ion-item *ngFor="let store of searchList">
+    <ion-item
+      *ngFor="let store of searchList"
+      (click)="selectStore({ detail: { checked: true, value: store.StoreId } }, true)"
+    >
       <ion-label>{{ store.StoreName }}</ion-label>
     </ion-item>
   </ion-list>

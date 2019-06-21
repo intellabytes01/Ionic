@@ -37,7 +37,8 @@ export class RequestTabComponent implements OnInit {
 
   ngOnInit() {
     this.storeAuth.pipe(select(selectAuthState)).subscribe(data => {
-      this.requestSubmitBody.userId = data['userData']['userData']['userSummary']['UserId'];
+      this.requestSubmitBody.userId =
+        data['userData']['userData']['userSummary']['UserId'];
       this.getStores();
     }),
       untilDestroyed(this);
@@ -79,17 +80,21 @@ export class RequestTabComponent implements OnInit {
     }
   }
 
-  selectStore(event) {
-    this.checkEvent();
-    if (event.detail.checked) {
-      this.requestSubmitBody.storeIds.push(Number(event.detail.value));
+  selectStore(event, selectedFromSearchList?) {
+    if (selectedFromSearchList) {
+      this.checkEvent(Number(event.detail.value));
     } else {
-      const index = this.requestSubmitBody.storeIds.findIndex(element => {
-        return element === Number(event.detail.value);
-      });
-      if (index !== -1) {
-        this.requestSubmitBody.storeIds.splice(index, 1);
-      }
+      this.checkEvent();
+    }
+    this.searchText = '';
+    const index = this.requestSubmitBody.storeIds.findIndex(element => {
+      return element === Number(event.detail.value);
+    });
+    if (event.detail.checked && index === -1) {
+      this.requestSubmitBody.storeIds.push(Number(event.detail.value));
+    }
+    if (!event.detail.checked && index !== -1) {
+      this.requestSubmitBody.storeIds.splice(index, 1);
     }
   }
 
@@ -104,10 +109,13 @@ export class RequestTabComponent implements OnInit {
       untilDestroyed(this);
   }
 
-  checkEvent() {
+  checkEvent(storeId?: any) {
     const totalItems = this.storeList.length;
     let checked = 0;
     this.storeList.map(obj => {
+      if (storeId && obj.StoreId === storeId) {
+        obj.isChecked = true;
+      }
       if (obj.isChecked) {
         checked++;
       }
@@ -125,10 +133,14 @@ export class RequestTabComponent implements OnInit {
   }
 
   requestSubmit() {
-    if(this.requestSubmitBody.storeIds.length === 0){
-      this.alert.presentToast(this.translateService.instant('ADD_DISTRIBUTOR.REQUEST_TAB_MESSAGE_3'));
+    if (this.requestSubmitBody.storeIds.length === 0) {
+      this.alert.presentToast(
+        this.translateService.instant('ADD_DISTRIBUTOR.REQUEST_TAB_MESSAGE_3')
+      );
       return;
     }
-    this.storeAddDistributor.dispatch(new RequestSubmit(this.requestSubmitBody));
+    this.storeAddDistributor.dispatch(
+      new RequestSubmit(this.requestSubmitBody)
+    );
   }
 }
