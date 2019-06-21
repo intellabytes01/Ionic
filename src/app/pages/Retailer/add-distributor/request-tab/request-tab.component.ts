@@ -9,6 +9,7 @@ import { AddDistributorState } from '../store/add-distributor.state';
 import { storesData } from '../store/add-distributor.reducers';
 import { GetStores, RequestSubmit } from '../store/add-distributor.actions';
 import { AlertService } from '@app/shared/services/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-request-tab',
@@ -30,7 +31,8 @@ export class RequestTabComponent implements OnInit {
   constructor(
     private storeAuth: Store<AuthState>,
     private storeAddDistributor: Store<AddDistributorState>,
-    private alert: AlertService
+    private alert: AlertService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -124,7 +126,7 @@ export class RequestTabComponent implements OnInit {
 
   requestSubmit() {
     if(this.requestSubmitBody.storeIds.length === 0){
-      this.alert.presentToast('Please select atleast one store.');
+      this.alert.presentToast(this.translateService.instant('ADD_DISTRIBUTOR.REQUEST_TAB_MESSAGE_3'));
       return;
     }
     this.storeAddDistributor.dispatch(new RequestSubmit(this.requestSubmitBody));

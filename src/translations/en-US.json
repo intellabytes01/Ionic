@@ -92,7 +92,8 @@
     "DISTRIBUTOR_NAME": "Distributor Name",
     "CONTACT": "Contact Number",
     "STATUS": "Status",
-    "FILTER_TEXT": "Click here to filter Status"
+    "FILTER_TEXT": "Click here to filter Status",
+    "REQUEST_TAB_MESSAGE_3": "Please select atleast one store."
   },
 
   "VALIDATIONS": {
