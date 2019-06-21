@@ -4,13 +4,15 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 export interface AddDistributorState {
   storesArray: any;
   requestSubmitObject: any;
+  statusArray: any;
   errorMessage: string | null;
 }
 
 export const initialState: AddDistributorState = {
   errorMessage: null,
   storesArray: [],
-  requestSubmitObject: {}
+  requestSubmitObject: {},
+  statusArray: []
 };
 
 export function addDistributorReducer(
@@ -53,6 +55,23 @@ export function addDistributorReducer(
       };
     }
 
+    // Status
+
+    case AddDistributorAction.GETSTATUS_SUCCESS: {
+      return {
+        ...state,
+        statusArray: action.payload.statusList.data,
+        errorMessage: null
+      };
+    }
+    case AddDistributorAction.GETSTATUS_FAILURE: {
+      return {
+        ...state,
+        statusArray: [],
+        errorMessage: null
+      };
+    }
+
     default: {
       return state;
     }
@@ -64,4 +83,11 @@ const storesState = createFeatureSelector<AddDistributorState>('AddDistributor')
 export const storesData = createSelector(
   storesState,
   coursesState => coursesState.storesArray
+);
+
+const statusState = createFeatureSelector<AddDistributorState>('AddDistributor');
+
+export const statusData = createSelector(
+  statusState,
+  coursesState => coursesState.statusArray
 );

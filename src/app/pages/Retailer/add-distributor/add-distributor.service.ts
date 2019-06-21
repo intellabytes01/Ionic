@@ -17,7 +17,8 @@ export interface RequestContext {
 
 const routes = {
   stores: '/stores/nonmapped?retailerId=',
-  requestsubmit: '/stores/retailer/mappings'
+  requestsubmit: '/stores/retailer/mappings',
+  status: '/stores/nonmapped/status?retailerId='
 };
 
 @Injectable()
@@ -42,6 +43,19 @@ export class AddDistributorService {
 
   submitRequest(context: RequestContext): Observable<any> {
     return this.httpClient.post(routes.requestsubmit, context).pipe(
+      map((data: any) => ({
+        data
+      })),
+      catchError(error => this.errorHandler(error))
+    );
+  }
+
+  /**
+   * Get Status.
+   * @return Array of Status.
+   */
+  getGetStatus(retailerId): Observable<any> {
+    return this.httpClient.get(`${routes.status}${retailerId}`).pipe(
       map((data: any) => ({
         data
       })),

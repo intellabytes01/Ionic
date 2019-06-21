@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '@app/shared';
 import { StatusTabComponent } from './status-tab.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { StatusFilterPageModule } from './status-filter/status-filter.module';
 
 const routes: Routes = [
   {
@@ -22,8 +23,9 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     SharedModule,
-    TranslateModule
+    TranslateModule,
+    StatusFilterPageModule
   ],
   exports: [StatusTabComponent]
 })
-export class StatusTabModule { }
+export class StatusTabModule {}

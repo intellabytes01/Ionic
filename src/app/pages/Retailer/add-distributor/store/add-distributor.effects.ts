@@ -7,7 +7,10 @@ import {
   RequestSubmitFailure,
   AddDistributorAction,
   GetStores,
-  RequestSubmit
+  RequestSubmit,
+  GetStatus,
+  GetStatusSuccess,
+  GetStatusFailure,
 } from './add-distributor.actions';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
@@ -26,7 +29,7 @@ export class AddDistributorEffects {
   // Get Request
 
   @Effect()
-  GetStores: Observable<Action> = this.actions.pipe(
+  Getc: Observable<Action> = this.actions.pipe(
     ofType(AddDistributorAction.GETSTORES),
     map((action: GetStores) => action.payload),
     switchMap((payload: any) => {
@@ -79,5 +82,31 @@ export class AddDistributorEffects {
     tap(() => {
       this.alert.presentToast('Something went wrong, Please try again later.');
     })
+  );
+
+  // Get Status
+
+  @Effect()
+  GetStatus: Observable<Action> = this.actions.pipe(
+    ofType(AddDistributorAction.GETSTATUS),
+    map((action: GetStatus) => action.payload),
+    switchMap((payload: any) => {
+      return this.addDistributorService.getGetStatus(payload.retailerId).pipe(
+        map(data => {
+          return new GetStatusSuccess({ statusList: data['data'] });
+        }),
+        catchError(error => of(new GetStatusFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  GetStatusSuccess: Observable<any> = this.actions.pipe(
+    ofType(AddDistributorAction.GETSTATUS_SUCCESS)
+  );
+
+  @Effect({ dispatch: false })
+  GetStatusFailure: Observable<any> = this.actions.pipe(
+    ofType(AddDistributorAction.GETSTATUS_FAILURE)
   );
 }

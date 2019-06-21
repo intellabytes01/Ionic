@@ -6,7 +6,10 @@ export enum AddDistributorAction {
   GETSTORES_FAILURE = '[Request] Get Request Failure',
   REQUESTSUBMIT = '[Request] Request Submit',
   REQUESTSUBMIT_SUCCESS = '[Request] Request Submit Success',
-  REQUESTSUBMIT_FAILURE = '[Request] Request Submit Failure'
+  REQUESTSUBMIT_FAILURE = '[Request] Request Submit Failure',
+  GETSTATUS = '[Status] Get Status',
+  GETSTATUS_SUCCESS = '[Status] Get Status Success',
+  GETSTATUS_FAILURE = '[Status] Get Status Failure',
 }
 
 export class GetStores implements Action {
@@ -39,10 +42,28 @@ export class RequestSubmitFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class GetStatus implements Action {
+  readonly type = AddDistributorAction.GETSTATUS;
+  constructor(public payload: any) {}
+}
+
+export class GetStatusSuccess implements Action {
+  readonly type = AddDistributorAction.GETSTATUS_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class GetStatusFailure implements Action {
+  readonly type = AddDistributorAction.GETSTATUS_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | GetStores
   | GetStoresSuccess
   | GetStoresFailure
   | RequestSubmit
   | RequestSubmitSuccess
-  | RequestSubmitFailure;
+  | RequestSubmitFailure
+  | GetStatus
+  | GetStatusSuccess
+  | GetStatusFailure;
