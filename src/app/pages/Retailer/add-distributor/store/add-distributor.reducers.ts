@@ -5,6 +5,7 @@ export interface AddDistributorState {
   storesArray: any;
   requestSubmitObject: any;
   statusArray: any;
+  distributorSubmitObject: any;
   errorMessage: string | null;
 }
 
@@ -12,6 +13,7 @@ export const initialState: AddDistributorState = {
   errorMessage: null,
   storesArray: [],
   requestSubmitObject: {},
+  distributorSubmitObject: {},
   statusArray: []
 };
 
@@ -68,6 +70,23 @@ export function addDistributorReducer(
       return {
         ...state,
         statusArray: [],
+        errorMessage: null
+      };
+    }
+
+    // Distributor Submit
+
+    case AddDistributorAction.DISTRIBUTORSUBMIT_SUCCESS: {
+      return {
+        ...state,
+        distributorSubmitObject: action.payload.distributorSubmit,
+        errorMessage: null
+      };
+    }
+    case AddDistributorAction.DISTRIBUTORSUBMIT_FAILURE: {
+      return {
+        ...state,
+        distributorSubmitObject: {},
         errorMessage: null
       };
     }
