@@ -7,7 +7,8 @@ import { Store, select } from '@ngrx/store';
 import { untilDestroyed } from '@app/core';
 import { AddDistributorState } from '../store/add-distributor.state';
 import { storesData } from '../store/add-distributor.reducers';
-import { GetStores } from '../store/add-distributor.actions';
+import { GetStores, RequestSubmit } from '../store/add-distributor.actions';
+import { AlertService } from '@app/shared/services/alert.service';
 
 @Component({
   selector: 'app-request-tab',
@@ -16,11 +17,11 @@ import { GetStores } from '../store/add-distributor.actions';
 })
 export class RequestTabComponent implements OnInit {
   searchList: any[] = [];
-  tempList: any[] = [];
+  storeList: any[] = [];
   searchText = '';
   stores$: any;
   requestSubmitBody: any = {
-    retailerId: null,
+    retailerId: 3,
     userId: null,
     storeIds: []
   };
@@ -28,31 +29,32 @@ export class RequestTabComponent implements OnInit {
   masterCheck = false;
   constructor(
     private storeAuth: Store<AuthState>,
-    private storeAddDistributor: Store<AddDistributorState>
+    private storeAddDistributor: Store<AddDistributorState>,
+    private alert: AlertService
   ) {}
 
   ngOnInit() {
     this.storeAuth.pipe(select(selectAuthState)).subscribe(data => {
-      this.getStores(data['userData']['userData']['userSummary']['UserId']);
+      this.requestSubmitBody.userId = data['userData']['userData']['userSummary']['UserId'];
+      this.getStores();
     }),
       untilDestroyed(this);
     this.stores$ = this.storeAddDistributor.pipe(select(storesData));
-    this.stores$.subscribe((data) => {
-      console.log(data);
+    this.stores$.subscribe(data => {
       this.searchList = data;
-      Object.assign(this.tempList, this.searchList);
+      Object.assign(this.storeList, this.searchList);
       if (data) {
         data.forEach(obj => {
           obj.isChecked = false;
         });
       }
     }),
-    untilDestroyed(this);
+      untilDestroyed(this);
   }
 
-  getStores(retailerId) {
+  getStores() {
     const payload = {
-      retailerId: 3
+      retailerId: this.requestSubmitBody.retailerId
     };
     this.storeAddDistributor.dispatch(new GetStores(payload));
   }
@@ -60,15 +62,18 @@ export class RequestTabComponent implements OnInit {
   search() {
     const list = [];
     if (this.searchText) {
-      this.tempList.map((element) => {
-        if (element.StoreName.toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1) {
+      this.storeList.map(element => {
+        if (
+          element.StoreName.toLowerCase().indexOf(
+            this.searchText.toLowerCase()
+          ) !== -1
+        ) {
           list.push(element);
         }
       });
       this.searchList = list;
-      console.log(this.searchList);
     } else {
-      this.searchList = this.tempList;
+      this.searchList = this.storeList;
     }
   }
 
@@ -84,33 +89,31 @@ export class RequestTabComponent implements OnInit {
         this.requestSubmitBody.storeIds.splice(index, 1);
       }
     }
-    console.log(this.requestSubmitBody.storeIds);
   }
 
   checkMaster() {
-    setTimeout(() => {
-      this.stores$.subscribe((data) => {
-        console.log(data);
-        if (data) {
-          data.forEach(obj => {
-            obj.isChecked = this.masterCheck;
-          });
-        }
-      }),
+    this.stores$.subscribe(data => {
+      if (data) {
+        data.forEach(obj => {
+          obj.isChecked = this.masterCheck;
+        });
+      }
+    }),
       untilDestroyed(this);
-    });
   }
 
   checkEvent() {
-    const totalItems = this.requestSubmitBody.storeIds.length;
+    const totalItems = this.storeList.length;
     let checked = 0;
-    this.requestSubmitBody.storeIds.map(obj => {
-      if (obj.isChecked) { checked++; }
+    this.storeList.map(obj => {
+      if (obj.isChecked) {
+        checked++;
+      }
     });
     if (checked > 0 && checked < totalItems) {
       // If even one item is checked but not all
       this.masterCheck = false;
-    } else if (checked == totalItems) {
+    } else if (checked === totalItems) {
       // If all are checked
       this.masterCheck = true;
     } else {
@@ -119,5 +122,11 @@ export class RequestTabComponent implements OnInit {
     }
   }
 
-  requestSubmit() {}
+  requestSubmit() {
+    if(this.requestSubmitBody.storeIds.length === 0){
+      this.alert.presentToast('Please select atleast one store.');
+      return;
+    }
+    this.storeAddDistributor.dispatch(new RequestSubmit(this.requestSubmitBody));
+  }
 }
