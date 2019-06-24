@@ -93,7 +93,10 @@
     "CONTACT": "Contact Number",
     "STATUS": "Status",
     "FILTER_TEXT": "Click here to filter Status",
-    "REQUEST_TAB_MESSAGE_3": "Please select atleast one store."
+    "REQUEST_TAB_MESSAGE_3": "Please select atleast one store.",
+    "VALIDATIONS": {
+      "DISTRIBUTOR_NAME": "Distributor name is required."
+    }
   },
 
   "VALIDATIONS": {

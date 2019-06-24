@@ -4,18 +4,76 @@
       ADD_DISTRIBUTOR.ADD_TAB_MESSAGE
     </ion-col>
   </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-item>
-        <ion-label position="floating">{{'ADD_DISTRIBUTOR.DISTRIBUTOR_NAME' | translate}}</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">{{'ADD_DISTRIBUTOR.CONTACT' | translate}}</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+
+  <form [formGroup]="distributorForm">
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">{{
+            "ADD_DISTRIBUTOR.DISTRIBUTOR_NAME" | translate
+          }}</ion-label>
+          <ion-input formControlName="storeName" type="text"></ion-input>
+        </ion-item>
+
+        <br />
+        <div class="validation-errors">
+          <ng-container
+            *ngFor="
+              let validation of validation_messages.storeName;
+              trackBy: trackByFn
+            "
+          >
+            <div
+              class="error-message"
+              *ngIf="
+                distributorForm.get('storeName').hasError(validation.type) &&
+                (distributorForm.get('storeName').dirty ||
+                  distributorForm.get('storeName').touched)
+              "
+            >
+              {{ validation.message | translate }}
+            </div>
+          </ng-container>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">{{
+            "ADD_DISTRIBUTOR.CONTACT" | translate
+          }}</ion-label>
+          <ion-input
+            formControlName="mobile"
+            type="number"
+            (ionInput)="validationMobile($event.target.value)"
+          ></ion-input>
+        </ion-item>
+
+        <br />
+        <div class="validation-errors">
+          <ng-container
+            *ngFor="
+              let validation of validation_messages.mobile;
+              trackBy: trackByFn
+            "
+          >
+            <div
+              class="error-message"
+              *ngIf="
+                distributorForm.get('mobile').hasError(validation.type) &&
+                (distributorForm.get('mobile').dirty ||
+                  distributorForm.get('mobile').touched)
+              "
+            >
+              {{ validation.message | translate }}
+            </div>
+          </ng-container>
+        </div>
+      </ion-col>
+    </ion-row>
+  </form>
 
   <br />
   <ion-row>
@@ -23,9 +81,7 @@
       <app-back-button [link]="['/dashboard']"></app-back-button>
     </ion-col>
     <ion-col size="6" class="create">
-      <ion-button (click)="sendOtp()" color="blue" expand="full" fill="solid">{{
-        "SUBMIT" | translate
-      }}</ion-button>
+      <app-submit-button (click)="distributorSubmit()"></app-submit-button>
     </ion-col>
   </ion-row>
 </ion-grid>

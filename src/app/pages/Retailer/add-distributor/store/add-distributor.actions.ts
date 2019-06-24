@@ -10,9 +10,9 @@ export enum AddDistributorAction {
   GETSTATUS = '[Status] Get Status',
   GETSTATUS_SUCCESS = '[Status] Get Status Success',
   GETSTATUS_FAILURE = '[Status] Get Status Failure',
-  DISTRIBUTORSUBMIT = '[Request] Request Submit',
-  DISTRIBUTORSUBMIT_SUCCESS = '[Request] Request Submit Success',
-  DISTRIBUTORSUBMIT_FAILURE = '[Request] Request Submit Failure',
+  DISTRIBUTORSUBMIT = '[Distributor] Distributor Submit',
+  DISTRIBUTORSUBMIT_SUCCESS = '[Distributor] Distributor Submit Success',
+  DISTRIBUTORSUBMIT_FAILURE = '[Distributor] Distributor Submit Failure',
 }
 
 export class GetStores implements Action {
