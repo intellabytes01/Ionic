@@ -1,8 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { businessTypesData, regionsData } from '@app/pages/auth/register/store/register.reducers';
+import { BusinessTypes, Regions } from '@app/pages/auth/register/store/register.actions';
+import { RegisterState } from '@app/pages/auth/register/store/register.state';
 
 @Component({
   selector: 'app-profile',
@@ -18,20 +21,20 @@ export class ProfilePage implements OnInit, OnDestroy {
   imgPreview = '';
   businesstypeStore: any;
   regionStore: any;
+  businessTypes$: any;
+  regions$: any;
+  
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private camera: Camera
+    private camera: Camera,
+    private storeRegister: Store<RegisterState>
   ) {
-    // this.businesstypeStore = this.store.select(getAllBusinessTypes).subscribe((state: any) => {
-    //   this.logger.info("businessTypes state: ", state);
-    //   this.businessTypes = state;
-    // });
+    this.getBusinessTypes();
+    this.businessTypes$ = this.storeRegister.pipe(select(businessTypesData));
 
-    // this.regionStore = this.store.select(getAllRegions).subscribe((state: any) => {
-    //   this.logger.info("region state: ", state);
-    //   this.regions = state;
-    // });
+    this.getRegions();
+    this.regions$ = this.storeRegister.pipe(select(regionsData));
   }
 
   ngOnInit() {
@@ -87,8 +90,6 @@ export class ProfilePage implements OnInit, OnDestroy {
         ]
       }
     );
-    // this.store.dispatch(new fromauth.GetAllBusinessTypes());
-    // this.store.dispatch(new fromauth.GetAllRegions());
   }
 
   editProfile(val) {
@@ -116,17 +117,19 @@ export class ProfilePage implements OnInit, OnDestroy {
     });
   }
 
+  async getBusinessTypes() {
+    this.storeRegister.dispatch(new BusinessTypes());
+  }
+
+  async getRegions() {
+    this.storeRegister.dispatch(new Regions());
+  }
+
   updateProfile() {
 
   }
 
   ngOnDestroy() {
-    if (this.businesstypeStore) {
-      this.businesstypeStore.unsubscribe();
-    }
-    if (this.regionStore) {
-      this.regionStore.unsubscribe();
-    }
   }
 
 }

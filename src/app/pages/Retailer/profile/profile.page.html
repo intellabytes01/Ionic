@@ -11,7 +11,7 @@
       <ion-col>
         <ion-label position="floating">Business Type</ion-label>
         <ion-select formControlName="businessType">
-          <ion-select-option *ngFor="let item of businessTypes" [value]="item.BusinessTypeId">{{item.BusinessTypeName}}</ion-select-option>
+          <ion-select-option *ngFor="let item of businessTypes$ | async" [value]="item.BusinessTypeId">{{item.BusinessTypeName}}</ion-select-option>
         </ion-select>
       </ion-col>
     </ion-row>
@@ -52,7 +52,7 @@
       <ion-col>
         <ion-label position="floating">Region</ion-label>
         <ion-select formControlName="region">
-          <ion-select-option *ngFor="let item of regions" [value]="item.RegionId">{{item.RegionName}}</ion-select-option>
+          <ion-select-option *ngFor="let item of regions$ | async" [value]="item.RegionId">{{item.RegionName}}</ion-select-option>
         </ion-select>
       </ion-col>
     </ion-row>

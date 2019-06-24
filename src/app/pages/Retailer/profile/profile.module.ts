@@ -7,7 +7,12 @@ import { IonicModule } from '@ionic/angular';
 
 import { ProfilePage } from './profile.page';
 import { SharedModule } from '@app-shared/shared.module';
-import { IonicSelectableModule } from 'ionic-selectable';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import * as fromprofileReducer from './store/profile.reducers';
+import { ProfileEffects } from './store/profile.effects';
+import * as fromregisterReducer from '@app/pages/auth/register/store/register.reducers';
+import { RegisterEffects } from '@app/pages/auth/register/store/register.effects';
 
 const routes: Routes = [
   {
@@ -24,7 +29,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     SharedModule,
-    IonicSelectableModule
+    StoreModule.forFeature('profile', fromprofileReducer.profileReducer),
+    StoreModule.forFeature('register', fromregisterReducer.registerReducer),
+    EffectsModule.forRoot([ProfileEffects, RegisterEffects])
   ],
   declarations: [ProfilePage]
 })
