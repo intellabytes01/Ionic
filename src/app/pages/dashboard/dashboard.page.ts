@@ -11,6 +11,7 @@ import { Store, select } from '@ngrx/store';
 import { untilDestroyed } from '@app/core';
 import { Storage } from '@ionic/storage';
 import * as fromModel from './dashboard-data.json';
+import { NewOrderService } from '../Retailer/new-order/new-order.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,7 +26,8 @@ export class DashboardPage implements OnInit {
               private translateService: TranslateService,
               private utilityService: UtilityService,
               private store: Store<AuthState>,
-              private storage: Storage) {}
+              private storage: Storage,
+              private newOrderService: NewOrderService) {}
 
   ionViewWillEnter() {
     this.menuCtrl.enable(true, 'menuLeft');

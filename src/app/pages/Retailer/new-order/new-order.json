@@ -1,0 +1,15 @@
+{
+  "Order1561453855577": {
+    "store": "Demo Store 1",
+    "productList": [
+      {
+        "name": "Corex",
+        "id": "1"
+      }
+    ],
+    "total": 800,
+    "deliveryMode": "Deliver to Store",
+    "priority": "Normal",
+    "remarks": ""
+  }
+}

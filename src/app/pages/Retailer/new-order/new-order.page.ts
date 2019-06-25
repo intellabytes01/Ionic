@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { Events } from '@ionic/angular';
+import { NewOrderService } from './new-order.service';
+import * as fromModel from './new-order.json';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'pr-new-order',
@@ -9,8 +11,8 @@ import { Events } from '@ionic/angular';
 })
 export class NewOrderPage implements OnInit {
   key = `Order${Date.now()}`;
-  testOrderData = {};
-  constructor(private storage: Storage, private events: Events) {    
+  testOrderData = fromModel;
+  constructor(private storage: Storage, private newOrderService: NewOrderService) {
   }
 
   saveToStorage() {
@@ -25,20 +27,12 @@ export class NewOrderPage implements OnInit {
     });
   }
 
-  setOrderValue(order){    
-    this.key = Object.keys(order)[0];
-    this.testOrderData = order[this.key];
-    console.log(this.key);
-  }
-
   ngOnInit() {
-    this.events.subscribe('orderUpdate', (order) => {
-      console.log(order);
-      this.setOrderValue(order);
-    })
-  }
-
-  ngOnDestroy(){
-    this.events.unsubscribe('orderUpdate');
+    // Update Case
+    // const order = this.newOrderService.getOrder();
+    // if (order) {
+    //   this.key = Object.keys(order)[0];
+    //   this.testOrderData = order[this.key];
+    // }
   }
 }
