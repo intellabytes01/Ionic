@@ -2,9 +2,9 @@
     "data" : [
         {
           "name": "DASHBOARD.NEWORDER",
-          "link": "/",
+          "link": "/new-order",
           "icon": "assets/icon/logo.png",
-          "disable": true,
+          "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
         {

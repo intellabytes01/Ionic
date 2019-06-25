@@ -55,9 +55,9 @@ export class DashboardPage implements OnInit {
     if (!this.userData['retailerSummary']['retailerInfo']) {
       this.pages.forEach((element, index) => {
         switch (element.name) {
-          case 'DASHBOARD.NEWORDER':
-            element.disable = true;
-            break;
+          // case 'DASHBOARD.NEWORDER':
+          //   element.disable = true;
+          //   break;
 
           case 'DASHBOARD.PAYMENTS':
             element.disable = true;
@@ -80,11 +80,11 @@ export class DashboardPage implements OnInit {
       this.userData['retailerSummary']['retailerInfo'] &&
       this.userData['retailerSummary']['retailerStoreParties']
     ) {
-      this.pages.forEach((element, index) => {
-        if (element.name === 'DASHBOARD.NEWORDER') {
-          element.disable = true;
-        }
-      });
+      // this.pages.forEach((element, index) => {
+      //   if (element.name === 'DASHBOARD.NEWORDER') {
+      //     element.disable = true;
+      //   }
+      // });
     }
   }
 }
