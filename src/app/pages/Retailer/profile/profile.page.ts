@@ -193,14 +193,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     );
   }
 
-  async getBusinessTypes() {
-    this.storeRegister.dispatch(new BusinessTypes());
-  }
-
-  async getRegions() {
-    this.storeRegister.dispatch(new Regions());
-  }
-
   updateProfile() {
     // stop here if form is invalid
     if (
