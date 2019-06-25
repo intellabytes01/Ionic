@@ -1,103 +1,177 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewEncapsulation,
+  AfterViewInit,
+  AfterContentInit
+} from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { businessTypesData, regionsData } from '@app/pages/auth/register/store/register.reducers';
-import { BusinessTypes, Regions } from '@app/pages/auth/register/store/register.actions';
-import { RegisterState } from '@app/pages/auth/register/store/register.state';
+import {
+  SaveProfileDetails,
+  BusinessTypes,
+  Regions,
+  GetProfileDetails
+} from './store/profile.actions';
+import {
+  ProfileState,
+  businessTypesData,
+  regionsData,
+  getProfileDetails
+} from './store/profile.reducers';
+import { selectAuthState } from '@app/core/authentication/auth.states';
+import { IProfileInterface } from './profile.interface';
+import { untilDestroyed } from '@app/core';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss']
+  styleUrls: ['./profile.page.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProfilePage implements OnInit, OnDestroy {
-
   public profileForm: FormGroup;
   disable = true;
-  businessTypes: any[];
-  regions: any[];
+  businessTypes$: any;
+  regions$: any;
+  userDetails$: any;
   imgPreview = '';
   businesstypeStore: any;
   regionStore: any;
-  businessTypes$: any;
-  regions$: any;
-  
+  profileInterface: IProfileInterface;
+  userProfileDetails$: any;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private camera: Camera,
-    private storeRegister: Store<RegisterState>
+    private store: Store<ProfileState>
   ) {
     this.getBusinessTypes();
-    this.businessTypes$ = this.storeRegister.pipe(select(businessTypesData));
-
     this.getRegions();
-    this.regions$ = this.storeRegister.pipe(select(regionsData));
+    this.getProfileDetails('34627');
+
+    this.businessTypes$ = this.store.pipe(select(businessTypesData));
+    this.regions$ = this.store.pipe(select(regionsData));
+    this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
+    // this.userProfileDetails$ = this.store.pipe(select(getProfileDetails)).subscribe(data => {
+    //   console.log(data);
+    // });
   }
 
   ngOnInit() {
-    this.profileForm = this.formBuilder.group(
-      {
-        loginId: [
-          {value: '', disabled: true},
-          Validators.compose([])
-        ],
-        shopName: [
-          {value: '', disabled: true},
-          Validators.compose([])
-        ],
-        retailerName: [
-          {value: '', disabled: true},
-          Validators.compose([])
-        ],
-        address: [
-          {value: '', disabled: true},
-          Validators.compose([])
-        ],
-        pincode: [
-          {value: '', disabled: true},
-          Validators.compose([])
-        ],
-        email: [
-          {value: '', disabled: true},
-          Validators.compose([])
-        ],
-        mobile: [
-          {value: '', disabled: true},
-          Validators.compose([])
-        ],
-        telephone: [
-          {value: '', disabled: true},
-          Validators.compose([])
-        ],
-        drugLicenseNumber: [
-          {value: '', disabled: true},
-          Validators.compose([])
-        ],
-        gstin: [
-          {value: '', disabled: true},
-          Validators.compose([])
-        ],
-        region: [
-          {value: '', disabled: true},
-          Validators.compose([])
-        ],
-        businessType: [
-          {value: '', disabled: true},
-          Validators.compose([])
-        ]
-      }
-    );
+    this.createForm();
+  }
+
+  createForm() {
+    this.profileForm = this.formBuilder.group({
+      loginId: [
+        { value: '', disabled: this.disable },
+        Validators.compose([Validators.required])
+      ],
+      shopName: [
+        { value: '', disabled: this.disable },
+        Validators.compose([Validators.required])
+      ],
+      firstName: [
+        { value: '', disabled: this.disable },
+        Validators.compose([
+          Validators.pattern('[a-zA-Z ]*'),
+          Validators.required
+        ])
+      ],
+      address1: [
+        { value: '', disabled: this.disable },
+        Validators.compose([Validators.required])
+      ],
+      pincode: [
+        { value: '', disabled: this.disable },
+        Validators.compose([
+          Validators.minLength(6),
+          Validators.maxLength(6),
+          Validators.required
+        ])
+      ],
+      email: [
+        { value: '', disabled: this.disable },
+        Validators.compose([
+          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'),
+          Validators.required
+        ])
+      ],
+      mobileNumber: [
+        { value: '', disabled: this.disable },
+        Validators.compose([
+          Validators.minLength(10),
+          Validators.maxLength(10),
+          Validators.required
+        ])
+      ],
+      telephone: [
+        { value: '', disabled: this.disable },
+        Validators.compose([Validators.required])
+      ],
+      licenseNumber: [
+        { value: '', disabled: this.disable },
+        Validators.compose([Validators.required])
+      ],
+      gstinNumber: [
+        { value: '', disabled: this.disable },
+        Validators.compose([Validators.required])
+      ],
+      retailerId: [3, Validators.compose([Validators.required])],
+      region: [
+        {
+          regionId: null,
+          regionName: ''
+        },
+        Validators.compose([Validators.required])
+      ],
+      businessType: [
+        {
+          BusinessTypeId: null,
+          BusinessTypeName: ''
+        },
+        Validators.compose([Validators.required])
+      ]
+    });
+  }
+
+  async getBusinessTypes() {
+    this.store.dispatch(new BusinessTypes());
+  }
+
+  async getRegions() {
+    this.store.dispatch(new Regions());
+  }
+
+  async getProfileDetails(userId) {
+    await this.store.dispatch(new GetProfileDetails(userId));
   }
 
   editProfile(val) {
     this.disable = val;
+    // this.profileForm.get('firstName').enable();
+    if (!val) {
+      Object.keys(this.profileForm.controls).forEach(key => {
+        if (key !== 'loginId' && key !== 'shopName') {
+          // && key !== 'businessType'
+          this.profileForm.get(key).enable();
+        }
+      });
+    } else {
+      this.getProfileDetails('34627');
+      Object.keys(this.profileForm.controls).forEach(key => {
+        if (key !== 'loginId' && key !== 'shopName') {
+          // && key !== 'businessType'
+          this.profileForm.get(key).disable();
+        }
+      });
+    }
   }
-
-  // photo library - this.takePhoto(0);
-  // camera - this.takePhoto(1);
 
   takePhoto(sourceType) {
     const options: CameraOptions = {
@@ -111,10 +185,12 @@ export class ProfilePage implements OnInit, OnDestroy {
       targetHeight: 500
     };
 
-    this.camera.getPicture(options).then((imageData) => {
-      this.imgPreview = imageData;
-    }, (err) => {
-    });
+    this.camera.getPicture(options).then(
+      imageData => {
+        this.imgPreview = imageData;
+      },
+      err => {}
+    );
   }
 
   async getBusinessTypes() {
@@ -126,10 +202,40 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   updateProfile() {
-
+    // stop here if form is invalid
+    if (
+      this.profileForm.invalid
+      || !this.profileForm.value.regionId
+      // || !this.profileForm.value.BusinessTypeId
+    ) {
+      return;
+    }
+    if (this.profileForm.value) {
+      if (this.profileForm.value.businessType) {
+        delete this.profileForm.value.businessType;
+      }
+      if (this.profileForm.value.region) {
+        delete this.profileForm.value.region;
+      }
+      const payload = {
+        userProfileDetails: this.profileForm.value
+        // businessTypeId: this.profileForm.value.businessType.BusinessTypeId
+      };
+      this.store.dispatch(new SaveProfileDetails(payload.userProfileDetails));
+    } else {
+      // this.alertService.presentToast('Please accept terms and conditions.');
+    }
   }
 
-  ngOnDestroy() {
+  updateBussinessType(value) {
+    // this.profileForm.value.BusinessTypeId = value.BusinessTypeId;
+    // this.profileForm.value.BusinessTypeName = value.BusinessTypeName;
   }
 
+  updateRegion(value) {
+    this.profileForm.value.regionId = value.RegionId;
+    // this.profileForm.value.RegionName = value.RegionName;
+  }
+
+  ngOnDestroy() {}
 }

@@ -1,23 +1,38 @@
+ion-input {
+  --placeholder-color: black !important;
+  // border: 1px solid grey;
+  margin-bottom: 1px;
+}
 
+ionic-selectable {
+  border: none !important;
+}
 
-  ion-input {
-    --placeholder-color: black !important;
-    border: 1px solid grey;
-    margin-bottom: 1rem;
-  }
+.native-input[disabled].sc-ion-input-md {
+  opacity: .4;
+  background-color: lightgray;
+}
 
-  ion-label {
-    color: black !important;
-  }
+ion-label {
+  color: black !important;
+}
 
-  ion-icon {
-    color: black !important;
-  }
+ion-icon {
+  color: black !important;
+}
 
-  .camera{
-    font-size: 2.5rem;
-  }
+.camera {
+  font-size: 2.5rem;
+}
 
-  ionic-selectable{
-    margin-bottom: 1rem;
-  }
+ionic-selectable {
+  margin-bottom: 1rem;
+}
+
+.selectWidth {
+  width: 50%;
+}
+
+.label-floating.sc-ion-label-md-h, .label-stacked.sc-ion-label-md-h {
+  margin-bottom: 12px;
+}
