@@ -73,6 +73,7 @@ const routes: Routes = [
     data: {title: 'My Profile', preload: false, delay: true}
   }
 
+
 ];
 
 @NgModule({

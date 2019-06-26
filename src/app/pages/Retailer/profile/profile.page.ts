@@ -25,6 +25,8 @@ import {
 import { selectAuthState } from '@app/core/authentication/auth.states';
 import { IProfileInterface } from './profile.interface';
 import { untilDestroyed } from '@app/core';
+import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -44,11 +46,14 @@ export class ProfilePage implements OnInit, OnDestroy {
   profileInterface: IProfileInterface;
   userProfileDetails$: any;
 
+  photo: SafeResourceUrl;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private camera: Camera,
-    private store: Store<ProfileState>
+    private store: Store<ProfileState>,
+    private sanitizer: DomSanitizer
   ) {
     this.getBusinessTypes();
     this.getRegions();
@@ -227,6 +232,17 @@ export class ProfilePage implements OnInit, OnDestroy {
   updateRegion(value) {
     this.profileForm.value.regionId = value.RegionId;
     // this.profileForm.value.RegionName = value.RegionName;
+  }
+
+  async takePicture() {
+    const image = await Plugins.Camera.getPhoto({
+      quality: 100,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera
+    });
+
+    this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
   }
 
   ngOnDestroy() {}

@@ -3,7 +3,7 @@
         {
           "name": "DASHBOARD.NEWORDER",
           "link": "/",
-          "icon": "assets/icon/logo.png",
+          "icon": "assets/icon/new-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
@@ -17,7 +17,7 @@
         {
           "name": "DASHBOARD.MYORDER",
           "link": "/draft-order",
-          "icon": "assets/icon/logo.png",
+          "icon": "assets/icon/my-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
@@ -45,7 +45,7 @@
         {
           "name": "DASHBOARD.DRAFTORDER",
           "link": "/draft-order",
-          "icon": "assets/icon/logo.png",
+          "icon": "assets/icon/draft-order.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
@@ -66,21 +66,21 @@
         {
           "name": "DASHBOARD.ADDDISTRIBUTOR",
           "link": "/add-distributor",
-          "icon": "assets/icon/logo.png",
+          "icon": "assets/icon/add-distributer.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
         {
           "name": "DASHBOARD.PRODUCTSEARCH",
           "link": "/product-search",
-          "icon": "assets/icon/logo.png",
+          "icon": "assets/icon/product-search.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
         {
           "name": "DASHBOARD.SCHEMES",
           "link": "/schemes",
-          "icon": "assets/icon/logo.png",
+          "icon": "assets/icon/schemes.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         }

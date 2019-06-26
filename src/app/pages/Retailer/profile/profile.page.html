@@ -12,7 +12,6 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <!-- <ion-label position="floating" translate>PROFILE.BUSINESS_TYPE</ion-label> -->
           <pr-select
             [placeHolder]="'Type of Business'"
             [ctrName]="'businessType'"
@@ -24,9 +23,6 @@
             [disableControl]="false"
             class="selectWidth"
           ></pr-select>
-          <!-- <ion-select formControlName="businessType">
-          <ion-select-option *ngFor="let item of businessTypes" [value]="item.BusinessTypeId">{{item.BusinessTypeName}}</ion-select-option>
-        </ion-select> -->
         </ion-item>
       </ion-col>
     </ion-row>
@@ -80,7 +76,6 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <!-- <ion-label position="floating" translate>PROFILE.REGION</ion-label>         -->
           <pr-select
             [placeHolder]="'Regions'"
             [ctrName]="'region'"
@@ -155,18 +150,29 @@
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="imgPreview">
+    <!-- <ion-row *ngIf="imgPreview">
       <ion-col>
         <img src="imgPreview" />
       </ion-col>
-    </ion-row>
+    </ion-row> -->
 
     <ion-row *ngIf="!disable">
-      <ion-col size="2" text-center (click)="takePhoto(1)">
-        <ion-icon class="camera" name="camera"></ion-icon>
+      <ion-col size="2" text-center>
+        <ion-content>        
+          <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+            <ion-fab-button (click)="takePicture()">
+              <ion-icon name="camera"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </ion-content>
       </ion-col>
       <ion-col size="10" text-start>
         <ion-label>Upload / Capture Drug License or Bill Copy</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <img [src]="photo" >
       </ion-col>
     </ion-row>
 
@@ -181,7 +187,6 @@
         <ion-button
           (click)="editProfile(true)"
           *ngIf="!disable"
-          [routerLink]="link"
           color="mustard"
           expand="full"
           fill="solid"

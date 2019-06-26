@@ -3,3 +3,12 @@
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
 }
+
+.sc-ion-card-md-h {
+  height: 132px;
+  box-shadow: 1px 1px;
+}
+
+::ng-deep .swiper-slide img {
+  width: 100%;
+}

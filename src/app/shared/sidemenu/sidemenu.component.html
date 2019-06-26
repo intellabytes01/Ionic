@@ -2,9 +2,40 @@
   <ion-menu side="start" type="overlay" menuId="menuLeft">
     <ion-content>
       <div class="sidemenu-header">
+          <!-- <div text-center>             
+                <ion-button (click)="openModal()"><ion-icon ios="ios-camera" md="md-camera"></ion-icon></ion-button>             
+          </div> -->
+          <ion-row style="height: 100%; flex-direction: column">
+              <ion-item no-lines>
+                  <ion-card (click)="openModal()">
+                      <ion-card-content>
+                          <img [src]="photo" *ngIf="photo" />
+                      </ion-card-content>
+                  </ion-card>
+              </ion-item>
+          </ion-row>
+          
+        <!-- <ion-row>
+          <ion-col text-center>
+            <ion-content>        
+              <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+                <ion-fab-button (click)="takePicture()">
+                  <ion-icon name="camera"></ion-icon>
+                </ion-fab-button>
+              </ion-fab>
+            </ion-content>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <img [src]="photo" >
+          </ion-col>
+        </ion-row> -->
+
+
         <ion-row>
           <ion-col text-center>
-            <img src="assets/icon/logo.png" />
+            <!-- <img src="assets/icon/logo.png" /> -->
           </ion-col>
         </ion-row>
 

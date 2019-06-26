@@ -1,0 +1,22 @@
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <ion-label color="dark">
+          Capture Profile Image
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <ion-label color="dark"><h5>Capture/Upload Profile Image</h5></ion-label>
+      </ion-col>      
+    </ion-row>
+    <ion-row>
+      <ion-col text-center size="6">
+        <ion-button (click)="getPictureFomLibrary()">Upload</ion-button>
+      </ion-col>
+      <ion-col text-center size="6">
+          <ion-button (click)="takePicture()">Capture</ion-button>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
