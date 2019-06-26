@@ -132,5 +132,14 @@
   "FEEDBACKTYPE_PLACEHOLDER": "Select feedback type",
   "FEEDBACKTO_PLACEHOLDER": "Select type",
   "FEEDBACKSTORE_PLACEHOLDER": "Select Store",
-  "MESSAGE_PLACEHOLDER": "Type your message"
+  "MESSAGE_PLACEHOLDER": "Type your message",
+
+  "NEW_ORDER": {
+    "STORE_PLACEHOLDER": "Select Store",
+    "SEARCH_PRODUCT_PLACEHOLDER": "Search Product",
+    "NOTFOUND": "No Products Found",
+    "DELIVERY_PLACEHOLDER": "Select Delivery Mode",
+    "PRIORITY_PLACEHOLDER": "Select Delivery Priority",
+    "REMARKS_PLACEHOLDER": "Remarks"
+  }
 }
