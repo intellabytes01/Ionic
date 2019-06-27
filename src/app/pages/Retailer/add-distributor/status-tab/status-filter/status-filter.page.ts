@@ -10,7 +10,7 @@ export class StatusFilterPage implements OnInit {
   statusList: any[] = ['Mapped', 'Pending', 'Not Mapped', 'Contact Dist'];
   selectedStatus: string;
 
-  constructor(private modalController: ModalController, private navParams: NavParams) {}
+  constructor(public modalController: ModalController, private navParams: NavParams) {}
 
   ngOnInit() {
     console.log(this.navParams.get('value'));
