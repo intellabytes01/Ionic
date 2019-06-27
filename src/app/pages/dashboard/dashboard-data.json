@@ -16,7 +16,7 @@
         },
         {
           "name": "DASHBOARD.MYORDER",
-          "link": "/draft-order",
+          "link": "/myorder",
           "icon": "assets/icon/logo.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]

@@ -79,6 +79,12 @@ const routes: Routes = [
       './pages/Retailer/new-order/new-order.module#NewOrderPageModule',
     canActivate: [AuthenticationGuard],
     data: { title: 'New Order', preload: false, delay: true }
+  },
+  {
+    path: 'myorder',
+    loadChildren: './pages/my-order/my-order.module#MyOrderPageModule',
+    canActivate: [AuthenticationGuard],
+    data: {title: 'My Orders', preload: false, delay: true}
   }
 ];
 
