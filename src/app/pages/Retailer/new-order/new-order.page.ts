@@ -13,10 +13,12 @@ import { SimilarProductsModalPage } from './similar-products-modal/similar-produ
 })
 export class NewOrderPage implements OnInit {
   private neworderForm: FormGroup;
-  key = `Order${Date.now()}`;
-  testOrderData = fromModel.data;
+  key = `Order#${Date.now()}`;
+  testOrderData: any[] = [];
+  storeList: any[] = [];
   searchList: any[] = [];
-  productList: any[] = fromModel.data.Order1561453855577.productList;
+  productList: any[] = [];
+  tempProductList: any[] = [];
   products$: any;
   deliveryModeList: any[] = fromModel.deliveryModeList;
   deliveryPriorityList: any[] = fromModel.deliveryPriorityList;
@@ -29,21 +31,38 @@ export class NewOrderPage implements OnInit {
   ) {
     this.route.params.subscribe(param => {
       // Update Case
-      // const order = this.newOrderService.getOrder();
-      // if (order) {
-      //   this.key = Object.keys(order)[0];
-      //   this.testOrderData = order[this.key];
-      // }
+      if (param.orderKey) {
+        this.key = param.orderKey;
+        this.storage.forEach((value, key, index) => {
+          if (key === this.key) {
+            console.log(value);
+            this.testOrderData = value;
+            this.setTempList();
+          }
+        });
+      }
     });
+    this.productList = Object.assign(this.productList, fromModel.data['Order#1561453855577'].productList);
+    this.testOrderData = Object.assign(this.testOrderData, fromModel.data);
+    this.setTempList();
   }
+
+  setTempList() {
+    this.key = 'Order#1561453855577';
+    this.tempProductList = Object.assign(this.tempProductList, this.testOrderData[this.key].productList);
+  }
+
+  // Save to offline storage
 
   saveToStorage() {
     this.storage.set(this.key, this.testOrderData);
   }
 
+  // Fetch draft order list (for testing will be moved to draft order page)
+
   fetchFromStorage() {
     this.storage.forEach((value, key, index) => {
-      if (key.substring(0, 5) === 'Order') {
+      if (key.split('#')[0] === 'Order') {
         console.log(value);
       }
     });
@@ -52,7 +71,7 @@ export class NewOrderPage implements OnInit {
   ngOnInit() {
     this.neworderForm = this.formBuilder.group({
       searchText: ['', Validators.compose([])],
-      product: [
+      store: [
         {
           id: null,
           name: ''
@@ -97,9 +116,61 @@ export class NewOrderPage implements OnInit {
     }
   }
 
-  selectProduct() {}
+  // Select Product from search list
 
-  createOrder() {}
+  selectProduct(product: object) {
+    this.neworderForm.patchValue({
+      searchText: ''
+    });
+    const productPresent = this.tempProductList.find((element) => {
+      return (element.id === product['id']);
+    });
+    if (!productPresent) {
+      this.tempProductList.push(product);
+    }
+  }
+
+  // Delete product
+
+  deleteProduct(index) {
+    this.neworderForm.patchValue({
+      searchText: ''
+    });
+    this.testOrderData[this.key].productList.splice(index, 1);
+    this.tempProductList.splice(index, 1);
+  }
+
+  // Set quantity of product selected
+
+  setQuantity(index, val) {
+    this.tempProductList[index].quantity = val;
+  }
+
+  // Add product and save as draft
+
+  add(product: object) {
+    this.testOrderData[this.key].productList.push(product);
+    this.saveToStorage();
+  }
+
+  // Create order
+
+  createOrder() {
+
+  }
+
+  // Change Store
+
+  changeStore(store) {
+
+  }
+
+  // Delete all
+
+  deleteAll() {
+    this.testOrderData[this.key].productList = [];
+    this.tempProductList = [];
+  }
 
   // Similar Products modal
 

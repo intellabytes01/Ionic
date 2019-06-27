@@ -1,11 +1,12 @@
 {
   "data": {
-    "Order1561453855577": {
+    "Order#1561453855577": {
       "store": "Demo Store 1",
       "productList": [
         {
           "name": "Corex",
-          "id": "1"
+          "id": "1",
+          "quantity": 200
         }
       ],
       "total": 800,
