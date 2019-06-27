@@ -20,7 +20,6 @@ import { authReducers } from './core/authentication/auth.states';
 import { AppPreloadingStrategy } from './app-preloading.module';
 import { Camera } from '@ionic-native/camera/ngx';
 import { NgxPermissionsModule, NgxPermissionsService } from 'ngx-permissions';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,7 +46,7 @@ driverOrder: ['sqlite', 'indexeddb', 'websql', 'localstorage']
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AppPreloadingStrategy,
-    Camera, NgxPermissionsService, OneSignal
+    Camera, NgxPermissionsService
   ],
   bootstrap: [AppComponent]
 })

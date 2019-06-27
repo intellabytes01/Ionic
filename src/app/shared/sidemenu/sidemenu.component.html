@@ -5,8 +5,8 @@
           <!-- <div text-center>             
                 <ion-button (click)="openModal()"><ion-icon ios="ios-camera" md="md-camera"></ion-icon></ion-button>             
           </div> -->
-          <ion-row style="height: 100%; flex-direction: column">
-              <ion-item no-lines>
+          <ion-row class="cardLayout">
+              <ion-item no-lines class="alignSelf-center marginTop">
                   <ion-card (click)="openModal()">
                       <ion-card-content>
                           <img [src]="photo" *ngIf="photo" />
