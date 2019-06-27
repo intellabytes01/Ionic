@@ -1,3 +1,4 @@
+<div *ngIf="items && items.length > 0">
 <ionic-selectable
   name="{{ ctrName }}"
   [items]="items"
@@ -6,5 +7,9 @@
   [canSearch]="canSearch"
   [placeholder]="placeHolder"
   (onChange)="selectChange($event)" 
->
+  [disabledItems]="disableControl? items: ''"
+  [(ngModel)]= "selectedValue"
+  
+  >
 </ionic-selectable>
+</div>

@@ -2,99 +2,162 @@
   <form [formGroup]="profileForm">
     <ion-row>
       <ion-col>
-        <ion-label position="floating">Login Id</ion-label>
-        <ion-input formControlName="loginId" type="text"></ion-input>
+        <ion-item>
+          <ion-label position="floating" translate>PROFILE.LOGIN_ID</ion-label>
+          <ion-input formControlName="loginId" type="text" 
+          [ngModel]="(userProfileDetails$ | async)?.RetailerId"></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
-
     <ion-row>
       <ion-col>
-        <ion-label position="floating">Business Type</ion-label>
-        <ion-select formControlName="businessType">
+        <ion-item>
+          <!-- <ion-label position="floating" translate>PROFILE.BUSINESS_TYPE</ion-label> -->
+          <pr-select
+            [placeHolder]="'Type of Business'"
+            [ctrName]="'businessType'"
+            [items]="businessTypes$ | async"
+            [id]="'BusinessTypeId'"
+            [name]="'BusinessTypeName'"
+            [canSearch]="true"
+            (valueChange)="updateBussinessType($event)"
+            [disableControl]="false"
+            class="selectWidth"
+          ></pr-select>
+          <!-- <ion-select formControlName="businessType">
           <ion-select-option *ngFor="let item of businessTypes" [value]="item.BusinessTypeId">{{item.BusinessTypeName}}</ion-select-option>
-        </ion-select>
+        </ion-select> -->
+        </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">Shop/Firm Full Name</ion-label>
-        <ion-input formControlName="shopName" type="text"></ion-input>
+        <ion-item>
+          <ion-label position="floating" translate
+            >PROFILE.SHOP_FULL_NAME</ion-label>
+          <ion-input formControlName="shopName" type="text"
+          [ngModel]="(userProfileDetails$ | async) ?.RetailerName"></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">Name</ion-label>
-        <ion-input
-          formControlName="retailerName"
-          type="text"
-          [disabled]="disable"
-        ></ion-input>
+        <ion-item>
+          <ion-label position="floating" translate>PROFILE.NAME</ion-label>
+          <ion-input formControlName="firstName" type="text"
+          [ngModel]="(userProfileDetails$ | async) ?.RetailerName"></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">Address</ion-label>
-        <ion-input formControlName="address" type="text" [disabled]="disable"></ion-input>
+        <ion-item>
+          <ion-label position="floating" translate>PROFILE.ADDRESS</ion-label>
+          <ion-input formControlName="address1" type="text"
+          [ngModel]="(userProfileDetails$ | async) ?.Address1"></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">Pincode</ion-label>
-        <ion-input formControlName="pincode" type="text" [disabled]="disable"></ion-input>
+        <ion-item>
+          <ion-label position="floating" translate>PROFILE.PINCODE</ion-label>
+          <ion-input
+            formControlName="pincode"
+            oninput="this.value=this.value.slice(0,6)"
+            type="text"
+            maxlength="6"
+            [ngModel]="(userProfileDetails$ | async) ?.Pincode"
+          ></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">Region</ion-label>
-        <ion-select formControlName="region">
-          <ion-select-option *ngFor="let item of regions" [value]="item.RegionId">{{item.RegionName}}</ion-select-option>
-        </ion-select>
+        <ion-item>
+          <!-- <ion-label position="floating" translate>PROFILE.REGION</ion-label>         -->
+          <pr-select
+            [placeHolder]="'Regions'"
+            [ctrName]="'region'"
+            [items]="regions$ | async"
+            [id]="'RegionId'"
+            [name]="'RegionName'"
+            [canSearch]="true"
+            [preSelectedValue]="(userProfileDetails$ | async) ?.RegionName"
+            (valueChange)="updateRegion($event)"
+            class="selectWidth"
+          ></pr-select>
+        </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input formControlName="email" type="text" [disabled]="disable"></ion-input>
+        <ion-item>
+          <ion-label position="floating" translate>PROFILE.EMAIL</ion-label>
+          <ion-input formControlName="email" type="email"
+          [ngModel]="(userProfileDetails$ | async) ?.Email"></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">Mobile Number</ion-label>
-        <ion-input formControlName="mobile" type="text"></ion-input>
+        <ion-item>
+          <ion-label position="floating" translate
+            >PROFILE.MOBILE_NUMBER</ion-label
+          >
+          <ion-input
+            formControlName="mobileNumber"
+            type="tel"
+            maxlength="10"
+            minlength="10"
+            [ngModel]="(userProfileDetails$ | async) ?.MobileNumber"
+          ></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">Telephone</ion-label>
-        <ion-input formControlName="telephone" type="text" [disabled]="disable"></ion-input>
+        <ion-item>
+          <ion-label position="floating" translate>PROFILE.TELEPHONE</ion-label>
+          <ion-input formControlName="telephone" type="number"
+          [ngModel]="(userProfileDetails$ | async) ?.Telephone"></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">Drug License Number</ion-label>
-        <ion-input formControlName="drugLicenseNumber" type="text"></ion-input>
+        <ion-item>
+          <ion-label position="floating">DRUG_LICENSE_NUMBER</ion-label>
+          <ion-input formControlName="licenseNumber" type="text"
+          [ngModel]="(userProfileDetails$ | async) ?.LicenseNumber"></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">GSTIN Number</ion-label>
-        <ion-input formControlName="gstin" type="text"></ion-input>
+        <ion-item>
+          <ion-label position="floating" translate
+            >PROFILE.GSTIN_NUMBER</ion-label
+          >
+          <ion-input formControlName="gstinNumber" type="text"
+          [ngModel]="(userProfileDetails$ | async) ?.GSTINNumber"></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row *ngIf="imgPreview">
       <ion-col>
-        <img src="imgPreview">
+        <img src="imgPreview" />
       </ion-col>
     </ion-row>
 
@@ -102,7 +165,7 @@
       <ion-col size="2" text-center (click)="takePhoto(1)">
         <ion-icon class="camera" name="camera"></ion-icon>
       </ion-col>
-      <ion-col size="10" text-start>        
+      <ion-col size="10" text-start>
         <ion-label>Upload / Capture Drug License or Bill Copy</ion-label>
       </ion-col>
     </ion-row>
@@ -122,8 +185,9 @@
           color="mustard"
           expand="full"
           fill="solid"
+          translate
         >
-          Cancel
+          PROFILE.BACK_BUTTON
         </ion-button>
       </ion-col>
       <ion-col size="6" class="create">
@@ -133,7 +197,8 @@
           color="blue"
           expand="full"
           fill="solid"
-          >Edit Profile</ion-button
+          translate
+          >PROFILE.EDIT_PROFILE</ion-button
         >
 
         <ion-button
@@ -142,7 +207,9 @@
           color="blue"
           expand="full"
           fill="solid"
-          >Update Profile</ion-button
+          [disabled]="!profileForm.valid"
+          translate
+          >PROFILE.UPDATE_BUTTON</ion-button
         >
       </ion-col>
     </ion-row>

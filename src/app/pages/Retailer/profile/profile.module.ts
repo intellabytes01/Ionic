@@ -8,6 +8,12 @@ import { IonicModule } from '@ionic/angular';
 import { ProfilePage } from './profile.page';
 import { SharedModule } from '@app-shared/shared.module';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { TranslateModule } from '@ngx-translate/core';
+import { ProfileService } from './profile.service';
+import * as fromProfileReducer from './store/profile.reducers';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { ProfileEffects } from './store/profile.effects';
 
 const routes: Routes = [
   {
@@ -22,10 +28,14 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+    TranslateModule,
     SharedModule,
-    IonicSelectableModule
+    IonicSelectableModule,
+    StoreModule.forFeature('profile', fromProfileReducer.profileReducer),
+    EffectsModule.forRoot([ProfileEffects])
   ],
-  declarations: [ProfilePage]
+  declarations: [ProfilePage],
+  providers: [ProfileService]
 })
 export class ProfilePageModule {}

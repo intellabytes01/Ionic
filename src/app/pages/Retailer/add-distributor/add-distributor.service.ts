@@ -15,10 +15,17 @@ export interface RequestContext {
   toStoreId: number;
 }
 
+export interface DistributorContext {
+  retailerId: number;
+  storeName: string;
+  mobile: number;
+}
+
 const routes = {
   stores: '/stores/nonmapped?retailerId=',
   requestsubmit: '/stores/retailer/mappings',
-  status: '/stores/nonmapped/status?retailerId='
+  status: '/stores/nonmapped/status?retailerId=',
+  distributorsubmit: '/stores/retailer/request'
 };
 
 @Injectable()
@@ -56,6 +63,15 @@ export class AddDistributorService {
    */
   getGetStatus(retailerId): Observable<any> {
     return this.httpClient.get(`${routes.status}${retailerId}`).pipe(
+      map((data: any) => ({
+        data
+      })),
+      catchError(error => this.errorHandler(error))
+    );
+  }
+
+  submitDistributor(context: DistributorContext): Observable<any> {
+    return this.httpClient.post(routes.distributorsubmit, context).pipe(
       map((data: any) => ({
         data
       })),

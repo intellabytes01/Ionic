@@ -11,6 +11,9 @@ import {
   GetStatus,
   GetStatusSuccess,
   GetStatusFailure,
+  DistributorSubmit,
+  DistributorSubmitSuccess,
+  DistributorSubmitFailure
 } from './add-distributor.actions';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
@@ -108,5 +111,37 @@ export class AddDistributorEffects {
   @Effect({ dispatch: false })
   GetStatusFailure: Observable<any> = this.actions.pipe(
     ofType(AddDistributorAction.GETSTATUS_FAILURE)
+  );
+
+  // Distributor Submit
+
+  @Effect()
+  DistributorSubmit: Observable<Action> = this.actions.pipe(
+    ofType(AddDistributorAction.DISTRIBUTORSUBMIT),
+    map((action: DistributorSubmit) => action.payload),
+    switchMap((payload) => {
+      return this.addDistributorService.submitDistributor(payload).pipe(
+        map(data => {
+          return new DistributorSubmitSuccess({ distributorSubmit: data['data'] });
+        }),
+        catchError(error => of(new DistributorSubmitFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  DistributorSubmitSuccess: Observable<any> = this.actions.pipe(
+    ofType(AddDistributorAction.DISTRIBUTORSUBMIT_SUCCESS),
+    tap(() => {
+      this.alert.presentToast('Distributor submitted successfully.');
+    })
+  );
+
+  @Effect({ dispatch: false })
+  DistributorSubmitFailure: Observable<any> = this.actions.pipe(
+    ofType(AddDistributorAction.DISTRIBUTORSUBMIT_FAILURE),
+    tap(() => {
+      this.alert.presentToast('Something went wrong, Please try again later.');
+    })
   );
 }

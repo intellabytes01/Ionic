@@ -18,15 +18,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { UtilityService } from './services/utility.service';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { SelectComponent } from './select/select.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SlidePage } from './slide/slide.page';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { ShowHideInputDirective } from './directives/show-hide-input.directive';
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
+import { DisableControlDirective } from './directives/disable-control.directive';
 
 @NgModule({
   imports: [IonicModule, CommonModule, RouterModule, TranslateModule, IonicSelectableModule, FormsModule,
-    NgxPermissionsModule],
+    NgxPermissionsModule, ReactiveFormsModule],
   declarations: [
     LoaderComponent,
     TabsPage,
@@ -41,7 +42,8 @@ import { EqualValidatorDirective } from './directives/equal-validator.directive'
     SelectComponent,
     SlidePage,
     ShowHideInputDirective,
-    EqualValidatorDirective
+    EqualValidatorDirective,
+    DisableControlDirective
   ],
   exports: [
     LoaderComponent,
@@ -57,7 +59,8 @@ import { EqualValidatorDirective } from './directives/equal-validator.directive'
     SelectComponent,
     SlidePage,
     ShowHideInputDirective,
-    EqualValidatorDirective
+    EqualValidatorDirective,
+    DisableControlDirective
   ],
   providers: [AlertService, UtilityService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

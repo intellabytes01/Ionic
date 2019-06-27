@@ -93,7 +93,10 @@
     "CONTACT": "Contact Number",
     "STATUS": "Status",
     "FILTER_TEXT": "Click here to filter Status",
-    "REQUEST_TAB_MESSAGE_3": "Please select atleast one store."
+    "REQUEST_TAB_MESSAGE_3": "Please select atleast one store.",
+    "VALIDATIONS": {
+      "DISTRIBUTOR_NAME": "Distributor name is required."
+    }
   },
 
   "VALIDATIONS": {
@@ -133,6 +136,24 @@
   "FEEDBACKTO_PLACEHOLDER": "Select type",
   "FEEDBACKSTORE_PLACEHOLDER": "Select Store",
   "MESSAGE_PLACEHOLDER": "Type your message",
+
+  "PROFILE": {
+    "LOGIN_ID":"Login Id",
+    "BUSINESS_TYPE":"Business Type",
+    "SHOP_FULL_NAME":"Shop/Firm Full Name",
+    "NAME":"Name",
+    "ADDRESS":"Address",
+    "PINCODE":"Pincode",
+    "REGION":"Region",
+    "EMAIL":"Email",
+    "MOBILE_NUMBER":"Mobile Number",
+    "TELEPHONE":"Telephone",
+    "DRUG_LICENSE_NUMBER":"Drug License Number",
+    "GSTIN_NUMBER":"GSTIN Number",
+    "BACK_BUTTON":"Back",
+    "UPDATE_BUTTON":"Update Profile",
+    "EDIT_PROFILE": "Edit Profile"
+  },
 
   "NEW_ORDER": {
     "STORE_PLACEHOLDER": "Select Store",
