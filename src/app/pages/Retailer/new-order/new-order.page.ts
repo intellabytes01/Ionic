@@ -12,7 +12,7 @@ import { SimilarProductsModalPage } from './similar-products-modal/similar-produ
   styleUrls: ['./new-order.page.scss']
 })
 export class NewOrderPage implements OnInit {
-  private neworderForm: FormGroup;
+  public neworderForm: FormGroup;
   key = `Order#${Date.now()}`;
   testOrderData: any[] = [];
   storeList: any[] = [];

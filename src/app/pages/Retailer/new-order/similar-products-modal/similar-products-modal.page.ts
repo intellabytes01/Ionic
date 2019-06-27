@@ -9,7 +9,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 export class SimilarProductsModalPage implements OnInit {
 
   title: string = 'Similar Products Modal';
-  constructor(private modalController: ModalController, private navParams: NavParams) { }
+  constructor(public modalController: ModalController, private navParams: NavParams) { }
 
   add() {
     this.modalController.dismiss();
