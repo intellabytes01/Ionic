@@ -66,7 +66,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createForm();
-    this.photo = '../../../assets/icon/user-default.png';
+    this.photo = '../../../assets/icon/gstin.png';
   }
 
   createForm() {
