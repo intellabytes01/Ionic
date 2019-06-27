@@ -12,6 +12,7 @@ import * as fromMyOrderReducer from './store/myOrder.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { MyOrderEffects } from './store/myOrder.effects';
 import { TranslateModule } from '@ngx-translate/core';
+import { OrderFilterModalPageModule } from './order-filter-modal/order-filter-modal.module';
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     StoreModule.forFeature('myOrder', fromMyOrderReducer.myOrderReducer),
     EffectsModule.forRoot([MyOrderEffects]),
-    TranslateModule
+    TranslateModule,
+    OrderFilterModalPageModule
   ],
   declarations: [MyOrderPage]
 })
