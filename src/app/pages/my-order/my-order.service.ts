@@ -6,7 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 
 const log = new Logger('MyOrder');
 
-export interface FeedbackContext {
+export interface MyOrderContext {
   fromDate: string;
   toDate: string;
   storeId: string;
@@ -32,8 +32,8 @@ export class MyOrderService {
     * Get My Orders.
     * @return object of orders.
     */
-  getMyOrders(): Observable<any> {
-    return this.httpClient.get(routes.getOrder).pipe(
+  getMyOrders(context: MyOrderContext): Observable<any> {
+    return this.httpClient.post(routes.getOrder, context).pipe(
       map((data: any) => ({
         data
       })),

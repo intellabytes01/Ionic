@@ -5,29 +5,56 @@ import { Store, select } from '@ngrx/store';
 import { myOrderData } from './store/myOrder.reducers';
 import { ModalController, IonInfiniteScroll } from '@ionic/angular';
 import { OrderFilterModalPage } from './order-filter-modal/order-filter-modal.page';
+import { untilDestroyed } from '@app/core';
 
 @Component({
   selector: 'pr-my-order',
   templateUrl: './my-order.page.html',
-  styleUrls: ['./my-order.page.scss'],
+  styleUrls: ['./my-order.page.scss']
 })
 export class MyOrderPage implements OnInit {
   myOrderList$: any;
+  myOrderList: any[] = [];
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  currentPage = 1;
+  limit = 15;
+  count = 0;
+  orderFilter: any = {
+    fromDate: '16/01/17',
+    toDate: '21/06/19',
+    storeId: 151,
+    orderNo: 'L1'
+  };
   constructor(
     private store: Store<MyOrderState>,
-    public modalController: ModalController,
+    public modalController: ModalController
   ) {
     this.getMyOrders();
     this.myOrderList$ = this.store.pipe(select(myOrderData));
-   }
-
-  ngOnInit() {
+    this.myOrderList$.subscribe(data => {
+      if (data) {
+        this.count = data.length;
+        this.myOrderList = this.myOrderList.concat(data);
+      }
+    }),
+      untilDestroyed(this);
   }
+
+  ngOnInit() {}
 
   getMyOrders() {
     const payload = {
-      orderDetails: {}
+      orderDetails: {
+        fromDate: this.orderFilter.fromDate,
+        toDate: this.orderFilter.toDate,
+        storeId: this.orderFilter.storeId,
+        orderNo: this.orderFilter.orderNo,
+        pagination: {
+          currentPage: this.currentPage,
+          limit: this.limit,
+          maxDateTime: '2019-06-26 05:53:33'
+        }
+      }
     };
     this.store.dispatch(new MyOrderList(payload));
   }
@@ -35,19 +62,27 @@ export class MyOrderPage implements OnInit {
   async presentModalOrderFilter() {
     const modal = await this.modalController.create({
       component: OrderFilterModalPage,
-      componentProps: { value: '' }
+      componentProps: { value: this.orderFilter }
+    });
+    modal.onDidDismiss().then(data => {
+      if (data.data) {
+        this.orderFilter = data.data;
+      }
     });
     return await modal.present();
   }
 
   loadData(event) {
+    this.currentPage += 1;
+    this.limit += this.limit;
     const length = null;
     setTimeout(() => {
+      this.getMyOrders();
       event.target.complete();
 
       // App logic to determine if all data is loaded
       // and disable the infinite scroll
-      if (length === 1000) {
+      if (this.count < this.limit) {
         event.target.disabled = true;
       }
     }, 500);

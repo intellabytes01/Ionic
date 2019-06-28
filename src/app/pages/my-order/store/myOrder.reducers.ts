@@ -21,7 +21,7 @@ export function myOrderReducer(
     case MyOrderAction.MYORDER_SUCCESS: {
       return {
         ...state,
-        myOrderArray: action.payload.myOrders.data,
+        myOrderArray: action.payload.myOrders.data.returnData,
         errorMessage: null
       };
     }

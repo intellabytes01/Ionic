@@ -15,14 +15,14 @@ export class MyOrderEffects {
     private myOrderService: MyOrderService
   ) {}
 
-  // Feedback Types
+  // My Order
 
   @Effect()
   myOrder: Observable<Action> = this.actions.pipe(
     ofType(MyOrderAction.MYORDERLIST),
-    map((action: MyOrderList) => {}),
-    switchMap(() => {
-      return this.myOrderService.getMyOrders().pipe(
+    map((action: MyOrderList) => action.payload),
+    switchMap((payload) => {
+      return this.myOrderService.getMyOrders(payload.orderDetails).pipe(
         map(data => {
           return new MyOrderSuccess({ myOrders: data['data'] });
         }),

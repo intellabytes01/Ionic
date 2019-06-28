@@ -5,7 +5,7 @@ import {
   FormBuilder,
   AbstractControl
 } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-order-filter-modal',
@@ -36,17 +36,23 @@ export class OrderFilterModalPage implements OnInit {
     { id: '1', name: 'View' },
     { id: '2', name: 'Email' }
   ];
+  orderFilter: any = {};
   constructor(
     public formBuilder: FormBuilder,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private navParams: NavParams
   ) {}
 
+
   ngOnInit() {
+    console.log(this.navParams.get('value'));
+    this.orderFilter = this.navParams.get('value');
+
     this.orderFilterForm = this.formBuilder.group({
       store: [
         {
-          id: null,
-          name: ''
+          id: this.orderFilter.storeId,
+          name: 'Pharmex Lifecare'
         },
         Validators.compose([this.validateType])
       ],
@@ -57,9 +63,9 @@ export class OrderFilterModalPage implements OnInit {
         },
         Validators.compose([this.validateType])
       ],
-      orderNo: ['', Validators.compose([Validators.required])],
-      fromDate: ['', Validators.compose([Validators.required])],
-      toDate: ['', Validators.compose([Validators.required])],
+      orderNo: [this.orderFilter.orderNo, Validators.compose([Validators.required])],
+      fromDate: [this.orderFilter.fromDate, Validators.compose([Validators.required])],
+      toDate: [this.orderFilter.toDate, Validators.compose([Validators.required])],
       operation: ['', Validators.compose([Validators.required])],
       emailIds: ['', Validators.compose([Validators.required])],
       count: ['', Validators.compose([Validators.required])]
@@ -79,5 +85,7 @@ export class OrderFilterModalPage implements OnInit {
 
   }
 
-  orderFilterSubmit() {}
+  orderFilterSubmit() {
+    this.modalController.dismiss(this.orderFilter);
+  }
 }
