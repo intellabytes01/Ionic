@@ -4,15 +4,17 @@
       <ion-col>
         <ion-item>
           <ion-label position="floating" translate>PROFILE.LOGIN_ID</ion-label>
-          <ion-input formControlName="loginId" type="text" 
-          [ngModel]="(userProfileDetails$ | async)?.RetailerId"></ion-input>
+          <ion-input
+            formControlName="loginId"
+            type="text"
+            [ngModel]="(userProfileDetails$ | async)?.RetailerId"
+          ></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <ion-item>
-          <!-- <ion-label position="floating" translate>PROFILE.BUSINESS_TYPE</ion-label> -->
           <pr-select
             [placeHolder]="'Type of Business'"
             [ctrName]="'businessType'"
@@ -24,9 +26,6 @@
             [disableControl]="false"
             class="selectWidth"
           ></pr-select>
-          <!-- <ion-select formControlName="businessType">
-          <ion-select-option *ngFor="let item of businessTypes" [value]="item.BusinessTypeId">{{item.BusinessTypeName}}</ion-select-option>
-        </ion-select> -->
         </ion-item>
       </ion-col>
     </ion-row>
@@ -35,9 +34,13 @@
       <ion-col>
         <ion-item>
           <ion-label position="floating" translate
-            >PROFILE.SHOP_FULL_NAME</ion-label>
-          <ion-input formControlName="shopName" type="text"
-          [ngModel]="(userProfileDetails$ | async) ?.RetailerName"></ion-input>
+            >PROFILE.SHOP_FULL_NAME</ion-label
+          >
+          <ion-input
+            formControlName="shopName"
+            type="text"
+            [ngModel]="(userProfileDetails$ | async)?.RetailerName"
+          ></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -46,8 +49,11 @@
       <ion-col>
         <ion-item>
           <ion-label position="floating" translate>PROFILE.NAME</ion-label>
-          <ion-input formControlName="firstName" type="text"
-          [ngModel]="(userProfileDetails$ | async) ?.RetailerName"></ion-input>
+          <ion-input
+            formControlName="firstName"
+            type="text"
+            [ngModel]="(userProfileDetails$ | async)?.RetailerName"
+          ></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -56,8 +62,11 @@
       <ion-col>
         <ion-item>
           <ion-label position="floating" translate>PROFILE.ADDRESS</ion-label>
-          <ion-input formControlName="address1" type="text"
-          [ngModel]="(userProfileDetails$ | async) ?.Address1"></ion-input>
+          <ion-input
+            formControlName="address1"
+            type="text"
+            [ngModel]="(userProfileDetails$ | async)?.Address1"
+          ></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -71,7 +80,7 @@
             oninput="this.value=this.value.slice(0,6)"
             type="text"
             maxlength="6"
-            [ngModel]="(userProfileDetails$ | async) ?.Pincode"
+            [ngModel]="(userProfileDetails$ | async)?.Pincode"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -80,7 +89,6 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <!-- <ion-label position="floating" translate>PROFILE.REGION</ion-label>         -->
           <pr-select
             [placeHolder]="'Regions'"
             [ctrName]="'region'"
@@ -88,7 +96,7 @@
             [id]="'RegionId'"
             [name]="'RegionName'"
             [canSearch]="true"
-            [preSelectedValue]="(userProfileDetails$ | async) ?.RegionName"
+            [preSelectedValue]="(userProfileDetails$ | async)?.RegionName"
             (valueChange)="updateRegion($event)"
             class="selectWidth"
           ></pr-select>
@@ -100,8 +108,11 @@
       <ion-col>
         <ion-item>
           <ion-label position="floating" translate>PROFILE.EMAIL</ion-label>
-          <ion-input formControlName="email" type="email"
-          [ngModel]="(userProfileDetails$ | async) ?.Email"></ion-input>
+          <ion-input
+            formControlName="email"
+            type="email"
+            [ngModel]="(userProfileDetails$ | async)?.Email"
+          ></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -117,7 +128,7 @@
             type="tel"
             maxlength="10"
             minlength="10"
-            [ngModel]="(userProfileDetails$ | async) ?.MobileNumber"
+            [ngModel]="(userProfileDetails$ | async)?.MobileNumber"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -127,8 +138,11 @@
       <ion-col>
         <ion-item>
           <ion-label position="floating" translate>PROFILE.TELEPHONE</ion-label>
-          <ion-input formControlName="telephone" type="number"
-          [ngModel]="(userProfileDetails$ | async) ?.Telephone"></ion-input>
+          <ion-input
+            formControlName="telephone"
+            type="number"
+            [ngModel]="(userProfileDetails$ | async)?.Telephone"
+          ></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -137,8 +151,11 @@
       <ion-col>
         <ion-item>
           <ion-label position="floating">DRUG_LICENSE_NUMBER</ion-label>
-          <ion-input formControlName="licenseNumber" type="text"
-          [ngModel]="(userProfileDetails$ | async) ?.LicenseNumber"></ion-input>
+          <ion-input
+            formControlName="licenseNumber"
+            type="text"
+            [ngModel]="(userProfileDetails$ | async)?.LicenseNumber"
+          ></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -149,26 +166,52 @@
           <ion-label position="floating" translate
             >PROFILE.GSTIN_NUMBER</ion-label
           >
-          <ion-input formControlName="gstinNumber" type="text"
-          [ngModel]="(userProfileDetails$ | async) ?.GSTINNumber"></ion-input>
+          <ion-input
+            formControlName="gstinNumber"
+            type="text"
+            [ngModel]="(userProfileDetails$ | async)?.GSTINNumber"
+          ></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="imgPreview">
+    <ion-row *ngIf="!disable">
       <ion-col>
-        <img src="imgPreview" />
+        <ion-item>
+          <ion-label>Upload / Capture Drug License or Bill Copy</ion-label>
+        </ion-item>
       </ion-col>
     </ion-row>
+    
+    <ion-row style="height: 100%; flex-direction: column" *ngIf="!disable">
+      <ion-item no-lines class="alignSelf-center">
+        <ion-card (click)="openModal()">
+          <ion-card-content>
+            <img [src]="photo" *ngIf="photo" />
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-row>
 
-    <ion-row *ngIf="!disable">
-      <ion-col size="2" text-center (click)="takePhoto(1)">
-        <ion-icon class="camera" name="camera"></ion-icon>
+    <!-- <ion-row *ngIf="!disable">
+      <ion-col size="2" text-center>
+        <ion-content>        
+          <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+            <ion-fab-button (click)="takePicture()">
+              <ion-icon name="camera"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </ion-content>
       </ion-col>
       <ion-col size="10" text-start>
         <ion-label>Upload / Capture Drug License or Bill Copy</ion-label>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col>
+        <img [src]="photo" >
+      </ion-col>
+    </ion-row> -->
 
     <br />
 
@@ -181,7 +224,6 @@
         <ion-button
           (click)="editProfile(true)"
           *ngIf="!disable"
-          [routerLink]="link"
           color="mustard"
           expand="full"
           fill="solid"

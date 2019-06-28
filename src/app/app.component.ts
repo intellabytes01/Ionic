@@ -18,6 +18,7 @@ import { SaveToken } from './core/authentication/actions/auth.actions';
 import { AuthState } from './core/authentication/auth.states';
 import { Store } from '@ngrx/store';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { Platform } from '@ionic/angular';
 
 const log = new Logger('App');
 
@@ -38,7 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private storage: Storage,
     private authService: AuthenticationService,
     private store: Store<AuthState>,
-    private oneSignal: OneSignal
+    private oneSignal: OneSignal,
+    private platform: Platform
   ) {
     this.initializeApp();
   }
@@ -49,7 +51,9 @@ export class AppComponent implements OnInit, OnDestroy {
       Logger.enableProductionMode();
     }
 
-    this.pushSetup();
+    if (this.platform.is('cordova')) {
+      this.pushSetup();
+    }
 
     // log.debug('init');
 

@@ -9,7 +9,8 @@ import { I18nService, untilDestroyed } from '@app/core';
 import { Store } from '@ngrx/store';
 import { AuthState, selectAuthState } from '@app/core/authentication/auth.states';
 import { LogIn } from '@app/core/authentication/actions/auth.actions';
-
+import { ModalController } from '@ionic/angular';
+import { ModalPopupPage } from '@app/shared/modal-popup/modal-popup.page';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   passwordType = 'password';
   passwordIcon = 'eye-off';
   loginForm: FormGroup;
+  dataReturned:any;
 
 // tslint:disable-next-line: variable-name
   validation_messages = {
@@ -64,6 +66,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private i18nService: I18nService,
     private store: Store<AuthState>,
     public menuCtrl: MenuController,
+    public modalController: ModalController
   ) {
     this.createForm();
   }
@@ -117,4 +120,22 @@ export class LoginComponent implements OnInit, OnDestroy {
     return index;
   }
 
+  // async openModal() {
+  //   const modal = await this.modalController.create({
+  //     component: ModalPopupPage,
+  //     componentProps: {
+  //       "paramID": 123,
+  //       "paramTitle": "Test Title"
+  //     }
+  //   });
+ 
+  //   modal.onDidDismiss().then((dataReturned) => {
+  //     if (dataReturned !== null) {
+  //       this.dataReturned = dataReturned.data;
+  //       //alert('Modal Sent Data :'+ dataReturned);
+  //     }
+  //   });
+ 
+  //   return await modal.present();
+  // }
 }
