@@ -178,8 +178,20 @@
     "MRP": "MRP",
     "PTR": "PTR",
     "GRAND_TOTAL": "Grand Total",
+    "TOTAL": "Total",
     "DELETE": "DELETE >",
     "DRAFT_PO": "DRAFT PO >",
     "CONFIRM": "CONFIRM >"
+  },
+
+  "MY_ORDER": {
+    "ORDERID": "OrderId",
+    "PLACED": "Placed",
+    "UPLOADED": "Uploaded",
+    "PROCESSED": "Processed",
+    "CALL": "Call Now",
+    "REMARKS": "Remarks",
+    "MODE": "Delivery Mode",
+    "PRIORITY": "Delivery Priority"
   }
 }

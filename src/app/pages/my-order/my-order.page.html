@@ -28,10 +28,10 @@
             <ion-label>{{ order.OrderDate | date: "dd MMM yyyy h:mm a" }}</ion-label>
           </ion-col>
           <ion-col text-center size="3">
-            <ion-label class="blue-color">Placed ></ion-label>
+            <ion-label (click)="goToOrderDetails(order)" class="blue-color">Placed ></ion-label>
           </ion-col>
           <ion-col text-end size="3">
-            <ion-label>{{ order.OrderAmount }}</ion-label>
+            <ion-label>₹{{ order.OrderAmount }}</ion-label>
           </ion-col>
         </ion-row>
       </ion-col>

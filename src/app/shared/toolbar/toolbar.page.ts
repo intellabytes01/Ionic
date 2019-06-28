@@ -12,6 +12,7 @@ export class ToolbarPage implements OnInit {
   @Input() showBackButton = false;
   showHeader = false;
   title$: Observable<string>;
+  backUrl = '/dashboard';
 
   constructor(private router: Router) {
   }
@@ -23,6 +24,13 @@ export class ToolbarPage implements OnInit {
       map(event => {
         let data = null;
         let route = event['state'].root;
+
+        // Back Button Url
+        if (event['url'].split('?')[0] === '/myorder/my-order-details') {
+          this.backUrl = '/myorder';
+        } else {
+          this.backUrl = '/dashboard';
+        }
 
         if (
           event['url'] !== '/' &&

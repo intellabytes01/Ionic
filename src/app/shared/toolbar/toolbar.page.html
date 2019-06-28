@@ -1,20 +1,9 @@
-<!-- <ion-header>
-  <ion-toolbar [hidden]="!showHeader"> 
-    <ion-buttons slot="start">
-        <div *ngIf="showBackButton== true">
-          <ion-back-button defaultHref="/dashboard"></ion-back-button>
-          </div>
-    </ion-buttons>
-    <ion-title  *ngIf="(title$ | async) as title"><span translate>{{ title }}</span></ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-header [hidden]="!showHeader">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button *ngIf="showBackButton != true" menu="menuLeft"></ion-menu-button>
       <div *ngIf="showBackButton == true">
-        <ion-back-button defaultHref="/dashboard"></ion-back-button>
+        <ion-back-button [defaultHref]="backUrl"></ion-back-button>
       </div>
     </ion-buttons>
 

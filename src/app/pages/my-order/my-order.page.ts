@@ -6,6 +6,7 @@ import { myOrderData } from './store/myOrder.reducers';
 import { ModalController, IonInfiniteScroll } from '@ionic/angular';
 import { OrderFilterModalPage } from './order-filter-modal/order-filter-modal.page';
 import { untilDestroyed } from '@app/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'pr-my-order',
@@ -27,7 +28,8 @@ export class MyOrderPage implements OnInit {
   };
   constructor(
     private store: Store<MyOrderState>,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public router: Router
   ) {
     this.getMyOrders();
     this.myOrderList$ = this.store.pipe(select(myOrderData));
@@ -86,5 +88,9 @@ export class MyOrderPage implements OnInit {
         event.target.disabled = true;
       }
     }, 500);
+  }
+
+  goToOrderDetails(order){
+    this.router.navigate(['myorder/my-order-details'], { queryParams: { data: JSON.stringify(order) } });
   }
 }

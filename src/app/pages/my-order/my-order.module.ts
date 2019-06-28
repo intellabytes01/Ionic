@@ -18,6 +18,12 @@ const routes: Routes = [
   {
     path: '',
     component: MyOrderPage
+  },
+  {
+    path: 'my-order-details',
+    loadChildren:
+      './my-order-details/my-order-details.module#MyOrderDetailsPageModule',
+    data: { title: 'My Order Details', preload: false, delay: true }
   }
 ];
 
