@@ -153,5 +153,33 @@
     "BACK_BUTTON":"Back",
     "UPDATE_BUTTON":"Update Profile",
     "EDIT_PROFILE": "Edit Profile"
+  },
+
+  "NEW_ORDER": {
+    "STORE_PLACEHOLDER": "Select Store",
+    "SEARCH_PRODUCT_PLACEHOLDER": "Search Product",
+    "NOTFOUND": "No Products Found",
+    "DELIVERY_PLACEHOLDER": "Select Delivery Mode",
+    "PRIORITY_PLACEHOLDER": "Select Delivery Priority",
+    "REMARKS_PLACEHOLDER": "Remarks",
+    "TOTAL_BAL": "TOTAL BAL:",
+    "ORDER": "ORDER HISTORY >",
+    "IN_STOCK": "In Stock",
+    "LOW_STOCK": "Low Stock",
+    "NO_STOCK": "No Stock",
+    "QTY": "Qty",
+    "FREE": "Free",
+    "HS": "HS",
+    "ADD": "ADD >",
+    "STOCK": "Stock",
+    "PKG": "Pkg",
+    "CASE": "Case",
+    "BOX": "Box",
+    "MRP": "MRP",
+    "PTR": "PTR",
+    "GRAND_TOTAL": "Grand Total",
+    "DELETE": "DELETE >",
+    "DRAFT_PO": "DRAFT PO >",
+    "CONFIRM": "CONFIRM >"
   }
 }

@@ -1,0 +1,27 @@
+{
+  "data": {
+    "Order#1561453855577": {
+      "store": "Demo Store 1",
+      "productList": [
+        {
+          "name": "Corex",
+          "id": "1",
+          "quantity": 200
+        }
+      ],
+      "total": 800,
+      "deliveryMode": "Deliver to Store",
+      "priority": "Normal",
+      "remarks": ""
+    }
+  },
+  "deliveryModeList": [
+    { "id": "1", "name": "Pickup from Counter" },
+    { "id": "2", "name": "Delivery to Store" }
+  ],
+  "deliveryPriorityList": [
+    { "id": "1", "name": "Low" },
+    { "id": "2", "name": "Normal" },
+    { "id": "3", "name": "High" }
+  ]
+}

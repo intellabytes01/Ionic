@@ -2,7 +2,7 @@
     "data" : [
         {
           "name": "DASHBOARD.NEWORDER",
-          "link": "/",
+          "link": "/new-order",
           "icon": "assets/icon/new-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
