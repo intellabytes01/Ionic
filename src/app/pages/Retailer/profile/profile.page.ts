@@ -2,12 +2,8 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  ViewEncapsulation,
-  AfterViewInit,
-  AfterContentInit
-} from '@angular/core';
+  ViewEncapsulation} from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import {
@@ -22,9 +18,11 @@ import {
   regionsData,
   getProfileDetails
 } from './store/profile.reducers';
-import { selectAuthState } from '@app/core/authentication/auth.states';
 import { IProfileInterface } from './profile.interface';
-import { untilDestroyed } from '@app/core';
+import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import { ModalController } from '@ionic/angular';
+import { ModalPopupPage } from '@app/shared/modal-popup/modal-popup.page';
 
 @Component({
   selector: 'app-profile',
@@ -44,11 +42,15 @@ export class ProfilePage implements OnInit, OnDestroy {
   profileInterface: IProfileInterface;
   userProfileDetails$: any;
 
+  photo: SafeResourceUrl;
+  dataReturned: any;
+
   constructor(
-    private router: Router,
     private formBuilder: FormBuilder,
     private camera: Camera,
-    private store: Store<ProfileState>
+    private store: Store<ProfileState>,
+    private sanitizer: DomSanitizer,
+    public modalController: ModalController
   ) {
     this.getBusinessTypes();
     this.getRegions();
@@ -64,6 +66,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createForm();
+    this.photo = '../../../assets/icon/gstin.png';
   }
 
   createForm() {
@@ -189,7 +192,7 @@ export class ProfilePage implements OnInit, OnDestroy {
       imageData => {
         this.imgPreview = imageData;
       },
-      err => {}
+      () => {}
     );
   }
 
@@ -219,7 +222,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
   }
 
-  updateBussinessType(value) {
+  updateBussinessType() {
     // this.profileForm.value.BusinessTypeId = value.BusinessTypeId;
     // this.profileForm.value.BusinessTypeName = value.BusinessTypeName;
   }
@@ -227,6 +230,35 @@ export class ProfilePage implements OnInit, OnDestroy {
   updateRegion(value) {
     this.profileForm.value.regionId = value.RegionId;
     // this.profileForm.value.RegionName = value.RegionName;
+  }
+
+  async takePicture() {
+    const image = await Plugins.Camera.getPhoto({
+      quality: 100,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera
+    });
+
+    this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
+  }
+
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: ModalPopupPage,
+      componentProps: {
+        paramID: 123,
+        paramTitle: 'Test Title'
+      }
+    });
+
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned.data && dataReturned.data !== null) {
+        this.dataReturned = dataReturned.data;
+        this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(this.dataReturned && (this.dataReturned.dataUrl));
+      }
+    });
+    return await modal.present();
   }
 
   ngOnDestroy() {}

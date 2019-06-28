@@ -16,7 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./add-tab.component.scss']
 })
 export class AddTabComponent implements OnInit {
-  private distributorForm: FormGroup;
+  distributorForm: FormGroup;
   mobnumPattern = '^((\\+91-?)|0)?[0-9]{10}$';
   validation_messages = {
     mobile: [

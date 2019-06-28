@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "843743278051",
+    "firebase_url": "https://pharmarack-76176.firebaseio.com",
+    "project_id": "pharmarack-76176",
+    "storage_bucket": "pharmarack-76176.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843743278051:android:ceabc980fee933dc",
+        "android_client_info": {
+          "package_name": "com.pr.retailer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843743278051-o3eac1l5j8vnsebevelm4qnkpnf6h780.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJZtFxo52pDgOpli6AWk-nvJ7lGg1CMtU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843743278051-o3eac1l5j8vnsebevelm4qnkpnf6h780.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

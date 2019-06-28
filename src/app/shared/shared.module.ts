@@ -24,6 +24,8 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { ShowHideInputDirective } from './directives/show-hide-input.directive';
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
 import { DisableControlDirective } from './directives/disable-control.directive';
+import { ModalPopupPage } from './modal-popup/modal-popup.page';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 @NgModule({
   imports: [IonicModule, CommonModule, RouterModule, TranslateModule, IonicSelectableModule, FormsModule,
@@ -43,7 +45,8 @@ import { DisableControlDirective } from './directives/disable-control.directive'
     SlidePage,
     ShowHideInputDirective,
     EqualValidatorDirective,
-    DisableControlDirective
+    DisableControlDirective,
+    ModalPopupPage
   ],
   exports: [
     LoaderComponent,
@@ -60,9 +63,11 @@ import { DisableControlDirective } from './directives/disable-control.directive'
     SlidePage,
     ShowHideInputDirective,
     EqualValidatorDirective,
-    DisableControlDirective
+    DisableControlDirective,
+    ModalPopupPage
   ],
-  providers: [AlertService, UtilityService],
+  entryComponents: [ModalPopupPage],
+  providers: [AlertService, UtilityService, ImagePicker],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class SharedModule {}
