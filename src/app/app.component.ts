@@ -3,7 +3,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { environment } from '@env/environment';
 import { merge } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
-import { Logger, I18nService, untilDestroyed, AuthenticationService } from './core';
+import {
+  Logger,
+  I18nService,
+  untilDestroyed,
+  AuthenticationService
+} from './core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -12,6 +17,7 @@ import { Storage } from '@ionic/storage';
 import { SaveToken } from './core/authentication/actions/auth.actions';
 import { AuthState } from './core/authentication/auth.states';
 import { Store } from '@ngrx/store';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 const log = new Logger('App');
 
@@ -31,17 +37,19 @@ export class AppComponent implements OnInit, OnDestroy {
     private permissionsService: NgxPermissionsService,
     private storage: Storage,
     private authService: AuthenticationService,
-    private store: Store<AuthState>
+    private store: Store<AuthState>,
+    private oneSignal: OneSignal
   ) {
     this.initializeApp();
   }
 
   ngOnInit() {
-
     // Setup logger
     if (environment.production) {
       Logger.enableProductionMode();
     }
+
+    this.pushSetup();
 
     // log.debug('init');
 
@@ -88,5 +96,26 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.i18nService.destroy();
+  }
+
+  pushSetup() {
+    this.oneSignal.startInit(
+      '8c0d9b5c-ba78-4feb-a240-f708199f111a',
+      '843743278051'
+    );
+
+    this.oneSignal.inFocusDisplaying(
+      this.oneSignal.OSInFocusDisplayOption.Notification
+    );
+
+    this.oneSignal.handleNotificationReceived().subscribe(() => {
+      // do something when notification is received
+    });
+
+    this.oneSignal.handleNotificationOpened().subscribe(() => {
+      // do something when a notification is opened
+    });
+
+    this.oneSignal.endInit();
   }
 }
