@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppPreloadingStrategy } from './app-preloading.module';
 import { AuthenticationGuard } from './core';
 import { NgxPermissionsGuard } from 'ngx-permissions';
+import { NoComponentPage } from './pages/no-component/no-component.page';
 
 const routes: Routes = [
   {
@@ -79,6 +80,10 @@ const routes: Routes = [
       './pages/Retailer/new-order/new-order.module#NewOrderPageModule',
     canActivate: [AuthenticationGuard],
     data: { title: 'New Order', preload: false, delay: true }
+  },
+  {
+    path: '**',
+    component: NoComponentPage
   }
 ];
 

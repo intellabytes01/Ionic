@@ -137,7 +137,7 @@ export class RegisterPage implements OnInit, OnDestroy {
       };
       this.store.dispatch(new SignUp(payload));
     } else {
-      this.alertService.presentToast('Please accept terms and conditions.');
+      this.alertService.presentToast('danger', 'Please accept terms and conditions.');
     }
   }
 

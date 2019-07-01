@@ -21,6 +21,7 @@ import { AppPreloadingStrategy } from './app-preloading.module';
 import { Camera } from '@ionic-native/camera/ngx';
 import { NgxPermissionsModule, NgxPermissionsService } from 'ngx-permissions';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { NoComponentPageModule } from './pages/no-component/no-component.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,7 +41,8 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
 driverOrder: ['sqlite', 'indexeddb', 'websql', 'localstorage']
     }),
     EffectsModule.forRoot([AuthEffects]),
-    NgxPermissionsModule.forRoot()
+    NgxPermissionsModule.forRoot(),
+    NoComponentPageModule
   ],
   providers: [
     StatusBar,

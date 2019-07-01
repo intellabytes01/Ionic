@@ -153,7 +153,7 @@ export class RequestTabComponent implements OnInit {
 
   requestSubmit() {
     if (this.requestSubmitBody.storeIds.length === 0) {
-      this.alert.presentToast(
+      this.alert.presentToast('danger',
         this.translateService.instant('ADD_DISTRIBUTOR.REQUEST_TAB_MESSAGE_3')
       );
       return;

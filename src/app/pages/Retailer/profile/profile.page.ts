@@ -218,7 +218,7 @@ export class ProfilePage implements OnInit, OnDestroy {
       };
       this.store.dispatch(new SaveProfileDetails(payload.userProfileDetails));
     } else {
-      // this.alertService.presentToast('Please accept terms and conditions.');
+      // this.alertService.presentToast('danger', 'Please accept terms and conditions.');
     }
   }
 

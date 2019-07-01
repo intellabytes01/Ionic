@@ -63,13 +63,13 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
     };
     if (!sendOtpBody.mobile) {
       this.alert.presentToast(
-        this.translateService.instant('VALIDATIONS.MOBILEREQUIRED')
+        'danger', this.translateService.instant('VALIDATIONS.MOBILEREQUIRED')
       );
       return;
     }
     if (sendOtpBody.mobile.length < 10) {
       this.alert.presentToast(
-        this.translateService.instant('VALIDATIONS.MOBILEPATTERN')
+        'danger', this.translateService.instant('VALIDATIONS.MOBILEPATTERN')
       );
       return;
     }
@@ -89,7 +89,7 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
     };
     if (!verifyOtpBody.otp) {
       this.alert.presentToast(
-        this.translateService.instant('VALIDATIONS.OTPREQUIRED')
+        'danger', this.translateService.instant('VALIDATIONS.OTPREQUIRED')
       );
       return;
     }
