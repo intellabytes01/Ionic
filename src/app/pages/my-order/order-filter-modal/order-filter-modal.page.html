@@ -32,56 +32,6 @@
       </ion-col>
     </ion-row>
 
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.store">
-        <div
-          class="error-message"
-          *ngIf="
-            orderFilterForm.get('store').hasError(validation.type) &&
-            (orderFilterForm.get('store').dirty ||
-              orderFilterForm.get('store').touched)
-          "
-        >
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-
-    <ion-row>
-      <ion-col>
-        <ion-label
-          *ngIf="!orderFilterForm.value.status.id"
-          class="ionic-selectable-label"
-          >Select Status</ion-label
-        >
-        <div class="ionic-selectable-border">
-          <ionic-selectable
-            formControlName="status"
-            [items]="statusList"
-            itemValueField="id"
-            itemTextField="name"
-            [canSearch]="true"
-          >
-          </ionic-selectable>
-        </div>
-      </ion-col>
-    </ion-row>
-
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.status">
-        <div
-          class="error-message"
-          *ngIf="
-            orderFilterForm.get('status').hasError(validation.type) &&
-            (orderFilterForm.get('status').dirty ||
-              orderFilterForm.get('status').touched)
-          "
-        >
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-
     <ion-row>
       <ion-col>
         <ion-input
@@ -89,20 +39,6 @@
           type="text"
           placeholder="Order No"
         ></ion-input>
-        <div class="validation-errors">
-          <ng-container *ngFor="let validation of validation_messages.orderNo">
-            <div
-              class="error-message"
-              *ngIf="
-                orderFilterForm.get('orderNo').hasError(validation.type) &&
-                (orderFilterForm.get('orderNo').dirty ||
-                  orderFilterForm.get('orderNo').touched)
-              "
-            >
-              {{ validation.message }}
-            </div>
-          </ng-container>
-        </div>
       </ion-col>
     </ion-row>
 
@@ -112,8 +48,9 @@
       </ion-col>
       <ion-col size="4" text-start>
         <ion-datetime
-          placeholder="From Date"
-          display-format="MMM DD, YYYY"
+          [placeholder]="orderFilterForm.value.fromDate" 
+          pickerFormat="DD/MM/YY" 
+          display-format="DD/MM/YY"
           formControlName="fromDate"
         ></ion-datetime>
       </ion-col>
@@ -122,8 +59,9 @@
       </ion-col>
       <ion-col size="4" text-start>
         <ion-datetime
-          placeholder="To Date"
-          display-format="MMM DD, YYYY"
+          [placeholder]="orderFilterForm.value.toDate" 
+          pickerFormat="DD/MM/YY" 
+          display-format="DD/MM/YY"
           formControlName="toDate"
         ></ion-datetime>
       </ion-col>
@@ -156,85 +94,6 @@
                 orderFilterForm.get('toDate').hasError(validation.type) &&
                 (orderFilterForm.get('toDate').dirty ||
                   orderFilterForm.get('toDate').touched)
-              "
-            >
-              {{ validation.message }}
-            </div>
-          </ng-container>
-        </div>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-label position="floating">Operation:</ion-label>
-        <ion-select formControlName="operation">
-          <ion-select-option
-            *ngFor="let item of operationTypes"
-            [value]="item.id"
-            >{{ item.name }}</ion-select-option
-          >
-        </ion-select>
-        <div class="validation-errors">
-          <ng-container
-            *ngFor="let validation of validation_messages.operation"
-          >
-            <div
-              class="error-message"
-              *ngIf="
-                orderFilterForm.get('operation').hasError(validation.type) &&
-                (orderFilterForm.get('operation').dirty ||
-                  orderFilterForm.get('operation').touched)
-              "
-            >
-              {{ validation.message }}
-            </div>
-          </ng-container>
-        </div>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-label position="floating">Email Ids:</ion-label>
-        <ion-input
-          formControlName="emailIds"
-          type="text"
-          placeholder="Order No"
-        ></ion-input>
-        <div class="validation-errors">
-          <ng-container *ngFor="let validation of validation_messages.emailIds">
-            <div
-              class="error-message"
-              *ngIf="
-                orderFilterForm.get('emailIds').hasError(validation.type) &&
-                (orderFilterForm.get('emailIds').dirty ||
-                  orderFilterForm.get('emailIds').touched)
-              "
-            >
-              {{ validation.message }}
-            </div>
-          </ng-container>
-        </div>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-label position="floating">Count:</ion-label>
-        <ion-input
-          formControlName="count"
-          type="text"
-          placeholder="Order No"
-        ></ion-input>
-        <div class="validation-errors">
-          <ng-container *ngFor="let validation of validation_messages.count">
-            <div
-              class="error-message"
-              *ngIf="
-                orderFilterForm.get('count').hasError(validation.type) &&
-                (orderFilterForm.get('count').dirty ||
-                  orderFilterForm.get('count').touched)
               "
             >
               {{ validation.message }}

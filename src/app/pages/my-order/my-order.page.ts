@@ -26,6 +26,10 @@ export class MyOrderPage implements OnInit {
     storeId: 151,
     orderNo: 'L1'
   };
+  total: any = {
+    amount: 0.00,
+    count: 0
+  };
   constructor(
     private store: Store<MyOrderState>,
     public modalController: ModalController,
@@ -69,6 +73,7 @@ export class MyOrderPage implements OnInit {
     modal.onDidDismiss().then(data => {
       if (data.data) {
         this.orderFilter = data.data;
+        this.getMyOrders();
       }
     });
     return await modal.present();
@@ -77,7 +82,6 @@ export class MyOrderPage implements OnInit {
   loadData(event) {
     this.currentPage += 1;
     this.limit += this.limit;
-    const length = null;
     setTimeout(() => {
       this.getMyOrders();
       event.target.complete();
@@ -90,7 +94,7 @@ export class MyOrderPage implements OnInit {
     }, 500);
   }
 
-  goToOrderDetails(order){
-    this.router.navigate(['myorder/my-order-details'], { queryParams: { data: JSON.stringify(order) } });
+  goToOrderDetails(order) {
+    this.router.navigateByUrl('myorder/my-order-details', { state: { data: JSON.stringify(order) } });
   }
 }

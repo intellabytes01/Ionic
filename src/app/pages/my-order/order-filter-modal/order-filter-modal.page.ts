@@ -6,6 +6,9 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { ModalController, NavParams } from '@ionic/angular';
+import { format, isValid } from 'date-fns';
+import * as fromModel from '../my-order-data.json';
+import { AlertService } from '@app/shared/services/alert.service.js';
 
 @Component({
   selector: 'app-order-filter-modal',
@@ -16,15 +19,11 @@ export class OrderFilterModalPage implements OnInit {
   public orderFilterForm: FormGroup;
   validation_messages = {
     store: [{ type: 'validValue', message: 'Value is required for Remarks.' }],
-    status: [{ type: 'validValue', message: 'It\'s required.' }],
     orderNo: [{ type: 'required', message: 'It\'s required.' }],
     fromDate: [{ type: 'required', message: 'It\'s required.' }],
-    toDate: [{ type: 'required', message: 'It\'s required.' }],
-    operation: [{ type: 'required', message: 'It\'s required.' }],
-    emailIds: [{ type: 'required', message: 'It\'s required.' }],
-    count: [{ type: 'required', message: 'It\'s required.' }]
+    toDate: [{ type: 'required', message: 'It\'s required.' }]
   };
-  storeList: any[] = [];
+  storeList: any[] = fromModel.storeList;
   statusList: any[] = [
     { id: 1, name: 'All' },
     { id: 2, name: 'Success' },
@@ -40,14 +39,12 @@ export class OrderFilterModalPage implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public modalController: ModalController,
-    private navParams: NavParams
+    public navParams: NavParams,
+    public alert: AlertService
   ) {}
 
-
   ngOnInit() {
-    console.log(this.navParams.get('value'));
     this.orderFilter = this.navParams.get('value');
-
     this.orderFilterForm = this.formBuilder.group({
       store: [
         {
@@ -56,19 +53,15 @@ export class OrderFilterModalPage implements OnInit {
         },
         Validators.compose([this.validateType])
       ],
-      status: [
-        {
-          id: '',
-          name: ''
-        },
-        Validators.compose([this.validateType])
+      orderNo: [this.orderFilter.orderNo, Validators.compose([])],
+      fromDate: [
+        this.orderFilter.fromDate,
+        Validators.compose([Validators.required])
       ],
-      orderNo: [this.orderFilter.orderNo, Validators.compose([Validators.required])],
-      fromDate: [this.orderFilter.fromDate, Validators.compose([Validators.required])],
-      toDate: [this.orderFilter.toDate, Validators.compose([Validators.required])],
-      operation: ['', Validators.compose([Validators.required])],
-      emailIds: ['', Validators.compose([Validators.required])],
-      count: ['', Validators.compose([Validators.required])]
+      toDate: [
+        this.orderFilter.toDate,
+        Validators.compose([Validators.required])
+      ]
     });
   }
 
@@ -81,11 +74,32 @@ export class OrderFilterModalPage implements OnInit {
     return null;
   }
 
-  updateStore(val){
-
+  updateStore(val) {
+    this.orderFilterForm.value.storeId = val.id;
   }
 
   orderFilterSubmit() {
-    this.modalController.dismiss(this.orderFilter);
+    if (this.orderFilterForm.invalid) {
+      return;
+    }
+
+    this.orderFilter.fromDate = format(
+      this.orderFilterForm.value.fromDate,
+      'DD/MM/YY'
+    );
+    this.orderFilter.toDate = format(
+      this.orderFilterForm.value.toDate,
+      'DD/MM/YY'
+    );
+    this.orderFilter.storeId = this.orderFilterForm.value.store.id;
+    this.orderFilter.orderNo = this.orderFilterForm.value.orderNo;
+    if (
+      !isValid(new Date(this.orderFilter.fromDate)) ||
+      !isValid(new Date(this.orderFilter.toDate))
+    ) {
+      this.alert.presentToast('Invalid Date');
+    } else {
+      this.modalController.dismiss(this.orderFilter);
+    }
   }
 }
