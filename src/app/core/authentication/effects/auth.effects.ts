@@ -48,7 +48,7 @@ export class AuthEffects {
   LogInFailure: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.LOGIN_FAILURE),
     tap(() => {
-      this.alert.presentToast('Please provide valid credentials.');
+      this.alert.presentToast('danger', 'Please provide valid credentials.');
     })
   );
 
@@ -81,7 +81,7 @@ export class AuthEffects {
   SignUpFailure: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.SIGNUP_FAILURE),
     tap((user) => {
-      this.alert.presentToast('Please provide valid data.');
+      this.alert.presentToast('danger', 'Please provide valid data.');
     })
   );
 

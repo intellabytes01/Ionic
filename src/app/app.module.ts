@@ -22,6 +22,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { NgxPermissionsModule, NgxPermissionsService } from 'ngx-permissions';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { NoComponentPageModule } from './pages/no-component/no-component.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,7 +42,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 driverOrder: ['sqlite', 'indexeddb', 'websql', 'localstorage']
     }),
     EffectsModule.forRoot([AuthEffects]),
-    NgxPermissionsModule.forRoot()
+    NgxPermissionsModule.forRoot(),
+    NoComponentPageModule
   ],
   providers: [
     StatusBar,

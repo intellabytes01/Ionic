@@ -44,7 +44,7 @@ export class OtpEffects {
   SendOtpFailure: Observable<any> = this.actions.pipe(
     ofType(OtpActionTypes.SENDOTP_FAILURE),
     tap(() => {
-      this.alert.presentToast('Incorrect mobile number');
+      this.alert.presentToast('danger', 'Incorrect mobile number');
     })
   );
 
@@ -73,7 +73,7 @@ export class OtpEffects {
   VerifyOtpFailure: Observable<any> = this.actions.pipe(
     ofType(OtpActionTypes.VERIFYOTP_FAILURE),
     tap(() => {
-      this.alert.presentToast('Invalid otp, please request again');
+      this.alert.presentToast('danger', 'Invalid otp, please request again');
     })
   );
 }

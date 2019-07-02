@@ -44,11 +44,23 @@ export class AlertService {
     }
   }
 
-  async presentToast(msg) {
+  async presentToast(type: string, msg: string) {
+    let color: string;
+    if (type === 'success') {
+      color = 'success';
+    } else if (type === 'danger') {
+      color = 'danger';
+    } else if (type === 'warning') {
+      color = 'warning';
+    } else {
+      color = 'secondary';
+    }
+
     const toast = await this.toastCtrl.create({
       message: msg,
       duration: 3000,
-      position: 'bottom'
+      position: 'bottom',
+      color
     });
     toast.present();
   }

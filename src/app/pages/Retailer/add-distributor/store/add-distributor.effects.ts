@@ -75,7 +75,7 @@ export class AddDistributorEffects {
   RequestSubmitSuccess: Observable<any> = this.actions.pipe(
     ofType(AddDistributorAction.REQUESTSUBMIT_SUCCESS),
     tap(() => {
-      this.alert.presentToast('Request submitted successfully.');
+      this.alert.presentToast('success', 'Request submitted successfully.');
     })
   );
 
@@ -83,7 +83,7 @@ export class AddDistributorEffects {
   RequestSubmitFailure: Observable<any> = this.actions.pipe(
     ofType(AddDistributorAction.REQUESTSUBMIT_FAILURE),
     tap(() => {
-      this.alert.presentToast('Something went wrong, Please try again later.');
+      this.alert.presentToast('danger', 'Something went wrong, Please try again later.');
     })
   );
 
@@ -133,7 +133,7 @@ export class AddDistributorEffects {
   DistributorSubmitSuccess: Observable<any> = this.actions.pipe(
     ofType(AddDistributorAction.DISTRIBUTORSUBMIT_SUCCESS),
     tap(() => {
-      this.alert.presentToast('Distributor submitted successfully.');
+      this.alert.presentToast('success', 'Distributor submitted successfully.');
     })
   );
 
@@ -141,7 +141,7 @@ export class AddDistributorEffects {
   DistributorSubmitFailure: Observable<any> = this.actions.pipe(
     ofType(AddDistributorAction.DISTRIBUTORSUBMIT_FAILURE),
     tap(() => {
-      this.alert.presentToast('Something went wrong, Please try again later.');
+      this.alert.presentToast('danger', 'Something went wrong, Please try again later.');
     })
   );
 }

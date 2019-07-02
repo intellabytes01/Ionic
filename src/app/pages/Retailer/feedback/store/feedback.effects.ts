@@ -69,7 +69,7 @@ export class FeedbackEffects {
   FeedbackSubmitSuccess: Observable<any> = this.actions.pipe(
     ofType(FeedbackAction.FEEDBACKSUBMIT_SUCCESS),
     tap(() => {
-      this.alert.presentToast('Feedback submitted successfully.');
+      this.alert.presentToast('success', 'Feedback submitted successfully.');
     })
   );
 
@@ -77,7 +77,7 @@ export class FeedbackEffects {
   FeedbackSubmitFailure: Observable<any> = this.actions.pipe(
     ofType(FeedbackAction.FEEDBACKSUBMIT_FAILURE),
     tap(() => {
-      this.alert.presentToast('Something went wrong, Please try again later.');
+      this.alert.presentToast('danger', 'Something went wrong, Please try again later.');
     })
   );
 }

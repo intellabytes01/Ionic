@@ -53,7 +53,7 @@ export class ProfileEffects {
   // ProfileFailure: Observable<any> = this.actions.pipe(
   //   ofType(ProfileActionTypes.SAVEPROFILE_FAILURE),
   //   tap(() => {
-  //     this.alert.presentToast('Invalid Profile Details');
+  //     this.alert.presentToast('danger', 'Invalid Profile Details');
   //   })
   // );
 
