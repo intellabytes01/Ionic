@@ -1,17 +1,18 @@
 {
-    "storeList": [
-      {
-        "id": 151,
-        "name": "Demo Store 1"
-      },
-      {
-        "id": 152,
-        "name": "Demo Store 2"
-      },
-      {
-        "id": 153,
-        "name": "Demo Store 3"
-      }
-    ]
-  }
-  
+  "storeList": [
+    {
+      "id": 151,
+      "name": "Demo Store 1"
+    },
+    {
+      "id": 152,
+      "name": "Demo Store 2"
+    },
+    {
+      "id": 153,
+      "name": "Demo Store 3"
+    }
+  ],
+  "operation": ["view", "download"],
+  "status": ["isplaced", "isprocessed", "isuploaded"]
+}

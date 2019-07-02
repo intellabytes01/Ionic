@@ -18,23 +18,12 @@ import { AlertService } from '@app/shared/services/alert.service.js';
 export class OrderFilterModalPage implements OnInit {
   public orderFilterForm: FormGroup;
   validation_messages = {
-    store: [{ type: 'validValue', message: 'Value is required for Remarks.' }],
-    orderNo: [{ type: 'required', message: 'It\'s required.' }],
     fromDate: [{ type: 'required', message: 'It\'s required.' }],
     toDate: [{ type: 'required', message: 'It\'s required.' }]
   };
   storeList: any[] = fromModel.storeList;
-  statusList: any[] = [
-    { id: 1, name: 'All' },
-    { id: 2, name: 'Success' },
-    { id: 3, name: 'Pending' },
-    { id: 4, name: 'Failed' },
-    { id: 5, name: 'Other' }
-  ];
-  operationTypes: any[] = [
-    { id: '1', name: 'View' },
-    { id: '2', name: 'Email' }
-  ];
+  statusList: any[] = fromModel.status;
+  operationTypes: any[] = fromModel.operation;
   orderFilter: any = {};
   constructor(
     public formBuilder: FormBuilder,
@@ -54,12 +43,14 @@ export class OrderFilterModalPage implements OnInit {
         Validators.compose([this.validateType])
       ],
       orderNo: [this.orderFilter.orderNo, Validators.compose([])],
+      status: [this.orderFilter.status, Validators.compose([])],
+      operation: [this.orderFilter.operation, Validators.compose([])],
       fromDate: [
-        this.orderFilter.fromDate,
+        new Date().toISOString(),
         Validators.compose([Validators.required])
       ],
       toDate: [
-        this.orderFilter.toDate,
+        new Date().toISOString(),
         Validators.compose([Validators.required])
       ]
     });
@@ -93,6 +84,8 @@ export class OrderFilterModalPage implements OnInit {
     );
     this.orderFilter.storeId = this.orderFilterForm.value.store.id;
     this.orderFilter.orderNo = this.orderFilterForm.value.orderNo;
+    this.orderFilter.status = this.orderFilterForm.value.status;
+    this.orderFilter.operation = this.orderFilterForm.value.operation;
     if (
       !isValid(new Date(this.orderFilter.fromDate)) ||
       !isValid(new Date(this.orderFilter.toDate))

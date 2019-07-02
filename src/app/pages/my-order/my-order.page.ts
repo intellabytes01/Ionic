@@ -24,7 +24,9 @@ export class MyOrderPage implements OnInit {
     fromDate: '16/01/17',
     toDate: '21/06/19',
     storeId: 151,
-    orderNo: 'L1'
+    orderNo: 'L1',
+    operation: 'view',
+    status: 'isplaced'
   };
   total: any = {
     amount: 0.00,
@@ -41,6 +43,8 @@ export class MyOrderPage implements OnInit {
       if (data) {
         this.count = data.length;
         this.myOrderList = this.myOrderList.concat(data);
+      } else {
+        this.myOrderList = [];
       }
     }),
       untilDestroyed(this);
@@ -55,6 +59,8 @@ export class MyOrderPage implements OnInit {
         toDate: this.orderFilter.toDate,
         storeId: this.orderFilter.storeId,
         orderNo: this.orderFilter.orderNo,
+        operation: this.orderFilter.operation,
+        status: this.orderFilter.status,
         pagination: {
           currentPage: this.currentPage,
           limit: this.limit,

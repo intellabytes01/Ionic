@@ -103,6 +103,24 @@
       </ion-col>
     </ion-row>
 
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Status</ion-label>
+        <ion-select formControlName="status">
+          <ion-select-option *ngFor="let item of statusList" [value]="item">{{item}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">Operation</ion-label>
+        <ion-select formControlName="operation">
+          <ion-select-option *ngFor="let item of operationTypes" [value]="item">{{item}}</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+
     <br />
 
     <ion-row>
