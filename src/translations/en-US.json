@@ -187,7 +187,8 @@
     "GSTIN_NUMBER": "GSTIN Number",
     "BACK_BUTTON": "Back",
     "UPDATE_BUTTON": "Update Profile",
-    "EDIT_PROFILE": "Edit Profile"
+    "EDIT_PROFILE": "Edit Profile",
+    "UPLOAD_TEXT": "Upload / Capture Drug License or Bill Copy"
   },
 
   "NEW_ORDER": {
