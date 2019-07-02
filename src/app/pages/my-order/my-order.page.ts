@@ -43,8 +43,6 @@ export class MyOrderPage implements OnInit {
       if (data) {
         this.count = data.length;
         this.myOrderList = this.myOrderList.concat(data);
-      } else {
-        this.myOrderList = [];
       }
     }),
       untilDestroyed(this);
