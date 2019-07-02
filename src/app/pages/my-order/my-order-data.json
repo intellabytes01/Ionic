@@ -14,5 +14,15 @@
     }
   ],
   "operation": ["view", "download"],
-  "status": ["isplaced", "isprocessed", "isuploaded"]
+  "status": ["isplaced", "isprocessed", "isuploaded"],
+  "orderFilter": {
+    "fromDate": "16/01/17",
+    "toDate": "21/06/19",
+    "storeId": 151,
+    "orderNo": "L1",
+    "operation": "view",
+    "status": "isplaced"
+  },
+  "currentPage": 1,
+  "limit": 15
 }

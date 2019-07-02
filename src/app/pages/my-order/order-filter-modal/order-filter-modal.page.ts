@@ -9,6 +9,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { format, isValid } from 'date-fns';
 import * as fromModel from '../my-order-data.json';
 import { AlertService } from '@app/shared/services/alert.service.js';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-order-filter-modal',
@@ -17,10 +18,8 @@ import { AlertService } from '@app/shared/services/alert.service.js';
 })
 export class OrderFilterModalPage implements OnInit {
   public orderFilterForm: FormGroup;
-  validation_messages = {
-    fromDate: [{ type: 'required', message: 'It\'s required.' }],
-    toDate: [{ type: 'required', message: 'It\'s required.' }]
-  };
+// tslint:disable-next-line: variable-name
+  validation_messages = this.translateService.instant('MY_ORDER.VALIDATION_MESSAGES');
   storeList: any[] = fromModel.storeList;
   statusList: any[] = fromModel.status;
   operationTypes: any[] = fromModel.operation;
@@ -29,7 +28,8 @@ export class OrderFilterModalPage implements OnInit {
     public formBuilder: FormBuilder,
     public modalController: ModalController,
     public navParams: NavParams,
-    public alert: AlertService
+    public alert: AlertService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -90,7 +90,7 @@ export class OrderFilterModalPage implements OnInit {
       !isValid(new Date(this.orderFilter.fromDate)) ||
       !isValid(new Date(this.orderFilter.toDate))
     ) {
-      this.alert.presentToast('Invalid Date');
+      this.alert.presentToast('warning', 'Invalid Date');
     } else {
       this.modalController.dismiss(this.orderFilter);
     }

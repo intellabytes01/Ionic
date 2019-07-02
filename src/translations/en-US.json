@@ -236,7 +236,11 @@
     "OPERATION": "Operation",
     "CLOSE": "Close",
     "FILTERORDER": "Filter Order",
-    "AMOUNT": "Amount | Order"
+    "AMOUNT": "Amount | Order",
+    "VALIDATION_MESSAGES": {
+      "fromDate": [{ "type": "required", "message": "It's required." }],
+      "toDate": [{ "type": "required", "message": "It's required." }]
+    }
   },
 
   "LOGIN": {

@@ -7,6 +7,7 @@ import { ModalController, IonInfiniteScroll } from '@ionic/angular';
 import { OrderFilterModalPage } from './order-filter-modal/order-filter-modal.page';
 import { untilDestroyed } from '@app/core';
 import { Router } from '@angular/router';
+import * as fromModel from './my-order-data.json';
 
 @Component({
   selector: 'pr-my-order',
@@ -17,17 +18,10 @@ export class MyOrderPage implements OnInit {
   myOrderList$: any;
   myOrderList: any[] = [];
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  currentPage = 1;
-  limit = 15;
+  currentPage = fromModel.currentPage;
+  limit = fromModel.limit;
   count = 0;
-  orderFilter: any = {
-    fromDate: '16/01/17',
-    toDate: '21/06/19',
-    storeId: 151,
-    orderNo: 'L1',
-    operation: 'view',
-    status: 'isplaced'
-  };
+  orderFilter: any = fromModel.orderFilter;
   total: any = {
     amount: 0.00,
     count: 0
@@ -62,7 +56,7 @@ export class MyOrderPage implements OnInit {
         pagination: {
           currentPage: this.currentPage,
           limit: this.limit,
-          maxDateTime: '2019-06-26 05:53:33'
+          maxDateTime: ''
         }
       }
     };
@@ -77,6 +71,7 @@ export class MyOrderPage implements OnInit {
     modal.onDidDismiss().then(data => {
       if (data.data) {
         this.orderFilter = data.data;
+        this.myOrderList = [];
         this.getMyOrders();
       }
     });
