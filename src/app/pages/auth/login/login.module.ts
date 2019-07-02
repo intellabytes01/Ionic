@@ -24,7 +24,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     SharedModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
   entryComponents: [LoginComponent],
   declarations: [LoginComponent]

@@ -10,7 +10,7 @@
       <ion-col>
         <div class="white-border white-color">
           <pr-select
-            [placeHolder]="'Type of Business'"
+            [placeHolder]="'REGISTER.BT' | translate"
             [ctrName]="'businessType'"
             [items]="businessTypes$ | async"
             [id]="'BusinessTypeId'"
@@ -44,7 +44,7 @@
       <ion-col>
         <!-- <ion-label position="floating">Mobile Number</ion-label> -->
         <ion-input
-          placeholder="Mobile Number"
+          [placeholder]="'REGISTER.MOBILE' | translate"
           formControlName="mobile"
           class="white-border white-color"
           type="number"
@@ -77,7 +77,7 @@
       <ion-col>
         <!-- <ion-label position="floating">Password</ion-label> -->
         <ion-input
-          placeholder="Password"
+          [placeholder]="'LOGIN.PASSWORD' | translate"
           formControlName="password"
           class="white-border white-color"
           [type]="passwordType"
@@ -116,7 +116,7 @@
       <ion-col>
         <div class="white-border white-color">
           <pr-select
-            [placeHolder]="'Regions'"
+            [placeHolder]="'REGISTER.REGIONS' | translate"
             [ctrName]="'region'"
             [items]="regions$ | async"
             [id]="'RegionId'"
@@ -151,7 +151,7 @@
       <ion-col>
         <ion-checkbox formControlName="agree"></ion-checkbox>
         <ion-label class="message"
-          >&nbsp;I Agree to Terms & Conditions of Pharmarack</ion-label
+          >&nbsp;{{'REGISTER.AGREE' | translate}}</ion-label
         >
       </ion-col>
     </ion-row>
@@ -162,7 +162,7 @@
       </ion-col>
       <ion-col size="6" class="create padding0">
         <ion-button (click)="register()" color="blue" expand="full" fill="solid"
-          >Register</ion-button
+          >{{'REGISTER.REGISTER' | translate}}</ion-button
         >
       </ion-col>
     </ion-row>

@@ -16,7 +16,7 @@
       <ion-col>
         <ion-item>
           <pr-select
-            [placeHolder]="'Type of Business'"
+            [placeHolder]="'REGISTER.BT' | translate"
             [ctrName]="'businessType'"
             [items]="businessTypes$ | async"
             [id]="'BusinessTypeId'"
@@ -90,7 +90,7 @@
       <ion-col>
         <ion-item>
           <pr-select
-            [placeHolder]="'Regions'"
+            [placeHolder]="'REGISTER.REGIONS' | translate"
             [ctrName]="'region'"
             [items]="regions$ | async"
             [id]="'RegionId'"

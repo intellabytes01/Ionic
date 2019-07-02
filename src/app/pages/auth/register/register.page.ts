@@ -14,6 +14,7 @@ import { BusinessTypes, Regions } from './store/register.actions';
 import { businessTypesData, regionsData } from './store/register.reducers';
 import { untilDestroyed } from '@app/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
@@ -29,26 +30,7 @@ export class RegisterPage implements OnInit, OnDestroy {
   passwordIcon = 'eye-off';
   public registerForm: FormGroup;
   // tslint:disable-next-line: variable-name
-  validation_messages = {
-    mobile: [
-      { type: 'required', message: 'Mobile number is required.' },
-      {
-        type: 'pattern',
-        message: 'Mobile number must be 10 characters long.'
-      }
-    ],
-    password: [
-      { type: 'required', message: 'Password is required.' },
-      {
-        type: 'minlength',
-        message: 'Password must be at least 6 characters long.'
-      }
-    ],
-    region: [{ type: 'validValue', message: 'Region is required.' }],
-    businessType: [
-      { type: 'validValue', message: 'Business Type is required.' }
-    ]
-  };
+  validation_messages = this.translateService.instant('REGISTER.VALIDATION_MESSAGES');
   mobnumPattern = '^((\\+91-?)|0)?[0-9]{10}$';
   businesstypeStore: any;
   registerStore: any;
@@ -59,7 +41,8 @@ export class RegisterPage implements OnInit, OnDestroy {
     public formBuilder: FormBuilder,
     public menuCtrl: MenuController,
     private store: Store<AuthState>,
-    private router: Router
+    private router: Router,
+    private translateService: TranslateService
   ) {
     this.getBusinessTypes();
     this.businessTypes$ = this.store.pipe(select(businessTypesData));

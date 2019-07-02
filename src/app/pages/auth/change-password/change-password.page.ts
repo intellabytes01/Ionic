@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AuthState, selectAuthState } from '@app/core/authentication/auth.states';
 import { ChangePassword } from './store/change-password.actions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'pr-change-password',
@@ -14,18 +15,10 @@ export class ChangePasswordPage implements OnInit {
   passwordType = 'password';
   passwordIcon = 'eye-off';
   // tslint:disable-next-line: variable-name
-  validation_messages = {
-    password: [
-      { type: 'required', message: 'Password is required.' },
-      {
-        type: 'minlength',
-        message: 'Password must be at least 6 characters long.'
-      }
-    ]
-  };
+  validation_messages = this.translateService.instant('CHANGE_PASSWORD.VALIDATION_MESSAGES');
   previousRouteUrl$: any;
 
-  constructor(public formBuilder: FormBuilder, private store: Store<AuthState>) {
+  constructor(public formBuilder: FormBuilder, private store: Store<AuthState>, private translateService: TranslateService) {
     this.previousRouteUrl$ = this.store.select(selectAuthState);
     // this.store.select(selectAuthState).subscribe(data => {
     //   this.previousRouteUrl$ = data['previousUrl'];

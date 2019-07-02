@@ -20,15 +20,7 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
   showVerify = false;
   public forgotPasswordForm: FormGroup;
   // tslint:disable-next-line: variable-name
-  validation_messages = {
-    mobile: [
-      { type: 'required', message: 'VALIDATIONS.MOBILEREQUIRED' },
-      {
-        type: 'pattern',
-        message: 'VALIDATIONS.MOBILEPATTERN'
-      }
-    ]
-  };
+  validation_messages = this.translateService.instant('FORGOT_PASSWORD.VALIDATION_MESSAGES');
   mobnumPattern = '^((\\+91-?)|0)?[0-9]{10}$';
   constructor(
     public formBuilder: FormBuilder,

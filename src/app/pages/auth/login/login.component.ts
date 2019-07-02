@@ -11,6 +11,7 @@ import { AuthState, selectAuthState } from '@app/core/authentication/auth.states
 import { LogIn } from '@app/core/authentication/actions/auth.actions';
 import { ModalController } from '@ionic/angular';
 import { ModalPopupPage } from '@app/shared/modal-popup/modal-popup.page';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -25,29 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   dataReturned:any;
 
 // tslint:disable-next-line: variable-name
-  validation_messages = {
-    username: [
-      { type: 'required', message: 'Username is required.' },
-      {
-        type: 'minlength',
-        message: 'Username must be at least 5 characters long.'
-      },
-      {
-        type: 'maxlength',
-        message: 'Username cannot be more than 25 characters long.'
-      }
-    ],
-    password: [
-      {
-        type: 'required',
-        message: 'Password is required.'
-      },
-      {
-        type: 'minlength',
-        message: 'Password must be at least 6 characters long.'
-      }
-    ]
-  };
+  validation_messages = this.translateService.instant('LOGIN.VALIDATION_MESSAGES');
 
   ionViewWillEnter() {
     this.menuCtrl.enable(false, 'menuLeft');
@@ -66,7 +45,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private i18nService: I18nService,
     private store: Store<AuthState>,
     public menuCtrl: MenuController,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private translateService: TranslateService
   ) {
     this.createForm();
   }

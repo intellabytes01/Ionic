@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { RegisterEffects } from './store/register.effects';
 import * as fromregisterReducer from './store/register.reducers';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     SharedModule,
     StoreModule.forFeature('register', fromregisterReducer.registerReducer),
-    EffectsModule.forRoot([RegisterEffects])
+    EffectsModule.forRoot([RegisterEffects]),
+    TranslateModule
   ],
   declarations: [RegisterPage]
 })

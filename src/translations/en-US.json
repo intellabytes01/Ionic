@@ -7,7 +7,6 @@
   "Change language": "Change language",
   "Language": "Language",
   "Ok": "Ok",
-  "LOGIN": "Login",
   "LOGOUT": "Logout",
   "Password": "Password",
   "Password is required": "Password is required",
@@ -96,6 +95,23 @@
     "REQUEST_TAB_MESSAGE_3": "Please select atleast one store.",
     "VALIDATIONS": {
       "DISTRIBUTOR_NAME": "Distributor name is required."
+    },
+    "RM": "Request Mapping",
+    "SELECTSTATUS": "Select Status",
+    "VALIDATION_MESSAGES": {
+      "mobile": [
+        { "type": "required", "message": "VALIDATIONS.MOBILEREQUIRED" },
+        {
+          "type": "pattern",
+          "message": "VALIDATIONS.MOBILEPATTERN"
+        }
+      ],
+      "storeName": [
+        {
+          "type": "required",
+          "message": "ADD_DISTRIBUTOR.VALIDATIONS.DISTRIBUTOR_NAME"
+        }
+      ]
     }
   },
 
@@ -122,36 +138,55 @@
     "SENDOTPMESSAGE": "We will send you an OTP to your mobile number to enable you to login.",
     "VERIFY": "Verify Otp",
     "RESEND": "Resend Otp",
-    "VERIFYOTPMESSAGE": "Please enter the OTP code which has been sent to your Mobile number."
+    "VERIFYOTPMESSAGE": "Please enter the OTP code which has been sent to your Mobile number.",
+    "VALIDATION_MESSAGES": {
+      "mobile": [
+        { "type": "required", "message": "VALIDATIONS.MOBILEREQUIRED" },
+        {
+          "type": "pattern",
+          "message": "VALIDATIONS.MOBILEPATTERN"
+        }
+      ]
+    }
   },
   "CHANGE_PASSWORD": {
-    "CURRENT_PASSWORD":"Current Password",
+    "CURRENT_PASSWORD": "Current Password",
     "NEW_PASSWORD": "New Password",
     "CONFIRM_PASSWORD": "Confirm Password",
     "CHANGE_BUTTON": "Change",
-    "BACK_BUTTON": "Back"
+    "BACK_BUTTON": "Back",
+    "VALIDATION_MESSAGES": {
+      "password": [
+        { "type": "required", "message": "Password is required." },
+        {
+          "type": "minlength",
+          "message": "Password must be at least 6 characters long."
+        }
+      ]
+    }
   },
 
   "FEEDBACKTYPE_PLACEHOLDER": "Select feedback type",
   "FEEDBACKTO_PLACEHOLDER": "Select type",
   "FEEDBACKSTORE_PLACEHOLDER": "Select Store",
   "MESSAGE_PLACEHOLDER": "Type your message",
+  "FEEDBACK_TEXT": "We value your feedback. Please send your feedback in the below form.",
 
   "PROFILE": {
-    "LOGIN_ID":"Login Id",
-    "BUSINESS_TYPE":"Business Type",
-    "SHOP_FULL_NAME":"Shop/Firm Full Name",
-    "NAME":"Name",
-    "ADDRESS":"Address",
-    "PINCODE":"Pincode",
-    "REGION":"Region",
-    "EMAIL":"Email",
-    "MOBILE_NUMBER":"Mobile Number",
-    "TELEPHONE":"Telephone",
-    "DRUG_LICENSE_NUMBER":"Drug License Number",
-    "GSTIN_NUMBER":"GSTIN Number",
-    "BACK_BUTTON":"Back",
-    "UPDATE_BUTTON":"Update Profile",
+    "LOGIN_ID": "Login Id",
+    "BUSINESS_TYPE": "Business Type",
+    "SHOP_FULL_NAME": "Shop/Firm Full Name",
+    "NAME": "Name",
+    "ADDRESS": "Address",
+    "PINCODE": "Pincode",
+    "REGION": "Region",
+    "EMAIL": "Email",
+    "MOBILE_NUMBER": "Mobile Number",
+    "TELEPHONE": "Telephone",
+    "DRUG_LICENSE_NUMBER": "Drug License Number",
+    "GSTIN_NUMBER": "GSTIN Number",
+    "BACK_BUTTON": "Back",
+    "UPDATE_BUTTON": "Update Profile",
     "EDIT_PROFILE": "Edit Profile"
   },
 
@@ -192,6 +227,73 @@
     "CALL": "Call Now",
     "REMARKS": "Remarks",
     "MODE": "Delivery Mode",
-    "PRIORITY": "Delivery Priority"
+    "PRIORITY": "Delivery Priority",
+    "FILTER": "Order Filter",
+    "FROMDATE": "From Date",
+    "TODATE": "To Date",
+    "STATUS": "Status",
+    "OPERATION": "Operation",
+    "CLOSE": "Close",
+    "FILTERORDER": "Filter Order",
+    "AMOUNT": "Amount | Order"
+  },
+
+  "LOGIN": {
+    "UM": "Username / Mobile Number",
+    "PASSWORD": "Password",
+    "FP": "Forgot Password",
+    "SI": "Sign in",
+    "CA": "Create Account",
+    "VALIDATION_MESSAGES": {
+      "username": [
+        { "type": "required", "message": "Username is required." },
+        {
+          "type": "minlength",
+          "message": "Username must be at least 5 characters long."
+        },
+        {
+          "type": "maxlength",
+          "message": "Username cannot be more than 25 characters long."
+        }
+      ],
+      "password": [
+        {
+          "type": "required",
+          "message": "Password is required."
+        },
+        {
+          "type": "minlength",
+          "message": "Password must be at least 6 characters long."
+        }
+      ]
+    }
+  },
+
+  "REGISTER": {
+    "BT": "Type of Business",
+    "MOBILE": "Mobile Number",
+    "REGIONS": "Regions",
+    "AGREE": "I Agree to Terms & Conditions of Pharmarack",
+    "REGISTER": "Register",
+    "VALIDATION_MESSAGES": {
+      "mobile": [
+        { "type": "required", "message": "Mobile number is required." },
+        {
+          "type": "pattern",
+          "message": "Mobile number must be 10 characters long."
+        }
+      ],
+      "password": [
+        { "type": "required", "message": "Password is required." },
+        {
+          "type": "minlength",
+          "message": "Password must be at least 6 characters long."
+        }
+      ],
+      "region": [{ "type": "validValue", "message": "Region is required." }],
+      "businessType": [
+        { "type": "validValue", "message": "Business Type is required." }
+      ]
+    }
   }
 }

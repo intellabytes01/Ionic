@@ -18,20 +18,12 @@ import { TranslateService } from '@ngx-translate/core';
 export class AddTabComponent implements OnInit {
   distributorForm: FormGroup;
   mobnumPattern = '^((\\+91-?)|0)?[0-9]{10}$';
-  validation_messages = {
-    mobile: [
-      { type: 'required', message: 'VALIDATIONS.MOBILEREQUIRED' },
-      {
-        type: 'pattern',
-        message: 'VALIDATIONS.MOBILEPATTERN'
-      }
-    ],
-    storeName: [{ type: 'required', message: 'ADD_DISTRIBUTOR.VALIDATIONS.DISTRIBUTOR_NAME' }]
-  };
+// tslint:disable-next-line: variable-name
+  validation_messages = this.translateService.instant('ADD_DISTRIBUTOR.VALIDATION_MESSAGES');
   constructor(
     private storeAuth: Store<AuthState>,
     private storeAddDistributor: Store<AddDistributorState>,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder, private translateService: TranslateService
   ) {}
 
   ngOnInit() {

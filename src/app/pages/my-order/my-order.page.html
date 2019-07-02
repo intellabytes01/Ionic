@@ -2,12 +2,12 @@
   <ion-row class="shadow">
     <ion-col text-start size="6">
       <ion-label class="filter" (click)="presentModalOrderFilter()"
-        ><ion-icon name="funnel"></ion-icon>&nbsp;&nbsp;Filter Order</ion-label
+        ><ion-icon name="funnel"></ion-icon>&nbsp;&nbsp;{{'MY_ORDER.FILTERORDER' | translate}}</ion-label
       >
     </ion-col>
 
     <ion-col text-end size="6">
-      <ion-label class="blue-color">Amount | Order</ion-label><br />
+      <ion-label class="blue-color">{{'MY_ORDER.AMOUNT' | translate}}</ion-label><br />
       <ion-label class="blue-color">₹{{total.amount.toFixed(2)}} | {{total.count}}</ion-label>
     </ion-col>
   </ion-row>
@@ -28,7 +28,7 @@
             <ion-label>{{ order.OrderDate | date: "dd MMM yyyy h:mm a" }}</ion-label>
           </ion-col>
           <ion-col text-center size="3">
-            <ion-label (click)="goToOrderDetails(order)" class="blue-color">Placed ></ion-label>
+            <ion-label (click)="goToOrderDetails(order)" class="blue-color">{{'MY_ORDER.PLACED' | translate}} ></ion-label>
           </ion-col>
           <ion-col text-end size="3">
             <ion-label>₹{{ order.OrderAmount }}</ion-label>
