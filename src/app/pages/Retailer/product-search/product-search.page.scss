@@ -1,0 +1,17 @@
+.tab-buttons {
+  --background: white !important;
+  border-right: 1px solid grey !important;
+  border-bottom: 1px solid grey !important;
+}
+
+.tab-buttons-text {
+  color: blue !important;
+}
+
+.active {
+  border-bottom: 2px solid darkorange !important;
+}
+
+.tab-header {
+  padding: 1rem 0rem 1rem 0rem;
+}

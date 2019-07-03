@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./retailer.page.scss'],
 })
 export class RetailerPage implements OnInit {
-  tabInfo = ['request', 'status', 'add'];
   constructor() { }
 
   ngOnInit() {

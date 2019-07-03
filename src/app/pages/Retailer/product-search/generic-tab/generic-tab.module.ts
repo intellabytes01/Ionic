@@ -5,17 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { RetailerPage } from './retailer.page';
-import { SharedModule } from '@app/shared';
-import { AuthenticationGuard } from '@app/core';
+import { GenericTabPage } from './generic-tab.page';
+import { SharedModule } from '@app-shared/shared.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
     path: '',
-    component: RetailerPage,
-    canActivate: [AuthenticationGuard],
-    children: [
-    ]
+    component: GenericTabPage
   }
 ];
 
@@ -24,9 +21,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    RouterModule.forChild(routes),
     SharedModule,
-    RouterModule.forChild(routes)
+    TranslateModule
   ],
-  declarations: [RetailerPage]
+  declarations: [GenericTabPage]
 })
-export class RetailerPageModule {}
+export class GenericTabPageModule {}

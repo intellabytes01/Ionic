@@ -59,7 +59,8 @@ const routes: Routes = [
     path: 'add-distributor',
     loadChildren:
       './pages/Retailer/add-distributor/add-distributor.module#AddDistributorPageModule',
-    data: { title: 'Add Distributor', preload: false, delay: true }
+    data: { title: 'Add Distributor', preload: false, delay: true },
+    canActivate: [AuthenticationGuard]
   },
   {
     path: 'feedback',
@@ -86,6 +87,13 @@ const routes: Routes = [
     loadChildren: './pages/my-order/my-order.module#MyOrderPageModule',
     canActivate: [AuthenticationGuard],
     data: { title: 'My Orders', preload: false, delay: true }
+  },
+  {
+    path: 'product-search',
+    loadChildren:
+      './pages/Retailer/product-search/product-search.module#ProductSearchPageModule',
+    data: { title: 'Product Search', preload: false, delay: true },
+    canActivate: [AuthenticationGuard]
   },
   {
     path: '**',

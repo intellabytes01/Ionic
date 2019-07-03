@@ -300,5 +300,14 @@
         { "type": "validValue", "message": "Business Type is required." }
       ]
     }
+  },
+
+  "PRODUCT_SEARCH": {
+    "PLACEHOLDER_PRODUCT": "Product name",
+    "PLACEHOLDER_GENERIC": "Generic name",
+    "PLACEHOLDER_COMPANY": "Company name",
+    "PLACEHOLDER_DISTRIBUTOR": "Distributor name",
+    "MINCHAR_TEXT": "Please enter minimum 3 characters to search",
+    "NOTFOUND": "Not Found"
   }
 }

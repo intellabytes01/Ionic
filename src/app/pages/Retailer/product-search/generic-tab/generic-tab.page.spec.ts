@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SelectStorePage } from './select-store.page';
+import { GenericTabPage } from './generic-tab.page';
 
-describe('SelectStorePage', () => {
-  let component: SelectStorePage;
-  let fixture: ComponentFixture<SelectStorePage>;
+describe('GenericTabPage', () => {
+  let component: GenericTabPage;
+  let fixture: ComponentFixture<GenericTabPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectStorePage ],
+      declarations: [ GenericTabPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SelectStorePage);
+    fixture = TestBed.createComponent(GenericTabPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

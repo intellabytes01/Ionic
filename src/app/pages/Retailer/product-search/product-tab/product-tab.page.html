@@ -1,0 +1,12 @@
+<ion-content>
+  <pr-search
+    [searchPlaceholder]="'PRODUCT_SEARCH.PLACEHOLDER_PRODUCT' | translate"
+    [searchList]="productList" 
+  ></pr-search>
+
+  <ion-list *ngIf="productList.length > 0">
+    <ion-item *ngFor="let item of productList">
+      <ion-label>{{ item.ProductName }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
