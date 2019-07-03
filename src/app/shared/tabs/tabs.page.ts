@@ -16,7 +16,7 @@ export class TabsPage implements OnInit {
     this.activeTab = this.tabInfo[0];
   }
 
-  setActiveTab(tab){
+  setActiveTab(tab) {
     this.activeTab = tab;
   }
 

@@ -2,7 +2,8 @@
 import { Directive, Input } from '@angular/core';
 
 @Directive({
-  selector: "[disableControl]"
+// tslint:disable-next-line: directive-selector
+  selector: '[disableControl]'
 })
 export class DisableControlDirective {
   @Input() set disableControl(condition: boolean) {
