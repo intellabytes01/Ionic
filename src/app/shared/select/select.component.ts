@@ -23,7 +23,6 @@ export class SelectComponent implements OnInit, OnChanges {
   @Input() ctrName: string;
   @Input() placeHolder: string;
   @Input() preSelectedValue: string;
-  @Input() preSelectedOn: string;
   @Input() disableControl: boolean;
 
   @Output() valueChange = new EventEmitter();
@@ -41,26 +40,15 @@ export class SelectComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     // changes.prop contains the old and the new value...
-    const self = this;
-    if (this.preSelectedOn && this.preSelectedValue && this.items.length > 0) {
-      this.items.filter(item => {
-// tslint:disable-next-line: triple-equals
-        if (item[self.preSelectedOn] == self.preSelectedValue) {
-          self.selectedValue = item;
-          return self.selectedValue;
-        }
-      });
-    }
-
-    // this.selectedValueArray =
-    //   (this.items && this.items.length) > 0
-    //     ? this.items.filter(
-    //         word => word[this.preSelectedOn] == this.preSelectedValue
-    //       )
-    //     : null;
-    // this.selectedValue =
-    //   this.selectedValueArray && this.selectedValueArray.length > 0
-    //     ? this.selectedValueArray[0]
-    //     : '';
+    this.selectedValueArray =
+      (this.items && this.items.length) > 0
+        ? this.items.filter(
+            word => word['BusinessTypeName'] == this.preSelectedValue
+          )
+        : null;
+    this.selectedValue =
+      this.selectedValueArray && this.selectedValueArray.length > 0
+        ? this.selectedValueArray[0]
+        : '';
   }
 }

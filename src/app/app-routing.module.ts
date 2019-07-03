@@ -96,6 +96,12 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard]
   },
   {
+    path: 'payments',
+    loadChildren: './pages/Retailer/payments/payments.module#PaymentsPageModule',
+    data: { title: 'Payment', preload: false, delay: true },
+    canActivate: [AuthenticationGuard]
+  },
+  {
     path: '**',
     component: NoComponentPage
   }

@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpEvent,
   HttpInterceptor,
@@ -16,7 +16,7 @@ import { Store, select } from '@ngrx/store';
  * Prefixes all requests not starting with `http[s]` with `environment.serverUrl`.
  */
 @Injectable()
-export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
+export class ApiPrefixInterceptor implements HttpInterceptor {
   constructor(private store: Store<AuthState>) {}
 
   intercept(
@@ -33,8 +33,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
       }
     });
 
-    this.store.pipe(select(selectAuthState),
-    untilDestroyed(this)).subscribe(data => {
+    this.store.pipe(select(selectAuthState)).subscribe(data => {
       if (data['userData'] && data['userData']['token']) {
         request = request.clone({
           setHeaders: {
@@ -42,14 +41,9 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
           }
         });
       }
-    });
+    }),
+      untilDestroyed(this);
 
     return next.handle(request);
-  }
-
-  ngOnDestroy(): void {
-    // Called once, before the instance is destroyed.
-    // Add 'implements OnDestroy' to the class.
-
   }
 }

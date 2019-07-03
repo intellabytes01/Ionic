@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   passwordType = 'password';
   passwordIcon = 'eye-off';
   loginForm: FormGroup;
-  dataReturned: any;
+  dataReturned:any;
 
 // tslint:disable-next-line: variable-name
   validation_messages = this.translateService.instant('LOGIN.VALIDATION_MESSAGES');
@@ -108,14 +108,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   //       "paramTitle": "Test Title"
   //     }
   //   });
-
+ 
   //   modal.onDidDismiss().then((dataReturned) => {
   //     if (dataReturned !== null) {
   //       this.dataReturned = dataReturned.data;
   //       //alert('Modal Sent Data :'+ dataReturned);
   //     }
   //   });
-
+ 
   //   return await modal.present();
   // }
 }

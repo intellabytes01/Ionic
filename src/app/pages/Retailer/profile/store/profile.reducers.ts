@@ -25,7 +25,7 @@ export function profileReducer(
     case ProfileActionTypes.SAVEPROFILE_SUCCESS: {
       return {
         ...state,
-        saveProfileDetails: action.payload.userProfile.message,
+        saveProfileDetails: action.payload.sendProfile.data,
         errorMessage: null
       };
     }
@@ -86,7 +86,7 @@ export function profileReducer(
     }
     default: {
       return state;
-    }
+    } 
   }
 }
 

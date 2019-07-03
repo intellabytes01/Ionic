@@ -35,7 +35,7 @@ export class ModalPopupPage implements OnInit {
 
   async takePicture() {
     ////////////// Open Camera ///////////////////
-
+    
     const image = await Plugins.Camera.getPhoto({
       quality: 100,
       allowEditing: false,
@@ -64,8 +64,8 @@ export class ModalPopupPage implements OnInit {
     };
     this.imagePicker.getPictures(options).then(
       results => {
-        for (const pic of results) {  // let i = 0; i < results.length; i++) {
-          console.log('Image URI: ' + pic);
+        for (let i = 0; i < results.length; i++) {
+          console.log('Image URI: ' + results[i]);
         }
       },
       err => {}

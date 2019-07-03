@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AuthState,
   selectAuthState
@@ -16,7 +16,7 @@ import { StatusFilterPage } from './status-filter/status-filter.page';
   templateUrl: './status-tab.component.html',
   styleUrls: ['./status-tab.component.scss']
 })
-export class StatusTabComponent implements OnInit, OnDestroy {
+export class StatusTabComponent implements OnInit {
   statusList: any[] = [];
   tempList: any[] = [];
   status$: any;
@@ -30,20 +30,19 @@ export class StatusTabComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Get retailer id
 
-    this.statusAuth.pipe(select(selectAuthState),
-    untilDestroyed(this)).subscribe(data => {
+    this.statusAuth.pipe(select(selectAuthState)).subscribe(data => {
       this.getStatus(data['userData']['userData']['retailerSummary']['retailerInfo']['RetailerId']);
     }),
       untilDestroyed(this);
 
     // Get status list for filter
     this.status$ = this.statusAddDistributor
-      .pipe(select(statusData),
-      untilDestroyed(this))
+      .pipe(select(statusData))
       .subscribe(data => {
         this.statusList = data;
         this.tempList = data;
-      });
+      }),
+      untilDestroyed(this);
   }
 
   getStatus(retailerId) {
@@ -69,11 +68,5 @@ export class StatusTabComponent implements OnInit, OnDestroy {
       }
     });
     return await modal.present();
-  }
-
-  ngOnDestroy(): void {
-    // Called once, before the instance is destroyed.
-    // Add 'implements OnDestroy' to the class.
-
   }
 }

@@ -1,18 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import * as fromModel from './new-order.json';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { SimilarProductsModalPage } from './similar-products-modal/similar-products-modal.page';
-import { untilDestroyed } from '@app/core/index.js';
 
 @Component({
   selector: 'pr-new-order',
   templateUrl: './new-order.page.html',
   styleUrls: ['./new-order.page.scss']
 })
-export class NewOrderPage implements OnInit, OnDestroy {
+export class NewOrderPage implements OnInit {
   public neworderForm: FormGroup;
   key = `Order#${Date.now()}`;
   testOrderData: any[] = [];
@@ -30,8 +29,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     public formBuilder: FormBuilder,
     private modalController: ModalController
   ) {
-    this.route.params.pipe(
-      untilDestroyed(this)).subscribe(param => {
+    this.route.params.subscribe(param => {
       // Update Case
       if (param.orderKey) {
         this.key = param.orderKey;
@@ -196,10 +194,5 @@ export class NewOrderPage implements OnInit, OnDestroy {
     modal.onDidDismiss().then(data => {
     });
     return await modal.present();
-  }
-
-  ngOnDestroy(): void {
-    // Called once, before the instance is destroyed.
-    // Add 'implements OnDestroy' to the class.
   }
 }

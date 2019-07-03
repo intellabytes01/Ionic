@@ -1,6 +1,5 @@
 import { User } from '../models/user';
 import { AuthActionTypes, All } from '../actions/auth.actions';
-import { createSelector } from '@ngrx/store';
 
 export interface State {
   // is a user authenticated?
@@ -11,16 +10,13 @@ export interface State {
   errorMessage: string | null;
 
   previousUrl: string | null;
-
-  userId: string | null;
 }
 
 export const initialState: State = {
   isAuthenticated: false,
   userData: null,
   errorMessage: null,
-  previousUrl: null,
-  userId: null
+  previousUrl: null
 };
 
 export function authReducer(state = initialState, action: All): State {
@@ -68,7 +64,6 @@ export function authReducer(state = initialState, action: All): State {
         ...state,
         isAuthenticated: true,
         userData: action.payload,
-        userId: action.payload.userData.userSummary.UserId,
         errorMessage: null
       };
     }

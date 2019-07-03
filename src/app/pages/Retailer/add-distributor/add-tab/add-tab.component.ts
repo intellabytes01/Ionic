@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AddDistributorState } from '../store/add-distributor.state';
 import { Store, select } from '@ngrx/store';
 import {
@@ -15,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './add-tab.component.html',
   styleUrls: ['./add-tab.component.scss']
 })
-export class AddTabComponent implements OnInit, OnDestroy {
+export class AddTabComponent implements OnInit {
   distributorForm: FormGroup;
   mobnumPattern = '^((\\+91-?)|0)?[0-9]{10}$';
 // tslint:disable-next-line: variable-name
@@ -43,13 +43,13 @@ export class AddTabComponent implements OnInit, OnDestroy {
     });
 
     // Set retailer id
-    this.storeAuth.pipe(select(selectAuthState),
-    untilDestroyed(this)).subscribe(data => {
+    this.storeAuth.pipe(select(selectAuthState)).subscribe(data => {
       this.distributorForm.value.retailerId =
         data['userData']['userData']['retailerSummary']['retailerInfo'][
           'RetailerId'
         ];
-    });
+    }),
+      untilDestroyed(this);
   }
 
   validationMobile(value) {
@@ -74,10 +74,5 @@ export class AddTabComponent implements OnInit, OnDestroy {
 
   trackByFn(index, item) {
     return index;
-  }
-
-  ngOnDestroy(): void {
-    // Called once, before the instance is destroyed.
-    // Add 'implements OnDestroy' to the class.
   }
 }

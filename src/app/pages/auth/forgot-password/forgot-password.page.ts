@@ -66,12 +66,12 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
       return;
     }
     this.store.dispatch(new SendOtp(sendOtpBody));
-    this.store.pipe(select(sendOtpData),
-    untilDestroyed(this)).subscribe(data => {
+    this.store.pipe(select(sendOtpData)).subscribe(data => {
       if (data && data.otp) {
         this.showVerify = true;
       }
-    });
+    }),
+      untilDestroyed(this);
   }
 
   verifyOtp() {
@@ -92,12 +92,12 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
     };
     this.store.dispatch(new GetPreviousUrl(payload));
 
-    this.store.pipe(select(verifyOtpData),
-    untilDestroyed(this)).subscribe(data => {
+    this.store.pipe(select(verifyOtpData)).subscribe(data => {
       if (data && data.password) {
         this.router.navigate(['/change-password']);
       }
-    });
+    }),
+      untilDestroyed(this);
   }
 
   // Custom validation for Mobile

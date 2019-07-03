@@ -1,4 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewEncapsulation} from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -19,8 +23,6 @@ import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { ModalController } from '@ionic/angular';
 import { ModalPopupPage } from '@app/shared/modal-popup/modal-popup.page';
-import { selectAuthState, getUserData } from '@app/core/authentication/auth.states';
-import { untilDestroyed } from '@app/core';
 
 @Component({
   selector: 'app-profile',
@@ -37,7 +39,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   imgPreview = '';
   businesstypeStore: any;
   regionStore: any;
-  profileInterface: Partial<IProfileInterface>;
+  profileInterface: IProfileInterface;
   userProfileDetails$: any;
 
   photo: SafeResourceUrl;
@@ -52,7 +54,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   ) {
     this.getBusinessTypes();
     this.getRegions();
-    this.getUserId();
+    this.getProfileDetails('34627');
 
     this.businessTypes$ = this.store.pipe(select(businessTypesData));
     this.regions$ = this.store.pipe(select(regionsData));
@@ -65,12 +67,6 @@ export class ProfilePage implements OnInit, OnDestroy {
   ngOnInit() {
     this.createForm();
     this.photo = '../../../assets/icon/gstin.png';
-  }
-
-  async getUserId() {
-    await this.store.pipe(select(getUserData), untilDestroyed(this)).subscribe(userId => {
-      this.getProfileDetails(userId);
-    });
   }
 
   createForm() {
@@ -203,8 +199,8 @@ export class ProfilePage implements OnInit, OnDestroy {
   updateProfile() {
     // stop here if form is invalid
     if (
-      this.profileForm.invalid ||
-      !this.profileForm.value.regionId
+      this.profileForm.invalid
+      || !this.profileForm.value.regionId
       // || !this.profileForm.value.BusinessTypeId
     ) {
       return;
@@ -216,25 +212,8 @@ export class ProfilePage implements OnInit, OnDestroy {
       if (this.profileForm.value.region) {
         delete this.profileForm.value.region;
       }
-
-      this.profileInterface = {
-        lastName: 'NoName',
-        gstinOption: 'GSTIN',
-        cstNumber: '12345',
-        pincode: this.profileForm.value.pincode.toString(),
-        regionId: this.profileForm.value.regionId.toString(),
-        firstName: this.profileForm.value.firstName,
-        retailerId: this.profileForm.value.retailerId,
-        email: this.profileForm.value.email,
-        mobileNumber: this.profileForm.value.mobileNumber,
-        telephone: this.profileForm.value.telephone,
-        address1: this.profileForm.value.address1,
-        licenseNumber: this.profileForm.value.licenseNumber,
-        gstinNumber: this.profileForm.value.gstinNumber
-      };
-
       const payload = {
-        userProfileDetails: this.profileInterface
+        userProfileDetails: this.profileForm.value
         // businessTypeId: this.profileForm.value.businessType.BusinessTypeId
       };
       this.store.dispatch(new SaveProfileDetails(payload.userProfileDetails));
@@ -261,9 +240,7 @@ export class ProfilePage implements OnInit, OnDestroy {
       source: CameraSource.Camera
     });
 
-    this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(
-      image && image.dataUrl
-    );
+    this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
   }
 
   async openModal() {
@@ -275,18 +252,14 @@ export class ProfilePage implements OnInit, OnDestroy {
       }
     });
 
-    modal.onDidDismiss().then(dataReturned => {
+    modal.onDidDismiss().then((dataReturned) => {
       if (dataReturned.data && dataReturned.data !== null) {
         this.dataReturned = dataReturned.data;
-        this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(
-          this.dataReturned && this.dataReturned.dataUrl
-        );
+        this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(this.dataReturned && (this.dataReturned.dataUrl));
       }
     });
     return await modal.present();
   }
 
-  ngOnDestroy() {
-    console.log(this.store);
-  }
+  ngOnDestroy() {}
 }
