@@ -24,23 +24,23 @@ const routes: Routes = [
       {
         path: 'tab/product',
         loadChildren: './product-tab/product-tab.module#ProductTabPageModule',
-        data: { title: 'Product', preload: true, delay: false }
+        data: { title: 'Product Search', preload: true, delay: false }
       },
       {
         path: 'tab/generic',
         loadChildren: './generic-tab/generic-tab.module#GenericTabPageModule',
-        data: { title: 'Generic', preload: true, delay: false }
+        data: { title: 'Product Search', preload: true, delay: false }
       },
       {
         path: 'tab/company',
         loadChildren: './company-tab/company-tab.module#CompanyTabPageModule',
-        data: { title: 'Company', preload: true, delay: false }
+        data: { title: 'Product Search', preload: true, delay: false }
       },
       {
         path: 'tab/distributor',
         loadChildren:
           './distributor-tab/distributor-tab.module#DistributorTabPageModule',
-        data: { title: 'Distributor', preload: true, delay: false }
+        data: { title: 'Product Search', preload: true, delay: false }
       }
     ]
   }
