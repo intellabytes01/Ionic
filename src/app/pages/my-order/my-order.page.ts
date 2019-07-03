@@ -8,6 +8,7 @@ import { OrderFilterModalPage } from './order-filter-modal/order-filter-modal.pa
 import { untilDestroyed } from '@app/core';
 import { Router } from '@angular/router';
 import * as fromModel from './my-order-data.json';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'pr-my-order',
@@ -56,7 +57,7 @@ export class MyOrderPage implements OnInit {
         pagination: {
           currentPage: this.currentPage,
           limit: this.limit,
-          maxDateTime: ''
+          maxDateTime: format(new Date(), 'YYYY-MM-DD HH:mm:ss')
         }
       }
     };
