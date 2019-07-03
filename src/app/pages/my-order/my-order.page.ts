@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MyOrderList } from './store/myOrder.actions';
 import { MyOrderState } from './store/myOrder.state';
 import { Store, select } from '@ngrx/store';
@@ -15,7 +15,7 @@ import { format } from 'date-fns';
   templateUrl: './my-order.page.html',
   styleUrls: ['./my-order.page.scss']
 })
-export class MyOrderPage implements OnInit {
+export class MyOrderPage implements OnInit, OnDestroy{
   myOrderList$: any;
   myOrderList: any[] = [];
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
@@ -24,7 +24,7 @@ export class MyOrderPage implements OnInit {
   count = 0;
   orderFilter: any = fromModel.orderFilter;
   total: any = {
-    amount: 0.00,
+    amount: 0.0,
     count: 0
   };
   constructor(
@@ -34,13 +34,12 @@ export class MyOrderPage implements OnInit {
   ) {
     this.getMyOrders();
     this.myOrderList$ = this.store.pipe(select(myOrderData));
-    this.myOrderList$.subscribe(data => {
+    this.myOrderList$.pipe(untilDestroyed(this)).subscribe(data => {
       if (data) {
         this.count = data.length;
         this.myOrderList = this.myOrderList.concat(data);
       }
-    }),
-      untilDestroyed(this);
+    });
   }
 
   ngOnInit() {}
@@ -95,6 +94,13 @@ export class MyOrderPage implements OnInit {
   }
 
   goToOrderDetails(order) {
-    this.router.navigateByUrl('myorder/my-order-details', { state: { data: JSON.stringify(order) } });
+    this.router.navigateByUrl('myorder/my-order-details', {
+      state: { data: JSON.stringify(order) }
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
   }
 }
