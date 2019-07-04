@@ -102,6 +102,24 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard]
   },
   {
+    path: 'schemes',
+    loadChildren: './pages/Retailer/schemes/schemes.module#SchemesPageModule',
+    data: { title: 'Schemes', preload: false, delay: true },
+    canActivate: [AuthenticationGuard]
+  },
+  // {
+  //   path: 'refer-earn',
+  //   loadChildren: './pages/Retailer/refer-earn/refer-earn.module#ReferEarnPageModule',
+  //   data: { title: 'Refer & Earn', preload: false, delay: true },
+  //   canActivate: [AuthenticationGuard]
+  // },
+  // {
+  //   path: 'draft-order',
+  //   loadChildren: './pages/Retailer/draft-order/draft-order.module#DraftOrderPageModule',
+  //   data: { title: 'Draft Order', preload: false, delay: true },
+  //   canActivate: [AuthenticationGuard]
+  // },
+  {
     path: '**',
     component: NoComponentPage
   }
