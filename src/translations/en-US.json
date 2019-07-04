@@ -323,5 +323,31 @@
   "SCHEMES": {
     "SCHEME_TEXT": "Note: These schemes may or may not be available in your area. Kindly check with the authorized company distributor.",
     "FEEDBACK": "Feedback"
+  },
+
+  "REFER": {
+    "VALIDATION_MESSAGES": {
+      "mobile": [
+        { "type": "required", "message": "Mobile number is required." },
+        {
+          "type": "pattern",
+          "message": "Mobile number must be at least 10 characters long."
+        }
+      ],
+      "name": [{ "type": "required", "message": "Name is required." }]
+    },
+    "RETAILER": "Retailer Name",
+    "CONTACT": "Contact Number",
+    "AGREE": "I Agree to Terms & Conditions of Pharmarack",
+    "TERMS": "Terms & Conditions",
+    "ACCEPT": "Please accept terms and conditions.",
+    "TERMS_POINTS": {
+      "1": "1. Place an order of minimum Rs.15000 to atleast 3 distributors between 11th Oct to 16th Oct.",
+      "2": "2. The order should be valid and processed by the Distributor.",
+      "3": "3. The order should be placed via Pharmarack platform.",
+      "4": "4. If the delivery, made by the Distributor, is denied by the Retailer then that order will not be considered to be eligible for the campaign.",
+      "5": "5. Winners will be chosen via lucky draw carried out by Pharmarack. Valid for 500 users only.",
+      "6": "6. The decisions of Pharmarack Technologies in relation to this Campaign will be final and binding on all entrants. Pharmarack Technologies reserves the right to cancel, terminate, or suspend this Campaign, at its sole discretion."
+    }
   }
 }
