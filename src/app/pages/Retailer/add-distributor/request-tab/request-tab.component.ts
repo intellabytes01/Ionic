@@ -49,9 +49,8 @@ export class RequestTabComponent implements OnInit, OnDestroy {
     });
 
     // Set isChecked false initially
-    this.stores$ = this.storeAddDistributor.pipe(select(storesData),
-    untilDestroyed(this));
-    this.stores$.subscribe(data => {
+    this.stores$ = this.storeAddDistributor.pipe(select(storesData));
+    this.stores$.pipe(untilDestroyed(this)).subscribe(data => {
       this.searchList = data;
       Object.assign(this.storeList, this.searchList);
       if (data) {

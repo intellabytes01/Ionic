@@ -185,7 +185,9 @@
     "TELEPHONE": "Telephone",
     "DRUG_LICENSE_NUMBER": "Drug License Number",
     "GSTIN_NUMBER": "GSTIN Number",
+    "CST_NUMBER": "CST Number",
     "BACK_BUTTON": "Back",
+    "CANCEL_BUTTON": "Cancel",
     "UPDATE_BUTTON": "Update Profile",
     "EDIT_PROFILE": "Edit Profile",
     "UPLOAD_TEXT": "Upload / Capture Drug License or Bill Copy"

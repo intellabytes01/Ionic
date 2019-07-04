@@ -6,7 +6,8 @@ import {
   SaveProfileDetails,
   BusinessTypes,
   Regions,
-  GetProfileDetails
+  GetProfileDetails,
+  ProfileActionTypes
 } from './store/profile.actions';
 import {
   ProfileState,
@@ -19,8 +20,11 @@ import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { ModalController } from '@ionic/angular';
 import { ModalPopupPage } from '@app/shared/modal-popup/modal-popup.page';
-import { selectAuthState, getUserData } from '@app/core/authentication/auth.states';
+import { getUserData } from '@app/core/authentication/auth.states';
 import { untilDestroyed } from '@app/core';
+import { Actions, ofType } from '@ngrx/effects';
+import { tap } from 'rxjs/operators';
+import { AlertService } from '@app/shared/services/alert.service';
 
 @Component({
   selector: 'app-profile',
@@ -48,7 +52,9 @@ export class ProfilePage implements OnInit, OnDestroy {
     private camera: Camera,
     private store: Store<ProfileState>,
     private sanitizer: DomSanitizer,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private updates$: Actions,
+    private alert: AlertService
   ) {
     this.getBusinessTypes();
     this.getRegions();
@@ -56,10 +62,20 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     this.businessTypes$ = this.store.pipe(select(businessTypesData));
     this.regions$ = this.store.pipe(select(regionsData));
-    this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
-    // this.userProfileDetails$ = this.store.pipe(select(getProfileDetails)).subscribe(data => {
-    //   console.log(data);
-    // });
+    // this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
+    this.userProfileDetails$ = this.store.pipe(select(getProfileDetails)).subscribe(data => {
+      this.userProfileDetails$ = data;
+    });
+
+
+    this.updates$.pipe(
+      ofType(ProfileActionTypes.SAVEPROFILE_SUCCESS),
+      untilDestroyed(this),
+      tap(res => {
+        this.alert.presentToast('success', 'Profile Updated Successfully');
+        this.editProfile(true);
+      })
+    ).subscribe();
   }
 
   ngOnInit() {
@@ -128,6 +144,9 @@ export class ProfilePage implements OnInit, OnDestroy {
       gstinNumber: [
         { value: '', disabled: this.disable },
         Validators.compose([Validators.required])
+      ],
+      cstNumber: [
+        { value: '', disabled: this.disable }
       ],
       retailerId: [3, Validators.compose([Validators.required])],
       region: [
@@ -203,9 +222,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   updateProfile() {
     // stop here if form is invalid
     if (
-      this.profileForm.invalid ||
-      !this.profileForm.value.regionId
-      // || !this.profileForm.value.BusinessTypeId
+      this.profileForm.invalid
     ) {
       return;
     }
@@ -218,11 +235,10 @@ export class ProfilePage implements OnInit, OnDestroy {
       }
 
       this.profileInterface = {
-        lastName: 'NoName',
-        gstinOption: 'GSTIN',
-        cstNumber: '12345',
+        cstNumber: this.profileForm.value.cstNumber.toString(),
         pincode: this.profileForm.value.pincode.toString(),
-        regionId: this.profileForm.value.regionId.toString(),
+        regionId: this.profileForm.value.regionId ? this.profileForm.value.regionId.toString()
+         : this.userProfileDetails$.RegionId,
         firstName: this.profileForm.value.firstName,
         retailerId: this.profileForm.value.retailerId,
         email: this.profileForm.value.email,
@@ -230,7 +246,10 @@ export class ProfilePage implements OnInit, OnDestroy {
         telephone: this.profileForm.value.telephone,
         address1: this.profileForm.value.address1,
         licenseNumber: this.profileForm.value.licenseNumber,
-        gstinNumber: this.profileForm.value.gstinNumber
+        gstinNumber: this.profileForm.value.gstinNumber,
+
+        lastName: 'NoName',
+        gstinOption: 'GSTIN',
       };
 
       const payload = {

@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { untilDestroyed } from '@app/core/index.js';
+import { ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import * as fromModel from './new-order.json';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
 import { SimilarProductsModalPage } from './similar-products-modal/similar-products-modal.page';
-import { untilDestroyed } from '@app/core/index.js';
 
 @Component({
   selector: 'pr-new-order',
@@ -30,8 +30,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     public formBuilder: FormBuilder,
     private modalController: ModalController
   ) {
-    this.route.params.pipe(
-      untilDestroyed(this)).subscribe(param => {
+    this.route.params.pipe(untilDestroyed(this)).subscribe(param => {
       // Update Case
       if (param.orderKey) {
         this.key = param.orderKey;
@@ -44,14 +43,20 @@ export class NewOrderPage implements OnInit, OnDestroy {
         });
       }
     });
-    this.productList = Object.assign(this.productList, fromModel.data['Order#1561453855577'].productList);
+    this.productList = Object.assign(
+      this.productList,
+      fromModel.data['Order#1561453855577'].productList
+    );
     this.testOrderData = Object.assign(this.testOrderData, fromModel.data);
     this.setTempList();
   }
 
   setTempList() {
     this.key = 'Order#1561453855577';
-    this.tempProductList = Object.assign(this.tempProductList, this.testOrderData[this.key].productList);
+    this.tempProductList = Object.assign(
+      this.tempProductList,
+      this.testOrderData[this.key].productList
+    );
   }
 
   // Save to offline storage
@@ -105,9 +110,9 @@ export class NewOrderPage implements OnInit, OnDestroy {
     if (this.neworderForm.value.searchText) {
       this.productList.map(element => {
         if (
-          element.name.toLowerCase().indexOf(
-            this.neworderForm.value.searchText.toLowerCase()
-          ) !== -1
+          element.name
+            .toLowerCase()
+            .indexOf(this.neworderForm.value.searchText.toLowerCase()) !== -1
         ) {
           list.push(element);
         }
@@ -124,8 +129,8 @@ export class NewOrderPage implements OnInit, OnDestroy {
     this.neworderForm.patchValue({
       searchText: ''
     });
-    const productPresent = this.tempProductList.find((element) => {
-      return (element.id === product['id']);
+    const productPresent = this.tempProductList.find(element => {
+      return element.id === product['id'];
     });
     if (!productPresent) {
       this.tempProductList.push(product);
@@ -157,15 +162,11 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   // Create order
 
-  createOrder() {
-
-  }
+  createOrder() {}
 
   // Change Store
 
-  changeStore(store) {
-
-  }
+  changeStore(store) {}
 
   // Delete all
 
@@ -181,8 +182,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
       component: SimilarProductsModalPage,
       componentProps: { title: 'Similar Products' }
     });
-    modal.onDidDismiss().then(data => {
-    });
+    modal.onDidDismiss().then(data => {});
     return await modal.present();
   }
 
@@ -193,8 +193,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
       component: SimilarProductsModalPage,
       componentProps: { title: 'View Order History' }
     });
-    modal.onDidDismiss().then(data => {
-    });
+    modal.onDidDismiss().then(data => {});
     return await modal.present();
   }
 

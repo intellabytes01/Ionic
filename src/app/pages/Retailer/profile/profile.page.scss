@@ -32,3 +32,10 @@ ionic-selectable {
 .label-floating.sc-ion-label-md-h, .label-stacked.sc-ion-label-md-h {
   margin-bottom: 12px;
 }
+
+.ion-padding {
+  -webkit-padding-start: var(--ion-padding, 4px);
+  padding-inline-start: var(--ion-padding, 4px);
+  -webkit-padding-end: var(--ion-padding, 4px);
+  padding-inline-end: var(--ion-padding, 4px);
+}
