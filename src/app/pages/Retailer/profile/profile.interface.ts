@@ -1,6 +1,6 @@
 export interface IProfileInterface {
     firstName: string;
-    lastName: string;
+    retailerId: string;
     email: string;
     mobileNumber: string;
     telephone: string;
@@ -9,7 +9,8 @@ export interface IProfileInterface {
     regionId: string;
     licenseNumber: string;
     gstinNumber: string;
+
+    lastName: string;
     gstinOption: string;
     cstNumber: string;
-    retailerId: string;
-  };
+  }

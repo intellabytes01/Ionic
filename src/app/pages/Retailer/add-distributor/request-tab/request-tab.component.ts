@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   AuthState,
   selectAuthState
@@ -16,7 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './request-tab.component.html',
   styleUrls: ['./request-tab.component.scss']
 })
-export class RequestTabComponent implements OnInit {
+export class RequestTabComponent implements OnInit, OnDestroy {
   searchList: any[] = [];
   storeList: any[] = [];
   searchText = '';
@@ -37,7 +37,8 @@ export class RequestTabComponent implements OnInit {
 
   ngOnInit() {
     // Set user id and retailer id
-    this.storeAuth.pipe(select(selectAuthState)).subscribe(data => {
+    this.storeAuth.pipe(select(selectAuthState),
+    untilDestroyed(this)).subscribe(data => {
       this.requestSubmitBody.userId =
         data['userData']['userData']['userSummary']['UserId'];
       this.requestSubmitBody.retailerId =
@@ -45,11 +46,11 @@ export class RequestTabComponent implements OnInit {
           'RetailerId'
         ];
       this.getStores();
-    }),
-      untilDestroyed(this);
+    });
 
     // Set isChecked false initially
-    this.stores$ = this.storeAddDistributor.pipe(select(storesData));
+    this.stores$ = this.storeAddDistributor.pipe(select(storesData),
+    untilDestroyed(this));
     this.stores$.subscribe(data => {
       this.searchList = data;
       Object.assign(this.storeList, this.searchList);
@@ -58,8 +59,7 @@ export class RequestTabComponent implements OnInit {
           obj.isChecked = false;
         });
       }
-    }),
-      untilDestroyed(this);
+    });
   }
 
   // Get Stores
@@ -114,14 +114,14 @@ export class RequestTabComponent implements OnInit {
   // Check for select all
 
   checkMaster() {
-    this.stores$.subscribe(data => {
+    this.stores$.pipe(
+      untilDestroyed(this)).subscribe(data => {
       if (data) {
         data.forEach(obj => {
           obj.isChecked = this.masterCheck;
         });
       }
-    }),
-      untilDestroyed(this);
+    });
   }
 
   // User selects store
@@ -161,5 +161,11 @@ export class RequestTabComponent implements OnInit {
     this.storeAddDistributor.dispatch(
       new RequestSubmit(this.requestSubmitBody)
     );
+  }
+
+  ngOnDestroy(): void {
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
+
   }
 }
