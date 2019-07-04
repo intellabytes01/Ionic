@@ -113,12 +113,12 @@ const routes: Routes = [
     data: { title: 'Refer & Earn', preload: false, delay: true },
     canActivate: [AuthenticationGuard]
   },
-  // {
-  //   path: 'draft-order',
-  //   loadChildren: './pages/Retailer/draft-order/draft-order.module#DraftOrderPageModule',
-  //   data: { title: 'Draft Order', preload: false, delay: true },
-  //   canActivate: [AuthenticationGuard]
-  // },
+  {
+    path: 'draft-order',
+    loadChildren: './pages/Retailer/draft-order/draft-order.module#DraftOrderPageModule',
+    data: { title: 'Draft Order', preload: false, delay: true },
+    canActivate: [AuthenticationGuard]
+  },
   {
     path: '**',
     component: NoComponentPage
