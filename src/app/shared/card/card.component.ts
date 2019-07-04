@@ -16,6 +16,6 @@ export class CardComponent implements OnInit {
 
   trackByFn(index, item) {
     return index;
-  }  
+  }
 
 }

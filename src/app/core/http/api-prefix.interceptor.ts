@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   HttpEvent,
   HttpInterceptor,
@@ -19,11 +19,9 @@ import { tap } from 'rxjs/operators';
  * Prefixes all requests not starting with `http[s]` with `environment.serverUrl`.
  */
 @Injectable()
-export class ApiPrefixInterceptor implements HttpInterceptor {
-  constructor(
-    private store: Store<AuthState>,
-    private topLoaderService: TopLoaderService
-  ) {}
+export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
+  constructor(private store: Store<AuthState>,
+    private topLoaderService: TopLoaderService) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -40,7 +38,8 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
       }
     });
 
-    this.store.pipe(select(selectAuthState)).subscribe(data => {
+    this.store.pipe(select(selectAuthState),
+    untilDestroyed(this)).subscribe(data => {
       if (data['userData'] && data['userData']['token']) {
         request = request.clone({
           setHeaders: {
@@ -48,8 +47,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
           }
         });
       }
-    }),
-      untilDestroyed(this);
+    });
 
     return next.handle(request).pipe(
       tap(
@@ -71,5 +69,11 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
 
   hideLoader() {
     this.topLoaderService.isLoading.next(false);
+  }
+
+  ngOnDestroy(): void {
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
+
   }
 }
