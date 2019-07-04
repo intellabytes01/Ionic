@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { Page } from './interface/dashboard';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,7 +18,7 @@ import { NewOrderService } from '../Retailer/new-order/new-order.service';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss']
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage implements OnInit, OnDestroy {
   pages = [];
   userData: object;
 
@@ -36,7 +36,8 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
     this.pages = fromModel.data;
-    this.store.pipe(select(selectAuthState)).subscribe(data => {
+    this.store.pipe(select(selectAuthState),
+    untilDestroyed(this)).subscribe(data => {
       console.log(data);
       if (!data['userData']) {
         this.storage.get('userData').then((value: any) => {
@@ -49,8 +50,8 @@ export class DashboardPage implements OnInit {
         this.userData = data['userData']['userData'];
         this.setDisable();
       }
-    }),
-      untilDestroyed(this);
+    });
+    untilDestroyed(this);
   }
 
   setDisable() {
@@ -88,5 +89,11 @@ export class DashboardPage implements OnInit {
       //   }
       // });
     }
+  }
+
+  ngOnDestroy(): void {
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
+
   }
 }

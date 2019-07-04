@@ -1,5 +1,6 @@
 <div *ngIf="items && items.length > 0">
 <ionic-selectable
+  id="{{ ctrName }}"
   name="{{ ctrName }}"
   [items]="items"
   itemValueField="{{ id }}"

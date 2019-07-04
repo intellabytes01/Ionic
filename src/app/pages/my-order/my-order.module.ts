@@ -13,7 +13,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { MyOrderEffects } from './store/myOrder.effects';
 import { TranslateModule } from '@ngx-translate/core';
 import { OrderFilterModalPageModule } from './order-filter-modal/order-filter-modal.module';
-import { SharedModule } from '@app/shared';
 
 const routes: Routes = [
   {
@@ -37,8 +36,7 @@ const routes: Routes = [
     StoreModule.forFeature('myOrder', fromMyOrderReducer.myOrderReducer),
     EffectsModule.forRoot([MyOrderEffects]),
     TranslateModule,
-    OrderFilterModalPageModule,
-    SharedModule
+    OrderFilterModalPageModule
   ],
   declarations: [MyOrderPage]
 })

@@ -22,9 +22,11 @@
             [id]="'BusinessTypeId'"
             [name]="'BusinessTypeName'"
             [canSearch]="true"
+            [preSelectedOn] = "'BusinessTypeId'"
+            [preSelectedValue]="(userProfileDetails$ | async)?.BusinessTypeId"
             (valueChange)="updateBussinessType()"
-            [disableControl]="false"
-            class="selectWidth"
+            [disableControl]="true"
+            class="selectWidth selectBackGround"
           ></pr-select>
         </ion-item>
       </ion-col>
@@ -96,8 +98,11 @@
             [id]="'RegionId'"
             [name]="'RegionName'"
             [canSearch]="true"
-            [preSelectedValue]="(userProfileDetails$ | async)?.RegionName"
+            [preSelectedOn] = "'RegionId'"
+            [preSelectedValue]="(userProfileDetails$ | async)?.RegionId"
             (valueChange)="updateRegion($event)"
+            [disableControl]="disable"
+            [ngClass]="disable ? 'selectBackGround' : ''"
             class="selectWidth"
           ></pr-select>
         </ion-item>
