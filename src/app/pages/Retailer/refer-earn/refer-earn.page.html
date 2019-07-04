@@ -1,0 +1,90 @@
+<ion-content padding>
+  <form [formGroup]="referForm">
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">{{'REFER.RETAILER' | translate}}</ion-label>
+        <ion-input formControlName="name" type="text"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.name">
+        <div
+          class="error-message"
+          *ngIf="
+            referForm.get('name').hasError(validation.type) &&
+            (referForm.get('name').dirty ||
+              referForm.get('name').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">{{'REFER.CONTACT' | translate}}</ion-label>
+        <ion-input
+          formControlName="mobile"
+          type="number"
+          (ionInput)="validationMobile($event.target.value)"
+        ></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.mobile">
+        <div
+          class="error-message"
+          *ngIf="
+            referForm.get('mobile').hasError(validation.type) &&
+            (referForm.get('mobile').dirty ||
+              referForm.get('mobile').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <br />
+
+    <ion-row>
+      <ion-col>
+        <ion-checkbox formControlName="agree"></ion-checkbox>
+        <ion-label style="font-size: 0.9rem;"
+          >&nbsp;{{'REFER.AGREE' | translate}}</ion-label
+        >
+      </ion-col>
+    </ion-row>    
+
+    <ion-row>
+      <ion-col size="6" class="signin">
+        <app-back-button [link]="['/dashboard']"></app-back-button>
+      </ion-col>
+      <ion-col size="6" class="create">
+        <app-submit-button (click)="refer()"></app-submit-button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+  <ion-row>
+    <ion-col>
+      <ion-label style="font-size: 1.2rem;"><b>{{'REFER.TERMS' | translate}}</b></ion-label>
+<pre>
+{{'REFER.TERMS_POINTS.1' | translate}}
+
+{{'REFER.TERMS_POINTS.2' | translate}}
+
+{{'REFER.TERMS_POINTS.3' | translate}}
+
+{{'REFER.TERMS_POINTS.4' | translate}}
+
+{{'REFER.TERMS_POINTS.5' | translate}}
+
+{{'REFER.TERMS_POINTS.6' | translate}}
+</pre>
+    </ion-col>
+  </ion-row>
+</ion-content>
