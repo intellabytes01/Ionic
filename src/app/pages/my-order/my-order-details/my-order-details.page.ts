@@ -18,9 +18,8 @@ export class MyOrderDetailsPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.state$ = this.activatedRoute.paramMap.pipe(
-      untilDestroyed(this), map(() => window.history.state));
-    this.state$.subscribe((data: any) => {
+    this.state$ = this.activatedRoute.paramMap.pipe(map(() => window.history.state));
+    this.state$.pipe(untilDestroyed(this)).subscribe((data: any) => {
       if (data.data) {
         this.orderDetails = JSON.parse(data.data);
       }
