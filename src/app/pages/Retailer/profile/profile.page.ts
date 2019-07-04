@@ -20,7 +20,7 @@ import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { ModalController } from '@ionic/angular';
 import { ModalPopupPage } from '@app/shared/modal-popup/modal-popup.page';
-import { getUserData } from '@app/core/authentication/auth.states';
+import { getUserId } from '@app/core/authentication/auth.states';
 import { untilDestroyed } from '@app/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
@@ -84,7 +84,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   async getUserId() {
-    await this.store.pipe(select(getUserData), untilDestroyed(this)).subscribe(userId => {
+    await this.store.pipe(select(getUserId), untilDestroyed(this)).subscribe(userId => {
       this.getProfileDetails(userId);
     });
   }

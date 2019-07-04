@@ -13,7 +13,7 @@ export const authReducers = {
 
 export const selectAuthState = createFeatureSelector<AuthState>('auth');
 
-export const getUserData = createSelector(
+export const getUserId = createSelector(
   selectAuthState,
   userData => userData['userId']
 );
