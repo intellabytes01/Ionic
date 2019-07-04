@@ -15,11 +15,11 @@
   <br />
   <ion-row>
     <ion-col size="4" text-start>
-      <ion-label class="date-label"><b>From Date:</b></ion-label>
+      <ion-label class="date-label"><b>{{'MY_ORDER.FROMDATE' | translate}}:</b></ion-label>
     </ion-col>
     <ion-col size="8" text-start>
       <ion-datetime
-        placeholder="From Date"
+        [placeholder]="'MY_ORDER.FROMDATE' | translate"
         display-format="MMM DD, YYYY"
       ></ion-datetime>
     </ion-col>
@@ -27,11 +27,11 @@
 
   <ion-row>
     <ion-col size="4" text-start>
-      <ion-label class="date-label"><b>To Date:</b></ion-label>
+      <ion-label class="date-label"><b>{{'MY_ORDER.TODATE' | translate}}:</b></ion-label>
     </ion-col>
     <ion-col size="8" text-start>
       <ion-datetime
-        placeholder="To Date"
+        [placeholder]="'MY_ORDER.TODATE' | translate"
         display-format="MMM DD, YYYY"
       ></ion-datetime>
     </ion-col>
@@ -45,7 +45,7 @@
         fill="solid"
         (click)="presentModalOutstanding()"
       >
-        View Outstanding
+      {{'PAYMENT.VO' | translate}}
       </ion-button>
     </ion-col>
   </ion-row>

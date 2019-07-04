@@ -309,5 +309,19 @@
     "PLACEHOLDER_DISTRIBUTOR": "Distributor name",
     "MINCHAR_TEXT": "Please enter minimum 3 characters to search",
     "NOTFOUND": "Not Found"
+  },
+
+  "PAYMENT": {
+    "VO": "View Outstanding",
+    "FP": "Filter Payment",
+    "AP": "Amount | Payment",
+    "INVOICE_TEXT": "Invoice Pending Total Amount",
+    "PH_TEXT": "Pharmex HealthCare",
+    "NOTIFY": "Notify"
+  },
+
+  "SCHEMES": {
+    "SCHEME_TEXT": "Note: These schemes may or may not be available in your area. Kindly check with the authorized company distributor.",
+    "FEEDBACK": "Feedback"
   }
 }
