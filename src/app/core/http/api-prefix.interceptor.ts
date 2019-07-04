@@ -20,8 +20,10 @@ import { tap } from 'rxjs/operators';
  */
 @Injectable()
 export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
-  constructor(private store: Store<AuthState>,
-    private topLoaderService: TopLoaderService) {}
+  constructor(
+    private store: Store<AuthState>,
+    private topLoaderService: TopLoaderService
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -38,8 +40,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
       }
     });
 
-    this.store.pipe(select(selectAuthState),
-    untilDestroyed(this)).subscribe(data => {
+    this.store.pipe(select(selectAuthState)).subscribe(data => {
       if (data['userData'] && data['userData']['token']) {
         request = request.clone({
           setHeaders: {
@@ -47,7 +48,8 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
           }
         });
       }
-    });
+    }),
+      untilDestroyed(this);
 
     return next.handle(request).pipe(
       tap(
@@ -74,6 +76,5 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
   ngOnDestroy(): void {
     // Called once, before the instance is destroyed.
     // Add 'implements OnDestroy' to the class.
-
   }
 }
