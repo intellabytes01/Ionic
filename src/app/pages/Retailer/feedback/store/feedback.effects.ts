@@ -14,13 +14,15 @@ import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { Action } from '@ngrx/store';
 import { FeedbackService } from '../feedback.service';
 import { AlertService } from '@app/shared/services/alert.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class FeedbackEffects {
   constructor(
     private actions: Actions,
     private feedbackService: FeedbackService,
-    private alert: AlertService
+    private alert: AlertService,
+    private router: Router
   ) {}
 
   // Feedback Types
@@ -69,7 +71,8 @@ export class FeedbackEffects {
   FeedbackSubmitSuccess: Observable<any> = this.actions.pipe(
     ofType(FeedbackAction.FEEDBACKSUBMIT_SUCCESS),
     tap(() => {
-      this.alert.presentToast('success', 'Feedback submitted successfully.');
+      this.alert.presentToast('success', 'Thank you! We value your feedback. We will get back to you soon.');
+      this.router.navigateByUrl('/dashboard');
     })
   );
 

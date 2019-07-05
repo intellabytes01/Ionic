@@ -46,21 +46,21 @@ export class FeedbackPage implements OnInit {
           Fid: null,
           Types: ''
         },
-        Validators.compose([this.validateType])
+        Validators.compose([])
       ],
       feedbackTo: [
         {
           Fid: null,
           Types: ''
         },
-        Validators.compose([this.validateType])
+        Validators.compose([])
       ],
       toStoreId: [
         {
           Fid: null,
           Types: ''
         },
-        Validators.compose([this.validateType])
+        Validators.compose([])
       ]
     });
   }
@@ -72,10 +72,10 @@ export class FeedbackPage implements OnInit {
     }
 
     const payload = {
-      subject: this.feedbackForm.value.feedbackType,
+      subject: this.feedbackForm.value.feedbackType.Types,
       message: this.feedbackForm.value.message,
-      feedbackTo: this.feedbackForm.value.feedbackTo,
-      toStoreId: this.feedbackForm.value.toStoreId
+      feedbackTo: this.feedbackForm.value.feedbackTo.Fid,
+      toStoreId: this.feedbackForm.value.toStoreId.Fid
     };
     this.store.dispatch(new FeedbackSubmit(payload));
   }
@@ -91,14 +91,17 @@ export class FeedbackPage implements OnInit {
 
   updateFeedbackTypes(value) {
     this.feedbackForm.value.feedbackType.Fid = value.Fid;
+    this.feedbackForm.value.feedbackType.Types = value.Types;
   }
 
   updateFeedbackTo(value) {
     this.feedbackForm.value.feedbackTo.Fid = value.Fid;
+    this.feedbackForm.value.feedbackTo.Types = value.Types;
   }
 
   updateStore(value) {
     this.feedbackForm.value.toStoreId.Fid = value.Fid;
+    this.feedbackForm.value.toStoreId.Types = value.Types;
   }
 
   getFeedbackTypes() {

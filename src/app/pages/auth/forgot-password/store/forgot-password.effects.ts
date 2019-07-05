@@ -44,7 +44,7 @@ export class OtpEffects {
   SendOtpFailure: Observable<any> = this.actions.pipe(
     ofType(OtpActionTypes.SENDOTP_FAILURE),
     tap(() => {
-      this.alert.presentToast('danger', 'Incorrect mobile number');
+      this.alert.presentToast('danger', 'Supplied Mobile number does not match in our database.');
     })
   );
 

@@ -29,9 +29,7 @@
         <div
           class="error-message"
           *ngIf="
-            feedbackForm.get('feedbackType').hasError(validation.type) &&
-            (feedbackForm.get('feedbackType').dirty ||
-              feedbackForm.get('feedbackType').touched)
+            !feedbackForm.value.feedbackType.Fid
           "
         >
           {{ validation.message }}
@@ -58,9 +56,7 @@
         <div
           class="error-message"
           *ngIf="
-            feedbackForm.get('feedbackTo').hasError(validation.type) &&
-            (feedbackForm.get('feedbackTo').dirty ||
-              feedbackForm.get('feedbackTo').touched)
+            !feedbackForm.value.feedbackTo.Fid
           "
         >
           {{ validation.message }}
@@ -87,9 +83,7 @@
         <div
           class="error-message"
           *ngIf="
-            feedbackForm.get('toStoreId').hasError(validation.type) &&
-            (feedbackForm.get('toStoreId').dirty ||
-              feedbackForm.get('toStoreId').touched)
+            !feedbackForm.value.toStoreId.Fid
           "
         >
           {{ validation.message }}
@@ -113,9 +107,7 @@
         <div
           class="error-message"
           *ngIf="
-            feedbackForm.get('message').hasError(validation.type) &&
-            (feedbackForm.get('message').dirty ||
-              feedbackForm.get('message').touched)
+            !feedbackForm.get('message')
           "
         >
           {{ validation.message }}

@@ -68,7 +68,7 @@ export function authReducer(state = initialState, action: All): State {
         ...state,
         isAuthenticated: true,
         userData: action.payload,
-        userId: action.payload.userData.userSummary.UserId,
+        userId: action.payload ? action.payload.userData.userSummary.UserId : null,
         errorMessage: null
       };
     }

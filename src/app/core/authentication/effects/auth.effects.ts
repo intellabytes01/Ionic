@@ -72,8 +72,10 @@ export class AuthEffects {
   SignUpSuccess: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.SIGNUP_SUCCESS),
     tap((user) => {
-      this.storage.set('userData', JSON.stringify(user.payload));
-      this.router.navigateByUrl('/dashboard');
+      if (user && user.payload) {
+        this.storage.set('userData', JSON.stringify(user.payload));
+        this.router.navigateByUrl('/dashboard');
+      }
     })
   );
 
