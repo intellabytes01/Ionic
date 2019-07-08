@@ -83,7 +83,7 @@ export class AuthEffects {
   SignUpFailure: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.SIGNUP_FAILURE),
     tap((user) => {
-      this.alert.presentToast('danger', 'Please provide valid data.');
+      this.alert.presentToast('danger', user.payload.data.message);
     })
   );
 
