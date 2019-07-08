@@ -17,6 +17,7 @@ export class ChangePasswordPage implements OnInit {
   // tslint:disable-next-line: variable-name
   validation_messages = this.translateService.instant('CHANGE_PASSWORD.VALIDATION_MESSAGES');
   previousRouteUrl$: any;
+  matchPasswordError = false;
 
   constructor(public formBuilder: FormBuilder, private store: Store<AuthState>, private translateService: TranslateService) {
     this.previousRouteUrl$ = this.store.select(selectAuthState);

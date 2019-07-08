@@ -10,35 +10,35 @@
         {
           "name": "DASHBOARD.PAYMENTS",
           "link": "/payments",
-          "icon": "assets/icon/logo.png",
+          "icon": "assets/icon/my-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
         {
           "name": "DASHBOARD.MYORDER",
           "link": "/myorder",
-          "icon": "assets/icon/logo.png",
+          "icon": "assets/icon/my-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
         {
           "name": "DASHBOARD.INVOICE",
           "link": "/draft-order",
-          "icon": "assets/icon/logo.png",
+          "icon": "assets/icon/my-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
         {
           "name": "DASHBOARD.TRACKER",
           "link": "/draft-order",
-          "icon": "assets/icon/logo.png",
+          "icon": "assets/icon/my-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
         {
           "name": "DASHBOARD.MALL",
           "link": "/draft-order",
-          "icon": "assets/icon/logo.png",
+          "icon": "assets/icon/my-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
@@ -52,14 +52,14 @@
         {
           "name": "DASHBOARD.NEWSALESRETURN",
           "link": "/draft-order",
-          "icon": "assets/icon/logo.png",
+          "icon": "assets/icon/my-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
         {
           "name": "DASHBOARD.VIEWSALESRETURN",
           "link": "/draft-order",
-          "icon": "assets/icon/logo.png",
+          "icon": "assets/icon/my-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },

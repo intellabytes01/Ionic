@@ -1,11 +1,8 @@
-<div *ngIf="loading">
+<!-- <ion-content *ngIf="loading"> -->
+    <!-- <ion-progress-bar type="indeterminate" color="danger" *ngIf="loading$ | async"></ion-progress-bar> -->
+<!-- </ion-content> -->
 
-  <div class="ion-padding custom-skeleton" *ngFor="let item of ' '.repeat(20).split('')">
-    <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-    <ion-skeleton-text animated></ion-skeleton-text>
-    <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
-    <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
-    <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-  </div>
-  
-</div>
+
+<ng-container *ngIf="loading">
+    <ion-progress-bar type="indeterminate" color="danger"></ion-progress-bar>
+</ng-container>

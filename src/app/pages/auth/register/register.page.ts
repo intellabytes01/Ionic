@@ -36,6 +36,7 @@ export class RegisterPage implements OnInit, OnDestroy {
   registerStore: any;
   regionStore: any;
   validateuserStore: any;
+  firstTimeLoad = true;
   constructor(
     private alertService: AlertService,
     public formBuilder: FormBuilder,
@@ -102,6 +103,7 @@ export class RegisterPage implements OnInit, OnDestroy {
 
   register() {
     // stop here if form is invalid
+    this.firstTimeLoad = false;
     if (
       this.registerForm.invalid ||
       !this.registerForm.value.region.RegionId ||
