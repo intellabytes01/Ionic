@@ -354,5 +354,9 @@
       "5": "5. Winners will be chosen via lucky draw carried out by Pharmarack. Valid for 500 users only.",
       "6": "6. The decisions of Pharmarack Technologies in relation to this Campaign will be final and binding on all entrants. Pharmarack Technologies reserves the right to cancel, terminate, or suspend this Campaign, at its sole discretion."
     }
+  },
+
+  "DRAFT_ORDER": {
+    "RESTORE": "Restore"
   }
 }
