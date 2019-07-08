@@ -6,6 +6,8 @@ import { ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import * as fromModel from './new-order.json';
 import { SimilarProductsModalPage } from './similar-products-modal/similar-products-modal.page';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'pr-new-order',
@@ -23,36 +25,17 @@ export class NewOrderPage implements OnInit, OnDestroy {
   products$: any;
   deliveryModeList: any[] = fromModel.deliveryModeList;
   deliveryPriorityList: any[] = fromModel.deliveryPriorityList;
+  state$: Observable<object>;
 
   constructor(
     private storage: Storage,
     private route: ActivatedRoute,
     public formBuilder: FormBuilder,
-    private modalController: ModalController
-  ) {
-    this.route.params.pipe(untilDestroyed(this)).subscribe(param => {
-      // Update Case
-      if (param.orderKey) {
-        this.key = param.orderKey;
-        this.storage.forEach((value, key, index) => {
-          if (key === this.key) {
-            console.log(value);
-            this.testOrderData = value;
-            this.setTempList();
-          }
-        });
-      }
-    });
-    this.productList = Object.assign(
-      this.productList,
-      fromModel.data['Order#1561453855577'].productList
-    );
-    this.testOrderData = Object.assign(this.testOrderData, fromModel.data);
-    this.setTempList();
-  }
+    private modalController: ModalController,
+    public activatedRoute: ActivatedRoute
+  ) {}
 
   setTempList() {
-    this.key = 'Order#1561453855577';
     this.tempProductList = Object.assign(
       this.tempProductList,
       this.testOrderData[this.key].productList
@@ -62,20 +45,41 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Save to offline storage
 
   saveToStorage() {
+    this.testOrderData[this.key]['key'] = this.key;
     this.storage.set(this.key, this.testOrderData);
   }
 
-  // Fetch draft order list (for testing will be moved to draft order page)
-
-  fetchFromStorage() {
-    this.storage.forEach((value, key, index) => {
-      if (key.split('#')[0] === 'Order') {
-        console.log(value);
+  ngOnInit() {
+    // Update Case
+    this.state$ = this.activatedRoute.paramMap.pipe(
+      map(() => window.history.state)
+    );
+    this.state$.pipe(untilDestroyed(this)).subscribe((data: any) => {
+      if (data.orderKey) {
+        this.key = data.orderKey;
+        this.storage.forEach((value, key, index) => {
+          if (key === this.key) {
+            console.log(value);
+            this.testOrderData = value;
+            this.productList = Object.assign(
+              this.productList,
+              this.testOrderData[this.key].productList
+            );
+            console.log(this.productList);
+            this.setTempList();
+          }
+        });
+      } else {
+        this.key = 'Order#1561453855577';
+        this.productList = Object.assign(
+          this.productList,
+          fromModel.data[this.key].productList
+        );
+        this.testOrderData = Object.assign(this.testOrderData, fromModel.data);
+        this.setTempList();
       }
     });
-  }
 
-  ngOnInit() {
     this.neworderForm = this.formBuilder.group({
       searchText: ['', Validators.compose([])],
       store: [
@@ -150,7 +154,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Set quantity of product selected
 
   setQuantity(index, val) {
-    this.tempProductList[index].quantity = val;
+    this.tempProductList[index].quantity = val.target.value;
   }
 
   // Add product and save as draft

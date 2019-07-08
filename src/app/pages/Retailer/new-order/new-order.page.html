@@ -169,11 +169,11 @@
 
     <br />
 
-    <div *ngIf="testOrderData[key].productList.length != 0">
+    <div *ngIf="testOrderData[key] && testOrderData[key].productList && testOrderData[key].productList.length != 0">
       <ion-row>
         <ion-col text-center>
           <ion-label class="total"
-            >{{ "NEW_ORDER.GRAND_TOTAL" | translate }} 6250.00</ion-label
+            >{{ "NEW_ORDER.GRAND_TOTAL" | translate }} {{testOrderData[key].total}}</ion-label
           >
         </ion-col>
       </ion-row>
