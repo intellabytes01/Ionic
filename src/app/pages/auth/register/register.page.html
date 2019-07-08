@@ -33,7 +33,7 @@
           class="error-message"
           *ngIf="
             !registerForm.value.businessType.BusinessTypeId
-          "
+            && !firstTimeLoad"
         >
           {{ validation.message }}
         </div>
@@ -62,7 +62,7 @@
       >
         <div
           class="error-message"
-          *ngIf="
+          *ngIf="env
             registerForm.get('mobile').hasError(validation.type) &&
             (registerForm.get('mobile').dirty ||
               registerForm.get('mobile').touched)
@@ -139,7 +139,7 @@
           class="error-message"
           *ngIf="
             !registerForm.value.region.RegionId
-          "
+            && !firstTimeLoad"
         >
           {{ validation.message }}
         </div>

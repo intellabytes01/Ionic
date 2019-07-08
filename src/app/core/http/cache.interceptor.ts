@@ -58,12 +58,13 @@ export class CacheInterceptor implements HttpInterceptor {
             } else {
               // this.sendMessage('ENABLE_PROGRESSBAR');
             }
-            this.removeRequest();
             subscriber.next(event);
+            this.removeRequest();
           },
           error => { subscriber.error(error);
                      this.removeRequest(); },
-          () => subscriber.complete()
+          () => { subscriber.complete();
+                  this.removeRequest(); }
         );
       }
     });

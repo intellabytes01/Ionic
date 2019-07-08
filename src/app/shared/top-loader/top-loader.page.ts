@@ -1,29 +1,27 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { TopLoaderService } from './top-loader.service';
 import { untilDestroyed } from '@app/core';
-import { startWith, tap, delay } from 'rxjs/operators';
+import { startWith, delay, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'pr-top-loader',
   templateUrl: './top-loader.page.html',
   styleUrls: ['./top-loader.page.scss']
 })
-export class TopLoaderPage implements OnInit, OnDestroy {
+export class TopLoaderPage implements OnInit, OnDestroy, AfterViewInit {
   loading: boolean;
-  constructor(private topLoaderService: TopLoaderService) {
-    this.topLoaderService.isLoading
-      .pipe(
-        startWith(null),
-        delay(0),
-        tap(() => {}),
-        untilDestroyed(this)
-      )
-      .subscribe(v => {
-        this.loading = v;
-      });
-  }
+  constructor(private topLoaderService: TopLoaderService) { }
 
   ngOnInit() {}
+
+  ngAfterViewInit() {
+    this.topLoaderService.isLoading
+        .pipe(
+            startWith(null),
+            delay(0),
+            tap((value) => this.loading = value)
+        ).subscribe();
+  }
 
   // This method must be present, even if empty to use untilDestroyed
   ngOnDestroy() {
