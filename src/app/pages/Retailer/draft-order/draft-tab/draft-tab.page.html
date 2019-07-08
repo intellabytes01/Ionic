@@ -1,3 +1,26 @@
-<ion-content>
-  draft-tab works!
+<ion-content padding>
+  <div *ngFor="let order of draftList; let i = index">
+    <ion-row>
+      <ion-col>
+        <ion-icon (click)="deleteOrder(order, i)" class="delete-icon red" name="trash"></ion-icon> &nbsp;
+        <ion-label>{{ order.store }}</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="pt">
+      <ion-col text-start size="6">
+        <ion-label>{{
+          order.key.split("#")[1] | date: "dd MMM yyyy h:mm a"
+        }}</ion-label>
+      </ion-col>
+      <ion-col text-center size="3">
+        <ion-label (click)="goToNewOrder(order)" class="blue-color"
+          >Restore ></ion-label
+        >
+      </ion-col>
+      <ion-col text-end size="3">
+        <ion-label>₹{{ order.total }}</ion-label>
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-content>
