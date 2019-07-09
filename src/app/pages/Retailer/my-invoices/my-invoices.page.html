@@ -1,0 +1,24 @@
+<ion-content padding>
+  <ion-row class="shadow">
+    <ion-col text-start size="6">
+      <ion-label class="filter" (click)="presentModalInvoiceFilter()"
+        ><ion-icon name="funnel"></ion-icon>&nbsp;&nbsp;{{'INVOICE.FILTER' | translate}}</ion-label
+      >
+    </ion-col>
+
+    <ion-col text-end size="6">
+      <ion-label class="blue-color">{{'INVOICE.AI' | translate}}</ion-label><br />
+      <ion-label class="blue-color">₹{{total.amount.toFixed(2)}} | {{total.count}}</ion-label>
+    </ion-col>
+  </ion-row>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more orders..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <pr-new-order-button></pr-new-order-button>
+</ion-content>

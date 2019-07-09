@@ -23,14 +23,14 @@
         },
         {
           "name": "DASHBOARD.INVOICE",
-          "link": "/draft-order",
+          "link": "/my-invoices",
           "icon": "assets/icon/my-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
         {
           "name": "DASHBOARD.TRACKER",
-          "link": "/draft-order",
+          "link": "/delivery-tracker",
           "icon": "assets/icon/my-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]

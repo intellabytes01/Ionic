@@ -97,7 +97,8 @@ const routes: Routes = [
   },
   {
     path: 'payments',
-    loadChildren: './pages/Retailer/payments/payments.module#PaymentsPageModule',
+    loadChildren:
+      './pages/Retailer/payments/payments.module#PaymentsPageModule',
     data: { title: 'Payment', preload: false, delay: true },
     canActivate: [AuthenticationGuard]
   },
@@ -109,14 +110,30 @@ const routes: Routes = [
   },
   {
     path: 'refer-earn',
-    loadChildren: './pages/Retailer/refer-earn/refer-earn.module#ReferEarnPageModule',
+    loadChildren:
+      './pages/Retailer/refer-earn/refer-earn.module#ReferEarnPageModule',
     data: { title: 'Refer & Earn', preload: false, delay: true },
     canActivate: [AuthenticationGuard]
   },
   {
     path: 'draft-order',
-    loadChildren: './pages/Retailer/draft-order/draft-order.module#DraftOrderPageModule',
+    loadChildren:
+      './pages/Retailer/draft-order/draft-order.module#DraftOrderPageModule',
     data: { title: 'Draft Order', preload: false, delay: true },
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'my-invoices',
+    loadChildren:
+      './pages/Retailer/my-invoices/my-invoices.module#MyInvoicesPageModule',
+    data: { title: 'My Invoices', preload: false, delay: true },
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'delivery-tracker',
+    loadChildren:
+      './pages/Retailer/delivery-tracker/delivery-tracker.module#DeliveryTrackerPageModule',
+    data: { title: 'Delivery Tracker', preload: false, delay: true },
     canActivate: [AuthenticationGuard]
   },
   {

@@ -358,5 +358,15 @@
 
   "DRAFT_ORDER": {
     "RESTORE": "Restore"
+  },
+
+  "INVOICE": {
+    "FILTER": "Filter Invoice",
+    "AI": "Amount | Invoice",
+    "HEADER": "Invoice Filter"
+  },
+
+  "DELIVERY": {
+    "FILTER": "Filter List"
   }
 }

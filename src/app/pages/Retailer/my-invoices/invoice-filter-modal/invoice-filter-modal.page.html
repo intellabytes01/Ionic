@@ -1,0 +1,126 @@
+<ion-header>
+  <ion-toolbar>      
+    <ion-row>
+      <ion-col size="10">
+        <ion-title class="header-title">{{'INVOICE.FILTER' | translate}}</ion-title>
+      </ion-col>
+      <ion-col size="2" text-end>
+        <ion-icon
+          (click)="modalController.dismiss()"
+          class="header-icon"
+          name="close"
+        ></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form [formGroup]="invoiceFilterForm">
+    
+    <ion-row>
+      <ion-col>
+        <pr-select
+          [placeHolder]="'FEEDBACKSTORE_PLACEHOLDER' | translate"
+          [ctrName]="'store'"
+          [items]="storeList"
+          [id]="'id'"
+          [name]="'name'"
+          [canSearch]="true"
+          (valueChange)="updateStore($event)"
+        ></pr-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-input
+          formControlName="invoiceNo"
+          type="text"
+          placeholder="Invoice No"
+        ></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="2" text-start>
+        <ion-label class="date-label"><b>{{'MY_ORDER.FROMDATE' | translate}}:</b></ion-label>
+      </ion-col>
+      <ion-col size="4" text-start>
+        <ion-datetime
+          [placeholder]="invoiceFilterForm.value.fromDate" 
+          pickerFormat="DD/MM/YY" 
+          display-format="DD/MM/YY"
+          formControlName="fromDate"
+        ></ion-datetime>
+      </ion-col>
+      <ion-col size="2" text-start>
+        <ion-label class="date-label"><b>{{'MY_ORDER.TODATE' | translate}}:</b></ion-label>
+      </ion-col>
+      <ion-col size="4" text-start>
+        <ion-datetime
+          [placeholder]="invoiceFilterForm.value.toDate" 
+          pickerFormat="DD/MM/YY" 
+          display-format="DD/MM/YY"
+          formControlName="toDate"
+        ></ion-datetime>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="6">
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.fromDate">
+            <div
+              class="error-message"
+              *ngIf="
+                invoiceFilterForm.get('fromDate').hasError(validation.type) &&
+                (invoiceFilterForm.get('fromDate').dirty ||
+                  invoiceFilterForm.get('fromDate').touched)
+              "
+            >
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+      </ion-col>
+
+      <ion-col size="6">
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.toDate">
+            <div
+              class="error-message"
+              *ngIf="
+                invoiceFilterForm.get('toDate').hasError(validation.type) &&
+                (invoiceFilterForm.get('toDate').dirty ||
+                  invoiceFilterForm.get('toDate').touched)
+              "
+            >
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <br />
+
+    <ion-row>
+      <ion-col size="6"></ion-col>
+      <ion-col size="3" class="signin" text-end>
+        <ion-button
+          (click)="modalController.dismiss()"
+          color="mustard"
+          expand="full"
+          fill="solid"
+        >
+        {{'MY_ORDER.CLOSE' | translate}}
+        </ion-button>
+      </ion-col>
+      <ion-col size="3" class="create" text-end>
+        <app-submit-button (click)="invoiceFilterSubmit()"></app-submit-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>
