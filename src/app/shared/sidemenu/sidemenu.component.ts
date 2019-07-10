@@ -31,7 +31,7 @@ export class SidemenuComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.photo = '../../../assets/icon/user-default.png';
+    this.photo = 'assets/icon/user-default.png';
   }
 
   openPage(page) {
@@ -66,9 +66,8 @@ export class SidemenuComponent implements OnInit {
     });
 
     modal.onDidDismiss().then((dataReturned) => {
-      if (dataReturned.data && dataReturned.data !== null) {
-        this.dataReturned = dataReturned.data;
-        this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(this.dataReturned && (this.dataReturned.dataUrl));
+      if (dataReturned.data) {
+        this.photo = 'data:image/jpeg;base64,' + dataReturned.data;
       }
     });
     return await modal.present();

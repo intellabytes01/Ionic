@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'pr-modal-popup',
@@ -13,13 +11,11 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 export class ModalPopupPage implements OnInit {
   modalTitle: string;
   modelId: number;
-  photo: SafeResourceUrl;
 
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
-    private sanitizer: DomSanitizer,
-    private imagePicker: ImagePicker
+    private camera: Camera
   ) {}
 
   ngOnInit() {
@@ -33,43 +29,23 @@ export class ModalPopupPage implements OnInit {
     await this.modalController.dismiss(onClosedData);
   }
 
-  async takePicture() {
-    ////////////// Open Camera ///////////////////
-
-    const image = await Plugins.Camera.getPhoto({
-      quality: 100,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Camera
-    }).catch(error => {
-      console.log(error);
-    });
-
-    if (image && image.dataUrl) {
-      this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(
-        image && image.dataUrl
-      );
-      this.modalController.dismiss(image);
-    }
-  }
-
-  async getPictureFomLibrary() {
-
-    ///////////////// Get Picture From Library ////////////////
-    const options = {
-      maximumImagesCount: 1,
-      width: 100,
-      height: 100,
-      quality: 100
+  takePhoto(sourceType) {
+    const options: CameraOptions = {
+      quality: 80,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType,
+      targetWidth: 500,
+      targetHeight: 500
     };
-    this.imagePicker.getPictures(options).then(
-      results => {
-        for (const pic of results) {  // let i = 0; i < results.length; i++) {
-          console.log('Image URI: ' + pic);
-        }
+
+    this.camera.getPicture(options).then(
+      imageData => {
+        this.modalController.dismiss(imageData);
       },
-      err => {}
+      () => {}
     );
-    this.modalController.dismiss();
   }
 }

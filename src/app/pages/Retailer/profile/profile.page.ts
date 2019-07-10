@@ -199,26 +199,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
   }
 
-  takePhoto(sourceType) {
-    const options: CameraOptions = {
-      quality: 80,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.PNG,
-      mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation: true,
-      sourceType,
-      targetWidth: 500,
-      targetHeight: 500
-    };
-
-    this.camera.getPicture(options).then(
-      imageData => {
-        this.imgPreview = imageData;
-      },
-      () => {}
-    );
-  }
-
   updateProfile() {
     // stop here if form is invalid
     if (
@@ -272,19 +252,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     // this.profileForm.value.RegionName = value.RegionName;
   }
 
-  async takePicture() {
-    const image = await Plugins.Camera.getPhoto({
-      quality: 100,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Camera
-    });
-
-    this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(
-      image && image.dataUrl
-    );
-  }
-
   async openModal() {
     const modal = await this.modalController.create({
       component: ModalPopupPage,
@@ -295,11 +262,8 @@ export class ProfilePage implements OnInit, OnDestroy {
     });
 
     modal.onDidDismiss().then(dataReturned => {
-      if (dataReturned.data && dataReturned.data !== null) {
-        this.dataReturned = dataReturned.data;
-        this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(
-          this.dataReturned && this.dataReturned.dataUrl
-        );
+      if (dataReturned.data) {
+        this.photo = 'data:image/jpeg;base64,' + dataReturned.data;
       }
     });
     return await modal.present();
