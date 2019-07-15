@@ -9,6 +9,7 @@ import * as UI from '../../shared/ui.actions';
 import { Store } from '@ngrx/store';
 import { Logger } from '../logger.service';
 import { Storage } from '@ionic/storage';
+import { LoginResponse, User } from './models/user';
 
 const log = new Logger('AuthenticationGuard');
 
@@ -48,9 +49,9 @@ export class AuthenticationService {
    * @param context The login parameters.
    * @return The user credentials.
    */
-  login(context: LoginContext): Observable<Credentials> {
+  login(context: LoginContext): Observable<User> {
     return this.httpClient
-      .post(routes.login(context), JSON.stringify(context))
+      .post<LoginResponse>(routes.login(context), JSON.stringify(context))
       .pipe(
         map((data: any) => ({
           data
@@ -68,11 +69,11 @@ export class AuthenticationService {
    * @param context SignUpContext
    */
 
-  signUp(context: SignupContext): Observable<Credentials> {
+  signUp(context: SignupContext): Observable<User> {
     return (
       this.httpClient
         // .cache()
-        .post(routes.signup(context), JSON.stringify(context))
+        .post<LoginResponse>(routes.signup(context), JSON.stringify(context))
         .pipe(
           map((data: any) => ({
             data

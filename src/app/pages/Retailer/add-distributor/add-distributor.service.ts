@@ -5,6 +5,7 @@ import * as fromRequest from './store/add-distributor.reducers';
 import { Observable } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Logger } from '@app/core';
+import { StatusResponse, StoreResponse, RequestSubmitResponse, DistributorSubmitResponse } from './store/add-distributor.state';
 
 const log = new Logger('RequestGuard');
 
@@ -40,7 +41,7 @@ export class AddDistributorService {
    * @return Array of Request Types.
    */
   getGetStores(retailerId): Observable<any> {
-    return this.httpClient.get(`${routes.stores}${retailerId}`).pipe(
+    return this.httpClient.get<StoreResponse>(`${routes.stores}${retailerId}`).pipe(
       map((data: any) => ({
         data
       })),
@@ -49,7 +50,7 @@ export class AddDistributorService {
   }
 
   submitRequest(context: RequestContext): Observable<any> {
-    return this.httpClient.post(routes.requestsubmit, context).pipe(
+    return this.httpClient.post<RequestSubmitResponse>(routes.requestsubmit, context).pipe(
       map((data: any) => ({
         data
       })),
@@ -62,7 +63,7 @@ export class AddDistributorService {
    * @return Array of Status.
    */
   getGetStatus(retailerId): Observable<any> {
-    return this.httpClient.get(`${routes.status}${retailerId}`).pipe(
+    return this.httpClient.get<StatusResponse>(`${routes.status}${retailerId}`).pipe(
       map((data: any) => ({
         data
       })),
@@ -71,7 +72,7 @@ export class AddDistributorService {
   }
 
   submitDistributor(context: DistributorContext): Observable<any> {
-    return this.httpClient.post(routes.distributorsubmit, context).pipe(
+    return this.httpClient.post<DistributorSubmitResponse>(routes.distributorsubmit, context).pipe(
       map((data: any) => ({
         data
       })),

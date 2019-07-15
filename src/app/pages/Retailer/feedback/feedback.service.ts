@@ -5,6 +5,7 @@ import * as fromFeedback from './store/feedback.reducers';
 import { Observable } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Logger } from '@app/core';
+import { FeedbackTypeResponse } from './store/feedback.state';
 
 const log = new Logger('FeedbackGuard');
 
@@ -32,7 +33,7 @@ export class FeedbackService {
    * @return Array of Feedback Types.
    */
   getFeedbackTypes(): Observable<any> {
-    return this.httpClient.get(routes.feedbacktypes).pipe(
+    return this.httpClient.get<FeedbackTypeResponse>(routes.feedbacktypes).pipe(
       map((data: any) => ({
         data
       })),

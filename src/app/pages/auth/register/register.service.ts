@@ -5,6 +5,7 @@ import * as fromRegister from './store/register.reducers';
 import { Observable } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Logger } from '@app/core';
+import { RegionResponse, Region, BussinessTypeResponse, BussinessType } from './store/register.state';
 
 const log = new Logger('AuthenticationGuard');
 
@@ -12,10 +13,6 @@ const routes = {
   businesstypes: '/businesstypes',
   regions: '/regions'
 };
-export interface BusinessTypeContext {
-  // The quote's category: 'dev', 'explicit'...
-  endPoint: string;
-}
 @Injectable({
   providedIn: 'root'
 })
@@ -30,7 +27,7 @@ export class RegisterService {
    * @return Array of Business Types.
    */
   getBusinessTypes(): Observable<any> {
-    return this.httpClient.get(routes.businesstypes).pipe(
+    return this.httpClient.get<BussinessTypeResponse>(routes.businesstypes).pipe(
       map((data: any) => ({
         data
       })),
@@ -43,7 +40,7 @@ export class RegisterService {
    * @return Array of Regions.
    */
   getRegions(): Observable<any> {
-    return this.httpClient.get(routes.regions).pipe(
+    return this.httpClient.get<RegionResponse>(routes.regions).pipe(
       map((data: any) => ({
         data
       })),

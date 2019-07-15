@@ -3,6 +3,7 @@ import { Logger } from '@app/core';
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { MyOrderResponse } from './store/myOrder.state';
 
 const log = new Logger('MyOrder');
 
@@ -33,7 +34,7 @@ export class MyOrderService {
     * @return object of orders.
     */
   getMyOrders(context: MyOrderContext): Observable<any> {
-    return this.httpClient.post(routes.getOrder, context).pipe(
+    return this.httpClient.post<MyOrderResponse>(routes.getOrder, context).pipe(
       map((data: any) => ({
         data
       })),
