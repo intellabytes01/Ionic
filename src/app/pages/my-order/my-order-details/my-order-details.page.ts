@@ -4,6 +4,10 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { untilDestroyed } from '@app/core';
+import { MyOrderState } from '../store/myOrder.state';
+import { Store, select } from '@ngrx/store';
+import { MyOrderDetails } from '../store/myOrder.actions';
+import { myOrderDetailsData } from '../store/myOrder.reducers';
 
 @Component({
   selector: 'pr-my-order-details',
@@ -12,22 +16,45 @@ import { untilDestroyed } from '@app/core';
 })
 export class MyOrderDetailsPage implements OnInit, OnDestroy {
   state$: Observable<object>;
-  orderDetails: any = {};
-  constructor(public activatedRoute: ActivatedRoute, public iab: InAppBrowser) {
-
-  }
-
-  ngOnInit() {
-    this.state$ = this.activatedRoute.paramMap.pipe(map(() => window.history.state));
-    this.state$.pipe(untilDestroyed(this)).subscribe((data: any) => {
-      if (data.data) {
-        this.orderDetails = JSON.parse(data.data);
+  orderDetails: any = [];
+  myOrderDetails$: any;
+  constructor(
+    public activatedRoute: ActivatedRoute,
+    public iab: InAppBrowser,
+    private store: Store<MyOrderState>
+  ) {
+    this.myOrderDetails$ = this.store.pipe(select(myOrderDetailsData));
+    this.myOrderDetails$.pipe(untilDestroyed(this)).subscribe(data => {
+      if (data) {
+        this.orderDetails = data;
       }
     });
   }
 
-  call() {
-    this.iab.create(`tel:${this.orderDetails.mobilenumber}`);
+  ngOnInit() {
+    this.orderDetails = [];
+    this.state$ = this.activatedRoute.paramMap.pipe(
+      map(() => window.history.state)
+    );
+    this.state$.pipe(untilDestroyed(this)).subscribe((data: any) => {
+      if (data.data) {
+        this.getMyOrderDetails(JSON.parse(data.data).OrderId);
+      }
+    });
+  }
+
+  getMyOrderDetails(oId) {
+    const payload = {
+      orderDetails: {
+        orderId: oId,
+        operation: 'view'
+      }
+    };
+    this.store.dispatch(new MyOrderDetails(payload));
+  }
+
+  call(mobile) {
+    this.iab.create(`tel:${mobile}`);
   }
 
   ngOnDestroy(): void {

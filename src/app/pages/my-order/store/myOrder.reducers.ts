@@ -4,13 +4,15 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 export interface MyOrderState {
   myOrderArray: any;
   myOrderSubmitObject: any;
+  myOrderDetailsArray: any;
   errorMessage: string | null;
 }
 
 export const initialState: MyOrderState = {
   errorMessage: null,
   myOrderArray: [],
-  myOrderSubmitObject: {}
+  myOrderSubmitObject: {},
+  myOrderDetailsArray: []
 };
 
 export function myOrderReducer(
@@ -21,7 +23,7 @@ export function myOrderReducer(
     case MyOrderAction.MYORDER_SUCCESS: {
       return {
         ...state,
-        myOrderArray: action.payload.myOrders.data.returnData,
+        myOrderArray: action.payload.myOrders.data,
         errorMessage: null
       };
     }
@@ -29,6 +31,20 @@ export function myOrderReducer(
       return {
         ...state,
         myOrderArray: [],
+        errorMessage: null
+      };
+    }
+    case MyOrderAction.MYORDERDETAILS_SUCCESS: {
+      return {
+        ...state,
+        myOrderDetailsArray: action.payload.myOrders.data,
+        errorMessage: null
+      };
+    }
+    case MyOrderAction.MYORDERDETAILS_FAILURE: {
+      return {
+        ...state,
+        myOrderDetailsArray: [],
         errorMessage: null
       };
     }
@@ -43,4 +59,9 @@ const myOrderState = createFeatureSelector<MyOrderState>('myOrder');
 export const myOrderData = createSelector(
   myOrderState,
   orderState => orderState.myOrderArray
+);
+
+export const myOrderDetailsData = createSelector(
+  myOrderState,
+  orderState => orderState.myOrderDetailsArray
 );

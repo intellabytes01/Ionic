@@ -15,7 +15,7 @@ import { format } from 'date-fns';
   templateUrl: './my-order.page.html',
   styleUrls: ['./my-order.page.scss']
 })
-export class MyOrderPage implements OnInit, OnDestroy{
+export class MyOrderPage implements OnInit, OnDestroy {
   myOrderList$: any;
   myOrderList: any[] = [];
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
@@ -24,9 +24,10 @@ export class MyOrderPage implements OnInit, OnDestroy{
   count = 0;
   orderFilter: any = fromModel.orderFilter;
   total: any = {
-    amount: 0.0,
+    amount: 0,
     count: 0
   };
+  event: any;
   constructor(
     private store: Store<MyOrderState>,
     public modalController: ModalController,
@@ -35,9 +36,16 @@ export class MyOrderPage implements OnInit, OnDestroy{
     this.getMyOrders();
     this.myOrderList$ = this.store.pipe(select(myOrderData));
     this.myOrderList$.pipe(untilDestroyed(this)).subscribe(data => {
-      if (data) {
-        this.count = data.length;
-        this.myOrderList = this.myOrderList.concat(data);
+      if (data && data.returnData) {
+        this.count = data.returnData.length;
+        this.myOrderList = this.myOrderList.concat(data.returnData);
+        this.total.amount = data.totalOrderAmount;
+        this.total.count = data.paginationData.totalRecords;
+        // App logic to determine if all data is loaded
+        // and disable the infinite scroll
+        if (this.event && this.count < this.limit) {
+          this.event.target.disabled = true;
+        }
       }
     });
   }
@@ -79,17 +87,11 @@ export class MyOrderPage implements OnInit, OnDestroy{
   }
 
   loadData(event) {
+    this.event = event;
     this.currentPage += 1;
-    this.limit += this.limit;
     setTimeout(() => {
       this.getMyOrders();
       event.target.complete();
-
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      if (this.count < this.limit) {
-        event.target.disabled = true;
-      }
     }, 500);
   }
 
