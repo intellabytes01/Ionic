@@ -47,7 +47,7 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   LogInFailure: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.LOGIN_FAILURE),
-    tap(() => {
+    tap((res) => {
       this.alert.presentToast('danger', 'Please provide valid credentials.');
     })
   );

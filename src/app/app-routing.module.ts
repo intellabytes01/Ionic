@@ -42,7 +42,7 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule',
     data: { title: 'Home', preload: true, delay: false },
-    canActivate: [AuthenticationGuard]
+    canLoad : [AuthenticationGuard]
   },
 
   // {

@@ -60,7 +60,9 @@ export class ProfileService {
    * @return Array of Business Types.
    */
   getBusinessTypes(): Observable<any> {
-    return this.httpClient.get(routes.businesstypes).pipe(
+    return this.httpClient
+    .cache(true)
+    .get(routes.businesstypes).pipe(
       map((data: any) => ({
         data
       })),
