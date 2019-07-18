@@ -18,3 +18,10 @@ export const getUserId = createSelector(
   userData => userData['userId']
 );
 
+export const getRetailerStoreParties = createSelector(
+    selectAuthState,
+    userData => {
+        return userData['userData']['userData']['retailerSummary']['retailerStoreParties'];
+    }
+  );
+

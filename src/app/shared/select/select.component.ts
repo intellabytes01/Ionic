@@ -51,16 +51,5 @@ export class SelectComponent implements OnInit, OnChanges {
         }
       });
     }
-
-    // this.selectedValueArray =
-    //   (this.items && this.items.length) > 0
-    //     ? this.items.filter(
-    //         word => word[this.preSelectedOn] == this.preSelectedValue
-    //       )
-    //     : null;
-    // this.selectedValue =
-    //   this.selectedValueArray && this.selectedValueArray.length > 0
-    //     ? this.selectedValueArray[0]
-    //     : '';
   }
 }

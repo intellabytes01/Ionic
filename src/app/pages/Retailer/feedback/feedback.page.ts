@@ -12,6 +12,8 @@ import { feedbackTypesData } from './store/feedback.reducers';
 import { FeedbackTypes, FeedbackSubmit } from './store/feedback.actions';
 import * as fromModel from './feedback-data.json';
 import { TranslateService } from '@ngx-translate/core';
+import { getRetailerStoreParties } from '@app/core/authentication/auth.states';
+import { untilDestroyed } from '@app/core';
 
 @Component({
   selector: 'app-feedback',
@@ -34,6 +36,7 @@ export class FeedbackPage implements OnInit {
     private store: Store<FeedbackState>,
     private translateService: TranslateService
   ) {
+    this.getRetailerStoreParties();
     this.getFeedbackTypes();
     this.feedbackTypes$ = this.store.pipe(select(feedbackTypesData));
   }
@@ -100,12 +103,18 @@ export class FeedbackPage implements OnInit {
   }
 
   updateStore(value) {
-    this.feedbackForm.value.toStoreId.Fid = value.Fid;
-    this.feedbackForm.value.toStoreId.Types = value.Types;
+    this.feedbackForm.value.toStoreId.Fid = value.StoreId;
+    this.feedbackForm.value.toStoreId.Types = value.StoreName;
   }
 
   getFeedbackTypes() {
     this.store.dispatch(new FeedbackTypes());
+  }
+
+  async getRetailerStoreParties() {
+    await this.store.pipe(select(getRetailerStoreParties), untilDestroyed(this)).subscribe(storeId => {
+      this.toStoreIds = storeId;
+    });
   }
 
 // tslint:disable-next-line: use-life-cycle-interface
