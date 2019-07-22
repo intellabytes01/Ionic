@@ -26,9 +26,14 @@ export interface SignupContext {
   businessTypeId: number;
 }
 
+export interface UserExistsContext {
+  mobile: string;
+}
+
 const routes = {
-  login: (c: LoginContext) => `/login`,
+  login: (c: LoginContext) => '/login',
   signup: (c: SignupContext) => '/register/retailer',
+  userExists: (c: UserExistsContext) => '/user/exists',
   savetoken: ''
 };
 
@@ -53,9 +58,6 @@ export class AuthenticationService {
     return this.httpClient
       .post<LoginResponse>(routes.login(context), JSON.stringify(context))
       .pipe(
-        map((data: any) => ({
-          data
-        })),
         tap((data: any) => {
           // this.store.dispatch(new Auth.SetAuthenticated());
           this.credentialsService.setCredentials(data, true);
@@ -75,9 +77,6 @@ export class AuthenticationService {
         // .cache()
         .post<LoginResponse>(routes.signup(context), JSON.stringify(context))
         .pipe(
-          map((data: any) => ({
-            data
-          })),
           tap((data: any) => {
             // this.store.dispatch(new Auth.SetAuthenticated());
             this.credentialsService.setCredentials(data, true);
@@ -86,7 +85,6 @@ export class AuthenticationService {
         )
     );
   }
-
 
   // Save Token
 
@@ -104,6 +102,21 @@ export class AuthenticationService {
     return of(true);
   }
 
+  /**
+   * context: user mobile number object
+   */
+  userExists(context: UserExistsContext): Observable<any> {
+    return this.httpClient
+      .cache(true)
+      .post(routes.userExists(context), JSON.stringify(context))
+      .pipe(
+        tap((data: any) => {
+          console.log(data);
+        }),
+        catchError(error => this.errorHandler(error))
+      );
+  }
+
   // Customize the default error handler here if needed
   private errorHandler(response: HttpEvent<any>): Observable<HttpEvent<any>> {
     // if (!environment.production) {
@@ -111,7 +124,7 @@ export class AuthenticationService {
     log.error('Request error', response);
     this.store.dispatch(new UI.StopLoading());
     // }
-    throw response;
+    throw response['error'];
   }
 
   // getToken(): string {

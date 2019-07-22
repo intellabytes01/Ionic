@@ -37,7 +37,7 @@
         },
         {
           "name": "DASHBOARD.MALL",
-          "link": "/draft-order",
+          "link": "/mall",
           "icon": "assets/icon/my-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]

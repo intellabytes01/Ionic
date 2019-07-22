@@ -31,7 +31,7 @@ export class CacheInterceptor implements HttpInterceptor {
   }
 
   removeRequest() {
-    this.topLoaderService.isLoading.next(false  );
+    this.topLoaderService.isLoading.next(false);
 }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

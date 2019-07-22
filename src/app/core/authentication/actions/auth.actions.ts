@@ -13,7 +13,10 @@ export enum AuthActionTypes {
   SAVETOKEN = '[Auth] Save Token',
   SAVETOKEN_SUCCESS = '[Auth] Save Token Success',
   SAVETOKEN_FAIL = '[Auth] Save Token Fail',
-  PREVIOUS_URL = '[Route] Previous Url'
+  PREVIOUS_URL = '[Route] Previous Url',
+  USEREXISTS = '[Auth] User Exists',
+  USEREXISTS_SUCCESS = '[Auth] User Exists Success',
+  USEREXISTS_FAILURE = '[Auth] User Exists Failure',
 }
 
 export class LogIn implements Action {
@@ -73,6 +76,21 @@ export class GetPreviousUrl implements Action {
   constructor(public payload: any) {}
 }
 
+export class UserExists implements Action {
+  readonly type = AuthActionTypes.USEREXISTS;
+  constructor(public payload: any) {}
+}
+
+export class UserExistsSuccess implements Action {
+  readonly type = AuthActionTypes.USEREXISTS_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class UserExistsFailure implements Action {
+  readonly type = AuthActionTypes.USEREXISTS_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | LogIn
   | LogInSuccess
@@ -85,4 +103,7 @@ export type All =
   | SaveToken
   | SaveTokenSuccess
   | SaveTokenFail
-  | GetPreviousUrl;
+  | GetPreviousUrl
+  | UserExists
+  | UserExistsSuccess
+  | UserExistsFailure;

@@ -136,10 +136,16 @@ const routes: Routes = [
     data: { title: 'Delivery Tracker', preload: false, delay: true },
     canActivate: [AuthenticationGuard]
   },
+  { path: 'mall',
+    loadChildren: './pages/mall/mall.module#MallPageModule',
+    data: { title: 'Pharma Mall', preload: false, delay: false },
+    canActivate: [AuthenticationGuard]
+  },
   {
     path: '**',
     component: NoComponentPage
   }
+
 ];
 
 @NgModule({

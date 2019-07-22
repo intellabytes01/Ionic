@@ -61,3 +61,5 @@ export interface RetailerStoreParties {
   StoreId: number;
   StoreName: string;
 }
+
+

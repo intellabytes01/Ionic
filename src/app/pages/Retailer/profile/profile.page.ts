@@ -46,6 +46,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   photo: SafeResourceUrl;
   dataReturned: any;
+  userId: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -85,6 +86,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   async getUserId() {
     await this.store.pipe(select(getUserId), untilDestroyed(this)).subscribe(userId => {
+      this.userId = userId;
       this.getProfileDetails(userId);
     });
   }
@@ -189,7 +191,7 @@ export class ProfilePage implements OnInit, OnDestroy {
         }
       });
     } else {
-      this.getProfileDetails('34627');
+      this.getProfileDetails(this.userId);
       Object.keys(this.profileForm.controls).forEach(key => {
         if (key !== 'loginId' && key !== 'shopName') {
           // && key !== 'businessType'

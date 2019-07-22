@@ -9,10 +9,10 @@
   "Ok": "Ok",
   "LOGOUT": "Logout",
   "Password": "Password",
-  "Password is required": "Password is required",
+  "Please Enter Password Greater Than Or Equal To 6 Characters": "Please Enter Password Greater Than Or Equal To 6 Characters",
   "Username": "Username",
   "Username is required": "Username is required",
-  "Username or password incorrect.": "Username or password incorrect.",
+  "Username or password incorrect": "Username or password incorrect",
   "Remember me": "Remember me",
   "Version": "Version",
   "USER_DATA": "userData",
@@ -79,9 +79,9 @@
   },
 
   "ADD_DISTRIBUTOR": {
-    "REQUEST_TAB_MESSAGE_1": "Please enter Party Code for faster Mapping.",
+    "REQUEST_TAB_MESSAGE_1": "Please enter Party Code for faster Mapping",
     "NOTE": "Note:",
-    "REQUEST_TAB_MESSAGE_2": "Party code can be found in Distributor's Sales Inovoice / Bill.",
+    "REQUEST_TAB_MESSAGE_2": "Party code can be found in Distributor's Sales Inovoice / Bill",
     "ADD_TAB_MESSAGE": "Distributor you would like to see on Pharmarack",
     "SEARCH_PLACEHOLDER": "Search Distributor",
     "NOTFOUND": "No Distributor Found",
@@ -92,9 +92,9 @@
     "CONTACT": "Contact Number",
     "STATUS": "Status",
     "FILTER_TEXT": "Click here to filter Status",
-    "REQUEST_TAB_MESSAGE_3": "Please select atleast one store.",
+    "REQUEST_TAB_MESSAGE_3": "Please select atleast one store",
     "VALIDATIONS": {
-      "DISTRIBUTOR_NAME": "Distributor name is required."
+      "DISTRIBUTOR_NAME": "Distributor name is required"
     },
     "RM": "Request Mapping",
     "SELECTSTATUS": "Select Status",
@@ -116,16 +116,16 @@
   },
 
   "VALIDATIONS": {
-    "MOBILEREQUIRED": "Mobile number is required.",
-    "MOBILEPATTERN": "Mobile number must be at least 10 characters long.",
-    "OTPREQUIRED": "Otp is required.",
+    "MOBILEREQUIRED": "Mobile number is required",
+    "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number",
+    "OTPREQUIRED": "Otp is required",
     "FEEDBACK": {
       "message": [
-        { "type": "required", "message": "Value is required for Remarks." }
+        { "type": "required", "message": "Value is required for Remarks" }
       ],
-      "feedbackType": [{ "type": "validValue", "message": "It's required." }],
-      "feedbackTo": [{ "type": "validValue", "message": "It's required." }],
-      "toStoreId": [{ "type": "validValue", "message": "It's required." }]
+      "feedbackType": [{ "type": "validValue", "message": "It's required" }],
+      "feedbackTo": [{ "type": "validValue", "message": "It's required" }],
+      "toStoreId": [{ "type": "validValue", "message": "It's required" }]
     }
   },
 
@@ -135,13 +135,13 @@
 
   "FORGOT_PASSWORD": {
     "TITLE": "Forgot Password?",
-    "SENDOTPMESSAGE": "We will send you an OTP to your mobile number to enable you to login.",
+    "SENDOTPMESSAGE": "We will send you an OTP to your mobile number to enable you to login",
     "VERIFY": "Verify Otp",
     "RESEND": "Resend Otp",
-    "VERIFYOTPMESSAGE": "Please enter the OTP code which has been sent to your Mobile number.",
+    "VERIFYOTPMESSAGE": "Please enter the OTP code which has been sent to your Mobile number",
     "VALIDATION_MESSAGES": {
       "mobile": [
-        { "type": "required", "message": "VALIDATIONS.MOBILEREQUIRED" },
+        { "type": "required", "message": "VALIDATIONS.MOBILEPATTERN" },
         {
           "type": "pattern",
           "message": "VALIDATIONS.MOBILEPATTERN"
@@ -157,10 +157,10 @@
     "BACK_BUTTON": "Back",
     "VALIDATION_MESSAGES": {
       "password": [
-        { "type": "required", "message": "Password is required." },
+        { "type": "required", "message": "Please Enter Password Greater Than Or Equal To 6 Characters" },
         {
           "type": "minlength",
-          "message": "Password must be at least 6 characters long."
+          "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
         }
       ],
       "matchPasswordError": [{
@@ -173,7 +173,7 @@
   "FEEDBACKTO_PLACEHOLDER": "Select type",
   "FEEDBACKSTORE_PLACEHOLDER": "Select Store",
   "MESSAGE_PLACEHOLDER": "Type your message",
-  "FEEDBACK_TEXT": "We value your feedback. Please send your feedback in the below form.",
+  "FEEDBACK_TEXT": "We value your feedback. Please send your feedback in the below form",
 
   "PROFILE": {
     "LOGIN_ID": "Login Id",
@@ -243,8 +243,8 @@
     "FILTERORDER": "Filter Order",
     "AMOUNT": "Amount | Order",
     "VALIDATION_MESSAGES": {
-      "fromDate": [{ "type": "required", "message": "It's required." }],
-      "toDate": [{ "type": "required", "message": "It's required." }]
+      "fromDate": [{ "type": "required", "message": "It's required" }],
+      "toDate": [{ "type": "required", "message": "It's required" }]
     }
   },
 
@@ -256,24 +256,24 @@
     "CA": "Create Account",
     "VALIDATION_MESSAGES": {
       "username": [
-        { "type": "required", "message": "Username is required." },
+        { "type": "required", "message": "Username is required" },
         {
           "type": "minlength",
-          "message": "Username must be at least 5 characters long."
+          "message": "Username must be at least 5 characters long"
         },
         {
           "type": "maxlength",
-          "message": "Username cannot be more than 25 characters long."
+          "message": "Username cannot be more than 25 characters long"
         }
       ],
       "password": [
         {
           "type": "required",
-          "message": "Password is required."
+          "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
         },
         {
           "type": "minlength",
-          "message": "Password must be at least 6 characters long."
+          "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
         }
       ]
     }
@@ -283,27 +283,34 @@
     "BT": "Type of Business",
     "MOBILE": "Mobile Number",
     "REGIONS": "Regions",
-    "AGREE": "I Agree to Terms & Conditions of Pharmarack",
+    "AGREE": "I Agree to",
+    "tnc": "Terms & Conditions",
+    "ofPR": "of Pharmarack",
     "REGISTER": "Register",
     "VALIDATION_MESSAGES": {
       "mobile": [
-        { "type": "required", "message": "Mobile number is required." },
+        { "type": "required", "message": "Mobile number is required" },
         {
           "type": "pattern",
-          "message": "Mobile number must be 10 characters long."
+          "message": "Please Enter Valid 10 Digit Mobile Number"
         }
       ],
       "password": [
-        { "type": "required", "message": "Password is required." },
+        { "type": "required", "message": "Please Enter Password Greater Than Or Equal To 6 Characters" },
         {
           "type": "minlength",
-          "message": "Password must be at least 6 characters long."
+          "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
         }
       ],
-      "region": [{ "type": "validValue", "message": "Region is required." }],
+      "region": [{ "type": "validValue", "message": "Please Select Region" }],
       "businessType": [
-        { "type": "validValue", "message": "Business Type is required." }
-      ]
+        { "type": "validValue", "message": "Please Select Business Type" }
+      ],
+      "tnc": [
+        {
+          "message": "Please Agree Terms & Conditions"
+      }
+    ]
     }
   },
 
@@ -326,33 +333,33 @@
   },
 
   "SCHEMES": {
-    "SCHEME_TEXT": "Note: These schemes may or may not be available in your area. Kindly check with the authorized company distributor.",
+    "SCHEME_TEXT": "Note: These schemes may or may not be available in your area. Kindly check with the authorized company distributor",
     "FEEDBACK": "Feedback"
   },
 
   "REFER": {
     "VALIDATION_MESSAGES": {
       "mobile": [
-        { "type": "required", "message": "Mobile number is required." },
+        { "type": "required", "message": "Mobile number is required" },
         {
           "type": "pattern",
-          "message": "Mobile number must be at least 10 characters long."
+          "message": "Please Enter Valid 10 Digit Mobile Number"
         }
       ],
-      "name": [{ "type": "required", "message": "Name is required." }]
+      "name": [{ "type": "required", "message": "Name is required" }]
     },
     "RETAILER": "Retailer Name",
     "CONTACT": "Contact Number",
     "AGREE": "I Agree to Terms & Conditions of Pharmarack",
     "TERMS": "Terms & Conditions",
-    "ACCEPT": "Please accept terms and conditions.",
+    "ACCEPT": "Please accept terms and conditions",
     "TERMS_POINTS": {
-      "1": "1. Place an order of minimum Rs.15000 to atleast 3 distributors between 11th Oct to 16th Oct.",
-      "2": "2. The order should be valid and processed by the Distributor.",
-      "3": "3. The order should be placed via Pharmarack platform.",
-      "4": "4. If the delivery, made by the Distributor, is denied by the Retailer then that order will not be considered to be eligible for the campaign.",
-      "5": "5. Winners will be chosen via lucky draw carried out by Pharmarack. Valid for 500 users only.",
-      "6": "6. The decisions of Pharmarack Technologies in relation to this Campaign will be final and binding on all entrants. Pharmarack Technologies reserves the right to cancel, terminate, or suspend this Campaign, at its sole discretion."
+      "1": "1. Place an order of minimum Rs.15000 to atleast 3 distributors between 11th Oct to 16th Oct",
+      "2": "2. The order should be valid and processed by the Distributor",
+      "3": "3. The order should be placed via Pharmarack platform",
+      "4": "4. If the delivery, made by the Distributor, is denied by the Retailer then that order will not be considered to be eligible for the campaign",
+      "5": "5. Winners will be chosen via lucky draw carried out by Pharmarack. Valid for 500 users only",
+      "6": "6. The decisions of Pharmarack Technologies in relation to this Campaign will be final and binding on all entrants. Pharmarack Technologies reserves the right to cancel, terminate, or suspend this Campaign, at its sole discretion"
     }
   },
 

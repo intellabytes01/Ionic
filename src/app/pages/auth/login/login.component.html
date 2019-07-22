@@ -38,7 +38,31 @@
   <ion-row>
     <ion-col>
       <ion-label position="floating">{{'LOGIN.PASSWORD' | translate}}</ion-label>
-      <ion-input
+
+      <ion-item>
+          <ion-input
+            type="password"
+            placeholder="{{ 'LOGIN.PASSWORD' | translate }}"
+            #password
+            formControlName="password"
+            clearOnEdit="false"
+          ></ion-input>
+
+          <button
+            class="showhidePass"
+            color="light"
+            ion-button
+            type="button"
+            item-end
+            prShowHideInput
+            [targetInput]="password"
+          >
+            <ion-icon name="eye"></ion-icon>
+          </button>
+        </ion-item>
+
+
+      <!-- <ion-input
         formControlName="password"
         class="white-border white-color"
         [type]="passwordType"
@@ -49,7 +73,7 @@
           [name]="passwordIcon"
           text-end
         ></ion-icon>
-      </ion-input>
+      </ion-input> -->
     </ion-col>
   </ion-row>
 

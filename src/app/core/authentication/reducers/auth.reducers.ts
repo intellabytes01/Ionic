@@ -13,6 +13,8 @@ export interface State {
   previousUrl: string | null;
 
   userId: string | null;
+
+  isUserExists: boolean | null;
 }
 
 export const initialState: State = {
@@ -20,7 +22,8 @@ export const initialState: State = {
   userData: null,
   errorMessage: null,
   previousUrl: null,
-  userId: null
+  userId: null,
+  isUserExists: null
 };
 
 export function authReducer(state = initialState, action: All): State {
@@ -36,7 +39,7 @@ export function authReducer(state = initialState, action: All): State {
     case AuthActionTypes.LOGIN_FAILURE: {
       return {
         ...state,
-        errorMessage: action.payload.error.error.message
+        errorMessage: action.payload.error
       };
     }
     case AuthActionTypes.SIGNUP_SUCCESS: {
@@ -76,6 +79,20 @@ export function authReducer(state = initialState, action: All): State {
       return {
         ...state,
         errorMessage: 'Error'
+      };
+    }
+
+    case AuthActionTypes.USEREXISTS_SUCCESS: {
+      return {
+        ...state,
+        isUserExists: true
+      };
+    }
+    case AuthActionTypes.USEREXISTS_FAILURE: {
+      return {
+        ...state,
+        isUserExists: false,
+        errorMessage: 'User is not Exists'
       };
     }
 

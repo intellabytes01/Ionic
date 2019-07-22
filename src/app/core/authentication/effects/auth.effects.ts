@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Storage } from '@ionic/storage';
 // tslint:disable-next-line: max-line-length
-import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure, SaveToken, SaveTokenSuccess, SaveTokenFail } from '../actions/auth.actions';
+import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure, SaveToken, SaveTokenSuccess, SaveTokenFail, UserExists, UserExistsSuccess, UserExistsFailure } from '../actions/auth.actions';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { AlertService } from '@app/shared/services/alert.service';
 
@@ -29,7 +29,7 @@ export class AuthEffects {
     switchMap(payload => {
       return this.authService.login(payload.cred).pipe(
         map((user) => {
-          return new LogInSuccess(user['data']['data']);
+          return new LogInSuccess(user['data']);
         }), catchError((error) => of(new LogInFailure({ error }))));
     })
     );
@@ -59,8 +59,8 @@ export class AuthEffects {
     switchMap(payload => {
       return this.authService.signUp(payload.cred).pipe(
         map((user) => {
-          if (user['data']['success']) {
-          return new SignUpSuccess(user['data']['data']);
+          if (user['success']) {
+          return new SignUpSuccess(user['data']);
           } else {
             return new SignUpFailure(user);
           }
@@ -83,7 +83,7 @@ export class AuthEffects {
   SignUpFailure: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.SIGNUP_FAILURE),
     tap((user) => {
-      this.alert.presentToast('danger', user.payload.data.message);
+      this.alert.presentToast('danger', user.payload.message);
     })
   );
 
@@ -121,4 +121,46 @@ export class AuthEffects {
     ofType(AuthActionTypes.PREVIOUS_URL),
     tap(url => {
     }));
+
+
+  @Effect()
+  UserExists: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.USEREXISTS),
+    map((action: UserExists) => action.payload),
+    switchMap(payload => {
+      return this.authService.userExists(payload.cred).pipe(
+        map((user) => {
+          if (user['success']) {
+          return new UserExistsSuccess(user['success']);
+          } else {
+            return new UserExistsFailure(user);
+          }
+        }), catchError((error) => {
+          return of({
+            type: AuthActionTypes.USEREXISTS_FAILURE,
+            payload: { error }
+          });
+        }
+          // of(new SignUpFailure({ error }))
+      ));
+    })
+    );
+
+  @Effect({ dispatch: false })
+  UserExistsSuccess: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.USEREXISTS_SUCCESS),
+    tap((user) => {
+      if (user && user.payload) {
+        console.log(user);
+      }
+    })
+  );
+
+  @Effect({ dispatch: false })
+  UserExistsFailure: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.USEREXISTS_FAILURE),
+    tap((user) => {
+      console.log(user);
+    })
+  );
 }
