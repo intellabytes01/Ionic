@@ -1,12 +1,60 @@
 <ion-content>
-  <pr-search
-    [searchPlaceholder]="'PRODUCT_SEARCH.PLACEHOLDER_PRODUCT' | translate"
-    [searchList]="productList" 
-  ></pr-search>
+  <ion-row>
+    <ion-col>
+      <ion-searchbar
+        [(ngModel)]="searchText"
+        [placeholder]="'PRODUCT_SEARCH.PLACEHOLDER_PRODUCT' | translate"
+        [showCancelButton]="true"
+        (ionChange)="search()"
+      ></ion-searchbar>
+    </ion-col>
+  </ion-row>
 
-  <ion-list *ngIf="productList.length > 0">
-    <ion-item *ngFor="let item of productList">
-      <ion-label>{{ item.ProductName }}</ion-label>
-    </ion-item>
-  </ion-list>
+  <div *ngIf="showList">
+    <!-- <ion-list *ngIf="productList.length == 0 && searchText.length >= 3">
+      <ion-item>
+        <ion-label>{{ "PRODUCT_SEARCH.NOTFOUND" | translate }}</ion-label>
+      </ion-item>
+    </ion-list> -->
+
+    <ion-row *ngIf="searchText.length < 3">
+      <ion-col>
+        <ion-label class="search-validation-text">{{
+          "PRODUCT_SEARCH.MINCHAR_TEXT" | translate
+        }}</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-list *ngIf="productList.length > 0">
+      <ion-item *ngFor="let item of productList" (click)="productClick(item)">
+        <ion-label>{{ item.ProductName }}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <ion-card *ngIf="!showList">
+    <ion-row>
+      <ion-col text-start>
+        <ion-label class="product-name">{{ productDetails.ProductName }}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-start>
+        <ion-label>{{ productDetails.CompanyName }}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-start>
+        <ion-label><b>MRP: </b>{{ productDetails.MRP }}</ion-label>
+      </ion-col>
+      <ion-col text-end>
+        <ion-label><b>Packing: </b>{{ productDetails.Packing }}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-start>
+        <ion-label>{{ productDetails.GenericName }}</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>

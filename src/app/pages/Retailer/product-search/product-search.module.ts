@@ -9,6 +9,11 @@ import { ProductSearchPage } from './product-search.page';
 import { SharedModule } from '@app-shared/shared.module';
 import { AuthenticationGuard } from '@app/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { ProductSearchEffects } from './store/product-search.effects';
+import * as productSearchReducer from './store/product-search.reducers';
+import { ProductSearchService } from './product-search.service';
 
 const routes: Routes = [
   {
@@ -53,8 +58,11 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     SharedModule,
-    TranslateModule
+    TranslateModule,
+    StoreModule.forFeature('productSearch', productSearchReducer.productSearchReducer),
+    EffectsModule.forRoot([ProductSearchEffects]),
   ],
-  declarations: [ProductSearchPage]
+  declarations: [ProductSearchPage],
+  providers: [ProductSearchService]
 })
 export class ProductSearchPageModule {}
