@@ -3,17 +3,19 @@ import { Router } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { AlertService } from '@app/shared/services/alert.service';
 import { ProductSearch } from '../store/product-search.actions';
-import { ProductSearchState, ProductDetails } from '../store/product-search.state';
+import {
+  ProductSearchState,
+  ProductDetails
+} from '../store/product-search.state';
 import { Store } from '@ngrx/store';
 import { productSearchData } from '../store/product-search.reducers';
 import { untilDestroyed } from '@app/core';
 @Component({
   selector: 'app-product-tab',
   templateUrl: './product-tab.page.html',
-  styleUrls: ['./product-tab.page.scss'],
+  styleUrls: ['./product-tab.page.scss']
 })
 export class ProductTabPage implements OnInit {
-
   productList: any[] = [];
   searchText = '';
   productDetails: ProductDetails;
@@ -22,32 +24,34 @@ export class ProductTabPage implements OnInit {
     private router: Router,
     private alertService: AlertService,
     public events: Events,
-    private store: Store<ProductSearchState>,
-  ) {
-  }
+    private store: Store<ProductSearchState>
+  ) {}
 
   ngOnInit() {}
 
   search() {
-    this.showList = true;
     if (this.searchText.length < 3) {
       this.productList = [];
+      this.productDetails = {} as ProductDetails;
     } else {
       const payload = {
         regionId: 1,
         query: this.searchText,
         page: 1
       };
-      this.store.dispatch(
-        new ProductSearch(payload)
-      );
+      if (
+        !(this.productDetails &&
+        this.searchText === this.productDetails.ProductName)
+      ) {
+        this.showList = true;
+        this.store.dispatch(new ProductSearch(payload));
+      }
 
       this.store.select(productSearchData, untilDestroyed(this)).subscribe(
         (state: any) => {
-            this.productList = state;
+          this.productList = state;
         },
-        e => {
-        }
+        e => {}
       );
     }
   }

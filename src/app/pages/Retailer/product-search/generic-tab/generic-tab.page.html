@@ -1,4 +1,76 @@
-<pr-search
-  [searchPlaceholder]="'PRODUCT_SEARCH.PLACEHOLDER_GENERIC' | translate"
-  [searchList]="genericList" 
-></pr-search>
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-searchbar
+        [(ngModel)]="searchText"
+        [placeholder]="'PRODUCT_SEARCH.PLACEHOLDER_GENERIC' | translate"
+        [showCancelButton]="true"
+        (ionChange)="search()"
+      ></ion-searchbar>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="searchText.length < 3">
+    <ion-col>
+      <ion-label class="search-validation-text">{{
+        "PRODUCT_SEARCH.MINCHAR_TEXT" | translate
+      }}</ion-label>
+    </ion-col>
+  </ion-row>
+  
+  <div *ngIf="showList">
+    <ion-list *ngIf="genericList.length > 0">
+      <ion-item *ngFor="let item of genericList" (click)="productClick(item)">
+        <ion-label>{{ item.NAME }}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <ion-card *ngIf="!showList">
+    <ion-list *ngFor="let item of genericProductList; let i = index" padding>
+      <ion-row (click)="toggle(i)" class="item-title">
+        <ion-col size="10">
+          <ion-label
+            class="product-name"
+            [ngClass]="{ selected: subListShow[i] }"
+            >{{ item.ProductName }}</ion-label
+          >
+        </ion-col>
+        <ion-col size="2" text-end>
+          <ion-icon *ngIf="!subListShow[i]" name="ios-arrow-forward"></ion-icon>
+          <ion-icon
+            *ngIf="subListShow[i]"
+            class="selected"
+            name="ios-arrow-down"
+          ></ion-icon>
+        </ion-col>
+      </ion-row>
+
+      <div *ngIf="subListShow[i]">
+        <ion-row>
+          <ion-col text-start>
+            <ion-label class="product-name">{{ item.ProductName }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-start>
+            <ion-label>{{ item.CompanyName }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-start>
+            <ion-label><b>MRP: </b>{{ item.MRP }}</ion-label>
+          </ion-col>
+          <ion-col text-end>
+            <ion-label><b>Packing: </b>{{ item.Packing }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-start>
+            <ion-label>{{ searchText | uppercase }}</ion-label>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-list>
+  </ion-card>
+</ion-content>
