@@ -3,7 +3,7 @@ import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Logger } from '@app/core';
-import { ProductSearchResponse, GenericSearchResponse, GenericDetailResponse } from './store/product-search.state';
+import { ProductSearchResponse, GenericSearchResponse, GenericDetailResponse, CompanySearchResponse, CompanyStoresResponse, CompanyProductsResponse } from './store/product-search.state';
 
 const log = new Logger('ProductSearch');
 export interface ProductSearchContext {
@@ -21,11 +21,25 @@ export interface GenericDetailContext {
   GenericId: string;
 }
 
+export interface CompanyStoresContext {
+  regionId: number;
+  retailerId: number;
+  slot: number;
+  companyId: number;
+}
+
+export interface CompanyProductsContext {
+  storeId: number;
+  page: number;
+  companyId: number;
+}
+
 const routes = {
   products: '/global/products?',
   generic: '/global/generics?',
   genericProducts: '/global/generic/',
-  companies: '/global/companies?'
+  companies: '/global/companies?',
+  companyStores: '/global/company/'
 };
 
 @Injectable()
@@ -83,10 +97,39 @@ export class ProductSearchService {
 
   getCompanies(context: ProductSearchContext): Observable<any> {
     return this.httpClient
-      .get<ProductSearchResponse>(
+      .get<CompanySearchResponse>(
         `${routes.companies}regionId=${context.regionId}&query=${
           context.query
         }&page=${context.page}`
+      )
+      .pipe(
+        map((data: any) => ({
+          data
+        })),
+        catchError(error => this.errorHandler(error))
+      );
+  }
+
+  getCompanyStores(context: CompanyStoresContext): Observable<any> {
+    return this.httpClient
+      .get<CompanyStoresResponse>(
+        `${routes.companyStores}${context.companyId}?regionId=${context.regionId}&retailerId=${
+          context.retailerId
+        }&slot=${context.slot}`
+      )
+      .pipe(
+        map((data: any) => ({
+          data
+        })),
+        catchError(error => this.errorHandler(error))
+      );
+  }
+
+  getCompanyProducts(context: CompanyProductsContext): Observable<any> {
+    return this.httpClient
+      .get<CompanyProductsResponse>(
+        `${routes.companyStores}${context.companyId}/products?storeId=${context.storeId}&page=${
+          context.page}`
       )
       .pipe(
         map((data: any) => ({

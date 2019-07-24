@@ -1,29 +1,66 @@
 <ion-content>
-    <ion-row>
-      <ion-col>
-        <ion-searchbar
-          [(ngModel)]="searchText"
-          [placeholder]="'PRODUCT_SEARCH.PLACEHOLDER_COMPANY' | translate"
-          [showCancelButton]="true"
-          (ionChange)="search()"
-        ></ion-searchbar>
-      </ion-col>
-    </ion-row>
-  
-    <ion-row *ngIf="searchText.length < 3">
-      <ion-col>
-        <ion-label class="search-validation-text">{{
-          "PRODUCT_SEARCH.MINCHAR_TEXT" | translate
-        }}</ion-label>
-      </ion-col>
-    </ion-row>
-  
-    <div *ngIf="showList">
-      <ion-list *ngIf="companyList.length > 0">
-        <ion-item *ngFor="let item of companyList" (click)="companyClick(item)">
-          <ion-label>{{ item.CompanyName }}</ion-label>
-        </ion-item>
-      </ion-list>
-    </div>
-  </ion-content>
-  
+  <ion-row>
+    <ion-col>
+      <ion-searchbar
+        [(ngModel)]="searchText"
+        [placeholder]="'PRODUCT_SEARCH.PLACEHOLDER_COMPANY' | translate"
+        [showCancelButton]="true"
+        (ionChange)="search()"
+      ></ion-searchbar>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="searchText.length < 3">
+    <ion-col>
+      <ion-label class="search-validation-text">{{
+        "PRODUCT_SEARCH.MINCHAR_TEXT" | translate
+      }}</ion-label>
+    </ion-col>
+  </ion-row>
+
+  <div *ngIf="showList">
+    <ion-list *ngIf="companyList.length > 0">
+      <ion-item
+        *ngFor="let company of companyList"
+        (click)="companyClick(company)"
+      >
+        <ion-label>{{ company.CompanyName }}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div *ngIf="!showList">
+    <ion-list
+      *ngFor="let store of companyStoreList; let i = index"
+      (click)="storeClick(store);toggle(i)"
+    >
+      <ion-row class="item-title">
+        <ion-col size="10">
+          <ion-label
+            class="product-name"
+            [ngClass]="{ selected: subListShow[i] }"
+            >{{ store.StoreName }}</ion-label
+          >
+        </ion-col>
+        <ion-col size="2" text-end>
+          <ion-icon *ngIf="!subListShow[i]" name="ios-arrow-forward"></ion-icon>
+          <ion-icon
+            *ngIf="subListShow[i]"
+            class="selected"
+            name="ios-arrow-down"
+          ></ion-icon>
+        </ion-col>
+      </ion-row>
+
+      <div *ngIf="subListShow[i]">
+        <div *ngFor="let product of companyProductList">
+          <ion-row>
+            <ion-col text-start>
+              <ion-label class="product-name">{{ product.StoreProductName }}</ion-label>
+            </ion-col>
+          </ion-row>          
+        </div>
+      </div>
+    </ion-list>
+  </div>
+</ion-content>

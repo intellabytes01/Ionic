@@ -3,6 +3,8 @@ export interface ProductSearchState {
   genericSearch: [];
   genericDetail: [];
   companySearch: [];
+  companyStores: [];
+  companyProducts: [];
   errorMessage: string | null;
 }
 
@@ -70,4 +72,36 @@ export interface CompanyDetails {
   RegionName: string;
   NonPRQty: number;
   slot: number;
+}
+
+export interface CompanyStoresResponse {
+  statusCode: number;
+  success: boolean;
+  data: CompanyStoreDetails[];
+  requestId: string;
+  message: string;
+}
+
+export interface CompanyStoreDetails {
+  StoreId: number;
+  StoreName: string;
+  NonPRQty: number;
+  IsMapped: number;
+}
+
+export interface CompanyProductsResponse {
+  statusCode: number;
+  success: boolean;
+  data: CompanyProductDetails[];
+  requestId: string;
+  message: string;
+}
+
+export interface CompanyProductDetails {
+  StoreId: number;
+  StoreProductCode: string;
+  StoreProductName: string;
+  StoreProductPacking: string;
+  StoreProductScheme: string;
+  TotalStock: number;
 }

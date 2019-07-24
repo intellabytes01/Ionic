@@ -6,6 +6,8 @@ export interface ProductSearchState {
   genericSearchArray: any;
   genericDetailArray: any;
   companySearchArray: any;
+  companyStoresArray: any;
+  companyProductsArray: any;
   errorMessage: string | null;
 }
 
@@ -14,7 +16,9 @@ export const initialState: ProductSearchState = {
   productSearchArray: [],
   genericSearchArray: [],
   genericDetailArray: [],
-  companySearchArray: []
+  companySearchArray: [],
+  companyStoresArray: [],
+  companyProductsArray: []
 };
 
 export function productSearchReducer(
@@ -91,6 +95,40 @@ export function productSearchReducer(
       };
     }
 
+    // Company Stores
+
+    case ProductSearchAction.COMPANYSTORES_SUCCESS: {
+      return {
+        ...state,
+        companyStoresArray: action.payload.companyStores.data,
+        errorMessage: null
+      };
+    }
+    case ProductSearchAction.COMPANYSTORES_FAILURE: {
+      return {
+        ...state,
+        companyStoresArray: [],
+        errorMessage: null
+      };
+    }
+
+    // Company Products
+
+    case ProductSearchAction.COMPANYPRODUCTS_SUCCESS: {
+      return {
+        ...state,
+        companyProductsArray: action.payload.companyProducts.data,
+        errorMessage: null
+      };
+    }
+    case ProductSearchAction.COMPANYPRODUCTS_FAILURE: {
+      return {
+        ...state,
+        companyProductsArray: [],
+        errorMessage: null
+      };
+    }
+
     default: {
       return state;
     }
@@ -117,4 +155,14 @@ export const genericDetailData = createSelector(
 export const companySearchData = createSelector(
   productSearchState,
   coursesState => coursesState.companySearchArray
+);
+
+export const companyStoresData = createSelector(
+  productSearchState,
+  coursesState => coursesState.companyStoresArray
+);
+
+export const companyProductsData = createSelector(
+  productSearchState,
+  coursesState => coursesState.companyProductsArray
 );

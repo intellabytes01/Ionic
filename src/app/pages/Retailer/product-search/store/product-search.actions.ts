@@ -13,6 +13,12 @@ export enum ProductSearchAction {
   COMPANYSEARCH = '[ProductSearch] Company Search',
   COMPANYSEARCH_SUCCESS = '[ProductSearch] Company Search Success',
   COMPANYSEARCH_FAILURE = '[ProductSearch] Company Search Failure',
+  COMPANYSTORES = '[ProductSearch] Company Stores',
+  COMPANYSTORES_SUCCESS = '[ProductSearch] Company Stores Success',
+  COMPANYSTORES_FAILURE = '[ProductSearch] Company Stores Failure',
+  COMPANYPRODUCTS = '[ProductSearch] Company Stores',
+  COMPANYPRODUCTS_SUCCESS = '[ProductSearch] Company Stores Success',
+  COMPANYPRODUCTS_FAILURE = '[ProductSearch] Company Stores Failure',
 }
 
 export class ProductSearch implements Action {
@@ -75,6 +81,36 @@ export class CompanySearchFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class CompanyStores implements Action {
+  readonly type = ProductSearchAction.COMPANYSTORES;
+  constructor(public payload: any) {}
+}
+
+export class CompanyStoresSuccess implements Action {
+  readonly type = ProductSearchAction.COMPANYSTORES_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class CompanyStoresFailure implements Action {
+  readonly type = ProductSearchAction.COMPANYSTORES_FAILURE;
+  constructor(public payload: any) {}
+}
+
+export class CompanyProducts implements Action {
+  readonly type = ProductSearchAction.COMPANYPRODUCTS;
+  constructor(public payload: any) {}
+}
+
+export class CompanyProductsSuccess implements Action {
+  readonly type = ProductSearchAction.COMPANYPRODUCTS_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class CompanyProductsFailure implements Action {
+  readonly type = ProductSearchAction.COMPANYPRODUCTS_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | ProductSearch
   | ProductSearchSuccess
@@ -87,4 +123,10 @@ export type All =
   | GenericDetailFailure
   | CompanySearch
   | CompanySearchSuccess
-  | CompanySearchFailure;
+  | CompanySearchFailure
+  | CompanyStores
+  | CompanyStoresSuccess
+  | CompanyStoresFailure
+  | CompanyProducts
+  | CompanyProductsSuccess
+  | CompanyProductsFailure;

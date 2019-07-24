@@ -13,7 +13,13 @@ import {
   GenericDetailFailure,
   CompanySearch,
   CompanySearchSuccess,
-  CompanySearchFailure
+  CompanySearchFailure,
+  CompanyStores,
+  CompanyStoresSuccess,
+  CompanyStoresFailure,
+  CompanyProducts,
+  CompanyProductsSuccess,
+  CompanyProductsFailure
 } from './product-search.actions';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
@@ -133,5 +139,57 @@ export class ProductSearchEffects {
   @Effect({ dispatch: false })
   CompanySearchFailure: Observable<any> = this.actions.pipe(
     ofType(ProductSearchAction.COMPANYSEARCH_FAILURE)
+  );
+
+  // Company Stores
+
+  @Effect()
+  CompanyStores: Observable<Action> = this.actions.pipe(
+    ofType(ProductSearchAction.COMPANYSTORES),
+    map((action: CompanyStores) => action.payload),
+    switchMap((payload) => {
+      return this.productSearchService.getCompanyStores(payload).pipe(
+        map(data => {
+          return new CompanyStoresSuccess({ companyStores: data['data'] });
+        }),
+        catchError(error => of(new CompanyStoresFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  CompanyStoresSuccess: Observable<any> = this.actions.pipe(
+    ofType(ProductSearchAction.COMPANYSTORES_SUCCESS)
+  );
+
+  @Effect({ dispatch: false })
+  CompanyStoresFailure: Observable<any> = this.actions.pipe(
+    ofType(ProductSearchAction.COMPANYSTORES_FAILURE)
+  );
+
+  // Company Products
+
+  @Effect()
+  CompanyProducts: Observable<Action> = this.actions.pipe(
+    ofType(ProductSearchAction.COMPANYPRODUCTS),
+    map((action: CompanyProducts) => action.payload),
+    switchMap((payload) => {
+      return this.productSearchService.getCompanyProducts(payload).pipe(
+        map(data => {
+          return new CompanyProductsSuccess({ companyProducts: data['data'] });
+        }),
+        catchError(error => of(new CompanyProductsFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  CompanyProductsSuccess: Observable<any> = this.actions.pipe(
+    ofType(ProductSearchAction.COMPANYPRODUCTS_SUCCESS)
+  );
+
+  @Effect({ dispatch: false })
+  CompanyProductsFailure: Observable<any> = this.actions.pipe(
+    ofType(ProductSearchAction.COMPANYPRODUCTS_FAILURE)
   );
 }
