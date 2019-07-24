@@ -16,9 +16,9 @@ export enum ProductSearchAction {
   COMPANYSTORES = '[ProductSearch] Company Stores',
   COMPANYSTORES_SUCCESS = '[ProductSearch] Company Stores Success',
   COMPANYSTORES_FAILURE = '[ProductSearch] Company Stores Failure',
-  COMPANYPRODUCTS = '[ProductSearch] Company Stores',
-  COMPANYPRODUCTS_SUCCESS = '[ProductSearch] Company Stores Success',
-  COMPANYPRODUCTS_FAILURE = '[ProductSearch] Company Stores Failure',
+  COMPANYPRODUCTS = '[ProductSearch] Company Products',
+  COMPANYPRODUCTS_SUCCESS = '[ProductSearch] Company Products Success',
+  COMPANYPRODUCTS_FAILURE = '[ProductSearch] Company Products Failure',
 }
 
 export class ProductSearch implements Action {

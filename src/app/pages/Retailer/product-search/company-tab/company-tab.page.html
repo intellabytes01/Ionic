@@ -32,9 +32,9 @@
   <div *ngIf="!showList">
     <ion-list
       *ngFor="let store of companyStoreList; let i = index"
-      (click)="storeClick(store);toggle(i)"
+      (click)="storeClick(store, i)"
     >
-      <ion-row class="item-title">
+      <ion-row class="item-title" [id]="store.StoreId">
         <ion-col size="10">
           <ion-label
             class="product-name"
@@ -53,10 +53,10 @@
       </ion-row>
 
       <div *ngIf="subListShow[i]">
-        <div *ngFor="let product of companyProductList">
-          <ion-row>
+        <div *ngFor="let product of companyProductList[i]">
+          <ion-row class="products">
             <ion-col text-start>
-              <ion-label class="product-name">{{ product.StoreProductName }}</ion-label>
+              <ion-label class="product-name green-color">{{ product.StoreProductName }}</ion-label>
             </ion-col>
           </ion-row>          
         </div>
