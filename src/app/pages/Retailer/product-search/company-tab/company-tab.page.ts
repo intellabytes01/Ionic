@@ -134,6 +134,8 @@ export class CompanyTabPage implements OnInit {
   }
 
   scrollTo(id) {
-    document.getElementById(id).scrollIntoView();
+    if(document.getElementById(id)){
+      document.getElementById(id).scrollIntoView();
+    }    
   }
 }

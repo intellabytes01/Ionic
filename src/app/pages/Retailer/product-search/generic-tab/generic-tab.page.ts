@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { AlertService } from '@app/shared/services/alert.service';
-import { GenericSearch, GenericDetail } from '../store/product-search.actions';
+import { GenericSearch, GenericDetail, GenericStores } from '../store/product-search.actions';
 import {
   ProductSearchState,
-  GenericProductDetails,
   GenericDetails
 } from '../store/product-search.state';
 import { Store } from '@ngrx/store';
-import { genericSearchData, genericDetailData } from '../store/product-search.reducers';
+import { genericSearchData, genericDetailData, genericStoresData } from '../store/product-search.reducers';
 import { untilDestroyed } from '@app/core';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-generic-tab',
@@ -21,18 +21,25 @@ export class GenericTabPage implements OnInit {
 
   genericList: any[] = [];
   genericProductList: any[] = [];
+  genericStoresList: any[] = [];
   searchText = '';
   genericDetails: GenericDetails;
   showList = true;
   subListShow: any[] = [];
+  retailerId: number;
   constructor(
     private router: Router,
     private alertService: AlertService,
     public events: Events,
-    private store: Store<ProductSearchState>
-  ) {}
+    private store: Store<ProductSearchState>,
+    private storage: Storage
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.storage.get('userData').then((data) => {
+      this.retailerId = JSON.parse(data)['userData']['retailerSummary']['retailerInfo']['RetailerId'];
+    });
+  }
 
   search() {
     if (this.searchText.length < 3) {
@@ -46,7 +53,7 @@ export class GenericTabPage implements OnInit {
       };
       if (
         !(this.genericDetails &&
-        this.searchText === this.genericDetails.NAME)
+          this.searchText === this.genericDetails.NAME)
       ) {
         this.showList = true;
         this.store.dispatch(new GenericSearch(payload));
@@ -56,7 +63,7 @@ export class GenericTabPage implements OnInit {
         (state: any) => {
           this.genericList = state;
         },
-        e => {}
+        e => { }
       );
     }
   }
@@ -74,7 +81,25 @@ export class GenericTabPage implements OnInit {
       (state: any) => {
         this.genericProductList = state;
       },
-      e => {}
+      e => { }
+    );
+  }
+
+  getStores(product, i) {
+    this.toggle(i);
+    const payloadStores = {
+      productId: product.ProductId,
+      retailerId: this.retailerId,
+      regionId: 1,
+      page: 1
+    };
+    this.store.dispatch(new GenericStores(payloadStores));
+    this.store.select(genericStoresData, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.genericStoresList = state;
+        this.scrollTo(product.ProductId);
+      },
+      e => { }
     );
   }
 
@@ -84,5 +109,17 @@ export class GenericTabPage implements OnInit {
       this.subListShow[index] = false;
     }
     this.subListShow[index] = !this.subListShow[index];
+    this.subListShow = this.subListShow.map((element, i) => {
+      if (i !== index) {
+        element = false;
+      }
+      return element;
+    })
+  }
+
+  scrollTo(id) {
+    if (document.getElementById(id)) {
+      document.getElementById(id).scrollIntoView();
+    }
   }
 }

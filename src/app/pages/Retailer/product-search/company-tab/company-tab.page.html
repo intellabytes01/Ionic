@@ -31,10 +31,9 @@
 
   <div *ngIf="!showList">
     <ion-list
-      *ngFor="let store of companyStoreList; let i = index"
-      (click)="storeClick(store, i)"
+      *ngFor="let store of companyStoreList; let i = index"      
     >
-      <ion-row class="item-title" [id]="store.StoreId">
+      <ion-row class="item-title" [id]="store.StoreId" (click)="storeClick(store, i)">
         <ion-col size="10">
           <ion-label
             class="product-name"

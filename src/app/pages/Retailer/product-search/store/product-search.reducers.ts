@@ -5,9 +5,12 @@ export interface ProductSearchState {
   productSearchArray: any;
   genericSearchArray: any;
   genericDetailArray: any;
+  genericStoresArray: any;
   companySearchArray: any;
   companyStoresArray: any;
   companyProductsArray: any;
+  distributorSearchArray: any;
+  distributorCompaniesArray: any;
   errorMessage: string | null;
 }
 
@@ -16,9 +19,12 @@ export const initialState: ProductSearchState = {
   productSearchArray: [],
   genericSearchArray: [],
   genericDetailArray: [],
+  genericStoresArray: [],
   companySearchArray: [],
   companyStoresArray: [],
-  companyProductsArray: []
+  companyProductsArray: [],
+  distributorSearchArray: [],
+  distributorCompaniesArray: []
 };
 
 export function productSearchReducer(
@@ -78,6 +84,23 @@ export function productSearchReducer(
       };
     }
 
+    // Generic Stores
+
+    case ProductSearchAction.GENERICSTORES_SUCCESS: {
+      return {
+        ...state,
+        genericStoresArray: action.payload.genericStores.data,
+        errorMessage: null
+      };
+    }
+    case ProductSearchAction.GENERICSTORES_FAILURE: {
+      return {
+        ...state,
+        genericStoresArray: [],
+        errorMessage: null
+      };
+    }
+
     // Company Search
 
     case ProductSearchAction.COMPANYSEARCH_SUCCESS: {
@@ -129,6 +152,40 @@ export function productSearchReducer(
       };
     }
 
+    // Distributor Search
+
+    case ProductSearchAction.DISTRIBUTORSEARCH_SUCCESS: {
+      return {
+        ...state,
+        distributorSearchArray: action.payload.distributorSearch.data,
+        errorMessage: null
+      };
+    }
+    case ProductSearchAction.DISTRIBUTORSEARCH_FAILURE: {
+      return {
+        ...state,
+        distributorSearchArray: [],
+        errorMessage: null
+      };
+    }
+
+    // Distributor Companies
+
+    case ProductSearchAction.DISTRIBUTORCOMPANIES_SUCCESS: {
+      return {
+        ...state,
+        distributorCompaniesArray: action.payload.distributorCompanies.data,
+        errorMessage: null
+      };
+    }
+    case ProductSearchAction.DISTRIBUTORCOMPANIES_FAILURE: {
+      return {
+        ...state,
+        distributorCompaniesArray: [],
+        errorMessage: null
+      };
+    }
+
     default: {
       return state;
     }
@@ -152,6 +209,11 @@ export const genericDetailData = createSelector(
   coursesState => coursesState.genericDetailArray
 );
 
+export const genericStoresData = createSelector(
+  productSearchState,
+  coursesState => coursesState.genericStoresArray
+);
+
 export const companySearchData = createSelector(
   productSearchState,
   coursesState => coursesState.companySearchArray
@@ -165,4 +227,14 @@ export const companyStoresData = createSelector(
 export const companyProductsData = createSelector(
   productSearchState,
   coursesState => coursesState.companyProductsArray
+);
+
+export const distributorSearchData = createSelector(
+  productSearchState,
+  coursesState => coursesState.distributorSearchArray
+);
+
+export const distributorCompaniesData = createSelector(
+  productSearchState,
+  coursesState => coursesState.distributorCompaniesArray
 );

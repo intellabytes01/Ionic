@@ -2,9 +2,12 @@ export interface ProductSearchState {
   productSearch: [];
   genericSearch: [];
   genericDetail: [];
+  genericStores: [];
   companySearch: [];
   companyStores: [];
   companyProducts: [];
+  distributorSearch: [];
+  distributorCompanies: [];
   errorMessage: string | null;
 }
 
@@ -57,6 +60,23 @@ export interface GenericProductDetails {
   qty: number;
 }
 
+export interface GenericStoresResponse {
+  statusCode: number;
+  success: boolean;
+  data: GenericStoreDetails[];
+  requestId: string;
+  message: string;
+}
+
+export interface GenericStoreDetails {
+  Storeid: number,
+  StoreName: string,
+  qty: number,
+  Scheme: string,
+  IsMapped: number,
+  TotalStock: number
+}
+
 export interface CompanySearchResponse {
   statusCode: number;
   success: boolean;
@@ -104,4 +124,34 @@ export interface CompanyProductDetails {
   StoreProductPacking: string;
   StoreProductScheme: string;
   TotalStock: number;
+}
+
+export interface DistributorSearchResponse {
+  statusCode: number;
+  success: boolean;
+  data: DistributorDetails[];
+  requestId: string;
+  message: string;
+}
+
+export interface DistributorDetails {
+  StoreId: number,
+  StoreName: string,
+  NonPRQty: number,
+  IsMapped: number
+}
+
+export interface DistributorListResponse {
+  statusCode: number;
+  success: boolean;
+  data: DistributorCompaniesList[];
+  requestId: string;
+  message: string;
+}
+
+export interface DistributorCompaniesList {
+  CompanyId: number,
+  CompanyName: string,
+  NonPRQty: number,
+  slot: number
 }

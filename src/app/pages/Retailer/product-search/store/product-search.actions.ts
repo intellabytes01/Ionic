@@ -10,6 +10,9 @@ export enum ProductSearchAction {
   GENERICDETAIL = '[ProductSearch] Generic Detail',
   GENERICDETAIL_SUCCESS = '[ProductSearch] Generic Detail Success',
   GENERICDETAIL_FAILURE = '[ProductSearch] Generic Detail Failure',
+  GENERICSTORES = '[ProductSearch] Generic Stores',
+  GENERICSTORES_SUCCESS = '[ProductSearch] Generic Stores Success',
+  GENERICSTORES_FAILURE = '[ProductSearch] Generic Stores Failure',
   COMPANYSEARCH = '[ProductSearch] Company Search',
   COMPANYSEARCH_SUCCESS = '[ProductSearch] Company Search Success',
   COMPANYSEARCH_FAILURE = '[ProductSearch] Company Search Failure',
@@ -19,6 +22,12 @@ export enum ProductSearchAction {
   COMPANYPRODUCTS = '[ProductSearch] Company Products',
   COMPANYPRODUCTS_SUCCESS = '[ProductSearch] Company Products Success',
   COMPANYPRODUCTS_FAILURE = '[ProductSearch] Company Products Failure',
+  DISTRIBUTORSEARCH = '[ProductSearch] Distributor Search',
+  DISTRIBUTORSEARCH_SUCCESS = '[ProductSearch] Distributor Search Success',
+  DISTRIBUTORSEARCH_FAILURE = '[ProductSearch] Distributor Search Failure',
+  DISTRIBUTORCOMPANIES = '[ProductSearch] Distributor Companies',
+  DISTRIBUTORCOMPANIES_SUCCESS = '[ProductSearch] Distributor Companies Success',
+  DISTRIBUTORCOMPANIES_FAILURE = '[ProductSearch] Distributor Companies Failure',
 }
 
 export class ProductSearch implements Action {
@@ -63,6 +72,21 @@ export class GenericDetailSuccess implements Action {
 
 export class GenericDetailFailure implements Action {
   readonly type = ProductSearchAction.GENERICDETAIL_FAILURE;
+  constructor(public payload: any) {}
+}
+
+export class GenericStores implements Action {
+  readonly type = ProductSearchAction.GENERICSTORES;
+  constructor(public payload: any) {}
+}
+
+export class GenericStoresSuccess implements Action {
+  readonly type = ProductSearchAction.GENERICSTORES_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class GenericStoresFailure implements Action {
+  readonly type = ProductSearchAction.GENERICSTORES_FAILURE;
   constructor(public payload: any) {}
 }
 
@@ -111,6 +135,36 @@ export class CompanyProductsFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class DistributorSearch implements Action {
+  readonly type = ProductSearchAction.DISTRIBUTORSEARCH;
+  constructor(public payload: any) {}
+}
+
+export class DistributorSearchSuccess implements Action {
+  readonly type = ProductSearchAction.DISTRIBUTORSEARCH_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class DistributorSearchFailure implements Action {
+  readonly type = ProductSearchAction.DISTRIBUTORSEARCH_FAILURE;
+  constructor(public payload: any) {}
+}
+
+export class DistributorCompanies implements Action {
+  readonly type = ProductSearchAction.DISTRIBUTORCOMPANIES;
+  constructor(public payload: any) {}
+}
+
+export class DistributorCompaniesSuccess implements Action {
+  readonly type = ProductSearchAction.DISTRIBUTORCOMPANIES_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class DistributorCompaniesFailure implements Action {
+  readonly type = ProductSearchAction.DISTRIBUTORCOMPANIES_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | ProductSearch
   | ProductSearchSuccess
@@ -121,6 +175,9 @@ export type All =
   | GenericDetail
   | GenericDetailSuccess
   | GenericDetailFailure
+  | GenericStores
+  | GenericStoresSuccess
+  | GenericStoresFailure
   | CompanySearch
   | CompanySearchSuccess
   | CompanySearchFailure
@@ -129,4 +186,10 @@ export type All =
   | CompanyStoresFailure
   | CompanyProducts
   | CompanyProductsSuccess
-  | CompanyProductsFailure;
+  | CompanyProductsFailure
+  | DistributorSearch
+  | DistributorSearchSuccess
+  | DistributorSearchFailure
+  | DistributorCompanies
+  | DistributorCompaniesSuccess
+  | DistributorCompaniesFailure;

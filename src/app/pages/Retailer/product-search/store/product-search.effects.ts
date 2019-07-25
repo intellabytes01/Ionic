@@ -19,7 +19,16 @@ import {
   CompanyStoresFailure,
   CompanyProducts,
   CompanyProductsSuccess,
-  CompanyProductsFailure
+  CompanyProductsFailure,
+  DistributorSearch,
+  DistributorSearchSuccess,
+  DistributorSearchFailure,
+  DistributorCompanies,
+  DistributorCompaniesSuccess,
+  DistributorCompaniesFailure,
+  GenericStores,
+  GenericStoresSuccess,
+  GenericStoresFailure
 } from './product-search.actions';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
@@ -115,6 +124,32 @@ export class ProductSearchEffects {
     ofType(ProductSearchAction.GENERICDETAIL_FAILURE)
   );
 
+  // Generic Stores
+
+  @Effect()
+  GenericStores: Observable<Action> = this.actions.pipe(
+    ofType(ProductSearchAction.GENERICSTORES),
+    map((action: GenericStores) => action.payload),
+    switchMap((payload) => {
+      return this.productSearchService.getGenericStores(payload).pipe(
+        map(data => {
+          return new GenericStoresSuccess({ genericStores: data['data'] });
+        }),
+        catchError(error => of(new GenericStoresFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  GenericStoresSuccess: Observable<any> = this.actions.pipe(
+    ofType(ProductSearchAction.GENERICSTORES_SUCCESS)
+  );
+
+  @Effect({ dispatch: false })
+  GenericStoresFailure: Observable<any> = this.actions.pipe(
+    ofType(ProductSearchAction.GENERICSTORES_FAILURE)
+  );
+
   // Company Search
 
   @Effect()
@@ -191,5 +226,57 @@ export class ProductSearchEffects {
   @Effect({ dispatch: false })
   CompanyProductsFailure: Observable<any> = this.actions.pipe(
     ofType(ProductSearchAction.COMPANYPRODUCTS_FAILURE)
+  );
+
+  // Distributor Search
+
+  @Effect()
+  DistributorSearch: Observable<Action> = this.actions.pipe(
+    ofType(ProductSearchAction.DISTRIBUTORSEARCH),
+    map((action: DistributorSearch) => action.payload),
+    switchMap((payload) => {
+      return this.productSearchService.getDistributors(payload).pipe(
+        map(data => {
+          return new DistributorSearchSuccess({ distributorSearch: data['data'] });
+        }),
+        catchError(error => of(new DistributorSearchFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  DistributorSearchSuccess: Observable<any> = this.actions.pipe(
+    ofType(ProductSearchAction.DISTRIBUTORSEARCH_SUCCESS)
+  );
+
+  @Effect({ dispatch: false })
+  DistributorSearchFailure: Observable<any> = this.actions.pipe(
+    ofType(ProductSearchAction.DISTRIBUTORSEARCH_FAILURE)
+  );
+
+  // Distributor Companies
+
+  @Effect()
+  DistributorCompanies: Observable<Action> = this.actions.pipe(
+    ofType(ProductSearchAction.DISTRIBUTORCOMPANIES),
+    map((action: DistributorCompanies) => action.payload),
+    switchMap((payload) => {
+      return this.productSearchService.getDistributorCompanies(payload).pipe(
+        map(data => {
+          return new DistributorCompaniesSuccess({ distributorCompanies: data['data'] });
+        }),
+        catchError(error => of(new DistributorCompaniesFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  DistributorCompaniesSuccess: Observable<any> = this.actions.pipe(
+    ofType(ProductSearchAction.DISTRIBUTORCOMPANIES_SUCCESS)
+  );
+
+  @Effect({ dispatch: false })
+  DistributorCompaniesFailure: Observable<any> = this.actions.pipe(
+    ofType(ProductSearchAction.DISTRIBUTORCOMPANIES_FAILURE)
   );
 }
