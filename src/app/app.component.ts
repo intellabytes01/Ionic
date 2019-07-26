@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { environment } from '@env/environment';
 import { merge } from 'rxjs';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import { filter, map, mergeMap, startWith, delay, tap } from 'rxjs/operators';
 import {
   Logger,
   I18nService,
@@ -19,6 +19,7 @@ import { AuthState } from './core/authentication/auth.states';
 import { Store } from '@ngrx/store';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { Platform } from '@ionic/angular';
+import { TopLoaderService } from './shared/top-loader/top-loader.service';
 
 const log = new Logger('App');
 
@@ -28,7 +29,7 @@ const log = new Logger('App');
 })
 export class AppComponent implements OnInit, OnDestroy {
   title: string;
-  // title$: Observable<string>;
+  norecord: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -40,7 +41,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private authService: AuthenticationService,
     private store: Store<AuthState>,
     private oneSignal: OneSignal,
-    private platform: Platform
+    private platform: Platform,
+    private topLoaderService: TopLoaderService
   ) {
     this.initializeApp();
   }
@@ -121,5 +123,14 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.oneSignal.endInit();
+  }
+
+  ngAfterViewInit() {
+    this.topLoaderService.norecord
+        .pipe(
+            startWith(null),
+            delay(0),
+            tap((value) => this.norecord = value)
+        ).subscribe();
   }
 }

@@ -375,5 +375,11 @@
 
   "DELIVERY": {
     "FILTER": "Filter List"
+  },
+
+  "NOTIFICATION": {
+    "TITLE": "Notification",
+    "FILTER": "Notification Filter",
+    "FILTER_TEXT": "Click here to filter notifications"
   }
 }

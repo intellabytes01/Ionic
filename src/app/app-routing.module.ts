@@ -42,7 +42,7 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule',
     data: { title: 'Home', preload: true, delay: false },
-    canLoad : [AuthenticationGuard]
+    canLoad: [AuthenticationGuard]
   },
 
   // {
@@ -136,9 +136,15 @@ const routes: Routes = [
     data: { title: 'Delivery Tracker', preload: false, delay: true },
     canActivate: [AuthenticationGuard]
   },
-  { path: 'mall',
+  {
+    path: 'mall',
     loadChildren: './pages/mall/mall.module#MallPageModule',
     data: { title: 'Pharma Mall', preload: false, delay: false },
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'notification', loadChildren: './pages/notification/notification.module#NotificationPageModule',
+    data: { title: 'Notification', preload: false, delay: false },
     canActivate: [AuthenticationGuard]
   },
   {
@@ -154,4 +160,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

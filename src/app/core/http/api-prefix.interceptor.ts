@@ -55,6 +55,12 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
       tap(
         (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
+            console.log(event);
+            if(event['body']['data'].length === 0){
+              this.noRecordsFound();
+            }else{
+              this.noRecordsFoundHide();
+            }
             this.hideLoader();
           }
         },
@@ -71,6 +77,14 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
 
   hideLoader() {
     this.topLoaderService.isLoading.next(false);
+  }
+
+  noRecordsFound(){
+    this.topLoaderService.norecord.next(true);
+  }
+
+  noRecordsFoundHide(){
+    this.topLoaderService.norecord.next(false);
   }
 
   ngOnDestroy(): void {

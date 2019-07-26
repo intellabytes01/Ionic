@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col size="10">
+        <ion-title class="header-title">{{'NOTIFICATION.FILTER' | translate}}</ion-title>
+      </ion-col>
+      <ion-col size="2" text-end>
+        <ion-icon (click)="modalController.dismiss()" class="header-icon" name="close"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="notificationFilterForm">
+    <ion-row>
+      <ion-col>
+        <pr-select [placeHolder]="'Select Store'" [ctrName]="'status'" [items]="statusList" [id]="'id'" [name]="'name'"
+          [canSearch]="true" (valueChange)="updateStatus($event)"></pr-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <pr-select [placeHolder]="'Select Status'" [ctrName]="'status'" [items]="statusList" [id]="'id'" [name]="'name'"
+          [canSearch]="true" (valueChange)="updateStatus($event)"></pr-select>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-datetime [placeholder]="notificationFilterForm.value.date" pickerFormat="DD/MM/YY"
+          display-format="DD/MM/YY" formControlName="date"></ion-datetime>
+      </ion-col>
+    </ion-row>
+
+    <br />
+
+    <ion-row>
+      <ion-col size="6"></ion-col>
+      <ion-col size="3" class="signin" text-end>
+        <ion-button (click)="modalController.dismiss()" color="mustard" expand="full" fill="solid">
+          {{'MY_ORDER.CLOSE' | translate}}
+        </ion-button>
+      </ion-col>
+      <ion-col size="3" class="create" text-end>
+        <app-submit-button (click)="notificationFilterSubmit()"></app-submit-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

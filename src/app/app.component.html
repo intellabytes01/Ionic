@@ -10,7 +10,10 @@
   <pr-toolbar></pr-toolbar>
   <pr-top-loader></pr-top-loader>
   <ion-content>
-    <app-sidemenu></app-sidemenu>
+    <app-sidemenu></app-sidemenu>    
   </ion-content>
+
+  <img *ngIf="norecord" class="norecord" src="assets/icon/no-recordFound.jpg">
+
   <app-footer></app-footer>
 </ion-app>

@@ -6,5 +6,6 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class TopLoaderService {
   public isLoading = new BehaviorSubject(false);
+  public norecord = new BehaviorSubject(false);
   constructor() { }
 }

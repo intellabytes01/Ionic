@@ -1,11 +1,10 @@
 <ion-content>
   <br>
-  <ion-row class="filter" (click)="presentModalStatusFilter()">
-    <ion-col text-start size="2">
-      <ion-icon name="wine"></ion-icon>
-    </ion-col>
-    <ion-col text-center size="10">
-      <ion-label>{{'ADD_DISTRIBUTOR.FILTER_TEXT' | translate}}</ion-label>
+  <ion-row class="filter">
+    <ion-col text-start>
+      <ion-label (click)="presentModalStatusFilter()">
+        <ion-icon name="wine"></ion-icon><span class="padding">{{'ADD_DISTRIBUTOR.FILTER_TEXT' | translate}}</span>
+      </ion-label>
     </ion-col>
   </ion-row>
   <br>
