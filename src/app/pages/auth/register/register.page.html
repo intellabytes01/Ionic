@@ -49,6 +49,7 @@
           class="white-border white-color"
           type="tel"
           maxlength="10"
+          clearOnEdit="false"
           (ionChange)="checkIfUserExists()"
         ></ion-input>
       </ion-col>
@@ -76,7 +77,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-item>
+        <ion-item color="transparent" class="white-border white-color">
           <ion-input
             type="password"
             [placeholder]="'LOGIN.PASSWORD' | translate"
@@ -179,7 +180,7 @@
         <ion-checkbox formControlName="agree"></ion-checkbox>
         <ion-label class="message"
           >&nbsp;{{ "REGISTER.AGREE" | translate }}
-          <a href="abc" target="_blank"> <u>{{ "REGISTER.tnc" | translate }}</u></a>
+          <a href="http://www.pharmarack.com/termsandconditions" target="_blank"> <u>{{ "REGISTER.tnc" | translate }}</u></a>
           {{ "REGISTER.ofPR" | translate }}
         </ion-label
         >

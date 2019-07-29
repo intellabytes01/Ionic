@@ -69,12 +69,12 @@ export interface GenericStoresResponse {
 }
 
 export interface GenericStoreDetails {
-  Storeid: number,
-  StoreName: string,
-  qty: number,
-  Scheme: string,
-  IsMapped: number,
-  TotalStock: number
+  Storeid: number;
+  StoreName: string;
+  qty: number;
+  Scheme: string;
+  IsMapped: number;
+  TotalStock: number;
 }
 
 export interface CompanySearchResponse {
@@ -135,10 +135,10 @@ export interface DistributorSearchResponse {
 }
 
 export interface DistributorDetails {
-  StoreId: number,
-  StoreName: string,
-  NonPRQty: number,
-  IsMapped: number
+  StoreId: number;
+  StoreName: string;
+  NonPRQty: number;
+  IsMapped: number;
 }
 
 export interface DistributorListResponse {
@@ -150,8 +150,8 @@ export interface DistributorListResponse {
 }
 
 export interface DistributorCompaniesList {
-  CompanyId: number,
-  CompanyName: string,
-  NonPRQty: number,
-  slot: number
+  CompanyId: number;
+  CompanyName: string;
+  NonPRQty: number;
+  slot: number;
 }

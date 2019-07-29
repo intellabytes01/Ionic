@@ -1,17 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MenuController, Platform, AlertController } from '@ionic/angular';
-import { Page } from './interface/dashboard';
+import { MenuController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { UtilityService } from '@app/shared/services/utility.service';
 import {
   AuthState,
-  selectAuthState
+  selectAuthState,
+  getRetailerName,
+  getRetailerStatus
 } from '@app/core/authentication/auth.states';
 import { Store, select } from '@ngrx/store';
 import { untilDestroyed } from '@app/core';
 import { Storage } from '@ionic/storage';
 import * as fromModel from './dashboard-data.json';
-import { NewOrderService } from '../Retailer/new-order/new-order.service';
+import { AlertService } from '@app/shared/services/alert.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,52 +24,69 @@ export class DashboardPage implements OnInit, OnDestroy {
   userData: object;
   backButton: any;
 
-  constructor(public menuCtrl: MenuController,
-              private translateService: TranslateService,
-              private utilityService: UtilityService,
-              private store: Store<AuthState>,
-              private storage: Storage,
-              private newOrderService: NewOrderService,
-              private platform: Platform,
-              public alertController: AlertController) {}
+  constructor(
+    public menuCtrl: MenuController,
+    private translateService: TranslateService,
+    private store: Store<AuthState>,
+    private storage: Storage,
+    private platform: Platform,
+    private alert: AlertService,
+    private router: Router
+  ) {
+    this.getRetailerName();
+    this.router.events.subscribe(e => {
+      if (e instanceof NavigationEnd) {
+        if (e.url === '/dashboard') {
+          this.getRetailerStatus();
+        }
+      }
+    });
+  }
 
   ionViewWillEnter() {
     this.menuCtrl.enable(true, 'menuLeft');
     this.menuCtrl.enable(true, 'menuRight');
-    this.backButton = this.platform.backButton.subscribeWithPriority(9999, () => {
-      this.presentAlertConfirm();
-    });
+    this.backButton = this.platform.backButton.subscribeWithPriority(
+      9999,
+      () => {
+        this.presentAlertConfirm();
+      }
+    );
   }
 
   ionViewDidLeave() {
     if (this.backButton) {
       this.backButton.unsubscribe();
-   }
+    }
   }
 
   ngOnInit() {
     this.pages = fromModel.data;
-    this.store.pipe(select(selectAuthState),
-    untilDestroyed(this)).subscribe(data => {
-      console.log(data);
-      if (!data['userData']) {
-        this.storage.get('userData').then((value: any) => {
-          if (value) {
-            this.userData = JSON.parse(value)['userData'];
-            this.setDisable();
-          }
-        });
-      } else {
-        this.userData = data['userData']['userData'];
-        this.setDisable();
-      }
-    });
+    this.store
+      .pipe(
+        select(selectAuthState),
+        untilDestroyed(this)
+      )
+      .subscribe(data => {
+        console.log(data);
+        if (!data['userData']) {
+          this.storage.get('userData').then((value: any) => {
+            if (value) {
+              this.userData = JSON.parse(value)['userData'];
+              this.setDisable();
+            }
+          });
+        } else {
+          this.userData = data['userData']['userData'];
+          this.setDisable();
+        }
+      });
     untilDestroyed(this);
   }
 
   setDisable() {
     if (!this.userData['retailerSummary']['retailerInfo']) {
-      this.pages.forEach((element, index) => {
+      this.pages.forEach((element) => {
         switch (element.name) {
           // case 'DASHBOARD.NEWORDER':
           //   element.disable = true;
@@ -103,27 +121,40 @@ export class DashboardPage implements OnInit, OnDestroy {
     }
   }
 
-  async presentAlertConfirm() {
-    const alert = await this.alertController.create({
-      header: '',
-      message: '<br><strong>Are you sure you want to exit the app?</strong>',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-          }
-        }, {
-          text: 'Okay',
-          handler: () => {
-            navigator['app'].exitApp();
-          }
-        }
-      ]
-    });
+  presentAlertConfirm() {
+    this.alert.exitModal(this.translateService.instant('EXIT_APP'));
+  }
 
-    await alert.present();
+  showUnAuthrorizedMessage() {
+    this.alert.presentToast(
+      'danger',
+      this.translateService.instant('USER_ACTIVATION'),
+      5000
+    );
+  }
+
+  showUpdateProfileModal() {
+    this.alert.confirmationModal(
+      this.translateService.instant('UPDATE_PROFILE_MODAL_TITLE'),
+      this.translateService.instant('UPDATE_PROFILE_MODAL_MESSAGE'),
+      'profile'
+    );
+  }
+
+  async getRetailerName() {
+    await this.store.pipe(select(getRetailerName), untilDestroyed(this)).subscribe(retailerName => {
+      if (!retailerName || retailerName == null || retailerName === '') {
+        this.showUpdateProfileModal();
+      }
+    });
+  }
+
+  async getRetailerStatus() {
+    await this.store.pipe(select(getRetailerStatus), untilDestroyed(this)).subscribe(retailerStatus => {
+      if (retailerStatus && retailerStatus != null && retailerStatus !== 'Authorized') {
+        this.showUnAuthrorizedMessage();
+      }
+    });
   }
 
   ngOnDestroy(): void {

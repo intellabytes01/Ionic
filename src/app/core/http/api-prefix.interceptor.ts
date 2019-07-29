@@ -78,11 +78,11 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
     this.topLoaderService.isLoading.next(false);
   }
 
-  noRecordsFound(){
+  noRecordsFound() {
     this.topLoaderService.norecord.next(true);
   }
 
-  noRecordsFoundHide(){
+  noRecordsFoundHide() {
     this.topLoaderService.norecord.next(false);
   }
 

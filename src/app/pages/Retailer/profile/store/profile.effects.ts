@@ -118,7 +118,7 @@ export class ProfileEffects {
         .getProfileDetails({ userId: Number(payload) })
         .pipe(
           map(data => {
-            if (data.data.success) {
+            if (data.success) {
               return new GetProfileSuccess({ userProfile: data['data'] });
             } else {
               return new GetProfileFailure({ data });

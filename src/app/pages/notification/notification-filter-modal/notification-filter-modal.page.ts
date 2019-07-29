@@ -32,11 +32,11 @@ export class NotificationFilterModalPage implements OnInit {
     });
   }
 
-  updateStatus(event){
+  updateStatus(event) {
 
   }
 
-  notificationFilterSubmit(){
+  notificationFilterSubmit() {
 
   }
 

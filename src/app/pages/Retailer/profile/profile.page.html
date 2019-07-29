@@ -7,7 +7,7 @@
           <ion-input
             formControlName="loginId"
             type="text"
-            [ngModel]="userProfileDetails$?.RetailerId"
+            [ngModel]="(userProfileDetails$ | async) ?.RetailerId"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -23,7 +23,7 @@
             [name]="'BusinessTypeName'"
             [canSearch]="true"
             [preSelectedOn]="'BusinessTypeId'"
-            [preSelectedValue]="userProfileDetails$?.BusinessTypeId"
+            [preSelectedValue]="(userProfileDetails$ | async) ?.BusinessTypeId"
             (valueChange)="updateBussinessType()"
             [disableControl]="true"
             class="selectWidth selectBackGround"
@@ -41,7 +41,7 @@
           <ion-input
             formControlName="shopName"
             type="text"
-            [ngModel]="userProfileDetails$?.RetailerName"
+            [ngModel]="(userProfileDetails$ | async) ?.RetailerName"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -54,7 +54,7 @@
           <ion-input
             formControlName="firstName"
             type="text"
-            [ngModel]="userProfileDetails$?.RetailerName"
+            [ngModel]="(userProfileDetails$ | async) ?.RetailerName"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -67,7 +67,7 @@
           <ion-input
             formControlName="address1"
             type="text"
-            [ngModel]="userProfileDetails$?.Address1"
+            [ngModel]="(userProfileDetails$ | async) ?.Address1"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -82,7 +82,7 @@
             oninput="this.value=this.value.slice(0,6)"
             type="text"
             maxlength="6"
-            [ngModel]="userProfileDetails$?.Pincode"
+            [ngModel]="(userProfileDetails$ | async) ?.Pincode"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -99,7 +99,7 @@
             [name]="'RegionName'"
             [canSearch]="true"
             [preSelectedOn]="'RegionId'"
-            [preSelectedValue]="userProfileDetails$?.RegionId"
+            [preSelectedValue]="(userProfileDetails$ | async) ?.RegionId"
             (valueChange)="updateRegion($event)"
             [disableControl]="disable"
             [ngClass]="disable ? 'selectBackGround' : ''"
@@ -116,7 +116,7 @@
           <ion-input
             formControlName="email"
             type="email"
-            [ngModel]="userProfileDetails$?.Email"
+            [ngModel]="(userProfileDetails$ | async) ?.Email"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -133,7 +133,7 @@
             type="tel"
             maxlength="10"
             minlength="10"
-            [ngModel]="userProfileDetails$?.MobileNumber"
+            [ngModel]="(userProfileDetails$ | async) ?.MobileNumber"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -146,7 +146,7 @@
           <ion-input
             formControlName="telephone"
             type="number"
-            [ngModel]="userProfileDetails$?.Telephone"
+            [ngModel]="(userProfileDetails$ | async) ?.Telephone"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -161,7 +161,7 @@
           <ion-input
             formControlName="licenseNumber"
             type="text"
-            [ngModel]="userProfileDetails$?.LicenseNumber"
+            [ngModel]="(userProfileDetails$ | async) ?.LicenseNumber"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -176,7 +176,7 @@
           <ion-input
             formControlName="gstinNumber"
             type="text"
-            [ngModel]="userProfileDetails$?.GSTINNumber"
+            [ngModel]="(userProfileDetails$ | async) ?.GSTINNumber"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -191,7 +191,7 @@
           <ion-input
             formControlName="cstNumber"
             type="text"
-            [ngModel]="userProfileDetails$?.CSTNumber"
+            [ngModel]="(userProfileDetails$ | async) ?.CSTNumber"
           ></ion-input>
         </ion-item>
       </ion-col>

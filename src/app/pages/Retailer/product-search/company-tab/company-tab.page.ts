@@ -49,7 +49,7 @@ export class CompanyTabPage implements OnInit {
     if (this.searchText.length < 3) {
       this.companyList = [];
       this.companyDetails = {} as CompanyDetails;
-      this.companyProductList = []; 
+      this.companyProductList = [];
       this.companyStoreList = [];
     } else {
       const payload = {
@@ -96,8 +96,8 @@ export class CompanyTabPage implements OnInit {
     );
   }
 
-  storeClick(store, index) {    
-    this.toggle(index);      
+  storeClick(store, index) {
+    this.toggle(index);
     const payload = {
       storeId: store.StoreId,
       page: 1,
@@ -110,33 +110,33 @@ export class CompanyTabPage implements OnInit {
     } 
     this.store.select(companyProductsData, untilDestroyed(this)).subscribe(
       (state: any) => {
-        if(this.index === index){
+        if (this.index === index) {
           this.companyProductList[index] = state;
           this.scrollTo(store.StoreId);
-        }                
+        }
       },
       e => {}
-    );     
-    
+    );
+
   }
 
-  toggle(index){
+  toggle(index) {
     this.index = index;
     if (this.subListShow[index] === undefined) {
       this.subListShow[index] = false;
     }
     this.subListShow[index] = !this.subListShow[index];
-    this.subListShow = this.subListShow.map((element, i)=>{
-      if(i !== index){
+    this.subListShow = this.subListShow.map((element, i) => {
+      if (i !== index) {
         element = false;
       }
       return element;
-    })
+    });
   }
 
   scrollTo(id) {
-    if(document.getElementById(id)){
+    if (document.getElementById(id)) {
       document.getElementById(id).scrollIntoView();
-    }    
+    }
   }
 }

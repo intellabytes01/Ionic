@@ -39,7 +39,7 @@ export function profileReducer(
     case ProfileActionTypes.BUSINESSTYPES_SUCCESS: {
       return {
         ...state,
-        businessTypesArray: action.payload.businessTypes.data,
+        businessTypesArray: action.payload.businessTypes,
         errorMessage: null
       };
     }
@@ -56,7 +56,7 @@ export function profileReducer(
     case ProfileActionTypes.REGIONS_SUCCESS: {
       return {
         ...state,
-        regionsArray: action.payload.regions.data,
+        regionsArray: action.payload.regions,
         errorMessage: null
       };
     }
@@ -99,7 +99,7 @@ export const saveProfileDetails = createSelector(
 
 export const getProfileDetails = createSelector(
   ProfileState,
-  profileGetDetailState => profileGetDetailState.getProfileDetails.data
+  profileGetDetailState => profileGetDetailState.getProfileDetails
 );
 
 export const businessTypesData = createSelector(

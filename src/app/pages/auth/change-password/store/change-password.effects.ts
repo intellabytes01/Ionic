@@ -26,10 +26,10 @@ export class ChangePasswordEffects {
     switchMap(payload => {
       return this.changePassword.changePassword(payload.cred).pipe(
         map(data => {
-          if (data.data.success) {
-          return new ChangePasswordSuccess({ sendChangePassword: data['data'] });
+          if (data.success) {
+          return new ChangePasswordSuccess({ sendChangePassword: data.message });
           } else {
-            return new ChangePasswordFailure({ data });
+            return new ChangePasswordFailure({ sendChangePassword: data.message });
           }
         }),
         catchError(error => of(new ChangePasswordFailure({ error })))
@@ -41,7 +41,7 @@ export class ChangePasswordEffects {
   ChangePasswordSuccess: Observable<any> = this.actions.pipe(
     ofType(ChangePasswordTypes.CHANGEPASSWORD_SUCCESS),
     tap((res) => {
-      this.alert.presentToast('success', res.payload['sendChangePassword']['message']);
+      this.alert.presentToast('success', res.payload['sendChangePassword']);
       this.credentialsService.setCredentials();
       this.router.navigate(['/login']);
     })
@@ -52,8 +52,7 @@ export class ChangePasswordEffects {
     ofType(ChangePasswordTypes.CHANGEPASSWORD_FAILURE),
     tap((res) => {
       this.alert.presentToast('danger',
-      res.payload['data'] ? res.payload['data']['data']['message']
-      : (res.payload['error'] ? res.payload['error']['error']['message'] : null));
+      res.payload['sendChangePassword']);
     })
   );
 }

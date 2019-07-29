@@ -4,25 +4,22 @@ import {
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  Route
+  Route,
+  CanLoad
 } from '@angular/router';
 
 import { CredentialsService } from './credentials.service';
 
 
 @Injectable()
-export class AuthenticationGuard implements CanActivate {
+export class AuthenticationGuard implements CanLoad, CanActivate {
   constructor(
     private router: Router,
     private credentialsService: CredentialsService
   ) {}
 
-  canLoad(route: Route): boolean {
-    const url: string = route.path;
-    if (this.isUserAuthenticate()) {
-      return true;
-    }
-    return false;
+  canLoad(route: Route): any {
+    return this.isUserAuthenticate();
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -30,7 +27,7 @@ export class AuthenticationGuard implements CanActivate {
   }
 
   async isUserAuthenticate() {
-    const isAuth = (await this.credentialsService.getApiTokenAsync()) as boolean;
+    const isAuth = await this.credentialsService.getApiTokenAsync();
     if (!isAuth) {
       this.router.navigateByUrl('/login');
       return false;

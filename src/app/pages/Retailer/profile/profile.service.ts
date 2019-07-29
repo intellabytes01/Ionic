@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { Logger } from '@app/core';
 import { HttpEvent, HttpClient } from '@angular/common/http';
 
@@ -39,9 +39,7 @@ export class ProfileService {
     .cache(true)
       .get(routes1.userDetails(context))
       .pipe(
-        map((data: any) => ({
-          data
-        })),
+        tap(),
         catchError(error => this.errorHandler(error))
       );
   }
@@ -63,9 +61,7 @@ export class ProfileService {
     return this.httpClient
     .cache(true)
     .get(routes.businesstypes).pipe(
-      map((data: any) => ({
-        data
-      })),
+      tap(),
       catchError(error => this.errorHandler(error))
     );
   }
@@ -76,9 +72,7 @@ export class ProfileService {
    */
   getRegions(): Observable<any> {
     return this.httpClient.get(routes.regions).pipe(
-      map((data: any) => ({
-        data
-      })),
+      tap(),
       catchError(error => this.errorHandler(error))
     );
   }
@@ -91,9 +85,7 @@ export class ProfileService {
     .cache(true)
       .put(routes.profileRoute(context), JSON.stringify(context.saveObj))
       .pipe(
-        map((data: any) => ({
-          data
-        })),
+       tap(),
         catchError(error => this.errorHandler(error))
       );
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 
 import { environment } from '@env/environment';
 import { merge } from 'rxjs';
@@ -6,14 +6,11 @@ import { filter, map, mergeMap, startWith, delay, tap } from 'rxjs/operators';
 import {
   Logger,
   I18nService,
-  untilDestroyed,
-  AuthenticationService
-} from './core';
+  untilDestroyed} from './core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { Storage } from '@ionic/storage';
 import { SaveToken } from './core/authentication/actions/auth.actions';
 import { AuthState } from './core/authentication/auth.states';
 import { Store } from '@ngrx/store';
@@ -27,7 +24,7 @@ const log = new Logger('App');
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   title: string;
   norecord: boolean;
 
@@ -37,8 +34,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private i18nService: I18nService,
     private permissionsService: NgxPermissionsService,
-    private storage: Storage,
-    private authService: AuthenticationService,
     private store: Store<AuthState>,
     private oneSignal: OneSignal,
     private platform: Platform,
@@ -127,6 +122,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.oneSignal.handleNotificationOpened().subscribe(() => {
       // do something when a notification is opened
     });
+
+    this.oneSignal.getIds().then((data) => console.log(data));
 
     this.oneSignal.endInit();
   }
