@@ -130,7 +130,9 @@ export class RegisterPage implements OnInit, OnDestroy {
           mobile: this.registerForm.value.mobile,
           password: this.registerForm.value.password,
           regionId: this.registerForm.value.region.RegionId,
-          businessTypeId: this.registerForm.value.businessType.BusinessTypeId
+          businessTypeId: this.registerForm.value.businessType.BusinessTypeId,
+          OneSignalId: '9b58ebb7-a916-4b84-b3f5-1fd475e43e3a',
+          DevicePlatform: 'android'
         }
       };
       this.store.dispatch(new SignUp(payload));

@@ -62,6 +62,11 @@
   "MYOUTSTANDING_NAME": "My Outstanding",
   "MYPAYMENTS_NAME": "My Payments",
 
+  "USER_ACTIVATION" : "Your account shall be activated once details are verified. Please call 9579870870 between 9.30am to 7pm",
+  "EXIT_APP": "Are you sure you want to exit the app?",
+  "UPDATE_PROFILE_MODAL_TITLE": "Update Your Profile",
+  "UPDATE_PROFILE_MODAL_MESSAGE": "We are glad to serve you. Kindly update your profile details for a seamless experience",
+
   "DASHBOARD": {
     "NEWORDER": "New Order",
     "PAYMENTS": "Payments",
@@ -152,6 +157,8 @@
   "CHANGE_PASSWORD": {
     "CURRENT_PASSWORD": "Current Password",
     "NEW_PASSWORD": "New Password",
+    "SAME_PASSWORD": "Current & New Password Can Not Be Same",
+    "PASSWORD_MISMATCH": "Confirm & New Password Did Not Match",
     "CONFIRM_PASSWORD": "Confirm Password",
     "CHANGE_BUTTON": "Change",
     "BACK_BUTTON": "Back",
@@ -252,7 +259,7 @@
     "UM": "Username / Mobile Number",
     "PASSWORD": "Password",
     "FP": "Forgot Password",
-    "SI": "Sign in",
+    "SI": "Sign In",
     "CA": "Create Account",
     "VALIDATION_MESSAGES": {
       "username": [

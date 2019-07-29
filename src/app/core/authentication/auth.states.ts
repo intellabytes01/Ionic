@@ -25,8 +25,22 @@ export const getRetailerStoreParties = createSelector(
     }
   );
 
-  export const isUserExists = createSelector(
+export const isUserExists = createSelector(
   selectAuthState,
   userData => userData['isUserExists']
+);
+
+export const getRetailerName = createSelector(
+  selectAuthState,
+  userData => {
+      return userData['userData']['userData']['retailerSummary']['retailerInfo']['RetailerName'];
+  }
+);
+
+export const getRetailerStatus = createSelector(
+  selectAuthState,
+  userData => {
+      return userData['userData']['userData']['retailerSummary']['retailerStatus'];
+  }
 );
 

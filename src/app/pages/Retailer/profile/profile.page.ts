@@ -64,9 +64,11 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.businessTypes$ = this.store.pipe(select(businessTypesData));
     this.regions$ = this.store.pipe(select(regionsData));
     // this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
-    this.userProfileDetails$ = this.store.pipe(select(getProfileDetails)).subscribe(data => {
-      this.userProfileDetails$ = data;
-    });
+    this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
+
+    // .subscribe(data => {
+    //   this.userProfileDetails$ = data;
+    // });
 
 
     this.updates$.pipe(

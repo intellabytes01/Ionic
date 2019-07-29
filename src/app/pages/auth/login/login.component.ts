@@ -7,7 +7,10 @@ import { Observable } from 'rxjs';
 import { environment } from '@env/environment';
 import { I18nService, untilDestroyed } from '@app/core';
 import { Store } from '@ngrx/store';
-import { AuthState, selectAuthState } from '@app/core/authentication/auth.states';
+import {
+  AuthState,
+  selectAuthState
+} from '@app/core/authentication/auth.states';
 import { LogIn } from '@app/core/authentication/actions/auth.actions';
 import { ModalController } from '@ionic/angular';
 import { ModalPopupPage } from '@app/shared/modal-popup/modal-popup.page';
@@ -25,8 +28,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   dataReturned: any;
 
-// tslint:disable-next-line: variable-name
-  validation_messages = this.translateService.instant('LOGIN.VALIDATION_MESSAGES');
+  // tslint:disable-next-line: variable-name
+  validation_messages = this.translateService.instant(
+    'LOGIN.VALIDATION_MESSAGES'
+  );
 
   ionViewWillEnter() {
     this.menuCtrl.enable(false, 'menuLeft');

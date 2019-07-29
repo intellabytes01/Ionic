@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { Logger } from '../../../core/logger.service';
 
 const log = new Logger('AuthenticationGuard');
@@ -30,9 +30,7 @@ export class ChangePasswordService {
     return this.httpClient
       .patch(routes.cPassword(context), JSON.stringify(context))
       .pipe(
-        map((data: any) => ({
-          data
-        })),
+        tap(),
         catchError(error => this.errorHandler(error))
       );
   }

@@ -114,7 +114,7 @@ export class GenericTabPage implements OnInit {
         element = false;
       }
       return element;
-    })
+    });
   }
 
   scrollTo(id) {

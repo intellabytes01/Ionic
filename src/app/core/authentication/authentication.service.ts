@@ -24,6 +24,8 @@ export interface SignupContext {
   password: string;
   regionId: number;
   businessTypeId: number;
+  OneSignalId: string;
+  DevicePlatform: string;
 }
 
 export interface UserExistsContext {
