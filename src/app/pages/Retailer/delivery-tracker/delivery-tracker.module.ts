@@ -9,6 +9,11 @@ import { DeliveryTrackerPage } from './delivery-tracker.page';
 import { FilterModalPageModule } from './filter-modal/filter-modal.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '@app/shared';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { DeliveryTrackerEffects } from './store/delivery-tracker.effects';
+import * as fromDeliveryTracker from './store/delivery-tracker.reducers';
+import { DeliveryTrackerService } from './delivery-tracker.service';
 
 const routes: Routes = [
   {
@@ -25,8 +30,11 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     FilterModalPageModule,
     TranslateModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature('deliveryTracker', fromDeliveryTracker.deliveryTrackerReducer),
+    EffectsModule.forRoot([DeliveryTrackerEffects])
   ],
-  declarations: [DeliveryTrackerPage]
+  declarations: [DeliveryTrackerPage],
+  providers: [DeliveryTrackerService]
 })
 export class DeliveryTrackerPageModule {}

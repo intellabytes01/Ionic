@@ -9,6 +9,9 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { format, isValid } from 'date-fns';
 import { AlertService } from '@app/shared/services/alert.service.js';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthState, getRetailerStoreParties } from '@app/core/authentication/auth.states';
+import { Store } from '@ngrx/store';
+import { untilDestroyed } from '@app/core';
 
 @Component({
   selector: 'pr-filter-modal',
@@ -22,26 +25,46 @@ export class FilterModalPage implements OnInit {
     'MY_ORDER.VALIDATION_MESSAGES'
   );
   storeList: any[] = [];
-  deliveryFilter: any = { storeId: '', deliveryNo: ''};
+  deliveryFilter: any = {
+    fromDate: '',
+    toDate: '',
+    status: '',
+    query: '',
+    store: ''
+  };
+  statusList = [{name: 'All'}, {name: 'Dispached'}, {name: 'Delivered'}, {name: 'Rejected'}, {name: 'Not Delivered'}, {name: 'Delivery Attempted'}]
   constructor(
     public formBuilder: FormBuilder,
     public modalController: ModalController,
     public navParams: NavParams,
     public alert: AlertService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private store: Store<AuthState>
   ) {}
 
   ngOnInit() {
+    this.store.select(getRetailerStoreParties, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.storeList = state;
+      },
+      e => { }
+    );
     this.deliveryFilter = this.navParams.get('value');
     this.deliveryFilterForm = this.formBuilder.group({
       store: [
         {
-          id: this.deliveryFilter.storeId,
-          name: 'Pharmex Lifecare'
+          StoreId: '',
+          StoreName: ''
         },
         Validators.compose([])
       ],
-      deliveryNo: [this.deliveryFilter.deliveryNo, Validators.compose([])],
+      status: [
+        {
+          name: ''
+        },
+        Validators.compose([])
+      ],
+      query: [this.deliveryFilter.query, Validators.compose([])],
       fromDate: [
         new Date().toISOString(),
         Validators.compose([Validators.required])
@@ -54,7 +77,11 @@ export class FilterModalPage implements OnInit {
   }
 
   updateStore(val) {
-    this.deliveryFilterForm.value.storeId = val.id;
+    this.deliveryFilterForm.value.store.StoreId = val.StoreId;
+  }
+
+  updateStatus(val) {
+    this.deliveryFilterForm.value.status.name = val.name;
   }
 
   deliveryFilterSubmit() {
@@ -70,8 +97,9 @@ export class FilterModalPage implements OnInit {
       this.deliveryFilterForm.value.toDate,
       'DD/MM/YY'
     );
-    this.deliveryFilter.storeId = this.deliveryFilterForm.value.store.id;
-    this.deliveryFilter.deliveryNo = this.deliveryFilterForm.value.deliveryNo;
+    this.deliveryFilter.store = this.deliveryFilterForm.value.store.StoreId;
+    this.deliveryFilter.query = this.deliveryFilterForm.value.query;
+    this.deliveryFilter.status = this.deliveryFilterForm.value.status.name;
     if (
       !isValid(new Date(this.deliveryFilter.fromDate)) ||
       !isValid(new Date(this.deliveryFilter.toDate))

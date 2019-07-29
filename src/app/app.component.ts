@@ -10,7 +10,7 @@ import {
   AuthenticationService
 } from './core';
 import { TranslateService } from '@ngx-translate/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Storage } from '@ionic/storage';
@@ -42,7 +42,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private store: Store<AuthState>,
     private oneSignal: OneSignal,
     private platform: Platform,
-    private topLoaderService: TopLoaderService
+    private topLoaderService: TopLoaderService,
+    public router: Router
   ) {
     this.initializeApp();
   }
@@ -89,6 +90,11 @@ export class AppComponent implements OnInit, OnDestroy {
           this.titleService.setTitle(this.translateService.instant(title));
         }
       });
+
+      this.router.events.subscribe((val)=>{
+        this.topLoaderService.norecord.next(false);
+      },
+      untilDestroyed(this))
   }
 
   initializeApp() {
@@ -133,4 +139,5 @@ export class AppComponent implements OnInit, OnDestroy {
             tap((value) => this.norecord = value)
         ).subscribe();
   }
+  
 }

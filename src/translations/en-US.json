@@ -172,6 +172,7 @@
   "FEEDBACKTYPE_PLACEHOLDER": "Select feedback type",
   "FEEDBACKTO_PLACEHOLDER": "Select type",
   "FEEDBACKSTORE_PLACEHOLDER": "Select Store",
+  "FEEDBACKSTATUS_PLACEHOLDER": "Select Status",
   "MESSAGE_PLACEHOLDER": "Type your message",
   "FEEDBACK_TEXT": "We value your feedback. Please send your feedback in the below form",
 

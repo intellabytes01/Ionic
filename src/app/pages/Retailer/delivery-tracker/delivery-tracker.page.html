@@ -1,11 +1,62 @@
 <ion-content padding>
-  <ion-row class="shadow">
-    <ion-col text-center>
-      <ion-label class="filter" (click)="presentModalInvoiceFilter()"
-        ><ion-icon name="funnel"></ion-icon>&nbsp;&nbsp;{{'DELIVERY.FILTER' | translate}}</ion-label
-      >
+  <ion-row class="filter" (click)="presentModalDeliveryTrackerFilter()">
+    <ion-col text-start size="5">
+      <ion-icon name="wine"></ion-icon>
+    </ion-col>
+    <ion-col text-start size="7">
+      <ion-label>
+        <span>{{ "DELIVERY.FILTER" | translate }}</span>
+      </ion-label>
     </ion-col>
   </ion-row>
+
+  <br />
+
+  <ion-card *ngFor="let item of deliveryTrackerList">
+    <ion-row>
+      <ion-col text-start>
+        <ion-label> {{ item.PartyName }} </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col text-start>
+        <ion-label> {{ item.InvoiceNo }} / {{ item.OrderNo }} </ion-label>
+      </ion-col>
+      <ion-col text-end>
+        <ion-label> {{ item.InvoiceAmt }} </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col text-start>
+        <ion-label> {{ item.StoreName }} </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col text-start>
+        <ion-label> <b>Status: </b> {{ item.Status }} </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col text-start>
+        <ion-label>
+          <b>Delivered attempted at: </b>
+          {{ item.DeliveryDate | date: "dd MMM yyyy h:mm a" }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col text-start>
+        <ion-label>
+          <b>Retailer Remarks: </b>{{ item.RetailerRemarks }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 
   <pr-new-order-button></pr-new-order-button>
 </ion-content>

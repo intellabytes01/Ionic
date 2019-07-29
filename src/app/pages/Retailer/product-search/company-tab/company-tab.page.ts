@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store';
 import { companySearchData, companyStoresData, companyProductsData } from '../store/product-search.reducers';
 import { untilDestroyed } from '@app/core';
 import { Storage } from '@ionic/storage';
+import { TopLoaderService } from '@app/shared/top-loader/top-loader.service';
 
 @Component({
   selector: 'app-company-tab',
@@ -34,7 +35,8 @@ export class CompanyTabPage implements OnInit {
     private alertService: AlertService,
     public events: Events,
     private store: Store<ProductSearchState>,
-    private storage: Storage
+    private storage: Storage,
+    private topLoaderService: TopLoaderService
   ) {}
 
   ngOnInit() {
@@ -104,8 +106,7 @@ export class CompanyTabPage implements OnInit {
     if(this.subListShow[index]){      
       this.store.dispatch(new CompanyProducts(payload));      
     }else{
-      payload.page = 0;
-      this.store.dispatch(new CompanyProducts(payload)); 
+      this.companyProductList[index] = [];
     } 
     this.store.select(companyProductsData, untilDestroyed(this)).subscribe(
       (state: any) => {

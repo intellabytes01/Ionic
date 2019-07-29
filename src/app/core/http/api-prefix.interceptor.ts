@@ -55,8 +55,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
       tap(
         (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
-            console.log(event);
-            if(event['body']['data'].length === 0){
+            if(Array.isArray(event['body']['data']) && event['body']['data'].length === 0){
               this.noRecordsFound();
             }else{
               this.noRecordsFoundHide();

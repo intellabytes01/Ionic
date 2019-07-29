@@ -277,8 +277,8 @@ ion-searchbar {
     ::placeholder {
       font-size: 1rem !important; 
     }      
-    border: 1px solid grey !important;
-    margin-top: 1rem;
+    // border: 1px solid grey !important;
+    // margin-top: 1rem;
 }
 
 .search-validation-text{
@@ -292,4 +292,9 @@ ion-searchbar {
 
 .norecord{
   margin-bottom: 14rem;
+}
+
+.searchbar-input.sc-ion-searchbar-md{
+  padding-right: 0% !important;
+  padding-left: 3rem !important;
 }
