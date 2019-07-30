@@ -10,8 +10,6 @@ import {
 import { Store } from '@ngrx/store';
 import { companySearchData, companyStoresData, companyProductsData } from '../store/product-search.reducers';
 import { untilDestroyed } from '@app/core';
-import { Storage } from '@ionic/storage';
-import { TopLoaderService } from '@app/shared/top-loader/top-loader.service';
 import { AuthState, getRetailerId } from '@app/core/authentication/auth.states';
 
 @Component({
@@ -20,7 +18,6 @@ import { AuthState, getRetailerId } from '@app/core/authentication/auth.states';
   styleUrls: ['./company-tab.page.scss']
 })
 export class CompanyTabPage implements OnInit {
-  @ViewChild(IonContent) content: IonContent;
   companyList: any[] = [];
   companyStoreList: any[] = [];
   companyProductList: any[] = [];
