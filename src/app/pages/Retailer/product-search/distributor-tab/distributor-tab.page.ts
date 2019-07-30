@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { distributorSearchData, distributorCompaniesData } from '../store/product-search.reducers';
 import { untilDestroyed } from '@app/core';
 import { Storage } from '@ionic/storage';
+import { AuthState, getRetailerId } from '@app/core/authentication/auth.states';
 
 @Component({
   selector: 'app-distributor-tab',
@@ -28,13 +29,16 @@ export class DistributorTabPage implements OnInit {
     private alertService: AlertService,
     public events: Events,
     private store: Store<ProductSearchState>,
-    private storage: Storage
+    private authStore: Store<AuthState>
   ) {}
 
   ngOnInit() {
-    this.storage.get('userData').then((data) => {
-      this.retailerId = JSON.parse(data)['userData']['retailerSummary']['retailerInfo']['RetailerId'];
-    });
+    this.authStore.select(getRetailerId, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.retailerId = state;
+      },
+      e => { }
+    );
   }
 
   search() {

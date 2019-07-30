@@ -44,3 +44,9 @@ export const getRetailerStatus = createSelector(
   }
 );
 
+export const getRetailerId = createSelector(
+  selectAuthState,
+  userData => {
+      return userData['userData']['userData']['retailerSummary']['retailerInfo']['RetailerId'];
+  }
+);

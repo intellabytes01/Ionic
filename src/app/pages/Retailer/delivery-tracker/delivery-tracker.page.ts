@@ -49,61 +49,7 @@ export class DeliveryTrackerPage implements OnInit, OnDestroy {
     this.store.dispatch(new DeliveryTracker(payload));
     this.store.select(deliveryTrackerData, untilDestroyed(this)).subscribe(
       (state: any) => {
-        this.deliveryTrackerList = [
-
-          {
-
-       "StoreId": 111,
-
-       "StoreName": "Desai Pharma",
-
-       "PartyCode": "2336",
-
-       "PartyName": "SHREE RAJENDRA CHEMIST",
-
-       "DisplayPartyCode": "36490",
-
-       "InvoiceNo": "77084",
-
-       "OrderNo": "DPH52174",
-
-       "InvoiceDate": "2018-10-27T18:30:00.000Z",
-
-       "InvoiceAmt": 899,
-
-       "DeliveryMan": "SURAJ",
-
-       "DeliveryAssignedDate": "2018-02-12T18:30:00.000Z",
-
-       "Status": "Dispatched",
-
-       "DeliveryDate": "2018-10-29T05:50:13.000Z",
-
-       "DeliveryRemarks": "Ret rejected",
-
-       "RetailerRemarks": "jgvj",
-
-       "UserId": 3214,
-
-       "Username": "Suraj123",
-
-       "NAME": "Suraj Chaurasia",
-
-       "CreatedBy": 2607,
-
-       "CreatedDate": "2018-02-15T11:25:08.000Z",
-
-       "ModifiedBy": 3214,
-
-       "ModifiedDate": "2018-10-29T05:50:13.000Z",
-
-       "Latitude": "18.4813136",
-
-       "Longitude": "73.830695"
-
-   }
-
-             ];
+        this.deliveryTrackerList = state;
       },
       e => { }
     );

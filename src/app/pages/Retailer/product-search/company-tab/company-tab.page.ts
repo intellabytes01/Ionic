@@ -12,6 +12,7 @@ import { companySearchData, companyStoresData, companyProductsData } from '../st
 import { untilDestroyed } from '@app/core';
 import { Storage } from '@ionic/storage';
 import { TopLoaderService } from '@app/shared/top-loader/top-loader.service';
+import { AuthState, getRetailerId } from '@app/core/authentication/auth.states';
 
 @Component({
   selector: 'app-company-tab',
@@ -35,14 +36,16 @@ export class CompanyTabPage implements OnInit {
     private alertService: AlertService,
     public events: Events,
     private store: Store<ProductSearchState>,
-    private storage: Storage,
-    private topLoaderService: TopLoaderService
+    private authStore: Store<AuthState>
   ) {}
 
   ngOnInit() {
-    this.storage.get('userData').then((data) => {
-      this.retailerId = JSON.parse(data)['userData']['retailerSummary']['retailerInfo']['RetailerId'];
-    });
+    this.authStore.select(getRetailerId, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.retailerId = state;
+      },
+      e => { }
+    );
   }
 
   search() {
