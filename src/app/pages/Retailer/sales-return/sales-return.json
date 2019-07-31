@@ -1,0 +1,24 @@
+{
+  "SALESRETURN": [
+    {
+      "id": "1",
+      "name": "Expiry"
+    },
+    {
+      "id": "2",
+      "name": "Breakage"
+    },
+    {
+      "id": "3",
+      "name": "Not Moving"
+    },
+    {
+      "id": "4",
+      "name": "Wrong Delivery"
+    }
+  ],
+  "deliveryModeList": [
+    { "id": "1", "name": "Pickup from Counter" },
+    { "id": "2", "name": "Delivery to Store" }
+  ]
+}

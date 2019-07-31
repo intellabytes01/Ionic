@@ -1,8 +1,10 @@
 <ion-header>
-  <ion-toolbar>      
+  <ion-toolbar>
     <ion-row>
       <ion-col size="10">
-        <ion-title class="header-title">{{'MY_ORDER.FILTER' | translate}}</ion-title>
+        <ion-title class="header-title">{{
+          "MY_ORDER.FILTER" | translate
+        }}</ion-title>
       </ion-col>
       <ion-col size="2" text-end>
         <ion-icon
@@ -17,15 +19,14 @@
 
 <ion-content padding>
   <form [formGroup]="orderFilterForm">
-    
     <ion-row>
       <ion-col>
         <pr-select
           [placeHolder]="'FEEDBACKSTORE_PLACEHOLDER' | translate"
           [ctrName]="'store'"
           [items]="storeList"
-          [id]="'id'"
-          [name]="'name'"
+          [id]="'StoreId'"
+          [name]="'StoreName'"
           [canSearch]="true"
           (valueChange)="updateStore($event)"
         ></pr-select>
@@ -44,23 +45,27 @@
 
     <ion-row>
       <ion-col size="2" text-start>
-        <ion-label class="date-label"><b>{{'MY_ORDER.FROMDATE' | translate}}:</b></ion-label>
+        <ion-label class="date-label"
+          ><b>{{ "MY_ORDER.FROMDATE" | translate }}:</b></ion-label
+        >
       </ion-col>
       <ion-col size="4" text-start>
         <ion-datetime
-          [placeholder]="orderFilterForm.value.fromDate" 
-          pickerFormat="DD/MM/YY" 
+          [placeholder]="orderFilterForm.value.fromDate"
+          pickerFormat="DD/MM/YY"
           display-format="DD/MM/YY"
           formControlName="fromDate"
         ></ion-datetime>
       </ion-col>
       <ion-col size="2" text-start>
-        <ion-label class="date-label"><b>{{'MY_ORDER.TODATE' | translate}}:</b></ion-label>
+        <ion-label class="date-label"
+          ><b>{{ "MY_ORDER.TODATE" | translate }}:</b></ion-label
+        >
       </ion-col>
       <ion-col size="4" text-start>
         <ion-datetime
-          [placeholder]="orderFilterForm.value.toDate" 
-          pickerFormat="DD/MM/YY" 
+          [placeholder]="orderFilterForm.value.toDate"
+          pickerFormat="DD/MM/YY"
           display-format="DD/MM/YY"
           formControlName="toDate"
         ></ion-datetime>
@@ -105,18 +110,28 @@
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">{{'MY_ORDER.STATUS' | translate}}</ion-label>
+        <ion-label position="floating">{{
+          "MY_ORDER.STATUS" | translate
+        }}</ion-label>
         <ion-select formControlName="status">
-          <ion-select-option *ngFor="let item of statusList" [value]="item">{{item}}</ion-select-option>
+          <ion-select-option *ngFor="let item of statusList" [value]="item">{{
+            item
+          }}</ion-select-option>
         </ion-select>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">{{'MY_ORDER.OPERATION' | translate}}</ion-label>
+        <ion-label position="floating">{{
+          "MY_ORDER.OPERATION" | translate
+        }}</ion-label>
         <ion-select formControlName="operation">
-          <ion-select-option *ngFor="let item of operationTypes" [value]="item">{{item}}</ion-select-option>
+          <ion-select-option
+            *ngFor="let item of operationTypes"
+            [value]="item"
+            >{{ item }}</ion-select-option
+          >
         </ion-select>
       </ion-col>
     </ion-row>
@@ -132,7 +147,7 @@
           expand="full"
           fill="solid"
         >
-        {{'MY_ORDER.CLOSE' | translate}}
+          {{ "MY_ORDER.CLOSE" | translate }}
         </ion-button>
       </ion-col>
       <ion-col size="3" class="create" text-end>

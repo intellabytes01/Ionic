@@ -5,14 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PaylaterTabPage } from './paylater-tab.page';
-import { SharedModule } from '@app-shared/shared.module';
+import { FilterSalesModalPage } from './filter-sales-modal.page';
+import { SharedModule } from '@app/shared';
 import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
-    path: '',
-    component: PaylaterTabPage
+    path: 'filter-sales',
+    component: FilterSalesModalPage
   }
 ];
 
@@ -26,6 +26,6 @@ const routes: Routes = [
     TranslateModule,
     ReactiveFormsModule
   ],
-  declarations: [PaylaterTabPage]
+  declarations: [FilterSalesModalPage]
 })
-export class PaylaterTabPageModule {}
+export class FilterSalesModalPageModule {}

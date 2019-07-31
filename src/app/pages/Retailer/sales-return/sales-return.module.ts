@@ -5,14 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PaylaterTabPage } from './paylater-tab.page';
-import { SharedModule } from '@app-shared/shared.module';
+import { SalesReturnPage } from './sales-return.page';
+import { SharedModule } from '@app/shared';
 import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
     path: '',
-    component: PaylaterTabPage
+    component: SalesReturnPage
   }
 ];
 
@@ -23,9 +23,9 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     SharedModule,
-    TranslateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule
   ],
-  declarations: [PaylaterTabPage]
+  declarations: [SalesReturnPage]
 })
-export class PaylaterTabPageModule {}
+export class SalesReturnPageModule {}

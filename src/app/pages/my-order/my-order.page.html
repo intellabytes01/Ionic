@@ -38,13 +38,5 @@
     </ion-row>
   </ion-list>
 
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more orders..."
-    >
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-
   <pr-new-order-button></pr-new-order-button>
 </ion-content>

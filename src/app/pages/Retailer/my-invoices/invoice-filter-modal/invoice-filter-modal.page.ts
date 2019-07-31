@@ -9,6 +9,9 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { format, isValid } from 'date-fns';
 import { AlertService } from '@app/shared/services/alert.service.js';
 import { TranslateService } from '@ngx-translate/core';
+import { getRetailerStoreParties, AuthState } from '@app/core/authentication/auth.states';
+import { untilDestroyed } from '@app/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'pr-invoice-filter-modal',
@@ -28,16 +31,23 @@ export class InvoiceFilterModalPage implements OnInit {
     public modalController: ModalController,
     public navParams: NavParams,
     public alert: AlertService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private store: Store<AuthState>
   ) {}
 
   ngOnInit() {
+    this.store.select(getRetailerStoreParties, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.storeList = state;
+      },
+      e => { }
+    );
     this.invoiceFilter = this.navParams.get('value');
     this.invoiceFilterForm = this.formBuilder.group({
       store: [
         {
-          id: this.invoiceFilter.storeId,
-          name: 'Pharmex Lifecare'
+          StoreId: this.invoiceFilter.storeId,
+          StoreName: ''
         },
         Validators.compose([])
       ],
@@ -54,7 +64,7 @@ export class InvoiceFilterModalPage implements OnInit {
   }
 
   updateStore(val) {
-    this.invoiceFilterForm.value.storeId = val.id;
+    this.invoiceFilterForm.value.StoreId = val.StoreId;
   }
 
   invoiceFilterSubmit() {

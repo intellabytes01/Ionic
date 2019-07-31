@@ -3,7 +3,7 @@
     <ion-row>
       <ion-col size="10">
         <ion-title class="header-title">{{
-          "INVOICE.FILTER" | translate
+          "MY_ORDER.FILTER" | translate
         }}</ion-title>
       </ion-col>
       <ion-col size="2" text-end>
@@ -18,7 +18,7 @@
 </ion-header>
 
 <ion-content padding>
-  <form [formGroup]="invoiceFilterForm">
+  <form [formGroup]="salesFilterForm">
     <ion-row>
       <ion-col>
         <pr-select
@@ -34,11 +34,24 @@
     </ion-row>
 
     <ion-row>
+        <ion-col>
+          <ion-label position="floating">{{
+            "SALESRETURN.SELECTRETURN" | translate
+          }}</ion-label>
+          <ion-select formControlName="returnType">
+            <ion-select-option *ngFor="let item of returnTypeList" [value]="item">{{
+              item
+            }}</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+
+    <ion-row>
       <ion-col>
         <ion-input
-          formControlName="invoiceNo"
+          formControlName="salesReturnNo"
           type="text"
-          placeholder="Invoice No"
+          [placeholder]="'SALESRETURN.SRN' | translate"
         ></ion-input>
       </ion-col>
     </ion-row>
@@ -51,7 +64,7 @@
       </ion-col>
       <ion-col size="4" text-start>
         <ion-datetime
-          [placeholder]="invoiceFilterForm.value.fromDate"
+          [placeholder]="salesFilterForm.value.fromDate"
           pickerFormat="DD/MM/YY"
           display-format="DD/MM/YY"
           formControlName="fromDate"
@@ -64,7 +77,7 @@
       </ion-col>
       <ion-col size="4" text-start>
         <ion-datetime
-          [placeholder]="invoiceFilterForm.value.toDate"
+          [placeholder]="salesFilterForm.value.toDate"
           pickerFormat="DD/MM/YY"
           display-format="DD/MM/YY"
           formControlName="toDate"
@@ -79,9 +92,9 @@
             <div
               class="error-message"
               *ngIf="
-                invoiceFilterForm.get('fromDate').hasError(validation.type) &&
-                (invoiceFilterForm.get('fromDate').dirty ||
-                  invoiceFilterForm.get('fromDate').touched)
+                salesFilterForm.get('fromDate').hasError(validation.type) &&
+                (salesFilterForm.get('fromDate').dirty ||
+                  salesFilterForm.get('fromDate').touched)
               "
             >
               {{ validation.message }}
@@ -96,9 +109,9 @@
             <div
               class="error-message"
               *ngIf="
-                invoiceFilterForm.get('toDate').hasError(validation.type) &&
-                (invoiceFilterForm.get('toDate').dirty ||
-                  invoiceFilterForm.get('toDate').touched)
+                salesFilterForm.get('toDate').hasError(validation.type) &&
+                (salesFilterForm.get('toDate').dirty ||
+                  salesFilterForm.get('toDate').touched)
               "
             >
               {{ validation.message }}
@@ -106,7 +119,7 @@
           </ng-container>
         </div>
       </ion-col>
-    </ion-row>
+    </ion-row>    
 
     <br />
 
@@ -123,7 +136,7 @@
         </ion-button>
       </ion-col>
       <ion-col size="3" class="create" text-end>
-        <app-submit-button (click)="invoiceFilterSubmit()"></app-submit-button>
+        <app-submit-button (click)="salesFilterSubmit()"></app-submit-button>
       </ion-col>
     </ion-row>
   </form>

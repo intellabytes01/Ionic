@@ -51,14 +51,14 @@
         },
         {
           "name": "DASHBOARD.NEWSALESRETURN",
-          "link": "/draft-order",
+          "link": "/new-sales-return",
           "icon": "assets/icon/my-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
         },
         {
           "name": "DASHBOARD.VIEWSALESRETURN",
-          "link": "/draft-order",
+          "link": "/view-sales-return",
           "icon": "assets/icon/my-orders.png",
           "disable": false,
           "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]

@@ -1,16 +1,19 @@
 <ion-content>
-  <ion-row>
-    <ion-col>
-      <pr-select
-        [placeHolder]="'FEEDBACKSTORE_PLACEHOLDER' | translate"
-        [ctrName]="'toStoreId'"
-        [items]="toStoreIds"
-        [id]="'Fid'"
-        [name]="'Types'"
-        [canSearch]="true"
-      ></pr-select>
-    </ion-col>
-  </ion-row>
+    <form [formGroup]="makepaymentForm">
+        <ion-row>
+          <ion-col>
+            <pr-select
+              [placeHolder]="'FEEDBACKSTORE_PLACEHOLDER' | translate"
+              [ctrName]="'store'"
+              [items]="storeList"
+              [id]="'StoreId'"
+              [name]="'StoreName'"
+              [canSearch]="true"
+              (valueChange)="updateStore($event)"
+            ></pr-select>
+          </ion-col>
+        </ion-row>
+      </form>
   <br />
   <ion-row>
     <ion-col size="4" text-start>

@@ -8,8 +8,11 @@ import {
 import { ModalController, NavParams } from '@ionic/angular';
 import { format, isValid } from 'date-fns';
 import * as fromModel from '../my-order-data.json';
-import { AlertService } from '@app/shared/services/alert.service.js';
+import { AlertService } from '@app/shared/services/alert.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthState, getRetailerStoreParties } from '@app/core/authentication/auth.states';
+import { Store } from '@ngrx/store';
+import { untilDestroyed } from '@app/core/index';
 
 @Component({
   selector: 'app-order-filter-modal',
@@ -20,7 +23,7 @@ export class OrderFilterModalPage implements OnInit {
   public orderFilterForm: FormGroup;
 // tslint:disable-next-line: variable-name
   validation_messages = this.translateService.instant('MY_ORDER.VALIDATION_MESSAGES');
-  storeList: any[] = fromModel.storeList;
+  storeList: any[] = [];
   statusList: any[] = fromModel.status;
   operationTypes: any[] = fromModel.operation;
   orderFilter: any = {};
@@ -29,16 +32,23 @@ export class OrderFilterModalPage implements OnInit {
     public modalController: ModalController,
     public navParams: NavParams,
     public alert: AlertService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private store: Store<AuthState>
   ) {}
 
   ngOnInit() {
+    this.store.select(getRetailerStoreParties, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.storeList = state;
+      },
+      e => { }
+    );
     this.orderFilter = this.navParams.get('value');
     this.orderFilterForm = this.formBuilder.group({
       store: [
         {
-          id: this.orderFilter.storeId,
-          name: 'Pharmex Lifecare'
+          StoreId: this.orderFilter.storeId,
+          StoreName: 'Pharmex Lifecare'
         },
         Validators.compose([this.validateType])
       ],
@@ -66,7 +76,7 @@ export class OrderFilterModalPage implements OnInit {
   }
 
   updateStore(val) {
-    this.orderFilterForm.value.storeId = val.id;
+    this.orderFilterForm.value.store.StoreId = val.StoreId;
   }
 
   orderFilterSubmit() {

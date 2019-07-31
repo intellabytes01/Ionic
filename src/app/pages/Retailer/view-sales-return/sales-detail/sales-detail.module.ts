@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PaylaterTabPage } from './paylater-tab.page';
-import { SharedModule } from '@app-shared/shared.module';
+import { SalesDetailPage } from './sales-detail.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '@app/shared';
 
 const routes: Routes = [
   {
     path: '',
-    component: PaylaterTabPage
+    component: SalesDetailPage
   }
 ];
 
@@ -22,10 +22,9 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    SharedModule,
     TranslateModule,
-    ReactiveFormsModule
+    SharedModule
   ],
-  declarations: [PaylaterTabPage]
+  declarations: [SalesDetailPage]
 })
-export class PaylaterTabPageModule {}
+export class SalesDetailPageModule {}
