@@ -9,9 +9,12 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { format, isValid } from 'date-fns';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthState, getRetailerStoreParties } from '@app/core/authentication/auth.states';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { untilDestroyed } from '@app/core/index';
 import { AlertService } from '@app/shared/services/alert.service';
+import { SalesReturnTypes } from '../store/view-sales-return.actions';
+import { SalesReturnState } from '../store/view-sales-return.state';
+import { salesReturnTypesData } from '../store/view-sales-return.reducers';
 
 @Component({
   selector: 'pr-filter-sales-modal',
@@ -23,7 +26,7 @@ export class FilterSalesModalPage implements OnInit {
   // tslint:disable-next-line: variable-name
     validation_messages = this.translateService.instant('MY_ORDER.VALIDATION_MESSAGES');
     storeList: any[] = [];
-    returnTypeList: any[] = [];
+    salesReturnTypes$: any;
     salesFilter: any = {};
     constructor(
       public formBuilder: FormBuilder,
@@ -31,10 +34,13 @@ export class FilterSalesModalPage implements OnInit {
       public navParams: NavParams,
       private translateService: TranslateService,
       private store: Store<AuthState>,
+      private salesReturnStore: Store<SalesReturnState>,
       private alert: AlertService
     ) {}
   
     ngOnInit() {
+      this.getSalesReturnTypes();
+      this.salesReturnTypes$ = this.salesReturnStore.pipe(select(salesReturnTypesData));
       this.store.select(getRetailerStoreParties, untilDestroyed(this)).subscribe(
         (state: any) => {
           this.storeList = state;
@@ -101,6 +107,10 @@ export class FilterSalesModalPage implements OnInit {
       } else {
         this.modalController.dismiss(this.salesFilter);
       }
+    }
+
+    getSalesReturnTypes() {
+      this.salesReturnStore.dispatch(new SalesReturnTypes());
     }
   }
   

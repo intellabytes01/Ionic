@@ -39,8 +39,8 @@
             "SALESRETURN.SELECTRETURN" | translate
           }}</ion-label>
           <ion-select formControlName="returnType">
-            <ion-select-option *ngFor="let item of returnTypeList" [value]="item">{{
-              item
+            <ion-select-option *ngFor="let item of salesReturnTypes$ | async" [value]="item.CreditNoteTypeId">{{
+              item.Type
             }}</ion-select-option>
           </ion-select>
         </ion-col>

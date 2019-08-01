@@ -10,6 +10,11 @@ import { FilterSalesModalPageModule } from './filter-sales-modal/filter-sales-mo
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '@app/shared';
 import { AuthenticationGuard } from '@app/core';
+import { SalesReturnService } from './view-sales-return.service';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { SalesReturnEffects } from './store/view-sales-return.effects';
+import * as fromSalesReturnReducer from './store/view-sales-return.reducers';
 
 const routes: Routes = [
   {
@@ -33,8 +38,11 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     FilterSalesModalPageModule,
     TranslateModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature('salesReturn', fromSalesReturnReducer.salesReturnReducer),
+    EffectsModule.forRoot([SalesReturnEffects]),
   ],
-  declarations: [ViewSalesReturnPage]
+  declarations: [ViewSalesReturnPage],
+  providers:[SalesReturnService]
 })
 export class ViewSalesReturnPageModule {}
