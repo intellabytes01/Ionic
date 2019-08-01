@@ -61,7 +61,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       environment.supportedLanguages
     );
 
-    const perm = ['ADMIN'];
+    const perm = ['VIEW'];
     this.permissionsService.loadPermissions(perm);
 
     // Change page title on navigation or language change, based on route data

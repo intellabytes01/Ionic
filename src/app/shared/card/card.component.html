@@ -1,6 +1,6 @@
 <ion-row>
   <ng-container *ngFor="let page of pages; trackBy: trackByFn">
-    <ion-col text-center size="6" *ngxPermissionsOnly="page.permissions[0]['perm']">
+    <ion-col text-center size="6" *ngIf="page.permissions[0]['perm'].includes('VIEW')">
       <ion-card
         [routerLink]="!page.disable ? [page.link] : []"
         [ngClass]="{ disable: page.disable }"

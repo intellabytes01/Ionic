@@ -1,88 +1,163 @@
-{ 
-    "data" : [
-        {
-          "name": "DASHBOARD.NEWORDER",
-          "link": "/new-order",
-          "icon": "assets/icon/new-orders.png",
-          "disable": false,
-          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
-        },
-        {
-          "name": "DASHBOARD.PAYMENTS",
-          "link": "/payments",
-          "icon": "assets/icon/my-orders.png",
-          "disable": false,
-          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
-        },
-        {
-          "name": "DASHBOARD.MYORDER",
-          "link": "/myorder",
-          "icon": "assets/icon/my-orders.png",
-          "disable": false,
-          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
-        },
-        {
-          "name": "DASHBOARD.INVOICE",
-          "link": "/my-invoices",
-          "icon": "assets/icon/my-orders.png",
-          "disable": false,
-          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
-        },
-        {
-          "name": "DASHBOARD.TRACKER",
-          "link": "/delivery-tracker",
-          "icon": "assets/icon/my-orders.png",
-          "disable": false,
-          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
-        },
-        {
-          "name": "DASHBOARD.MALL",
-          "link": "/mall",
-          "icon": "assets/icon/my-orders.png",
-          "disable": false,
-          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
-        },
-        {
-          "name": "DASHBOARD.DRAFTORDER",
-          "link": "/draft-order",
-          "icon": "assets/icon/draft-order.png",
-          "disable": false,
-          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
-        },
-        {
-          "name": "DASHBOARD.NEWSALESRETURN",
-          "link": "/new-sales-return",
-          "icon": "assets/icon/my-orders.png",
-          "disable": false,
-          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
-        },
-        {
-          "name": "DASHBOARD.VIEWSALESRETURN",
-          "link": "/view-sales-return",
-          "icon": "assets/icon/my-orders.png",
-          "disable": false,
-          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
-        },
-        {
-          "name": "DASHBOARD.ADDDISTRIBUTOR",
-          "link": "/add-distributor",
-          "icon": "assets/icon/add-distributer.png",
-          "disable": false,
-          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
-        },
-        {
-          "name": "DASHBOARD.PRODUCTSEARCH",
-          "link": "/product-search",
-          "icon": "assets/icon/product-search.png",
-          "disable": false,
-          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
-        },
-        {
-          "name": "DASHBOARD.SCHEMES",
-          "link": "/schemes",
-          "icon": "assets/icon/schemes.png",
-          "disable": false,
-          "permissions": [{ "perm" : ["ADMIN", "GUEST"]}]
-        }
-      ]
+{
+  "data": [
+    {
+      "name": "DASHBOARD.NEWORDER",
+      "link": "/new-order",
+      "icon": "assets/icon/new-orders.png",
+      "disable": false,
+      "permissions": [{ "perm": [] }]
+    },
+    {
+      "name": "DASHBOARD.PAYMENTS",
+      "link": "/payments",
+      "icon": "assets/icon/my-orders.png",
+      "disable": false,
+      "permissions": [{ "perm": [] }]
+    },
+    {
+      "name": "DASHBOARD.MYORDER",
+      "link": "/myorder",
+      "icon": "assets/icon/my-orders.png",
+      "disable": false,
+      "permissions": [{ "perm": [] }]
+    },
+    {
+      "name": "DASHBOARD.INVOICE",
+      "link": "/my-invoices",
+      "icon": "assets/icon/my-orders.png",
+      "disable": false,
+      "permissions": [{ "perm": [] }]
+    },
+    {
+      "name": "DASHBOARD.TRACKER",
+      "link": "/delivery-tracker",
+      "icon": "assets/icon/my-orders.png",
+      "disable": false,
+      "permissions": [{ "perm": [] }]
+    },
+    {
+      "name": "DASHBOARD.MALL",
+      "link": "/mall",
+      "icon": "assets/icon/my-orders.png",
+      "disable": false,
+      "permissions": [{ "perm": [] }]
+    },
+    {
+      "name": "DASHBOARD.DRAFTORDER",
+      "link": "/draft-order",
+      "icon": "assets/icon/draft-order.png",
+      "disable": false,
+      "permissions": [{ "perm": [] }]
+    },
+    {
+      "name": "DASHBOARD.NEWSALESRETURN",
+      "link": "/new-sales-return",
+      "icon": "assets/icon/my-orders.png",
+      "disable": false,
+      "permissions": [{ "perm": [] }]
+    },
+    {
+      "name": "DASHBOARD.VIEWSALESRETURN",
+      "link": "/view-sales-return",
+      "icon": "assets/icon/my-orders.png",
+      "disable": false,
+      "permissions": [{ "perm": [] }]
+    },
+    {
+      "name": "DASHBOARD.ADDDISTRIBUTOR",
+      "link": "/add-distributor",
+      "icon": "assets/icon/add-distributer.png",
+      "disable": false,
+      "permissions": [{ "perm": [] }]
+    },
+    {
+      "name": "DASHBOARD.PRODUCTSEARCH",
+      "link": "/product-search",
+      "icon": "assets/icon/product-search.png",
+      "disable": false,
+      "permissions": [{ "perm": [] }]
+    },
+    {
+      "name": "DASHBOARD.SCHEMES",
+      "link": "/schemes",
+      "icon": "assets/icon/schemes.png",
+      "disable": false,
+      "permissions": [{ "perm": [] }]
+    }
+  ],
+
+  "permissions": {
+    "DASHBOARD.NEWORDER": {
+      "View": 1,
+      "Edit": 0,
+      "Delete": 0,
+      "Add": 0
+    },
+    "DASHBOARD.PAYMENTS": {
+      "View": 1,
+      "Edit": 0,
+      "Delete": 0,
+      "Add": 0
+    },
+    "DASHBOARD.MYORDER": {
+      "View": 1,
+      "Edit": 0,
+      "Delete": 0,
+      "Add": 0
+    },
+    "DASHBOARD.INVOICE": {
+      "View": 1,
+      "Edit": 0,
+      "Delete": 0,
+      "Add": 0
+    },
+    "DASHBOARD.TRACKER": {
+      "View": 1,
+      "Edit": 0,
+      "Delete": 0,
+      "Add": 0
+    },
+    "DASHBOARD.MALL": {
+      "View": 1,
+      "Edit": 0,
+      "Delete": 0,
+      "Add": 0
+    },
+    "DASHBOARD.DRAFTORDER": {
+      "View": 1,
+      "Edit": 0,
+      "Delete": 0,
+      "Add": 0
+    },
+    "DASHBOARD.NEWSALESRETURN": {
+      "View": 1,
+      "Edit": 0,
+      "Delete": 0,
+      "Add": 0
+    },
+    "DASHBOARD.VIEWSALESRETURN": {
+      "View": 1,
+      "Edit": 0,
+      "Delete": 0,
+      "Add": 0
+    },
+    "DASHBOARD.ADDDISTRIBUTOR": {
+      "View": 1,
+      "Edit": 0,
+      "Delete": 0,
+      "Add": 0
+    },
+    "DASHBOARD.PRODUCTSEARCH": {
+      "View": 1,
+      "Edit": 0,
+      "Delete": 0,
+      "Add": 0
+    },
+    "DASHBOARD.SCHEMES": {
+      "View": 1,
+      "Edit": 0,
+      "Delete": 0,
+      "Add": 0
+    }
+  }
 }

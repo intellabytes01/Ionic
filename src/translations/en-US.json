@@ -400,8 +400,15 @@
     "FILTERORDER": "Filter Sales Return",
     "SR": "Sales Return",
     "SELECTRETURN": "Select Return Type",
-    "SRN": "Sales Return No",
+    "SRN": "Sales Return No.",
     "RETURN_TEXT": "* Sales Return settlement is not guaranteed by Pharmarack",
-    "CONFIRM_TEXT": "CONFIRM SALES RETURN >"
+    "SRD": "Sales Return Date",
+    "AP": "Awaiting Pickup",
+    "STATUS": "Status",
+    "RT": "Return Type",
+    "REMARKS": "Remarks",
+    "DO": "Delivery Option",
+    "PLACEHOLDER_STATUS": "Please Select Status",
+    "UPDATE": "Update"
   }
 }

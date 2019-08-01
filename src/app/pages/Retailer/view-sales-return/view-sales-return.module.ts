@@ -19,7 +19,7 @@ const routes: Routes = [
   {
     path: "sales-detail",
     loadChildren:
-      "./pages/Retailer/view-sales-return/sales-detail/sales-detail.module#SalesDetailPageModule",
+      "./sales-detail/sales-detail.module#SalesDetailPageModule",
       data: { title: "My Sales Return Details", preload: false, delay: false },
       canActivate: [AuthenticationGuard]
   }

@@ -13,6 +13,7 @@ import { Store, select } from '@ngrx/store';
 })
 export class SalesDetailPage implements OnInit {
   salesDetails: any = [];
+  statusList: any = [];
   constructor(
     public activatedRoute: ActivatedRoute,
     public iab: InAppBrowser

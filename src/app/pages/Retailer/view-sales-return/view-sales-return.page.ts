@@ -29,8 +29,6 @@ export class ViewSalesReturnPage implements OnInit {
   }
 
   ngOnInit() {
-    this.router.navigateByUrl('view-sales-return/sales-detail', {
-    });
   }
 
   getMysalesReturns() {
