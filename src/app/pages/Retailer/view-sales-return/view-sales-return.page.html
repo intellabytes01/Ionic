@@ -8,7 +8,7 @@
   
       <ion-col text-end size="4">
         <ion-label class="blue-color">{{'SALESRETURN.SR' | translate}}</ion-label><br />
-        <ion-label class="blue-color">{{total.count}}</ion-label>
+        <ion-label class="blue-color">{{mysalesReturnList.length}}</ion-label>
       </ion-col>
     </ion-row>
   
@@ -17,21 +17,21 @@
         <ion-col>
           <ion-row>
             <ion-col text-start size="8">
-              <ion-label><b>{{ sales.StoreName }}</b></ion-label>
+              <ion-label><b>{{ sales.storename }}</b></ion-label>
             </ion-col>
             <ion-col text-end size="4">
-              <ion-label class="blue-color">{{ sales.salesReturnNo }}</ion-label>
+              <ion-label class="blue-color">{{ sales.creditnoteno }}</ion-label>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col text-start size="6">
-              <ion-label>{{ sales.salesReturnDate | date: "dd MMM yyyy h:mm a" }}</ion-label>
+              <ion-label>{{ sales.createddate | date: "dd MMM yyyy h:mm a" }}</ion-label>
             </ion-col>
             <ion-col text-center size="3">
               <ion-label (click)="goToSalesReturnDetails(sales)" class="blue-color">{{'MY_ORDER.PLACED' | translate}} ></ion-label>
             </ion-col>
             <ion-col text-end size="3">
-              <ion-label>₹{{ sales.salesReturnAmount }}</ion-label>
+              <ion-label>₹{{ sales.totalAmount }}</ion-label>
             </ion-col>
           </ion-row>
         </ion-col>

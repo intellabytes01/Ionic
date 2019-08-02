@@ -12,9 +12,9 @@ import { AuthState, getRetailerStoreParties } from '@app/core/authentication/aut
 import { Store, select } from '@ngrx/store';
 import { untilDestroyed } from '@app/core/index';
 import { AlertService } from '@app/shared/services/alert.service';
-import { SalesReturnTypes } from '../store/view-sales-return.actions';
+import { SalesReturnTypes, SalesReturnStores } from '../store/view-sales-return.actions';
 import { SalesReturnState } from '../store/view-sales-return.state';
-import { salesReturnTypesData } from '../store/view-sales-return.reducers';
+import { salesReturnTypesData, salesReturnStoresData } from '../store/view-sales-return.reducers';
 
 @Component({
   selector: 'pr-filter-sales-modal',
@@ -33,15 +33,15 @@ export class FilterSalesModalPage implements OnInit {
       public modalController: ModalController,
       public navParams: NavParams,
       private translateService: TranslateService,
-      private store: Store<AuthState>,
       private salesReturnStore: Store<SalesReturnState>,
       private alert: AlertService
     ) {}
   
     ngOnInit() {
       this.getSalesReturnTypes();
+      this.getSalesReturnStores();
       this.salesReturnTypes$ = this.salesReturnStore.pipe(select(salesReturnTypesData));
-      this.store.select(getRetailerStoreParties, untilDestroyed(this)).subscribe(
+      this.salesReturnStore.select(salesReturnStoresData, untilDestroyed(this)).subscribe(
         (state: any) => {
           this.storeList = state;
         },
@@ -111,6 +111,10 @@ export class FilterSalesModalPage implements OnInit {
 
     getSalesReturnTypes() {
       this.salesReturnStore.dispatch(new SalesReturnTypes());
+    }
+
+    getSalesReturnStores() {
+      this.salesReturnStore.dispatch(new SalesReturnStores());
     }
   }
   

@@ -5,6 +5,15 @@ import {
   SalesReturnTypesFailure,
   SalesReturnAction,
   SalesReturnTypes,
+  SalesReturnStores,
+  SalesReturnStoresSuccess,
+  SalesReturnStoresFailure,
+  SalesReturnList,
+  SalesReturnListSuccess,
+  SalesReturnListFailure,
+  SalesReturnDetails,
+  SalesReturnDetailsSuccess,
+  SalesReturnDetailsFailure
 } from './view-sales-return.actions';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
@@ -46,6 +55,84 @@ export class SalesReturnEffects {
   @Effect({ dispatch: false })
   SalesReturnTypesFailure: Observable<any> = this.actions.pipe(
     ofType(SalesReturnAction.SALESRETURNTYPES_FAILURE)
+  );
+
+  // SalesReturn Stores
+
+  @Effect()
+  SalesReturnStores: Observable<Action> = this.actions.pipe(
+    ofType(SalesReturnAction.SALESRETURNSTORES),
+    map((action: SalesReturnStores) => {}),
+    switchMap(() => {
+      return this.salesReturnService.getSalesReturnStores().pipe(
+        map(data => {
+          return new SalesReturnStoresSuccess({ salesReturnStores: data['data'] });
+        }),
+        catchError(error => of(new SalesReturnStoresFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  SalesReturnStoresSuccess: Observable<any> = this.actions.pipe(
+    ofType(SalesReturnAction.SALESRETURNSTORES_SUCCESS)
+  );
+
+  @Effect({ dispatch: false })
+  SalesReturnStoresFailure: Observable<any> = this.actions.pipe(
+    ofType(SalesReturnAction.SALESRETURNSTORES_FAILURE)
+  );
+
+  // SalesReturn List
+
+  @Effect()
+  SalesReturnList: Observable<Action> = this.actions.pipe(
+    ofType(SalesReturnAction.SALESRETURNLIST),
+    map((action: SalesReturnList) => action.payload),
+    switchMap((payload) => {
+      return this.salesReturnService.getSalesReturnList(payload).pipe(
+        map(data => {
+          return new SalesReturnListSuccess({ salesReturnList: data['data'] });
+        }),
+        catchError(error => of(new SalesReturnListFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  SalesReturnListSuccess: Observable<any> = this.actions.pipe(
+    ofType(SalesReturnAction.SALESRETURNLIST_SUCCESS)
+  );
+
+  @Effect({ dispatch: false })
+  SalesReturnListFailure: Observable<any> = this.actions.pipe(
+    ofType(SalesReturnAction.SALESRETURNLIST_FAILURE)
+  );
+
+  // SalesReturn Details
+
+  @Effect()
+  SalesReturnDetails: Observable<Action> = this.actions.pipe(
+    ofType(SalesReturnAction.SALESRETURNDETAILS),
+    map((action: SalesReturnDetails) => action.payload),
+    switchMap((payload) => {
+      return this.salesReturnService.getSalesReturnDetails(payload).pipe(
+        map(data => {
+          return new SalesReturnDetailsSuccess({ salesReturnDetails: data['data'] });
+        }),
+        catchError(error => of(new SalesReturnDetailsFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  SalesReturnDetailsSuccess: Observable<any> = this.actions.pipe(
+    ofType(SalesReturnAction.SALESRETURNDETAILS_SUCCESS)
+  );
+
+  @Effect({ dispatch: false })
+  SalesReturnDetailsFailure: Observable<any> = this.actions.pipe(
+    ofType(SalesReturnAction.SALESRETURNDETAILS_FAILURE)
   );
 
 }

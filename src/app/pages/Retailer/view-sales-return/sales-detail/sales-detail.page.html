@@ -1,9 +1,9 @@
 <ion-content padding>
-  <div *ngFor="let sales of salesDetails">
+  <div *ngIf="salesDetails">
     <ion-row>
       <ion-col text-start>
         <ion-label class="storename"
-          ><b>{{ sales.ProductName }}</b></ion-label
+          ><b>{{ salesDetails.DisplayCreditNote.StoreName }}</b></ion-label
         >
       </ion-col>
     </ion-row>
@@ -14,7 +14,7 @@
         </ion-label>
       </ion-col>
       <ion-col text-end size="6">
-        <ion-label>{{ sales.SalesNo }}</ion-label>
+        <ion-label>{{ salesDetails.DisplayCreditNote.CreditNoteNo }}</ion-label>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -25,7 +25,7 @@
       </ion-col>
       <ion-col text-end size="6">
         <ion-label>{{
-          sales.CreatedDate | date: "dd MMM yyyy h:mm a"
+          salesDetails.DisplayCreditNote.CreatedDate | date: "dd MMM yyyy h:mm a"
         }}</ion-label>
       </ion-col>
     </ion-row>
@@ -37,37 +37,37 @@
       </ion-col>
       <ion-col text-end size="6">
         <ion-label>{{
-          sales.CreatedDate | date: "dd MMM yyyy h:mm a"
+          salesDetails.DisplayCreditNote.CreditNoteStatusUpdateDate | date: "dd MMM yyyy h:mm a"
         }}</ion-label>
       </ion-col>
     </ion-row>
-    <ion-card class="border-mustard">
+    <ion-card>
       <ion-card-content>
         <ion-row>
           <ion-col text-start>
             <ion-label>
-              <b>{{ "SALESRETURN.STATUS" | translate }}</b>
+              <b>{{ "SALESRETURN.STATUS" | translate }}:</b> &nbsp; {{ salesDetails.DisplayCreditNote.CreditNoteStatus }}
             </ion-label>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col text-start>
             <ion-label>
-              <b>{{ "SALESRETURN.RT" | translate }}</b>
+              <b>{{ "SALESRETURN.RT" | translate }}:</b> &nbsp; {{ salesDetails.DisplayCreditNote.CreditNoteStatus }}
             </ion-label>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col text-start>
             <ion-label
-              ><b>{{ "SALESRETURN.REMARKS" | translate }}</b>
+              ><b>{{ "SALESRETURN.REMARKS" | translate }}:</b> &nbsp; {{ salesDetails.DisplayCreditNote.CreditNoteStatus }}
             </ion-label>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col text-start>
             <ion-label
-              ><b>{{ "SALESRETURN.DO" | translate }}</b>
+              ><b>{{ "SALESRETURN.DO" | translate }}:</b> &nbsp; {{ salesDetails.DisplayCreditNote.CreditNoteStatus }}
             </ion-label>
           </ion-col>
         </ion-row>
@@ -102,6 +102,27 @@
         </ion-col>
         <ion-col size="2" text-center>
           <ion-label>{{ "SALESRETURN.MRP" | translate }}</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col text-start>
+          <ion-label class="mustard-color">{{ salesDetails.DisplayCreditNoteDetails.ProductName }}</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="2" text-center>
+          <ion-label>{{ salesDetails.DisplayCreditNoteDetails.RetailerQuantity }}</ion-label>
+        </ion-col>
+        <ion-col size="2" text-center>
+          <ion-label>{{ salesDetails.DisplayCreditNoteDetails.RetailerBatchNo }}</ion-label>
+        </ion-col>
+        <ion-col size="2" text-center>
+          <ion-label>{{ salesDetails.DisplayCreditNoteDetails.RetailerExpiryDate }}</ion-label>
+        </ion-col>
+        <ion-col size="2" text-center>
+          <ion-label>{{ salesDetails.DisplayCreditNoteDetails.RetailerMRP }}</ion-label>
         </ion-col>
       </ion-row>
     </div>

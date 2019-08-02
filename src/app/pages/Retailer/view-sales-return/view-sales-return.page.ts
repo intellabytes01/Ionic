@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import * as fromModel from './my-sales-data.json';
 import { format } from 'date-fns';
 import { FilterSalesModalPage } from './filter-sales-modal/filter-sales-modal.page';
+import { SalesReturnState } from './store/view-sales-return.state.js';
+import { salesReturnListData } from './store/view-sales-return.reducers.js';
+import { SalesReturnList } from './store/view-sales-return.actions.js';
 
 @Component({
   selector: 'pr-view-sales-return',
@@ -23,15 +26,30 @@ export class ViewSalesReturnPage implements OnInit {
   event: any;
   constructor(
     public modalController: ModalController,
-    public router: Router
+    public router: Router,
+    private salesReturnStore: Store<SalesReturnState>
   ) {
-    this.getMysalesReturns();
+    this.getSalesReturnList();
   }
 
   ngOnInit() {
+    this.salesReturnStore.select(salesReturnListData, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.mysalesReturnList = state;
+      },
+      e => { }
+    );
   }
 
-  getMysalesReturns() {
+  getSalesReturnList() {
+    let payload = {
+      fromDate: '',
+      toDate: '',
+      query: '',
+      store: '',
+      type: '',
+    }
+    this.salesReturnStore.dispatch(new SalesReturnList(payload));
   }
 
   async presentModalSalesReturnFilter() {
@@ -43,7 +61,7 @@ export class ViewSalesReturnPage implements OnInit {
       if (data.data) {
         this.salesFilter = data.data;
         this.mysalesReturnList = [];
-        this.getMysalesReturns();
+        this.getSalesReturnList();
       }
     });
     return await modal.present();
@@ -51,7 +69,7 @@ export class ViewSalesReturnPage implements OnInit {
 
   goToSalesReturnDetails(sales) {
     this.router.navigateByUrl('view-sales-return/sales-detail', {
-      state: { data: JSON.stringify(sales) }
+      state: { data: sales.RetailerCreditNoteId }
     });
   }
 
