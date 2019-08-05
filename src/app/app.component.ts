@@ -17,6 +17,7 @@ import { Store } from '@ngrx/store';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { Platform } from '@ionic/angular';
 import { TopLoaderService } from './shared/top-loader/top-loader.service';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 const log = new Logger('App');
 
@@ -38,7 +39,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private oneSignal: OneSignal,
     private platform: Platform,
     private topLoaderService: TopLoaderService,
-    public router: Router
+    public router: Router,
+    private splashScreen: SplashScreen
   ) {
     this.initializeApp();
   }
@@ -93,10 +95,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initializeApp() {
-    // this.platform.ready().then(() => {
-    //   this.statusBar.styleDefault();
-    //   this.splashScreen.hide();
-    // });
+    this.platform.ready().then(() => {
+      //this.statusBar.styleDefault();
+      this.splashScreen.hide();
+    });
 
     this.store.dispatch(new SaveToken());
   }

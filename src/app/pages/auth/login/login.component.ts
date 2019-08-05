@@ -15,6 +15,7 @@ import { LogIn } from '@app/core/authentication/actions/auth.actions';
 import { ModalController } from '@ionic/angular';
 import { ModalPopupPage } from '@app/shared/modal-popup/modal-popup.page';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertService } from '@app/shared/services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -27,21 +28,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   passwordIcon = 'eye-off';
   loginForm: FormGroup;
   dataReturned: any;
+  backButton: any;
 
   // tslint:disable-next-line: variable-name
   validation_messages = this.translateService.instant(
     'LOGIN.VALIDATION_MESSAGES'
-  );
-
-  ionViewWillEnter() {
-    this.menuCtrl.enable(false, 'menuLeft');
-    this.menuCtrl.enable(false, 'menuRight');
-  }
-
-  hideShowPassword() {
-    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
-    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
-  }
+  );  
 
   constructor(
     private router: Router,
@@ -51,9 +43,31 @@ export class LoginComponent implements OnInit, OnDestroy {
     private store: Store<AuthState>,
     public menuCtrl: MenuController,
     public modalController: ModalController,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private alert: AlertService
   ) {
     this.createForm();
+  }
+
+  ionViewWillEnter() {
+    this.menuCtrl.enable(false, 'menuLeft');
+    this.menuCtrl.enable(false, 'menuRight');
+    this.backButton = this.platform.backButton.subscribeWithPriority(
+      9999,
+      () => {
+        this.presentAlertConfirm();
+      }
+    );
+  }
+
+  ionViewDidLeave() {
+    if (this.backButton) {
+      this.backButton.unsubscribe();
+    }
+  }
+
+  presentAlertConfirm() {
+    this.alert.exitModal(this.translateService.instant("EXIT_APP"));
   }
 
   ngOnInit() {
@@ -104,23 +118,4 @@ export class LoginComponent implements OnInit, OnDestroy {
   trackByFn(index, item) {
     return index;
   }
-
-  // async openModal() {
-  //   const modal = await this.modalController.create({
-  //     component: ModalPopupPage,
-  //     componentProps: {
-  //       "paramID": 123,
-  //       "paramTitle": "Test Title"
-  //     }
-  //   });
-
-  //   modal.onDidDismiss().then((dataReturned) => {
-  //     if (dataReturned !== null) {
-  //       this.dataReturned = dataReturned.data;
-  //       //alert('Modal Sent Data :'+ dataReturned);
-  //     }
-  //   });
-
-  //   return await modal.present();
-  // }
 }

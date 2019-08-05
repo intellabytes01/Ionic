@@ -409,6 +409,7 @@
     "REMARKS": "Remarks",
     "DO": "Delivery Option",
     "PLACEHOLDER_STATUS": "Please Select Status",
-    "UPDATE": "Update"
+    "UPDATE": "Update",
+    "CONFIRM_TEXT": "CONFIRM SALES RETURN >"
   }
 }

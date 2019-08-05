@@ -43,11 +43,6 @@ export class ChangePasswordPage implements OnInit {
     });
   }
 
-  hideShowPassword() {
-    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
-    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
-  }
-
   async changePasswordClick() {
     // const credentials = {
     //   oldPassword: this.changePasswordForm.get('oldPassword'),

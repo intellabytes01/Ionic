@@ -80,10 +80,6 @@ export class OrderFilterModalPage implements OnInit {
   }
 
   orderFilterSubmit() {
-    if (this.orderFilterForm.invalid) {
-      return;
-    }
-
     this.orderFilter.fromDate = format(
       this.orderFilterForm.value.fromDate,
       'DD/MM/YY'

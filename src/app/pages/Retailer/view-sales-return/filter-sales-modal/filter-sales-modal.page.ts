@@ -82,11 +82,7 @@ export class FilterSalesModalPage implements OnInit {
       this.salesFilterForm.value.store.StoreId = val.StoreId;
     }
   
-    salesFilterSubmit() {
-      if (this.salesFilterForm.invalid) {
-        return;
-      }
-  
+    salesFilterSubmit() {  
       this.salesFilter.fromDate = format(
         this.salesFilterForm.value.fromDate,
         'DD/MM/YY'
