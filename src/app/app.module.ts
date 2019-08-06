@@ -23,6 +23,7 @@ import { NgxPermissionsModule, NgxPermissionsService } from 'ngx-permissions';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { NoComponentPageModule } from './pages/no-component/no-component.module';
+import { Device } from '@ionic-native/device/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -50,7 +51,7 @@ driverOrder: ['sqlite', 'indexeddb', 'websql', 'localstorage']
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AppPreloadingStrategy,
-    Camera, NgxPermissionsService, OneSignal, InAppBrowser
+    Camera, NgxPermissionsService, OneSignal, InAppBrowser, Device
   ],
   bootstrap: [AppComponent]
 })

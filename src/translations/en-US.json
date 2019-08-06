@@ -173,7 +173,9 @@
       "matchPasswordError": [{
         "message": "Passwords do not match"
       }]
-    }
+    },
+    "SUCCESS_MSG": "Password updated successfully",
+    "ERROR_MSG": "Something went wrong, please try again later"
   },
 
   "FEEDBACKTYPE_PLACEHOLDER": "Select feedback type",

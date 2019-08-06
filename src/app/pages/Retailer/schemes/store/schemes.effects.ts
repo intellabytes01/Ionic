@@ -15,16 +15,16 @@ import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { Action } from '@ngrx/store';
 import { SchemeService } from '../schemes.service';
-import { AlertService } from '@app/shared/services/alert.service';
 import { Router } from '@angular/router';
 import { SchemeAction } from './schemes.actions';
+import { TopLoaderService } from '@app/shared/top-loader/top-loader.service';
 
 @Injectable()
 export class SchemeEffects {
   constructor(
     private actions: Actions,
     private schemeService: SchemeService,
-    private alert: AlertService,
+    private topLoaderService: TopLoaderService,
     private router: Router
   ) {}
 
@@ -37,7 +37,7 @@ export class SchemeEffects {
     switchMap((payload) => {
       return this.schemeService.getSchemes(payload).pipe(
         map(data => {
-          return new SchemesSuccess({ companySearch: data['data'] });
+          return new SchemesSuccess({ schemes: data['data'] });
         }),
         catchError(error => of(new SchemesFailure({ error })))
       );
@@ -63,7 +63,7 @@ export class SchemeEffects {
     switchMap((payload) => {
       return this.schemeService.getSchemeCompanies(payload).pipe(
         map(data => {
-          return new SchemeCompaniesSuccess({ companyStores: data['data'] });
+          return new SchemeCompaniesSuccess({ schemeCompanies: data['data'] });
         }),
         catchError(error => of(new SchemeCompaniesFailure({ error })))
       );
@@ -89,7 +89,7 @@ export class SchemeEffects {
     switchMap((payload) => {
       return this.schemeService.getSchemeProducts(payload).pipe(
         map(data => {
-          return new SchemeProductsSuccess({ companyProducts: data['data'] });
+          return new SchemeProductsSuccess({ schemeProducts: data['data'] });
         }),
         catchError(error => of(new SchemeProductsFailure({ error })))
       );
@@ -98,7 +98,10 @@ export class SchemeEffects {
 
   @Effect({ dispatch: false })
   SchemeProductsSuccess: Observable<any> = this.actions.pipe(
-    ofType(SchemeAction.SCHEMEPRODUCTS_SUCCESS)
+    ofType(SchemeAction.SCHEMEPRODUCTS_SUCCESS),
+    tap(()=>{
+      this.topLoaderService.norecord.next(false);
+    })
   );
 
   @Effect({ dispatch: false })

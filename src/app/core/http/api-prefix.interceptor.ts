@@ -14,16 +14,25 @@ import { AuthState, selectAuthState } from '../authentication/auth.states';
 import { Store, select } from '@ngrx/store';
 import { TopLoaderService } from '@app/shared/top-loader/top-loader.service';
 import { tap } from 'rxjs/operators';
+import { Plugins } from '@capacitor/core';
+
+const { Device } = Plugins;
+
 
 /**
  * Prefixes all requests not starting with `http[s]` with `environment.serverUrl`.
  */
 @Injectable()
 export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
+  info: any;
   constructor(
     private store: Store<AuthState>,
     private topLoaderService: TopLoaderService
-  ) {}
+  ) {
+    Device.getInfo().then((val)=>{
+      this.info = val;
+    });
+  }
 
   intercept(
     request: HttpRequest<any>,
@@ -33,18 +42,19 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
     if (!/^(http|https):/i.test(request.url)) {
       request = request.clone({ url: environment.serverUrl + request.url });
     }
-
     request = request.clone({
       setHeaders: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'DeviceUUID': this.info['uuid'] ? this.info['uuid'] : 'web',
+        'IsMobileUser' : '1'
       }
     });
 
     this.store.pipe(select(selectAuthState)).subscribe(data => {
-      if (data['userData'] && data['userData']['token']) {
+      if (data['userData'] && data['userData']['token'] && data['userData']['token']['token']) {
         request = request.clone({
           setHeaders: {
-            Authorization: `Bearer ${data['userData']['token']}`
+            Authorization: `Bearer ${data['userData']['token']['token']}`
           }
         });
       }

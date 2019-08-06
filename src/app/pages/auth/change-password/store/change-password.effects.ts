@@ -10,12 +10,13 @@ import { ChangePasswordService } from '../change-password.service';
 import { AlertService } from '@app/shared/services/alert.service';
 import { CredentialsService } from '@app/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class ChangePasswordEffects {
   constructor(private actions: Actions, private changePassword: ChangePasswordService,
               private alert: AlertService, private credentialsService: CredentialsService,
-              private router: Router) {}
+              private router: Router, private translateService: TranslateService) {}
 
   // Send ChangePassword
 
@@ -41,7 +42,7 @@ export class ChangePasswordEffects {
   ChangePasswordSuccess: Observable<any> = this.actions.pipe(
     ofType(ChangePasswordTypes.CHANGEPASSWORD_SUCCESS),
     tap((res) => {
-      this.alert.presentToast('success', res.payload['sendChangePassword']);
+      this.alert.presentToast('success', this.translateService.instant('CHANGE_PASSWORD.SUCCESS_MSG'));
       this.credentialsService.setCredentials();
       this.router.navigate(['/login']);
     })
@@ -52,7 +53,7 @@ export class ChangePasswordEffects {
     ofType(ChangePasswordTypes.CHANGEPASSWORD_FAILURE),
     tap((res) => {
       this.alert.presentToast('danger',
-      res.payload['sendChangePassword']);
+      this.translateService.instant('CHANGE_PASSWORD.ERROR_MSG'));
     })
   );
 }

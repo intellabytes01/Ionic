@@ -15,7 +15,7 @@ export interface SchemesContext {
 const routes = {
   schemes: '/schemes/company?',
   schemeCompanies: '/schemes/company/',
-  schemeProducts: '/schemes/products'
+  schemeProducts: '/schemes/products?'
 };
 
 @Injectable()
