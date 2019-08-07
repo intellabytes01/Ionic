@@ -9,14 +9,28 @@ import { ModalController, NavParams } from '@ionic/angular';
 export class SimilarProductsModalPage implements OnInit {
 
   title = 'Similar Products Modal';
+  similarProducts: any[] = [];
+  selectedProducts: any[] = [];
   constructor(public modalController: ModalController, private navParams: NavParams) { }
 
   add() {
-    this.modalController.dismiss();
+    this.similarProducts.forEach((element)=>{
+      if(element.quantity){
+        this.selectedProducts.push(element);
+      }
+    })
+    this.modalController.dismiss({selectedProducts: this.selectedProducts});
   }
 
   ngOnInit() {
     this.title = this.navParams.get('title');
+    if(this.navParams.get('similarProductList')){
+      this.similarProducts = this.navParams.get('similarProductList');
+    }    
+  }
+
+  setQuantity(product, val) {
+    product['quantity'] = val.target.value;
   }
 
 }

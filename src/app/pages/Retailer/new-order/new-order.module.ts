@@ -9,6 +9,11 @@ import { NewOrderPage } from './new-order.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '@app/shared';
 import { SimilarProductsModalPageModule } from './similar-products-modal/similar-products-modal.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { NewOrderEffects } from './store/new-order.effects';
+import * as newOrderReducer from './store/new-order.reducers'
+import { NewOrderService } from './new-order.service';
 
 const routes: Routes = [
   {
@@ -26,8 +31,11 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateModule,
     SharedModule,
-    SimilarProductsModalPageModule
+    SimilarProductsModalPageModule,
+    StoreModule.forFeature('newOrder', newOrderReducer.newOrderReducer),
+    EffectsModule.forRoot([NewOrderEffects])
   ],
-  declarations: [NewOrderPage]
+  declarations: [NewOrderPage],
+  providers: [NewOrderService]
 })
 export class NewOrderPageModule {}

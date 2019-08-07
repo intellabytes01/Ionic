@@ -6,234 +6,254 @@
           [placeHolder]="'NEW_ORDER.STORE_PLACEHOLDER' | translate"
           [ctrName]="'store'"
           [items]="storeList"
-          [id]="'id'"
-          [name]="'name'"
+          [id]="'StoreId'"
+          [name]="'StoreName'"
           [canSearch]="true"
           (valueChange)="changeStore($event)"
         ></pr-select>
       </ion-col>
     </ion-row>
+    <br />
 
-    <ion-row>
-      <ion-col size="6" text-start>
-        <ion-label
-          ><b>{{ "NEW_ORDER.TOTAL_BAL" | translate }}</b></ion-label
-        >
-      </ion-col>
-      <ion-col size="6" text-end>
-        <ion-label (click)="presentModalOrderHistory()" class="blue-color">{{
-          "NEW_ORDER.ORDER" | translate
-        }}</ion-label>
-      </ion-col>
-    </ion-row>
+    <ng-container *ngIf="neworderForm.value.store.StoreId">
+      <ion-row>
+        <ion-col size="6" text-start>
+          <ion-label
+            ><b>{{ "NEW_ORDER.TOTAL_BAL" | translate }}</b></ion-label
+          >
+        </ion-col>
+        <ion-col size="6" text-end>
+          <ion-label (click)="presentModalOrderHistory()" class="blue-color">{{
+            "NEW_ORDER.ORDER" | translate
+          }}</ion-label>
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-      <ion-col size="4" text-center>
-        <ion-label class="green">{{
-          "NEW_ORDER.IN_STOCK" | translate
-        }}</ion-label>
-      </ion-col>
-      <ion-col size="4" text-center>
-        <ion-label class="dark-blue">{{
-          "NEW_ORDER.LOW_STOCK" | translate
-        }}</ion-label>
-      </ion-col>
-      <ion-col size="4" text-center>
-        <ion-label class="red">{{
-          "NEW_ORDER.NO_STOCK" | translate
-        }}</ion-label>
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col size="4" text-center>
+          <ion-label class="green">{{
+            "NEW_ORDER.IN_STOCK" | translate
+          }}</ion-label>
+        </ion-col>
+        <ion-col size="4" text-center>
+          <ion-label class="dark-blue">{{
+            "NEW_ORDER.LOW_STOCK" | translate
+          }}</ion-label>
+        </ion-col>
+        <ion-col size="4" text-center>
+          <ion-label class="red">{{
+            "NEW_ORDER.NO_STOCK" | translate
+          }}</ion-label>
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-      <ion-col size="10">
-        <ion-searchbar
-          formControlName="searchText"
-          [placeholder]="'NEW_ORDER.SEARCH_PRODUCT_PLACEHOLDER' | translate"
-          [showCancelButton]="true"
-          (ionChange)="search()"
-        ></ion-searchbar>
-      </ion-col>
-      <ion-col size="2">
-        <ion-icon
-          (click)="presentModalSimilarProducts()"
-          class="modal-icon"
-          name="reorder"
-        ></ion-icon>
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col size="10">
+          <ion-searchbar
+            formControlName="searchText"
+            [placeholder]="'NEW_ORDER.SEARCH_PRODUCT_PLACEHOLDER' | translate"
+            [showCancelButton]="true"
+            (ionChange)="search()"
+          ></ion-searchbar>
+        </ion-col>
+        <ion-col size="2">
+          <ion-icon
+            (click)="presentModalSimilarProducts()"
+            class="modal-icon"
+            name="reorder"
+          ></ion-icon>
+        </ion-col>
+      </ion-row>
 
-    <ion-list *ngIf="searchList.length == 0 && neworderForm.value.searchText">
+      <!-- <ion-list *ngIf="searchList.length == 0 && neworderForm.value.searchText">
       <ion-item>
         <ion-label>{{ "NEW_ORDER.NOTFOUND" | translate }}</ion-label>
       </ion-item>
-    </ion-list>
+    </ion-list> -->
 
-    <ion-list *ngIf="searchList.length !== 0 && neworderForm.value.searchText">
-      <ion-item
-        *ngFor="let product of searchList"
-        (click)="selectProduct(product)"
+      <ion-list
+        *ngIf="searchList.length !== 0 && neworderForm.value.searchText"
       >
-        <ion-label>{{ product.name }}</ion-label>
-      </ion-item>
-    </ion-list>
+        <ion-item
+          *ngFor="let product of searchList"
+          (click)="selectProduct(product)"
+        >
+          <ion-label>{{ product.ProductName }}</ion-label>
+        </ion-item>
+      </ion-list>
 
-    <div *ngIf="tempProductList.length != 0">
-      <ion-row>
-        <ion-col size="2" text-center>
-          <ion-label>{{ "NEW_ORDER.QTY" | translate }}</ion-label>
-        </ion-col>
-        <ion-col size="2" text-center>
-          <ion-label>{{ "NEW_ORDER.FREE" | translate }}</ion-label>
-        </ion-col>
-        <ion-col size="2" text-center>
-          <ion-label>{{ "NEW_ORDER.HS" | translate }}</ion-label>
-        </ion-col>
-      </ion-row>
-    </div>
+      <div *ngIf="tempProductList.length != 0">
+        <ion-row>
+          <ion-col size="2" text-center>
+            <ion-label>{{ "NEW_ORDER.QTY" | translate }}</ion-label>
+          </ion-col>
+          <ion-col size="2" text-center>
+            <ion-label>{{ "NEW_ORDER.FREE" | translate }}</ion-label>
+          </ion-col>
+          <ion-col size="2" text-center>
+            <ion-label>{{ "NEW_ORDER.HS" | translate }}</ion-label>
+          </ion-col>
+        </ion-row>
+      </div>
 
-    <ion-row *ngFor="let product of tempProductList; let i = index">
-      <ion-col size="10" text-start>
-        <ion-label class="mustard-color">{{ product.name }}</ion-label>
-      </ion-col>
-      <ion-col *ngIf="testOrderData[key].productList[i]" size="2" text-end>
-        <ion-icon
-          (click)="deleteProduct(i)"
-          class="delete-icon red"
-          name="trash"
-        ></ion-icon>
-      </ion-col>
-      <ion-row>
-        <ion-col size="4" text-start>
-          <ion-input
-            type="number"
-            [value]="product.quantity"
-            (ionChange)="setQuantity(i, $event)"
-            placeholder="Qty"
-          ></ion-input>
+      <ion-row *ngFor="let product of tempProductList; let i = index">
+        <ion-col size="10" text-start>
+          <ion-label class="mustard-color">{{ product.ProductName }}</ion-label>
         </ion-col>
-        <ion-col *ngIf="!testOrderData[key].productList[i]" size="8" text-end>
-          <ion-button
-            (click)="add(product)"
-            class="add-button"
-            color="mustard"
-            >{{ "NEW_ORDER.ADD" | translate }}</ion-button
+        <ion-col
+          *ngIf="orderData[key] && orderData[key].productList[i]"
+          size="2"
+          text-end
+        >
+          <ion-icon
+            (click)="deleteProduct(i)"
+            class="delete-icon red"
+            name="trash"
+          ></ion-icon>
+        </ion-col>
+        <ion-row>
+          <ion-col size="4" text-start>
+            <ion-input
+              type="number"
+              [value]="product.quantity"
+              (ionChange)="setQuantity(i, $event)"
+              placeholder="Qty"
+            ></ion-input>
+          </ion-col>
+          <ion-col
+            *ngIf="!(orderData[key] && orderData[key].productList[i])"
+            size="8"
+            text-end
           >
-        </ion-col>
-      </ion-row>
-    </ion-row>
-
-    <div *ngIf="tempProductList.length != 0">
-      <ion-row>
-        <ion-col size="2" text-center>
-          <ion-label>{{ "NEW_ORDER.STOCK" | translate }}</ion-label>
-        </ion-col>
-        <ion-col size="2" text-center>
-          <ion-label>{{ "NEW_ORDER.PKG" | translate }}</ion-label>
-        </ion-col>
-        <ion-col size="2" text-center>
-          <ion-label>{{ "NEW_ORDER.CASE" | translate }}</ion-label>
-        </ion-col>
-        <ion-col size="2" text-center>
-          <ion-label>{{ "NEW_ORDER.BOX" | translate }}</ion-label>
-        </ion-col>
-        <ion-col size="2" text-center>
-          <ion-label>{{ "NEW_ORDER.MRP" | translate }}</ion-label>
-        </ion-col>
-        <ion-col size="2" text-center>
-          <ion-label>{{ "NEW_ORDER.PTR" | translate }}</ion-label>
-        </ion-col>
+            <ion-button
+              (click)="add(product)"
+              class="add-button"
+              color="mustard"
+              >{{ "NEW_ORDER.ADD" | translate }}</ion-button
+            >
+          </ion-col>
+        </ion-row>
       </ion-row>
 
-      <ion-row>
-        <ion-col size="2" text-center>
-          <ion-label>375</ion-label>
-        </ion-col>
-        <ion-col size="2" text-center>
-          <ion-label>PC</ion-label>
-        </ion-col>
-        <ion-col size="2" text-center>
-          <ion-label>4</ion-label>
-        </ion-col>
-        <ion-col size="2" text-center>
-          <ion-label>4</ion-label>
-        </ion-col>
-        <ion-col size="2" text-center>
-          <ion-label>60</ion-label>
-        </ion-col>
-        <ion-col size="2" text-center>
-          <ion-label>12.5</ion-label>
-        </ion-col>
-      </ion-row>
-    </div>
+      <div *ngIf="tempProductList.length != 0">
+        <ion-row>
+          <ion-col size="2" text-center>
+            <ion-label>{{ "NEW_ORDER.STOCK" | translate }}</ion-label>
+          </ion-col>
+          <ion-col size="2" text-center>
+            <ion-label>{{ "NEW_ORDER.PKG" | translate }}</ion-label>
+          </ion-col>
+          <ion-col size="2" text-center>
+            <ion-label>{{ "NEW_ORDER.CASE" | translate }}</ion-label>
+          </ion-col>
+          <ion-col size="2" text-center>
+            <ion-label>{{ "NEW_ORDER.BOX" | translate }}</ion-label>
+          </ion-col>
+          <ion-col size="2" text-center>
+            <ion-label>{{ "NEW_ORDER.MRP" | translate }}</ion-label>
+          </ion-col>
+          <ion-col size="2" text-center>
+            <ion-label>{{ "NEW_ORDER.PTR" | translate }}</ion-label>
+          </ion-col>
+        </ion-row>
 
-    <br />
-
-    <div *ngIf="testOrderData[key] && testOrderData[key].productList && testOrderData[key].productList.length != 0">
-      <ion-row>
-        <ion-col text-center>
-          <ion-label class="total"
-            >{{ "NEW_ORDER.GRAND_TOTAL" | translate }} {{testOrderData[key].total}}</ion-label
-          >
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          <ion-input
-            formControlName="remarks"
-            [placeholder]="'NEW_ORDER.REMARKS_PLACEHOLDER' | translate"
-          ></ion-input>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          <pr-select
-            [placeHolder]="'NEW_ORDER.DELIVERY_PLACEHOLDER' | translate"
-            [ctrName]="'deliveryMode'"
-            [items]="deliveryModeList"
-            [id]="'id'"
-            [name]="'name'"
-            [canSearch]="true"
-            (valueChange)="changeDeliveryTo($event)"
-          ></pr-select>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          <pr-select
-            [placeHolder]="'NEW_ORDER.PRIORITY_PLACEHOLDER' | translate"
-            [ctrName]="'deliveryPriority'"
-            [items]="deliveryPriorityList"
-            [id]="'id'"
-            [name]="'name'"
-            [canSearch]="true"
-            (valueChange)="changeDeliveryPriority($event)"
-          ></pr-select>
-        </ion-col>
-      </ion-row>
+        <ion-row>
+          <ion-col size="2" text-center>
+            <ion-label>375</ion-label>
+          </ion-col>
+          <ion-col size="2" text-center>
+            <ion-label>PC</ion-label>
+          </ion-col>
+          <ion-col size="2" text-center>
+            <ion-label>4</ion-label>
+          </ion-col>
+          <ion-col size="2" text-center>
+            <ion-label>4</ion-label>
+          </ion-col>
+          <ion-col size="2" text-center>
+            <ion-label>60</ion-label>
+          </ion-col>
+          <ion-col size="2" text-center>
+            <ion-label>12.5</ion-label>
+          </ion-col>
+        </ion-row>
+      </div>
 
       <br />
 
-      <ion-row class="border-grey">
-        <ion-col text-center class="border-right-grey">
-          <ion-label (click)="deleteAll()" class="red">{{
-            "NEW_ORDER.DELETE" | translate
-          }}</ion-label>
-        </ion-col>
-        <ion-col text-center class="border-right-grey">
-          <ion-label (click)="saveToStorage()" class="mustard-color">{{
-            "NEW_ORDER.DRAFT_PO" | translate
-          }}</ion-label>
-        </ion-col>
-        <ion-col text-center>
-          <ion-label (click)="createOrder()" class="green">{{
-            "NEW_ORDER.CONFIRM" | translate
-          }}</ion-label>
-        </ion-col>
-      </ion-row>
-    </div>
+      <div
+        *ngIf="
+          orderData[key] &&
+          orderData[key].productList &&
+          orderData[key].productList.length != 0
+        "
+      >
+        <ion-row>
+          <ion-col text-center>
+            <ion-label class="total"
+              >{{ "NEW_ORDER.GRAND_TOTAL" | translate }}
+              {{ orderData[key].total }}</ion-label
+            >
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-input
+              formControlName="remarks"
+              [placeholder]="'NEW_ORDER.REMARKS_PLACEHOLDER' | translate"
+            ></ion-input>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <pr-select
+              [placeHolder]="'NEW_ORDER.DELIVERY_PLACEHOLDER' | translate"
+              [ctrName]="'deliveryMode'"
+              [items]="deliveryModeList"
+              [id]="'id'"
+              [name]="'name'"
+              [canSearch]="true"
+              (valueChange)="changeDeliveryTo($event)"
+            ></pr-select>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <pr-select
+              [placeHolder]="'NEW_ORDER.PRIORITY_PLACEHOLDER' | translate"
+              [ctrName]="'deliveryPriority'"
+              [items]="deliveryPriorityList"
+              [id]="'id'"
+              [name]="'name'"
+              [canSearch]="true"
+              (valueChange)="changeDeliveryPriority($event)"
+            ></pr-select>
+          </ion-col>
+        </ion-row>
+
+        <br />
+
+        <ion-row class="border-grey">
+          <ion-col text-center class="border-right-grey">
+            <ion-label (click)="deleteAll()" class="red">{{
+              "NEW_ORDER.DELETE" | translate
+            }}</ion-label>
+          </ion-col>
+          <ion-col text-center class="border-right-grey">
+            <ion-label (click)="saveToStorage()" class="mustard-color">{{
+              "NEW_ORDER.DRAFT_PO" | translate
+            }}</ion-label>
+          </ion-col>
+          <ion-col text-center>
+            <ion-label (click)="createOrder()" class="green">{{
+              "NEW_ORDER.CONFIRM" | translate
+            }}</ion-label>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ng-container>
   </form>
 </ion-content>
