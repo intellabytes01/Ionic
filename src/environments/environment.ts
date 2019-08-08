@@ -9,7 +9,7 @@ export const environment = {
   version: env.npm_package_version + '-dev',
   serverUrl: 'http://52.210.1.154:3000/api/v1',
   defaultLanguage: 'en-US',
-  supportedLanguages: ['en-US', 'fr-FR']
+  supportedLanguages: ['hi-IND', 'en-US', 'fr-FR']
 };
 
 

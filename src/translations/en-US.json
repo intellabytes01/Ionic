@@ -1,73 +1,29 @@
 {
-  "APP_NAME": "Pharmarack",
-  "About": "About",
-  "Hello world !": "Hello world !",
-  "Home": "Home",
-  "Cancel": "Cancel",
-  "Change language": "Change language",
-  "Language": "Language",
-  "Ok": "Ok",
-  "LOGOUT": "Logout",
-  "Password": "Password",
-  "Please Enter Password Greater Than Or Equal To 6 Characters": "Please Enter Password Greater Than Or Equal To 6 Characters",
-  "Username": "Username",
-  "Username is required": "Username is required",
-  "Username or password incorrect": "Username or password incorrect",
-  "Remember me": "Remember me",
-  "Version": "Version",
-  "USER_DATA": "userData",
-  "USER_PASSWORD": "userPassword",
-
-  "PRODUCT_NAME": "Product",
-  "GENERIC_NAME": "Generic",
-  "COMPANY_NAME": "Company",
-  "DISTRIBUTOR_NAME": "Distributor",
-
-  "PRODUCT_PLACEHOLDER": "Product name",
-  "GENERIC_PLACEHOLDER": "Generic name",
-  "COMPANY_PLACEHOLDER": "Company name",
-  "DISTRIBUTOR_PLACEHOLDER": "Distributor name",
-
-  "DASHBOARD_ROUTE": "dashboard",
-  "LOGIN_ROUTE": "login",
-  "REGISTER_ROUTE": "register",
-  "FORGOT_PASSWORD_ROUTE": "forgot-password",
-  "CHANGE_PASSWORD_ROUTE": "change-password",
-  "PROFILE_ROUTE": "profile",
-  "REFER_ROUTE": "refer-earn",
-  "FEEDBACK_ROUTE": "feedback",
-  "PRODUCT_SEARCH_ROUTE": "product-search",
-
-  "DASHBOARD_TITLE": "Dashboard",
-  "LOGOUT_TITLE": "Logout",
-  "REGISTER_TITLE": "Register",
-  "FORGOT_PASSWORD_TITLE": "Forgot Password",
-  "CHANGE_PASSWORD_TITLE": "Change Password",
-  "PROFILE_TITLE": "My Profile",
-  "REFER_TITLE": "Refer and Earn",
-  "FEEDBACK_TITLE": "Feedback",
-  "NOTIFICATION_TITLE": "Notification",
-  "TERMS_TITLE": "Terms & Conditions",
-
-  "TERMS_URL": "http://oldfish.ragabh.com/termsandconditions",
-
-  "DRAFT_NAME": "Draft",
-  "CONFIRMED_NAME": "Confirmed",
-  "DELETED_NAME": "Deleted",
-
-  "PAYLATER_NAME": "PAY LATER",
-  "MAKEPAYMENT_NAME": "MAKE PAYMENT",
-  "HISTORY_NAME": "HISTORY",
-
-  "MYOUTSTANDING_NAME": "My Outstanding",
-  "MYPAYMENTS_NAME": "My Payments",
-
-  "USER_ACTIVATION" : "Your account shall be activated once details are verified. Please call 9579870870 between 9.30am to 7pm",
-  "EXIT_APP": "Are you sure you want to exit the app?",
-  "UPDATE_PROFILE_MODAL_TITLE": "Update Your Profile",
-  "UPDATE_PROFILE_MODAL_MESSAGE": "We are glad to serve you. Kindly update your profile details for a seamless experience",
+  "SIDEMENU": {
+    "DASHBOARD_TITLE": "Dashboard",
+    "LOGOUT_TITLE": "Logout",
+    "REGISTER_TITLE": "Register",
+    "FORGOT_PASSWORD_TITLE": "Forgot Password",
+    "CHANGE_PASSWORD_TITLE": "Change Password",
+    "PROFILE_TITLE": "My Profile",
+    "REFER_TITLE": "Refer and Earn",
+    "FEEDBACK_TITLE": "Feedback",
+    "NOTIFICATION_TITLE": "Notification",
+    "TERMS_TITLE": "Terms & Conditions",
+    "TERMS_URL": "http://oldfish.ragabh.com/termsandconditions",
+    "DASHBOARD_ROUTE": "dashboard",
+    "LOGIN_ROUTE": "login",
+    "REGISTER_ROUTE": "register",
+    "FORGOT_PASSWORD_ROUTE": "forgot-password",
+    "CHANGE_PASSWORD_ROUTE": "change-password",
+    "PROFILE_ROUTE": "profile",
+    "REFER_ROUTE": "refer-earn",
+    "FEEDBACK_ROUTE": "feedback",
+    "PRODUCT_SEARCH_ROUTE": "product-search"
+  },
 
   "DASHBOARD": {
+    "SUBMIT": "Submit",
     "NEWORDER": "New Order",
     "PAYMENTS": "Payments",
     "MYORDER": "My Order",
@@ -80,7 +36,11 @@
     "ADDDISTRIBUTOR": "Add Distributor",
     "PRODUCTSEARCH": "Product Search",
     "SCHEMES": "Schemes",
-    "PRLOGO": "assets/icon/logo.png"
+    "PRLOGO": "assets/icon/logo.png",
+    "USER_ACTIVATION": "Your account shall be activated once details are verified. Please call 9579870870 between 9.30am to 7pm",
+    "EXIT_APP": "Are you sure you want to exit the app?",
+    "UPDATE_PROFILE_MODAL_TITLE": "Update Your Profile",
+    "UPDATE_PROFILE_MODAL_MESSAGE": "We are glad to serve you. Kindly update your profile details for a seamless experience"
   },
 
   "ADD_DISTRIBUTOR": {
@@ -118,25 +78,7 @@
         }
       ]
     }
-  },
-
-  "VALIDATIONS": {
-    "MOBILEREQUIRED": "Mobile number is required",
-    "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number",
-    "OTPREQUIRED": "Otp is required",
-    "FEEDBACK": {
-      "message": [
-        { "type": "required", "message": "Value is required for Remarks" }
-      ],
-      "feedbackType": [{ "type": "validValue", "message": "It's required" }],
-      "feedbackTo": [{ "type": "validValue", "message": "It's required" }],
-      "toStoreId": [{ "type": "validValue", "message": "It's required" }]
-    }
-  },
-
-  "MOBILE": "Mobile Number",
-
-  "SUBMIT": "Submit",
+  },  
 
   "FORGOT_PASSWORD": {
     "TITLE": "Forgot Password?",
@@ -154,6 +96,7 @@
       ]
     }
   },
+
   "CHANGE_PASSWORD": {
     "CURRENT_PASSWORD": "Current Password",
     "NEW_PASSWORD": "New Password",
@@ -164,26 +107,24 @@
     "BACK_BUTTON": "Back",
     "VALIDATION_MESSAGES": {
       "password": [
-        { "type": "required", "message": "Please Enter Password Greater Than Or Equal To 6 Characters" },
+        {
+          "type": "required",
+          "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
+        },
         {
           "type": "minlength",
           "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
         }
       ],
-      "matchPasswordError": [{
-        "message": "Passwords do not match"
-      }]
+      "matchPasswordError": [
+        {
+          "message": "Passwords do not match"
+        }
+      ]
     },
     "SUCCESS_MSG": "Password updated successfully",
     "ERROR_MSG": "Something went wrong, please try again later"
   },
-
-  "FEEDBACKTYPE_PLACEHOLDER": "Select feedback type",
-  "FEEDBACKTO_PLACEHOLDER": "Select type",
-  "FEEDBACKSTORE_PLACEHOLDER": "Select Store",
-  "FEEDBACKSTATUS_PLACEHOLDER": "Select Status",
-  "MESSAGE_PLACEHOLDER": "Type your message",
-  "FEEDBACK_TEXT": "We value your feedback. Please send your feedback in the below form",
 
   "PROFILE": {
     "LOGIN_ID": "Login Id",
@@ -306,7 +247,10 @@
         }
       ],
       "password": [
-        { "type": "required", "message": "Please Enter Password Greater Than Or Equal To 6 Characters" },
+        {
+          "type": "required",
+          "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
+        },
         {
           "type": "minlength",
           "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
@@ -319,8 +263,8 @@
       "tnc": [
         {
           "message": "Please Agree Terms & Conditions"
-      }
-    ]
+        }
+      ]
     }
   },
 
@@ -413,5 +357,27 @@
     "PLACEHOLDER_STATUS": "Please Select Status",
     "UPDATE": "Update",
     "CONFIRM_TEXT": "CONFIRM SALES RETURN >"
+  },
+
+  "FEEDBACK": {
+    "VALIDATIONS": {
+      "MOBILEREQUIRED": "Mobile number is required",
+      "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number",
+      "OTPREQUIRED": "Otp is required",
+      "FEEDBACK": {
+        "message": [
+          { "type": "required", "message": "Value is required for Remarks" }
+        ],
+        "feedbackType": [{ "type": "validValue", "message": "It's required" }],
+        "feedbackTo": [{ "type": "validValue", "message": "It's required" }],
+        "toStoreId": [{ "type": "validValue", "message": "It's required" }]
+      }
+    },
+    "FEEDBACKTYPE_PLACEHOLDER": "Select feedback type",
+    "FEEDBACKTO_PLACEHOLDER": "Select type",
+    "FEEDBACKSTORE_PLACEHOLDER": "Select Store",
+    "FEEDBACKSTATUS_PLACEHOLDER": "Select Status",
+    "MESSAGE_PLACEHOLDER": "Type your message",
+    "FEEDBACK_TEXT": "We value your feedback. Please send your feedback in the below form"
   }
 }

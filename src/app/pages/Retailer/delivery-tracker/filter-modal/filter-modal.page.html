@@ -23,14 +23,14 @@
 
     <ion-row>
       <ion-col>
-        <pr-select [placeHolder]="'FEEDBACKSTATUS_PLACEHOLDER' | translate" [ctrName]="'status'" [items]="statusList"
+        <pr-select [placeHolder]="'FEEDBACK.FEEDBACKSTATUS_PLACEHOLDER' | translate" [ctrName]="'status'" [items]="statusList"
           [id]="'name'" [name]="'name'" [canSearch]="true" (valueChange)="updateStatus($event)"></pr-select>
       </ion-col>
     </ion-row> <br>
 
     <ion-row>
       <ion-col>
-        <pr-select [placeHolder]="'FEEDBACKSTORE_PLACEHOLDER' | translate" [ctrName]="'store'" [items]="storeList"
+        <pr-select [placeHolder]="'FEEDBACK.FEEDBACKSTORE_PLACEHOLDER' | translate" [ctrName]="'store'" [items]="storeList"
           [id]="'StoreId'" [name]="'StoreName'" [canSearch]="true" (valueChange)="updateStore($event)"></pr-select>
       </ion-col>
     </ion-row> <br>

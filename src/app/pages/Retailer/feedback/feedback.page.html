@@ -3,7 +3,7 @@
     <ion-col>
       <ion-label>
         <b
-          >{{'FEEDBACK_TEXT' | translate}}</b
+          >{{'FEEDBACK.FEEDBACK_TEXT' | translate}}</b
         >
       </ion-label>
     </ion-col>
@@ -13,7 +13,7 @@
     <ion-row>
       <ion-col>
         <pr-select
-          [placeHolder]="'FEEDBACKTYPE_PLACEHOLDER' | translate"
+          [placeHolder]="'FEEDBACK.FEEDBACKTYPE_PLACEHOLDER' | translate"
           [ctrName]="'feedbackType'"
           [items]="feedbackTypes$ | async"
           [id]="'Fid'"
@@ -40,7 +40,7 @@
     <ion-row>
       <ion-col>
         <pr-select
-          [placeHolder]="'FEEDBACKTO_PLACEHOLDER' | translate"
+          [placeHolder]="'FEEDBACK.FEEDBACKTO_PLACEHOLDER' | translate"
           [ctrName]="'feedbackTo'"
           [items]="feedbackTos"
           [id]="'Fid'"
@@ -67,7 +67,7 @@
     <ion-row>
       <ion-col>
         <pr-select
-          [placeHolder]="'FEEDBACKSTORE_PLACEHOLDER' | translate"
+          [placeHolder]="'FEEDBACK.FEEDBACKSTORE_PLACEHOLDER' | translate"
           [ctrName]="'toStoreId'"
           [items]="toStoreIds"
           [id]="'StoreId'"
@@ -97,7 +97,7 @@
           formControlName="message"
           rows="6"
           cols="12"
-          [placeholder]="'MESSAGE_PLACEHOLDER' | translate"
+          [placeholder]="'FEEDBACK.MESSAGE_PLACEHOLDER' | translate"
         ></ion-textarea>
       </ion-col>
     </ion-row>

@@ -85,21 +85,21 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   presentAlertConfirm() {
-    this.alert.exitModal(this.translateService.instant("EXIT_APP"));
+    this.alert.exitModal(this.translateService.instant("DASHBOARD.EXIT_APP"));
   }
 
   showUnAuthrorizedMessage() {
     this.alert.presentToast(
       "danger",
-      this.translateService.instant("USER_ACTIVATION"),
+      this.translateService.instant("DASHBOARD.USER_ACTIVATION"),
       5000
     );
   }
 
   showUpdateProfileModal() {
     this.alert.confirmationModal(
-      this.translateService.instant("UPDATE_PROFILE_MODAL_TITLE"),
-      this.translateService.instant("UPDATE_PROFILE_MODAL_MESSAGE"),
+      this.translateService.instant("DASHBOARD.UPDATE_PROFILE_MODAL_TITLE"),
+      this.translateService.instant("DASHBOARD.UPDATE_PROFILE_MODAL_MESSAGE"),
       "profile"
     );
   }

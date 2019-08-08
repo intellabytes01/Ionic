@@ -40,7 +40,7 @@ export class SidemenuComponent implements OnInit {
       this.logout();
     }
     if (page.title === 'TERMS_TITLE') {
-      window.open(this.translateService.instant('TERMS_URL'), '_system');
+      window.open(this.translateService.instant('SIDEMENU.TERMS_URL'), '_system');
     }
     this.router.navigate([this.translateService.instant(page.url)]);
   }

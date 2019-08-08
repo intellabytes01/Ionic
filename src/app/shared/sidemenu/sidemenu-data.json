@@ -1,43 +1,43 @@
 { 
     "leftMenuData" : [
     {
-      "title": "DASHBOARD_TITLE",
-      "url": "DASHBOARD_ROUTE",
+      "title": "SIDEMENU.DASHBOARD_TITLE",
+      "url": "SIDEMENU.DASHBOARD_ROUTE",
       "icon": "dashboard"
     },
     {
-      "title": "PROFILE_TITLE",
-      "url": "PROFILE_ROUTE",
+      "title": "SIDEMENU.PROFILE_TITLE",
+      "url": "SIDEMENU.PROFILE_ROUTE",
       "icon": "dashboard"
     },
     {
-      "title": "REFER_TITLE",
-      "url": "REFER_ROUTE",
+      "title": "SIDEMENU.REFER_TITLE",
+      "url": "SIDEMENU.REFER_ROUTE",
       "icon": "dashboard"
     },
     {
-      "title": "CHANGE_PASSWORD_TITLE",
-      "url": "CHANGE_PASSWORD_ROUTE",
+      "title": "SIDEMENU.CHANGE_PASSWORD_TITLE",
+      "url": "SIDEMENU.CHANGE_PASSWORD_ROUTE",
       "icon": "dashboard"
     },
     {
-      "title": "FEEDBACK_TITLE",
-      "url": "FEEDBACK_ROUTE",
+      "title": "SIDEMENU.FEEDBACK_TITLE",
+      "url": "SIDEMENU.FEEDBACK_ROUTE",
       "icon": "dashboard"
     },
     {
-      "title": "NOTIFICATION_TITLE",
-      "url": "DASHBOARD_ROUTE",
+      "title": "SIDEMENU.NOTIFICATION_TITLE",
+      "url": "SIDEMENU.DASHBOARD_ROUTE",
       "icon": "dashboard"
     },
     {
-      "title": "TERMS_TITLE",
-      "url": "DASHBOARD_ROUTE",
+      "title": "SIDEMENU.TERMS_TITLE",
+      "url": "SIDEMENU.DASHBOARD_ROUTE",
       "icon": "dashboard"
     },
     {
-      "title": "LOGOUT_TITLE",
-      "url": "LOGIN_ROUTE",
+      "title": "SIDEMENU.LOGOUT_TITLE",
+      "url": "SIDEMENU.LOGIN_ROUTE",
       "icon": "dashboard"
     }
   ],

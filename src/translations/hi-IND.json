@@ -1,0 +1,340 @@
+{
+  "SIDEMENU": {
+    "DASHBOARD_TITLE": "डैशबोर्ड",
+    "LOGOUT_TITLE": "लॉगआउट",
+    "REGISTER_TITLE": "रजिस्टर",
+    "FORGOT_PASSWORD_TITLE": "पासवर्ड भूल गए",
+    "CHANGE_PASSWORD_TITLE": "पासवर्ड बदलें",
+    "PROFILE_TITLE": "मेरे प्रोफाइल",
+    "REFER_TITLE": "देखें और कमाएँ",
+    "FEEDBACK_TITLE": "प्रतिक्रिया",
+    "NOTIFICATION_TITLE": "अधिसूचना",
+    "TERMS_TITLE": "नियम एवं शर्तें",
+    "TERMS_URL": "http://oldfish.ragabh.com/termsandconditions",
+    "DASHBOARD_ROUTE": "डैशबोर्ड",
+    "LOGIN_ROUTE": "लॉगिन",
+    "REGISTER_ROUTE": "रजिस्टर",
+    "FORGOT_PASSWORD_ROUTE": "भूल गए-पासवर्ड",
+    "CHANGE_PASSWORD_ROUTE": "बदलें-पासवर्ड",
+    "PROFILE_ROUTE": "प्रोफ़ाइल",
+    "REFER_ROUTE": "देखें-कमाने",
+    "FEEDBACK_ROUTE": "प्रतिक्रिया",
+    "PRODUCT_SEARCH_ROUTE": "उत्पाद खोज"
+  },
+  "DASHBOARD": {
+    "SUBMIT": "प्रस्तुत",
+    "NEWORDER": "नए आदेश",
+    "PAYMENTS": "भुगतान",
+    "MYORDER": "मेरा आदेश",
+    "INVOICE": "मेरा चालान",
+    "TRACKER": "डिलिवरी ट्रैकर",
+    "MALL": "फार्मा मॉल",
+    "DRAFTORDER": "मसौदा आदेश",
+    "NEWSALESRETURN": "नई बिक्री वापसी",
+    "VIEWSALESRETURN": "देखें बिक्री वापसी",
+    "ADDDISTRIBUTOR": "जोड़ें वितरक",
+    "PRODUCTSEARCH": "उत्पाद खोज",
+    "SCHEMES": "योजनाओं",
+    "PRLOGO": "संपत्ति/आइकन/लोगो । png",
+    "USER_ACTIVATION": "आपका खाता सक्रिय हो जाएगा एक बार जब विवरण सत्यापित कर रहे हैं. कृपया कॉल 9579870870 के बीच 9.30 बजे से 7 बजे",
+    "EXIT_APP": "क्या आप सुनिश्चित हैं कि आप चाहते हैं कि app बाहर निकलने के लिए?",
+    "UPDATE_PROFILE_MODAL_TITLE": "अपने प्रोफ़ाइल का अद्यतन करें",
+    "UPDATE_PROFILE_MODAL_MESSAGE": "हम कर रहे हैं खुशी है कि आप की सेवा के लिए. कृपया अपने प्रोफ़ाइल का अद्यतन विवरण के लिए एक सहज अनुभव"
+  },
+  "ADD_DISTRIBUTOR": {
+    "REQUEST_TAB_MESSAGE_1": "कृपया दर्ज पार्टी के लिए कोड तेजी से मानचित्रण",
+    "NOTE": "ध्यान दें:",
+    "REQUEST_TAB_MESSAGE_2": "पार्टी कोड में पाया जा सकता है वितरक की बिक्री Inovoice / बिल",
+    "ADD_TAB_MESSAGE": "वितरक आप देखना चाहते हैं पर Pharmarack",
+    "SEARCH_PLACEHOLDER": "खोज वितरक",
+    "NOTFOUND": "कोई वितरक पाया",
+    "STORE": "दुकान का नाम",
+    "PARTY_CODE": "पार्टी कोड",
+    "OPTIONAL_PLACEHOLDER": "वैकल्पिक",
+    "DISTRIBUTOR_NAME": "वितरक का नाम",
+    "CONTACT": "संपर्क नंबर",
+    "STATUS": "स्थिति",
+    "FILTER_TEXT": "यहाँ क्लिक करें के लिए फ़िल्टर स्थिति",
+    "REQUEST_TAB_MESSAGE_3": "का चयन करें कम से कम एक दुकान",
+    "VALIDATIONS": { "DISTRIBUTOR_NAME": "वितरक का नाम आवश्यक है" },
+    "RM": "अनुरोध मानचित्रण",
+    "SELECTSTATUS": "स्थिति का चयन करें",
+    "VALIDATION_MESSAGES": {
+      "mobile": [
+        { "type": "आवश्यक", "message": "सत्यापन.MOBILEREQUIRED" },
+        { "type": "पैटर्न", "message": "सत्यापन.MOBILEPATTERN" }
+      ],
+      "storeName": [
+        {
+          "type": "आवश्यक",
+          "message": "ADD_DISTRIBUTOR.सत्यापन.DISTRIBUTOR_NAME"
+        }
+      ]
+    }
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE": "पासवर्ड भूल गए?",
+    "SENDOTPMESSAGE": "हम भेज देंगे आप एक OTP करने के लिए अपने मोबाइल नंबर के लिए आप को सक्षम करने के लिए लॉगिन",
+    "VERIFY": "Otp सत्यापित करें",
+    "RESEND": "पुन: भेजें Otp",
+    "VERIFYOTPMESSAGE": "कृपया OTP दर्ज करें कोड किया गया है जो आपके मोबाइल नंबर पर भेजा",
+    "VALIDATION_MESSAGES": {
+      "mobile": [
+        { "type": "आवश्यक", "message": "सत्यापन.MOBILEPATTERN" },
+        { "type": "पैटर्न", "message": "सत्यापन.MOBILEPATTERN" }
+      ]
+    }
+  },
+  "CHANGE_PASSWORD": {
+    "CURRENT_PASSWORD": "वर्तमान पासवर्ड",
+    "NEW_PASSWORD": "नया पासवर्ड",
+    "SAME_PASSWORD": "वर्तमान और नया पासवर्ड ही नहीं किया जा सकता",
+    "PASSWORD_MISMATCH": "इस बात की पुष्टि और नए पासवर्ड से मेल नहीं खाती",
+    "CONFIRM_PASSWORD": "पासवर्ड की पुष्टि करें",
+    "CHANGE_BUTTON": "परिवर्तन",
+    "BACK_BUTTON": "वापस",
+    "VALIDATION_MESSAGES": {
+      "password": [
+        {
+          "type": "आवश्यक",
+          "message": "कृपया पासवर्ड दर्ज करें की तुलना में अधिक या बराबर करने के लिए 6 अक्षर"
+        },
+        {
+          "type": "minlength",
+          "message": "कृपया पासवर्ड दर्ज करें की तुलना में अधिक या बराबर करने के लिए 6 अक्षर"
+        }
+      ],
+      "matchPasswordError": [{ "message": "पासवर्ड मेल नहीं खाते" }]
+    },
+    "SUCCESS_MSG": "पासवर्ड सफलतापूर्वक अद्यतन",
+    "ERROR_MSG": "कुछ गलत हो गया था, कृपया बाद में फिर से कोशिश"
+  },
+  "PROFILE": {
+    "LOGIN_ID": "लॉगिन आईडी",
+    "BUSINESS_TYPE": "व्यापार के प्रकार",
+    "SHOP_FULL_NAME": "दुकान/फर्म का पूरा नाम",
+    "NAME": "नाम",
+    "ADDRESS": "पता",
+    "PINCODE": "पिन कोड",
+    "REGION": "क्षेत्र",
+    "EMAIL": "ईमेल",
+    "MOBILE_NUMBER": "मोबाइल नंबर",
+    "TELEPHONE": "टेलीफोन",
+    "DRUG_LICENSE_NUMBER": "दवा लाइसेंस संख्या",
+    "GSTIN_NUMBER": "GSTIN संख्या",
+    "CST_NUMBER": "सीएसटी नंबर",
+    "BACK_BUTTON": "वापस",
+    "CANCEL_BUTTON": "रद्द",
+    "UPDATE_BUTTON": "अद्यतन प्रोफ़ाइल",
+    "EDIT_PROFILE": "प्रोफ़ाइल संपादित करें",
+    "UPLOAD_TEXT": "अपलोड / कब्जा दवा लाइसेंस या बिल कॉपी"
+  },
+  "NEW_ORDER": {
+    "STORE_PLACEHOLDER": "चयन की दुकान",
+    "SEARCH_PRODUCT_PLACEHOLDER": "खोज उत्पाद",
+    "NOTFOUND": "कोई उत्पादों पाया",
+    "DELIVERY_PLACEHOLDER": "वितरण का चयन करें मोड",
+    "PRIORITY_PLACEHOLDER": "वितरण का चयन करें प्राथमिकता",
+    "REMARKS_PLACEHOLDER": "टिप्पणी",
+    "TOTAL_BAL": "कुल बल:",
+    "ORDER": "आदेश इतिहास >",
+    "IN_STOCK": "स्टॉक में",
+    "LOW_STOCK": "कम स्टॉक",
+    "NO_STOCK": "कोई स्टॉक",
+    "QTY": "मात्रा",
+    "FREE": "नि: शुल्क",
+    "HS": "एच एस",
+    "ADD": "जोड़ें >",
+    "STOCK": "शेयर",
+    "PKG": "Pkg",
+    "CASE": "मामले",
+    "BOX": "बॉक्स",
+    "MRP": "एमआरपी",
+    "PTR": "PTR",
+    "GRAND_TOTAL": "भव्य कुल",
+    "TOTAL": "कुल",
+    "DELETE": "हटाएँ >",
+    "DRAFT_PO": "मसौदा पो >",
+    "CONFIRM": "इस बात की पुष्टि >"
+  },
+  "MY_ORDER": {
+    "ORDERID": "OrderId",
+    "PLACED": "रखा",
+    "UPLOADED": "अपलोड की गई",
+    "PROCESSED": "संसाधित",
+    "CALL": "अब कॉल करें",
+    "REMARKS": "टिप्पणी",
+    "MODE": "प्रसव के मोड",
+    "PRIORITY": "वितरण प्राथमिकता",
+    "FILTER": "आदेश फ़िल्टर",
+    "FROMDATE": "तारीख से",
+    "TODATE": "तिथि करने के लिए",
+    "STATUS": "स्थिति",
+    "OPERATION": "ऑपरेशन",
+    "CLOSE": "करीब",
+    "FILTERORDER": "फ़िल्टर आदेश",
+    "AMOUNT": "राशि | आदेश",
+    "VALIDATION_MESSAGES": {
+      "fromDate": [{ "type": "आवश्यक", "message": "यह आवश्यक है" }],
+      "toDate": [{ "type": "आवश्यक", "message": "यह आवश्यक है" }]
+    }
+  },
+  "LOGIN": {
+    "UM": "उपयोगकर्ता नाम / मोबाइल नंबर",
+    "PASSWORD": "पासवर्ड",
+    "FP": "पासवर्ड भूल गए",
+    "SI": "में साइन इन करें",
+    "CA": "खाता बनाएँ",
+    "VALIDATION_MESSAGES": {
+      "username": [
+        { "type": "आवश्यक", "message": "उपयोगकर्ता नाम की आवश्यकता है" },
+        {
+          "type": "minlength",
+          "message": "उपयोगकर्ता नाम होना चाहिए कम से कम 5 वर्ण"
+        },
+        {
+          "type": "maxlength",
+          "message": "उपयोगकर्ता नाम नहीं किया जा सकता है 25 से अधिक वर्ण लंबा"
+        }
+      ],
+      "password": [
+        {
+          "type": "आवश्यक",
+          "message": "कृपया पासवर्ड दर्ज करें की तुलना में अधिक या बराबर करने के लिए 6 अक्षर"
+        },
+        {
+          "type": "minlength",
+          "message": "कृपया पासवर्ड दर्ज करें की तुलना में अधिक या बराबर करने के लिए 6 अक्षर"
+        }
+      ]
+    }
+  },
+  "REGISTER": {
+    "BT": "व्यापार के प्रकार",
+    "MOBILE": "मोबाइल नंबर",
+    "REGIONS": "क्षेत्रों",
+    "AGREE": "मैं इस बात से सहमत करने के लिए",
+    "tnc": "नियम एवं शर्तें",
+    "ofPR": "के Pharmarack",
+    "REGISTER": "रजिस्टर",
+    "VALIDATION_MESSAGES": {
+      "mobile": [
+        { "type": "आवश्यक", "message": "मोबाइल नंबर की आवश्यकता है" },
+        { "type": "पैटर्न", "message": "दर्ज करें वैध 10 अंकों के मोबाइल नंबर" }
+      ],
+      "password": [
+        {
+          "type": "आवश्यक",
+          "message": "कृपया पासवर्ड दर्ज करें की तुलना में अधिक या बराबर करने के लिए 6 अक्षर"
+        },
+        {
+          "type": "minlength",
+          "message": "कृपया पासवर्ड दर्ज करें की तुलना में अधिक या बराबर करने के लिए 6 अक्षर"
+        }
+      ],
+      "region": [
+        { "type": "validValue", "message": "कृपया क्षेत्र का चयन करें" }
+      ],
+      "businessType": [
+        { "type": "validValue", "message": "व्यापार के प्रकार का चयन करें" }
+      ],
+      "tnc": [{ "message": "कृपया सहमत नियम एवं शर्तें" }]
+    }
+  },
+  "PRODUCT_SEARCH": {
+    "PLACEHOLDER_PRODUCT": "उत्पाद का नाम",
+    "PLACEHOLDER_GENERIC": "सामान्य नाम",
+    "PLACEHOLDER_COMPANY": "कंपनी का नाम",
+    "PLACEHOLDER_DISTRIBUTOR": "वितरक का नाम",
+    "MINCHAR_TEXT": "दर्ज करें न्यूनतम 3 अक्षर के लिए खोज",
+    "NOTFOUND": "नहीं पाया"
+  },
+  "PAYMENT": {
+    "VO": "देखें बकाया",
+    "FP": "फिल्टर भुगतान",
+    "AP": "राशि | भुगतान",
+    "INVOICE_TEXT": "चालान लंबित कुल राशि",
+    "PH_TEXT": "Pharmex स्वास्थ्य",
+    "NOTIFY": "को सूचित करें"
+  },
+  "SCHEMES": {
+    "SCHEME_TEXT": "नोट: इन योजनाओं में हो सकता है या उपलब्ध नहीं हो सकता है अपने क्षेत्र में. कृपया हमें के साथ की जाँच के लिए अधिकृत कंपनी के वितरक",
+    "FEEDBACK": "प्रतिक्रिया"
+  },
+  "REFER": {
+    "VALIDATION_MESSAGES": {
+      "mobile": [
+        { "type": "आवश्यक", "message": "मोबाइल नंबर की आवश्यकता है" },
+        { "type": "पैटर्न", "message": "दर्ज करें वैध 10 अंकों के मोबाइल नंबर" }
+      ],
+      "name": [{ "type": "आवश्यक", "message": "नाम की आवश्यकता है" }]
+    },
+    "RETAILER": "खुदरा विक्रेता का नाम",
+    "CONTACT": "संपर्क नंबर",
+    "AGREE": "मैं करने के लिए सहमत नियमों और शर्तों के Pharmarack",
+    "TERMS": "नियम एवं शर्तें",
+    "ACCEPT": "कृपया नियमों और शर्तों को स्वीकार",
+    "TERMS_POINTS": {
+      "1": "1. एक आदेश जगह के न्यूनतम रु.15000 करने के लिए कम से कम 3 वितरकों के बीच 11 अक्तूबर से 16 अक्तूबर",
+      "2": "2. आदेश मान्य होना चाहिए और प्रसंस्कृत वितरक द्वारा",
+      "3": "3. आदेश रखा जाना चाहिए के माध्यम से Pharmarack मंच",
+      "4": "4. यदि वितरण, बना वितरक द्वारा, द्वारा खंडन किया है रिटेलर तो उस क्रम में विचार नहीं किया जाएगा के लिए पात्र होने के लिए अभियान",
+      "5": "5. विजेताओं को चुना जाएगा के माध्यम से लकी ड्रा द्वारा किया जाता Pharmarack. के लिए मान्य 500 उपयोगकर्ताओं को केवल",
+      "6": "6. फैसले के Pharmarack प्रौद्योगिकियों के संबंध में इस अभियान के अंतिम और बाध्यकारी होगा पर सभी नवागंतुकों. Pharmarack प्रौद्योगिकियों का अधिकार सुरक्षित रखता रद्द करने के लिए, समाप्त, या निलंबित इस अभियान अपने विवेकाधिकार पर, "
+    }
+  },
+  "DRAFT_ORDER": { "RESTORE": "बहाल" },
+  "INVOICE": {
+    "FILTER": "फिल्टर चालान",
+    "AI": "राशि | चालान",
+    "HEADER": "चालान फिल्टर"
+  },
+  "DELIVERY": { "FILTER": "फ़िल्टर सूची" },
+  "NOTIFICATION": {
+    "TITLE": "अधिसूचना",
+    "FILTER": "अधिसूचना फिल्टर",
+    "FILTER_TEXT": "यहाँ क्लिक करें के लिए फ़िल्टर सूचनाएं"
+  },
+  "SALESRETURN": {
+    "PLACEHOLDER": "का चयन करें प्रकार की वापसी",
+    "QTY": "मात्रा",
+    "BATCH": "बैच",
+    "EXPIRY": "समाप्ति",
+    "MRP": "एमआरपी",
+    "FILTERORDER": "फिल्टर बिक्री वापसी",
+    "SR": "बिक्री वापसी",
+    "SELECTRETURN": "वापसी प्रकार का चयन करें",
+    "SRN": "बिक्री वापसी नहीं । ",
+    "RETURN_TEXT": "* बिक्री वापसी निपटान की गारंटी नहीं है के द्वारा Pharmarack",
+    "SRD": "बिक्री वापसी की तारीख",
+    "AP": "इंतजार पिक",
+    "STATUS": "स्थिति",
+    "RT": "वापसी प्रकार",
+    "REMARKS": "टिप्पणी",
+    "DO": "वितरण विकल्प",
+    "PLACEHOLDER_STATUS": "चयन करें स्थिति",
+    "UPDATE": "अद्यतन",
+    "CONFIRM_TEXT": "इस बात की पुष्टि की बिक्री वापसी >"
+  },
+  "FEEDBACK": {
+    "VALIDATIONS": {
+      "MOBILEREQUIRED": "मोबाइल नंबर की आवश्यकता है",
+      "MOBILEPATTERN": "दर्ज करें वैध 10 अंकों के मोबाइल नंबर",
+      "OTPREQUIRED": "Otp आवश्यक है",
+      "FEEDBACK": {
+        "message": [
+          { "type": "आवश्यक", "message": "मूल्य के लिए आवश्यक है टिप्पणी" }
+        ],
+        "feedbackType": [{ "type": "validValue", "message": "यह आवश्यक है" }],
+        "feedbackTo": [{ "type": "validValue", "message": "यह आवश्यक है" }],
+        "toStoreId": [{ "type": "validValue", "message": "यह आवश्यक है" }]
+      }
+    },
+    "FEEDBACKTYPE_PLACEHOLDER": "का चयन करें प्रतिक्रिया के प्रकार",
+    "FEEDBACKTO_PLACEHOLDER": "का चयन करें प्रकार",
+    "FEEDBACKSTORE_PLACEHOLDER": "चयन की दुकान",
+    "FEEDBACKSTATUS_PLACEHOLDER": "स्थिति का चयन करें",
+    "MESSAGE_PLACEHOLDER": "अपना संदेश लिखें",
+    "FEEDBACK_TEXT": "हम आपकी प्रतिक्रिया मूल्य. कृपया अपनी राय भेजने के लिए नीचे के रूप में"
+  }
+}
