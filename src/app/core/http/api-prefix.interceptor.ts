@@ -15,6 +15,8 @@ import { Store, select } from '@ngrx/store';
 import { TopLoaderService } from '@app/shared/top-loader/top-loader.service';
 import { tap } from 'rxjs/operators';
 import { Plugins } from '@capacitor/core';
+import { TokenRefresh } from '../authentication/actions/auth.actions';
+import { AlertService } from '@app/shared/services/alert.service';
 
 const { Device } = Plugins;
 
@@ -27,7 +29,8 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
   info: any;
   constructor(
     private store: Store<AuthState>,
-    private topLoaderService: TopLoaderService
+    private topLoaderService: TopLoaderService,
+    private alert: AlertService
   ) {
     Device.getInfo().then((val)=>{
       this.info = val;
@@ -57,13 +60,25 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
             Authorization: `Bearer ${data['userData']['token']['token']}`
           }
         });
+        if(request.url.split('v1')[1] == '/token/refresh'){
+          request = request.clone({
+            setHeaders: {
+              'refreshToken': `Bearer ${data['userData']['token']['refreshToken']}`
+            }
+          });
+          console.log(request);
+        }
       }
     }),
       untilDestroyed(this);
 
+    return this.handle(next, request);    
+  }
+
+  handle(next, request){
     return next.handle(request).pipe(
       tap(
-        (event: HttpEvent<any>) => {
+        (event: HttpEvent<any>) => {          
           if (event instanceof HttpResponse) {
             // Common condition for array
             if(Array.isArray(event['body']['data']) && event['body']['data'].length === 0){
@@ -80,9 +95,16 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
               }
             }
             this.hideLoader();
-          }
+            this.handle(next, request);
+          }          
         },
         (err: any) => {
+          console.log(err);
+          if (err.status === 401 && err.error.statusCode != 4050) {
+            this.alert.presentToast('danger', 'Your session is expired. Please wait...');
+            // Refresh our token
+            //this.store.dispatch(new TokenRefresh());
+         }
           this.hideLoader();
         }
       )

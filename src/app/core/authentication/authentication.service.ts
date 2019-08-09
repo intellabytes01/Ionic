@@ -36,6 +36,7 @@ const routes = {
   login: (c: LoginContext) => '/login',
   signup: (c: SignupContext) => '/register/retailer',
   userExists: (c: UserExistsContext) => '/user/exists',
+  refreshToken: '/token/refresh',
   savetoken: ''
 };
 
@@ -117,6 +118,15 @@ export class AuthenticationService {
         }),
         catchError(error => this.errorHandler(error))
       );
+  }
+
+  getRefreshToken(): Observable<any> {
+    return this.httpClient.get<LoginResponse>(routes.refreshToken).pipe(
+      map((data: any) => ({
+        data
+      })),
+      catchError(error => this.errorHandler(error))
+    );
   }
 
   // Customize the default error handler here if needed

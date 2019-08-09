@@ -17,6 +17,9 @@ export enum AuthActionTypes {
   USEREXISTS = '[Auth] User Exists',
   USEREXISTS_SUCCESS = '[Auth] User Exists Success',
   USEREXISTS_FAILURE = '[Auth] User Exists Failure',
+  TOKENREFRESH = '[Auth] TokenRefresh',
+  TOKENREFRESH_SUCCESS = '[Auth] TokenRefresh Success',
+  TOKENREFRESH_FAILURE = '[Auth] TokenRefresh Failure'
 }
 
 export class LogIn implements Action {
@@ -91,6 +94,21 @@ export class UserExistsFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class TokenRefresh implements Action {
+  readonly type = AuthActionTypes.TOKENREFRESH;
+  constructor() {}
+}
+
+export class TokenRefreshSuccess implements Action {
+  readonly type = AuthActionTypes.TOKENREFRESH_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class TokenRefreshFailure implements Action {
+  readonly type = AuthActionTypes.TOKENREFRESH_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | LogIn
   | LogInSuccess
@@ -106,4 +124,7 @@ export type All =
   | GetPreviousUrl
   | UserExists
   | UserExistsSuccess
-  | UserExistsFailure;
+  | UserExistsFailure
+  | TokenRefresh
+  | TokenRefreshSuccess
+  | TokenRefreshFailure;

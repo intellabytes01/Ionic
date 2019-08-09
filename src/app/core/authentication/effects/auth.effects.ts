@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Storage } from '@ionic/storage';
 // tslint:disable-next-line: max-line-length
-import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure, SaveToken, SaveTokenSuccess, SaveTokenFail, UserExists, UserExistsSuccess, UserExistsFailure } from '../actions/auth.actions';
+import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure, SaveToken, SaveTokenSuccess, SaveTokenFail, UserExists, UserExistsSuccess, UserExistsFailure, TokenRefresh, TokenRefreshSuccess, TokenRefreshFailure } from '../actions/auth.actions';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { AlertService } from '@app/shared/services/alert.service';
 
@@ -161,6 +161,36 @@ export class AuthEffects {
     ofType(AuthActionTypes.USEREXISTS_FAILURE),
     tap((user) => {
       console.log(user);
+    })
+  );
+
+  @Effect()
+  TokenRefresh: Observable<Action> = this.actions.pipe(
+    ofType(AuthActionTypes.TOKENREFRESH),
+    map((action: TokenRefresh) => {}),
+    switchMap(() => {
+      return this.authService.getRefreshToken().pipe(
+        map((user) => {
+          return new TokenRefreshSuccess(user['data']);
+        }), catchError((error) => of(new TokenRefreshFailure({ error }))));
+    })
+    );
+
+
+  @Effect({ dispatch: false })
+  TokenRefreshSuccess: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.TOKENREFRESH_SUCCESS),
+    tap((user) => {
+      this.storage.set('userData', JSON.stringify(user.payload));
+      this.router.navigateByUrl('/dashboard');
+    })
+  );
+
+  @Effect({ dispatch: false })
+  TokenRefreshFailure: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.TOKENREFRESH_FAILURE),
+    tap((res) => {
+      this.alert.presentToast('danger', 'Please provide valid credentials.');
     })
   );
 }

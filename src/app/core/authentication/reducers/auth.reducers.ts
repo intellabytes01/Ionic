@@ -96,6 +96,21 @@ export function authReducer(state = initialState, action: All): State {
       };
     }
 
+    case AuthActionTypes.TOKENREFRESH_SUCCESS: {
+      return {
+        ...state,
+        isAuthenticated: true,
+        userData: action.payload,
+        errorMessage: null
+      };
+    }
+    case AuthActionTypes.TOKENREFRESH_FAILURE: {
+      return {
+        ...state,
+        errorMessage: action.payload.error
+      };
+    }
+
     default: {
       return state;
     }
