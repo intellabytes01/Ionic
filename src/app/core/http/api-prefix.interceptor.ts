@@ -94,8 +94,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
                 this.noRecordsFoundHide();
               }
             }
-            this.hideLoader();
-            this.handle(next, request);
+            this.hideLoader();            
           }          
         },
         (err: any) => {
@@ -103,7 +102,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
           if (err.status === 401 && err.error.statusCode != 4050) {
             this.alert.presentToast('danger', 'Your session is expired. Please wait...');
             // Refresh our token
-            //this.store.dispatch(new TokenRefresh());
+            this.store.dispatch(new TokenRefresh());
          }
           this.hideLoader();
         }

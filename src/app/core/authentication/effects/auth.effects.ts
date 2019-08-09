@@ -182,7 +182,6 @@ export class AuthEffects {
     ofType(AuthActionTypes.TOKENREFRESH_SUCCESS),
     tap((user) => {
       this.storage.set('userData', JSON.stringify(user.payload));
-      this.router.navigateByUrl('/dashboard');
     })
   );
 
@@ -190,7 +189,7 @@ export class AuthEffects {
   TokenRefreshFailure: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.TOKENREFRESH_FAILURE),
     tap((res) => {
-      this.alert.presentToast('danger', 'Please provide valid credentials.');
+      this.alert.presentToast('danger', 'Token refresh failed');
     })
   );
 }
