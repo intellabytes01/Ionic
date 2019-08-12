@@ -13,7 +13,10 @@ export enum ProfileActionTypes {
   BUSINESSTYPES_FAILURE = '[Profile] Business Types Failure',
   REGIONS = '[Profile] Region Types',
   REGIONS_SUCCESS = '[Profile] Region Types Success',
-  REGIONS_FAILURE = '[Profile] Region Types Failure'
+  REGIONS_FAILURE = '[Profile] Region Types Failure',
+  IMAGEUPLOAD = '[Profile] Image Upload',
+  IMAGEUPLOAD_SUCCESS = '[Profile] Image Upload Success',
+  IMAGEUPLOAD_FAILURE = '[Profile] Image Upload Failure',
 }
 
 export class SaveProfileDetails implements Action {
@@ -78,6 +81,21 @@ export class BusinessTypesFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class ImageUpload implements Action {
+  readonly type = ProfileActionTypes.IMAGEUPLOAD;
+  constructor(public payload: any) {}
+}
+
+export class ImageUploadSuccess implements Action {
+  readonly type = ProfileActionTypes.IMAGEUPLOAD_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class ImageUploadFailure implements Action {
+  readonly type = ProfileActionTypes.IMAGEUPLOAD_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | SaveProfileDetails
   | SaveProfileSuccess
@@ -90,4 +108,7 @@ export type All =
   | RegionsFailure
   | GetProfileDetails
   | GetProfileSuccess
-  | GetProfileFailure;
+  | GetProfileFailure
+  | ImageUpload
+  | ImageUploadSuccess
+  | ImageUploadFailure;

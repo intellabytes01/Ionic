@@ -3,10 +3,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { environment } from '@env/environment';
 import { merge } from 'rxjs';
 import { filter, map, mergeMap, startWith, delay, tap } from 'rxjs/operators';
-import {
-  Logger,
-  I18nService,
-  untilDestroyed} from './core';
+import { Logger, I18nService, untilDestroyed } from './core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -88,15 +85,14 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
 
-      this.router.events.subscribe((val)=>{
-        this.topLoaderService.norecord.next(false);
-      },
-      untilDestroyed(this))
+    this.router.events.subscribe(val => {
+      this.topLoaderService.norecord.next(false);
+    }, untilDestroyed(this));
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      //this.statusBar.styleDefault();
+      // this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
 
@@ -125,18 +121,18 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       // do something when a notification is opened
     });
 
-    this.oneSignal.getIds().then((data) => console.log(data));
+    this.oneSignal.getIds().then(data => console.log(data));
 
     this.oneSignal.endInit();
   }
 
   ngAfterViewInit() {
     this.topLoaderService.norecord
-        .pipe(
-            startWith(null),
-            delay(0),
-            tap((value) => this.norecord = value)
-        ).subscribe();
+      .pipe(
+        startWith(null),
+        delay(0),
+        tap(value => (this.norecord = value))
+      )
+      .subscribe();
   }
-  
 }

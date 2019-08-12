@@ -122,9 +122,10 @@ export class AuthenticationService {
 
   getRefreshToken(): Observable<any> {
     return this.httpClient.get<LoginResponse>(routes.refreshToken).pipe(
-      map((data: any) => ({
-        data
-      })),
+      tap((data: any) => {
+        // this.store.dispatch(new Auth.SetAuthenticated());
+        this.credentialsService.setCredentials(data, true);
+      }),
       catchError(error => this.errorHandler(error))
     );
   }

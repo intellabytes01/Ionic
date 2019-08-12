@@ -83,7 +83,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createForm();
-    this.photo = '../../../assets/icon/gstin.png';
+    this.photo = 'assets/icon/gstin.png';
   }
 
   async getUserId() {
@@ -266,8 +266,9 @@ export class ProfilePage implements OnInit, OnDestroy {
     });
 
     modal.onDidDismiss().then(dataReturned => {
+      console.log(dataReturned);
       if (dataReturned.data) {
-        this.photo = 'data:image/jpeg;base64,' + dataReturned.data;
+        this.photo = dataReturned.data;
       }
     });
     return await modal.present();
