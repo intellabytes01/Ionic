@@ -5,22 +5,21 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-card>
-      <!-- <img src="./madison.jpg" /> -->
+    <ion-card *ngFor="let product of mallProducts">
       <ion-card-header>
         <ion-row>
           <ion-col size="4">
             <ion-avatar>
               <img
-                src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+                [src]="product.ImagePath"
               />
             </ion-avatar>
           </ion-col>
           <ion-col size="8">
             <ion-row>
               <ion-col>
-                <ion-card-title>Madison, WI</ion-card-title>
-                <ion-card-subtitle>Destination</ion-card-subtitle>
+                <ion-card-title>{{product.ProductName}}</ion-card-title>
+                <ion-card-subtitle>{{product.BrandName}}</ion-card-subtitle>
               </ion-col>
             </ion-row>
             <ion-row>
@@ -41,11 +40,11 @@
         <ion-row>
           <ion-col size="4">
             <p>PTR</p>
-            <p>₹ PTR</p>
+            <p>₹ {{product.PTR}}</p>
           </ion-col>
           <ion-col size="8">
             <p>MRP</p>
-            <p>₹ PTR</p>
+            <p>₹ {{product.MRP}}</p>
           </ion-col>
         </ion-row>
         <ion-row>
