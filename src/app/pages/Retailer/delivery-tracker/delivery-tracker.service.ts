@@ -17,8 +17,19 @@ export interface DeliveryTrackerContext {
   store: string;
 }
 
+export interface StatusUpdateContext {
+  invoiceDate: string;
+  invoiceNumber: string;
+  latitude: number;
+  longitude: number;
+  userId: number;
+  partyCode: string;
+  status: string;
+  remarks: string;
+}
+
 const routes = {
-  deliveryTracker: '/delivery_tracker?'
+  deliveryTracker: '/delivery_tracker'
 };
 
 @Injectable()
@@ -26,19 +37,40 @@ export class DeliveryTrackerService {
   constructor(
     private httpClient: HttpClient,
     private store: Store<fromDeliveryTracker.DeliveryTrackerState>
-  ) { }
+  ) {}
 
   /**
    * Get DeliveryTracker List.
    * @return Array of DeliveryTracker List.
    */
   getDeliveryTrackerList(context: DeliveryTrackerContext): Observable<any> {
-    return this.httpClient.get<DeliveryTrackerResponse>(`${routes.deliveryTracker}fromDate=${context.fromDate}&toDate=${context.toDate}&status=${context.status}&query=${context.query}&store=${context.store}`).pipe(
-      map((data: any) => ({
-        data
-      })),
-      catchError(error => this.errorHandler(error))
-    );
+    return this.httpClient
+      .get<DeliveryTrackerResponse>(
+        `${routes.deliveryTracker}?fromDate=${context.fromDate}&toDate=${
+          context.toDate
+        }&status=${context.status}&query=${context.query}&store=${
+          context.store
+        }`
+      )
+      .pipe(
+        map((data: any) => ({
+          data
+        })),
+        catchError(error => this.errorHandler(error))
+      );
+  }
+
+  updateStatus(context: StatusUpdateContext): Observable<any> {
+    return this.httpClient
+      .put<DeliveryTrackerResponse>(
+        `${routes.deliveryTracker}`, context
+      )
+      .pipe(
+        map((data: any) => ({
+          data
+        })),
+        catchError(error => this.errorHandler(error))
+      );
   }
 
   // Customize the default error handler here if needed

@@ -9,7 +9,7 @@ import {
 import { Store, select } from '@ngrx/store';
 import { ImageUpload } from '@app/pages/Retailer/profile/store/profile.actions';
 import { untilDestroyed } from '@app/core';
-declare var window;
+import { File, FileEntry } from '@ionic-native/file/ngx';
 
 @Component({
   selector: 'pr-modal-popup',
@@ -26,7 +26,8 @@ export class ModalPopupPage implements OnInit {
     private navParams: NavParams,
     private camera: Camera,
     private alert: AlertService,
-    private store: Store<ProfileState>
+    private store: Store<ProfileState>,
+    private file: File
   ) {}
 
   ngOnInit() {
@@ -36,13 +37,13 @@ export class ModalPopupPage implements OnInit {
   }
 
   async closeModal() {
-    await this.modalController.dismiss({ data: this.imgUrl });
+    await this.modalController.dismiss(this.imgUrl);
   }
 
   takePhoto(sourceType) {
     const options: CameraOptions = {
       quality: 80,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.PNG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
@@ -53,7 +54,6 @@ export class ModalPopupPage implements OnInit {
 
     this.camera.getPicture(options).then(
       imageData => {
-        this.modalController.dismiss(imageData);
         this.uploadMedia(imageData);
       },
       () => {}
@@ -61,39 +61,53 @@ export class ModalPopupPage implements OnInit {
   }
 
   uploadMedia(imageData) {
-    console.log('uploadMedia');
-    window.resolveLocalFileSystemURL(imageData, (fileEntry: any) => {
-      fileEntry.file(fileObj => {
-        console.log('fileObj: ', fileObj);
-        // if (fileObj.size <= 1000000) {
-        const payload = {
-          file: fileObj,
-          type: 'DL',
-          reqOpts: {
-            headers: null
+    this.file.resolveLocalFilesystemUrl(imageData).then(
+      (fileEntry: FileEntry) => {
+        console.log('fileEntry: ', fileEntry);
+        fileEntry.file(
+          fileObj => {
+            console.log('fileObj: ', fileObj);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const imgBlob = new Blob([reader.result], {
+                type: fileObj.type
+              });
+              const payload = {
+                file: imgBlob,
+                type: 'DL',
+                reqOpts: {
+                  headers: null
+                },
+                retailerId: 3
+              };
+              console.log('payload: ', payload);
+              this.store.dispatch(new ImageUpload(payload));
+              this.store
+                .pipe(
+                  select(imageUpload),
+                  untilDestroyed(this)
+                )
+                .subscribe(imgUrl => {
+                  console.log(imgUrl);
+                  this.imgUrl = imgUrl;
+                  if (this.imgUrl) {
+                    this.closeModal();
+                  }
+                });
+            };
+            reader.readAsArrayBuffer(fileObj);
           },
-          retailerId: 3
-        };
-        this.store.dispatch(new ImageUpload(payload));
-        this.store
-          .pipe(
-            select(imageUpload),
-            untilDestroyed(this)
-          )
-          .subscribe(imgUrl => {
-            console.log(imgUrl);
-            this.imgUrl = imgUrl;
-            if (this.imgUrl) {
-              this.closeModal();
-            }
-          });
-        // }
-        // else {
-        //   this.alert.presentToast('danger',
-        //     "Please upload files less than or equal to 1 MB."
-        //   );
-        // }
-      });
-    });
+          e => {
+            console.log(e);
+          }
+        );
+      },
+      e => {
+        console.log(e);
+      }
+    );
   }
+
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngOnDestroy() {}
 }
