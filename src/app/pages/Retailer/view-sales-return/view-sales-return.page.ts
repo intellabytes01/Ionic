@@ -15,8 +15,8 @@ import { SalesReturnList } from './store/view-sales-return.actions.js';
   templateUrl: './view-sales-return.page.html',
   styleUrls: ['./view-sales-return.page.scss'],
 })
-export class ViewSalesReturnPage implements OnInit {
-  
+export class ViewSalesReturnPage implements OnInit, OnDestroy {
+
   mysalesReturnList: any[] = [];
   salesFilter: any = {};
   total: any = {
@@ -42,13 +42,13 @@ export class ViewSalesReturnPage implements OnInit {
   }
 
   getSalesReturnList() {
-    let payload = {
+    const payload = {
       fromDate: '',
       toDate: '',
       query: '',
       store: '',
       type: '',
-    }
+    };
     this.salesReturnStore.dispatch(new SalesReturnList(payload));
   }
 

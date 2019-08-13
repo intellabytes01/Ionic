@@ -32,7 +32,8 @@ export class FilterModalPage implements OnInit {
     query: '',
     store: ''
   };
-  statusList = [{name: 'All'}, {name: 'Dispached'}, {name: 'Delivered'}, {name: 'Rejected'}, {name: 'Not Delivered'}, {name: 'Delivery Attempted'}]
+  statusList = [{name: 'All'}, {name: 'Dispached'}, {name: 'Delivered'},
+  {name: 'Rejected'}, {name: 'Not Delivered'}, {name: 'Delivery Attempted'}];
   constructor(
     public formBuilder: FormBuilder,
     public modalController: ModalController,

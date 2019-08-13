@@ -99,7 +99,7 @@ export class SchemeEffects {
   @Effect({ dispatch: false })
   SchemeProductsSuccess: Observable<any> = this.actions.pipe(
     ofType(SchemeAction.SCHEMEPRODUCTS_SUCCESS),
-    tap(()=>{
+    tap(() => {
       this.topLoaderService.norecord.next(false);
     })
   );

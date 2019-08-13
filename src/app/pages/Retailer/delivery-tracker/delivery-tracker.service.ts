@@ -33,7 +33,9 @@ export class DeliveryTrackerService {
    * @return Array of DeliveryTracker List.
    */
   getDeliveryTrackerList(context: DeliveryTrackerContext): Observable<any> {
-    return this.httpClient.get<DeliveryTrackerResponse>(`${routes.deliveryTracker}fromDate=${context.fromDate}&toDate=${context.toDate}&status=${context.status}&query=${context.query}&store=${context.store}`).pipe(
+    return this.httpClient.get<DeliveryTrackerResponse >
+    (`${routes.deliveryTracker}fromDate=${context.fromDate}
+    &toDate=${context.toDate}&status=${context.status}&query=${context.query}&store=${context.store}`).pipe(
       map((data: any) => ({
         data
       })),

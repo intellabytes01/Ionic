@@ -13,52 +13,52 @@ export interface DeliveryTrackerResponse {
 
 export interface DeliveryTrackerList {
 
-  StoreId: number,
+  StoreId: number;
 
-  StoreName: string,
+  StoreName: string;
 
-  PartyCode: 2336,
+  PartyCode: 2336;
 
-  PartyName: string,
+  PartyName: string;
 
-  DisplayPartyCode: string,
+  DisplayPartyCode: string;
 
-  InvoiceNo: string,
+  InvoiceNo: string;
 
-  OrderNo: string,
+  OrderNo: string;
 
-  InvoiceDate: string,
+  InvoiceDate: string;
 
-  InvoiceAmt: number,
+  InvoiceAmt: number;
 
-  DeliveryMan: string,
+  DeliveryMan: string;
 
-  DeliveryAssignedDate: string,
+  DeliveryAssignedDate: string;
 
-  Status: string,
+  Status: string;
 
-  DeliveryDate: string,
+  DeliveryDate: string;
 
-  DeliveryRemarks: string,
+  DeliveryRemarks: string;
 
-  RetailerRemarks: string,
+  RetailerRemarks: string;
 
-  UserId: number,
+  UserId: number;
 
-  Username: string,
+  Username: string;
 
-  NAME: string,
+  NAME: string;
 
-  CreatedBy: number,
+  CreatedBy: number;
 
-  CreatedDate: string,
+  CreatedDate: string;
 
-  ModifiedBy: number,
+  ModifiedBy: number;
 
-  ModifiedDate: string,
+  ModifiedDate: string;
 
-  Latitude: string,
+  Latitude: string;
 
-  Longitude: string
+  Longitude: string;
 
 }

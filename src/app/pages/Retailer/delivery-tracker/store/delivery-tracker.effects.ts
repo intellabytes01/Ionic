@@ -22,7 +22,7 @@ export class DeliveryTrackerEffects {
     private router: Router
   ) {}
 
-  // DeliveryTracker 
+  // DeliveryTracker
 
   @Effect()
   DeliveryTracker: Observable<Action> = this.actions.pipe(

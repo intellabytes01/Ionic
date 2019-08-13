@@ -1,23 +1,23 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
-import { untilDestroyed } from "@app/core/index.js";
-import { ModalController } from "@ionic/angular";
-import { Storage } from "@ionic/storage";
-import * as fromModel from "./new-order.json";
-import { SimilarProductsModalPage } from "./similar-products-modal/similar-products-modal.page";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
-import { ProductDetails, NewOrderState } from "./store/new-order.state";
-import { Store } from "@ngrx/store";
-import { ProductSearch } from "./store/new-order.actions";
-import { productSearchData } from "./store/new-order.reducers";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { untilDestroyed } from '@app/core/index.js';
+import { ModalController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import * as fromModel from './new-order.json';
+import { SimilarProductsModalPage } from './similar-products-modal/similar-products-modal.page';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ProductDetails, NewOrderState } from './store/new-order.state';
+import { Store } from '@ngrx/store';
+import { ProductSearch } from './store/new-order.actions';
+import { productSearchData } from './store/new-order.reducers';
 import { AuthState, getRetailerStoreParties } from '@app/core/authentication/auth.states.js';
 
 @Component({
-  selector: "pr-new-order",
-  templateUrl: "./new-order.page.html",
-  styleUrls: ["./new-order.page.scss"]
+  selector: 'pr-new-order',
+  templateUrl: './new-order.page.html',
+  styleUrls: ['./new-order.page.scss']
 })
 export class NewOrderPage implements OnInit, OnDestroy {
   public neworderForm: FormGroup;
@@ -52,7 +52,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Save to offline storage
 
   saveToStorage() {
-    this.orderData[this.key]["key"] = this.key;
+    this.orderData[this.key]['key'] = this.key;
     this.storage.set(this.key, this.orderData);
   }
 
@@ -65,8 +65,8 @@ export class NewOrderPage implements OnInit, OnDestroy {
     );
     this.orderData[this.key] = {
       productList: []
-    }
-    // Draft Order Update Case 
+    };
+    // Draft Order Update Case
     this.state$ = this.activatedRoute.paramMap.pipe(
       map(() => window.history.state)
     );
@@ -83,7 +83,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     });
 
     this.neworderForm = this.formBuilder.group({
-      searchText: ["", Validators.compose([])],
+      searchText: ['', Validators.compose([])],
       store: [
         {
           StoreId: null,
@@ -94,25 +94,25 @@ export class NewOrderPage implements OnInit, OnDestroy {
       deliveryMode: [
         {
           id: null,
-          name: ""
+          name: ''
         },
         Validators.compose([Validators.required])
       ],
       deliveryPriority: [
         {
           id: null,
-          name: ""
+          name: ''
         },
         Validators.compose([Validators.required])
       ],
-      remarks: ["", Validators.compose([])]
+      remarks: ['', Validators.compose([])]
     });
   }
 
   // Search in Product List
 
   search() {
-    if (this.neworderForm.value.searchText.length == 0) {
+    if (this.neworderForm.value.searchText.length === 0) {
       this.searchList = [];
     } else {
       const payload = {
@@ -137,10 +137,10 @@ export class NewOrderPage implements OnInit, OnDestroy {
   selectProduct(product) {
     this.similarProducts = Object.assign(this.similarProducts, this.searchList);
     this.neworderForm.patchValue({
-      searchText: ""
+      searchText: ''
     });
     const productPresent = this.tempProductList.find(element => {
-      return element.id === product["id"];
+      return element.id === product['id'];
     });
     if (!productPresent) {
       this.tempProductList.push(product);
@@ -151,7 +151,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   deleteProduct(index) {
     this.neworderForm.patchValue({
-      searchText: ""
+      searchText: ''
     });
     this.orderData[this.key].productList.splice(index, 1);
     this.tempProductList.splice(index, 1);
@@ -193,7 +193,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     const modal = await this.modalController.create({
       component: SimilarProductsModalPage,
       componentProps: {
-        title: "Similar Products",
+        title: 'Similar Products',
         similarProductList: this.similarProducts
       }
     });
@@ -212,7 +212,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   async presentModalOrderHistory() {
     const modal = await this.modalController.create({
       component: SimilarProductsModalPage,
-      componentProps: { title: "View Order History" }
+      componentProps: { title: 'View Order History' }
     });
     modal.onDidDismiss().then(data => {});
     return await modal.present();

@@ -4,7 +4,7 @@ import { DeliveryTrackerState } from './delivery-tracker.state';
 
 export const initialState: DeliveryTrackerState = {
   deliveryTrackerArray: [],
-  errorMessage: null  
+  errorMessage: null
 };
 
 export function deliveryTrackerReducer(

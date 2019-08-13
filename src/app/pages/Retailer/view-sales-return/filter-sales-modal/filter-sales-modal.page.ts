@@ -36,7 +36,7 @@ export class FilterSalesModalPage implements OnInit {
       private salesReturnStore: Store<SalesReturnState>,
       private alert: AlertService
     ) {}
-  
+
     ngOnInit() {
       this.getSalesReturnTypes();
       this.getSalesReturnStores();
@@ -68,21 +68,21 @@ export class FilterSalesModalPage implements OnInit {
         ]
       });
     }
-  
+
     // Custom validation for returnType
-  
+
     validateType(control: AbstractControl): { [key: string]: boolean } | null {
       if (!control.value.id) {
         return { validValue: true };
       }
       return null;
     }
-  
+
     updateStore(val) {
       this.salesFilterForm.value.store.StoreId = val.StoreId;
     }
-  
-    salesFilterSubmit() {  
+
+    salesFilterSubmit() {
       this.salesFilter.fromDate = format(
         this.salesFilterForm.value.fromDate,
         'DD/MM/YY'
@@ -113,4 +113,4 @@ export class FilterSalesModalPage implements OnInit {
       this.salesReturnStore.dispatch(new SalesReturnStores());
     }
   }
-  
+

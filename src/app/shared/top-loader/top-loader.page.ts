@@ -17,6 +17,7 @@ export class TopLoaderPage implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     this.topLoaderService.isLoading
         .pipe(
+            // tslint:disable-next-line: deprecation
             startWith(null),
             delay(0),
             tap((value) => this.loading = value)

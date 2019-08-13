@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AuthState, getRetailerStoreParties } from '@app/core/authentication/auth.states';
 import { untilDestroyed } from '@app/core';
-import * as fromModel from './sales-return.json'
+import * as fromModel from './sales-return.json';
 
 @Component({
   selector: 'pr-sales-return',
@@ -136,7 +136,7 @@ export class SalesReturnPage implements OnInit {
     this.salesReturnForm.value.SALESRETURN.name = val.name;
   }
 
-  changeDeliveryMode(val){
+  changeDeliveryMode(val) {
     this.salesReturnForm.value.deliveryMode.name = val.name;
   }
 

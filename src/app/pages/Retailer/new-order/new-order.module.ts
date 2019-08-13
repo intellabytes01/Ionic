@@ -12,7 +12,7 @@ import { SimilarProductsModalPageModule } from './similar-products-modal/similar
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { NewOrderEffects } from './store/new-order.effects';
-import * as newOrderReducer from './store/new-order.reducers'
+import * as newOrderReducer from './store/new-order.reducers';
 import { NewOrderService } from './new-order.service';
 
 const routes: Routes = [

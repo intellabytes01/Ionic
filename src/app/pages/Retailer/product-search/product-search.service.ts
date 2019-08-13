@@ -3,7 +3,9 @@ import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Logger } from '@app/core';
-import { ProductSearchResponse, GenericSearchResponse, GenericDetailResponse, CompanySearchResponse, CompanyStoresResponse, CompanyProductsResponse, DistributorSearchResponse, DistributorListResponse, GenericStoresResponse } from './store/product-search.state';
+import { ProductSearchResponse, GenericSearchResponse, GenericDetailResponse,
+  CompanySearchResponse, CompanyStoresResponse, CompanyProductsResponse,
+  DistributorSearchResponse, DistributorListResponse, GenericStoresResponse } from './store/product-search.state';
 
 const log = new Logger('ProductSearch');
 export interface ProductSearchContext {
@@ -119,7 +121,8 @@ export class ProductSearchService {
   getGenericStores(context: GenericStoreContext): Observable<any> {
     return this.httpClient
       .get<GenericStoresResponse>(
-        `${routes.genericStores}productId=${context.productId}&regionId=${context.regionId}&retailerId=${context.retailerId}&page=${context.page}`
+        `${routes.genericStores}productId=${context.productId}&regionId=${context.regionId}
+        &retailerId=${context.retailerId}&page=${context.page}`
       )
       .pipe(
         map((data: any) => ({

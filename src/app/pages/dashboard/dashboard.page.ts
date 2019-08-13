@@ -1,23 +1,23 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { MenuController, Platform } from "@ionic/angular";
-import { TranslateService } from "@ngx-translate/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MenuController, Platform } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import {
   AuthState,
   selectAuthState,
   getRetailerName,
   getRetailerStatus
-} from "@app/core/authentication/auth.states";
-import { Store, select } from "@ngrx/store";
-import { untilDestroyed } from "@app/core";
-import { Storage } from "@ionic/storage";
-import * as fromModel from "./dashboard-data.json";
-import { AlertService } from "@app/shared/services/alert.service";
-import { Router, NavigationEnd } from "@angular/router";
+} from '@app/core/authentication/auth.states';
+import { Store, select } from '@ngrx/store';
+import { untilDestroyed } from '@app/core';
+import { Storage } from '@ionic/storage';
+import * as fromModel from './dashboard-data.json';
+import { AlertService } from '@app/shared/services/alert.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
-  selector: "app-dashboard",
-  templateUrl: "./dashboard.page.html",
-  styleUrls: ["./dashboard.page.scss"]
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.page.html',
+  styleUrls: ['./dashboard.page.scss']
 })
 export class DashboardPage implements OnInit, OnDestroy {
   pages: any[] = [];
@@ -33,11 +33,11 @@ export class DashboardPage implements OnInit, OnDestroy {
     private alert: AlertService,
     private router: Router
   ) {
-    
+
     this.getRetailerName();
     this.router.events.subscribe(e => {
       if (e instanceof NavigationEnd) {
-        if (e.url === "/dashboard") {
+        if (e.url === '/dashboard') {
           this.getRetailerStatus();
         }
       }
@@ -45,8 +45,8 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
-    this.menuCtrl.enable(true, "menuLeft");
-    this.menuCtrl.enable(true, "menuRight");
+    this.menuCtrl.enable(true, 'menuLeft');
+    this.menuCtrl.enable(true, 'menuRight');
     this.backButton = this.platform.backButton.subscribeWithPriority(
       9999,
       () => {
@@ -71,36 +71,36 @@ export class DashboardPage implements OnInit, OnDestroy {
         untilDestroyed(this)
       )
       .subscribe(data => {
-        if (!data["userData"]) {
-          this.storage.get("userData").then((value: any) => {
+        if (!data['userData']) {
+          this.storage.get('userData').then((value: any) => {
             if (value) {
-              this.userData = JSON.parse(value)["userData"];
+              this.userData = JSON.parse(value)['userData'];
             }
           });
         } else {
-          this.userData = data["userData"]["userData"];
+          this.userData = data['userData']['userData'];
         }
       });
     untilDestroyed(this);
   }
 
   presentAlertConfirm() {
-    this.alert.exitModal(this.translateService.instant("DASHBOARD.EXIT_APP"));
+    this.alert.exitModal(this.translateService.instant('DASHBOARD.EXIT_APP'));
   }
 
   showUnAuthrorizedMessage() {
     this.alert.presentToast(
-      "danger",
-      this.translateService.instant("DASHBOARD.USER_ACTIVATION"),
+      'danger',
+      this.translateService.instant('DASHBOARD.USER_ACTIVATION'),
       5000
     );
   }
 
   showUpdateProfileModal() {
     this.alert.confirmationModal(
-      this.translateService.instant("DASHBOARD.UPDATE_PROFILE_MODAL_TITLE"),
-      this.translateService.instant("DASHBOARD.UPDATE_PROFILE_MODAL_MESSAGE"),
-      "profile"
+      this.translateService.instant('DASHBOARD.UPDATE_PROFILE_MODAL_TITLE'),
+      this.translateService.instant('DASHBOARD.UPDATE_PROFILE_MODAL_MESSAGE'),
+      'profile'
     );
   }
 
@@ -111,7 +111,7 @@ export class DashboardPage implements OnInit, OnDestroy {
         untilDestroyed(this)
       )
       .subscribe(retailerName => {
-        if (!retailerName || retailerName == null || retailerName === "") {
+        if (!retailerName || retailerName == null || retailerName === '') {
           this.showUpdateProfileModal();
         }
       });
@@ -127,25 +127,25 @@ export class DashboardPage implements OnInit, OnDestroy {
         if (
           retailerStatus &&
           retailerStatus != null &&
-          retailerStatus !== "Authorized"
+          retailerStatus !== 'Authorized'
         ) {
           this.showUnAuthrorizedMessage();
         }
       });
   }
 
-  setPermissions() {    
+  setPermissions() {
     this.pages = this.pages.map(val => {
-      switch (this.permissions[val.name]['View']){
+      switch (this.permissions[val.name]['View']) {
         case 0:
           val.permissions[0]['perm'].push('VIEW');
           val.disable = true;
-        break;
+          break;
 
         case 1:
           val.permissions[0]['perm'].push('VIEW');
           val.disable = false;
-        break;
+          break;
 
         case 2:
         break;
