@@ -25,6 +25,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { NoComponentPageModule } from './pages/no-component/no-component.module';
 import { Device } from '@ionic-native/device/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -52,7 +53,7 @@ driverOrder: ['sqlite', 'indexeddb', 'websql', 'localstorage']
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AppPreloadingStrategy,
-    Camera, NgxPermissionsService, OneSignal, InAppBrowser, Device, File
+    Camera, NgxPermissionsService, OneSignal, InAppBrowser, Device, File, FirebaseAnalytics
   ],
   bootstrap: [AppComponent]
 })

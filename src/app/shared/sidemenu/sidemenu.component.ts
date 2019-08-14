@@ -36,10 +36,10 @@ export class SidemenuComponent implements OnInit {
 
   openPage(page) {
     this.menuCtrl.close();
-    if (page.url === 'LOGIN_ROUTE') {
+    if (page.title === 'SIDEMENU.LOGOUT_TITLE') {
       this.logout();
     }
-    if (page.title === 'TERMS_TITLE') {
+    if (page.title === 'SIDEMENU.TERMS_TITLE') {
       window.open(this.translateService.instant('SIDEMENU.TERMS_URL'), '_system');
     }
     this.router.navigate([this.translateService.instant(page.url)]);

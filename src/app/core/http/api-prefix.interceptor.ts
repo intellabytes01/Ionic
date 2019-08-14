@@ -58,7 +58,9 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
           untilDestroyed(this)
         )
         .subscribe(data => {
-          this.token = data['userData']['token']['token'];
+          if (data['userData'] && data['userData']['token'] && data['userData']['token']['token']) {
+            this.token = data['userData']['token']['token'];
+          }
         });
     }
     request = request.clone({

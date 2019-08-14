@@ -28,6 +28,7 @@ import { ModalPopupPage } from './modal-popup/modal-popup.page';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { NewOrderButtonComponent } from './new-order-button/new-order-button.component';
 import { SearchComponent } from './search/search.component';
+import { ClickDirective } from './directives/click.directive';
 
 @NgModule({
   imports: [IonicModule, CommonModule, RouterModule, TranslateModule, IonicSelectableModule, FormsModule,
@@ -50,7 +51,8 @@ import { SearchComponent } from './search/search.component';
     DisableControlDirective,
     ModalPopupPage,
     NewOrderButtonComponent,
-    SearchComponent
+    SearchComponent,
+    ClickDirective
   ],
   exports: [
     LoaderComponent,
@@ -70,7 +72,8 @@ import { SearchComponent } from './search/search.component';
     DisableControlDirective,
     ModalPopupPage,
     NewOrderButtonComponent,
-    SearchComponent
+    SearchComponent,
+    ClickDirective
   ],
   entryComponents: [ModalPopupPage],
   providers: [AlertService, UtilityService, ImagePicker],

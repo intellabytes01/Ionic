@@ -14,9 +14,6 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.select(selectAuthState).pipe(untilDestroyed(this)).subscribe(data => {
-      console.log(data);
-    });
   }
 
   ngOnDestroy() {

@@ -9,37 +9,51 @@
   </ion-item>
 </ion-list> -->
 <ion-content padding>
-<ion-row>
-  <ion-col text-center>
-    <img class="prlogo" src="assets/icon/pr-logo.png" />
-  </ion-col> </ion-row
-><br /><br />
-
-<form [formGroup]="loginForm">
   <ion-row>
-    <ion-col>
-      <ion-label position="floating">{{'LOGIN.UM' | translate}}</ion-label>
-      <ion-input
-        formControlName="username"
-        class="white-border white-color"
-        type="text"
-      ></ion-input>
-    </ion-col>
-  </ion-row>
+    <ion-col text-center>
+      <img class="prlogo" src="assets/icon/pr-logo.png" />
+    </ion-col> </ion-row
+  ><br /><br />
 
-  <div class="validation-errors">
-    <ng-container *ngFor="let validation of validation_messages.username; trackBy: trackByFn">
-      <div class="error-message" *ngIf="loginForm.get('username').hasError(validation.type) && (loginForm.get('username').dirty || loginForm.get('username').touched)">
-        {{ validation.message }}
-      </div>
-    </ng-container>
-  </div>
+  <form [formGroup]="loginForm">
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">{{ "LOGIN.UM" | translate }}</ion-label>
+        <ion-input
+          formControlName="username"
+          class="white-border white-color"
+          type="text"
+        ></ion-input>
+      </ion-col>
+    </ion-row>
 
-  <ion-row>
-    <ion-col>
-      <ion-label position="floating">{{'LOGIN.PASSWORD' | translate}}</ion-label>
+    <div class="validation-errors">
+      <ng-container
+        *ngFor="
+          let validation of validation_messages.username;
+          trackBy: trackByFn
+        "
+      >
+        <div
+          class="error-message"
+          *ngIf="
+            loginForm.get('username').hasError(validation.type) &&
+            (loginForm.get('username').dirty ||
+              loginForm.get('username').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
 
-      <ion-item color="transparent" class="white-border white-color">
+    <ion-row>
+      <ion-col>
+        <ion-label position="floating">{{
+          "LOGIN.PASSWORD" | translate
+        }}</ion-label>
+
+        <ion-item color="transparent" class="white-border white-color">
           <ion-input
             type="password"
             placeholder="{{ 'LOGIN.PASSWORD' | translate }}"
@@ -60,47 +74,64 @@
             <ion-icon name="eye"></ion-icon>
           </button>
         </ion-item>
-    </ion-col>
-  </ion-row>
+      </ion-col>
+    </ion-row>
 
-  <div class="validation-errors">
-    <ng-container *ngFor="let validation of validation_messages.password; trackBy: trackByFn">
-      <div class="error-message" *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
-        {{ validation.message }}
-      </div>
-    </ng-container>
-  </div>
-
-  <br />
-  <ion-row>
-    <ion-col>
-      <ion-label
-        [routerLink]="['/forgot-password']"
-        style="font-size: 0.9rem;"
-        >&nbsp;{{'LOGIN.FP' | translate}}</ion-label
+    <div class="validation-errors">
+      <ng-container
+        *ngFor="
+          let validation of validation_messages.password;
+          trackBy: trackByFn
+        "
       >
-    </ion-col>
-  </ion-row>
+        <div
+          class="error-message"
+          *ngIf="
+            loginForm.get('password').hasError(validation.type) &&
+            (loginForm.get('password').dirty ||
+              loginForm.get('password').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
 
-  <br />
-  <ion-row>
-    <ion-col size="6" class="signin padding0">
-      <ion-button (click)="login()" color="mustard" expand="full" fill="solid"
-        >{{'LOGIN.SI' | translate}}</ion-button
-      >
-    </ion-col>
-    <ion-col size="6" class="create padding0">
-      <ion-button
-        color="blue"
-        expand="full"
-        fill="solid"
-        [routerLink]="['/register']"
-        >{{'LOGIN.CA' | translate}}</ion-button
-      >
-    </ion-col>
-  </ion-row>
+    <br />
+    <ion-row>
+      <ion-col>
+        <ion-label
+          [routerLink]="['/forgot-password']"
+          style="font-size: 0.9rem;"
+          >&nbsp;{{ "LOGIN.FP" | translate }}</ion-label
+        >
+      </ion-col>
+    </ion-row>
 
-</form>
+    <br />
+    <ion-row>
+      <ion-col size="6" class="signin padding0">
+        <ion-button
+          (click)="login()"
+          color="mustard"
+          expand="full"
+          fill="solid"
+          pr-retailer-analytics
+          >{{ "LOGIN.SI" | translate }}</ion-button
+        >
+      </ion-col>
+      <ion-col size="6" class="create padding0">
+        <ion-button
+          color="blue"
+          expand="full"
+          fill="solid"
+          [routerLink]="['/register']"
+          pr-retailer-analytics
+          >{{ "LOGIN.CA" | translate }}</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>
 
 <!-- <ion-content text-center>
