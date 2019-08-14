@@ -2,93 +2,157 @@
   <ion-toolbar>
     <ion-row>
       <ion-col size="10">
-        <ion-title class="header-title">{{'DELIVERY.FILTER' | translate}}</ion-title>
+        <ion-title class="header-title">{{ title }}</ion-title>
       </ion-col>
       <ion-col size="2" text-end>
-        <ion-icon (click)="modalController.dismiss()" class="header-icon" name="close"></ion-icon>
+        <ion-icon
+          (click)="modalController.dismiss()"
+          class="header-icon"
+          name="close"
+        ></ion-icon>
       </ion-col>
     </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
   <form [formGroup]="deliveryFilterForm">
+    <ng-container *ngIf="title != 'Status'">
+      <ion-row>
+        <ion-col>
+          <ion-input
+            formControlName="query"
+            type="text"
+            placeholder="ONo / PName / PCode"
+          ></ion-input>
+        </ion-col>
+      </ion-row>
+    </ng-container>
 
     <ion-row>
       <ion-col>
-        <ion-input formControlName="query" type="text" placeholder="ONo / PName / PCode"></ion-input>
+        <pr-select
+          [placeHolder]="'FEEDBACK.FEEDBACKSTATUS_PLACEHOLDER' | translate"
+          [ctrName]="'status'"
+          [items]="statusList"
+          [id]="'name'"
+          [name]="'name'"
+          [canSearch]="true"
+          (valueChange)="updateStatus($event)"
+        ></pr-select>
       </ion-col>
     </ion-row>
+    <br />
 
-    <ion-row>
-      <ion-col>
-        <pr-select [placeHolder]="'FEEDBACK.FEEDBACKSTATUS_PLACEHOLDER' | translate" [ctrName]="'status'" [items]="statusList"
-          [id]="'name'" [name]="'name'" [canSearch]="true" (valueChange)="updateStatus($event)"></pr-select>
-      </ion-col>
-    </ion-row> <br>
+    <ng-container *ngIf="title == 'Status'">
+      <ion-row>
+        <ion-col>
+          <ion-input
+            formControlName="remarks"
+            type="text"
+            placeholder="Remarks"
+          ></ion-input>
+        </ion-col>
+      </ion-row>
+    </ng-container>
 
-    <ion-row>
-      <ion-col>
-        <pr-select [placeHolder]="'FEEDBACK.FEEDBACKSTORE_PLACEHOLDER' | translate" [ctrName]="'store'" [items]="storeList"
-          [id]="'StoreId'" [name]="'StoreName'" [canSearch]="true" (valueChange)="updateStore($event)"></pr-select>
-      </ion-col>
-    </ion-row> <br>
+    <ng-container *ngIf="title != 'Status'">
+      <ion-row>
+        <ion-col>
+          <pr-select
+            [placeHolder]="'FEEDBACK.FEEDBACKSTORE_PLACEHOLDER' | translate"
+            [ctrName]="'store'"
+            [items]="storeList"
+            [id]="'StoreId'"
+            [name]="'StoreName'"
+            [canSearch]="true"
+            (valueChange)="updateStore($event)"
+          ></pr-select>
+        </ion-col>
+      </ion-row>
+      <br />
+      <ion-row>
+        <ion-col size="2" text-start>
+          <ion-label class="date-label"
+            ><b>{{ "MY_ORDER.FROMDATE" | translate }}:</b></ion-label
+          >
+        </ion-col>
+        <ion-col size="4" text-start>
+          <ion-datetime
+            [placeholder]="deliveryFilterForm.value.fromDate"
+            pickerFormat="DD/MM/YY"
+            display-format="DD/MM/YY"
+            formControlName="fromDate"
+          ></ion-datetime>
+        </ion-col>
+        <ion-col size="2" text-start>
+          <ion-label class="date-label"
+            ><b>{{ "MY_ORDER.TODATE" | translate }}:</b></ion-label
+          >
+        </ion-col>
+        <ion-col size="4" text-start>
+          <ion-datetime
+            [placeholder]="deliveryFilterForm.value.toDate"
+            pickerFormat="DD/MM/YY"
+            display-format="DD/MM/YY"
+            formControlName="toDate"
+          ></ion-datetime>
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-      <ion-col size="2" text-start>
-        <ion-label class="date-label"><b>{{'MY_ORDER.FROMDATE' | translate}}:</b></ion-label>
-      </ion-col>
-      <ion-col size="4" text-start>
-        <ion-datetime [placeholder]="deliveryFilterForm.value.fromDate" pickerFormat="DD/MM/YY"
-          display-format="DD/MM/YY" formControlName="fromDate"></ion-datetime>
-      </ion-col>
-      <ion-col size="2" text-start>
-        <ion-label class="date-label"><b>{{'MY_ORDER.TODATE' | translate}}:</b></ion-label>
-      </ion-col>
-      <ion-col size="4" text-start>
-        <ion-datetime [placeholder]="deliveryFilterForm.value.toDate" pickerFormat="DD/MM/YY" display-format="DD/MM/YY"
-          formControlName="toDate"></ion-datetime>
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <div class="validation-errors">
+            <ng-container
+              *ngFor="let validation of validation_messages.fromDate"
+            >
+              <div
+                class="error-message"
+                *ngIf="
+                  deliveryFilterForm
+                    .get('fromDate')
+                    .hasError(validation.type) &&
+                  (deliveryFilterForm.get('fromDate').dirty ||
+                    deliveryFilterForm.get('fromDate').touched)
+                "
+              >
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
 
-    <ion-row>
-      <ion-col size="6">
-        <div class="validation-errors">
-          <ng-container *ngFor="let validation of validation_messages.fromDate">
-            <div class="error-message" *ngIf="
-                deliveryFilterForm.get('fromDate').hasError(validation.type) &&
-                (deliveryFilterForm.get('fromDate').dirty ||
-                  deliveryFilterForm.get('fromDate').touched)
-              ">
-              {{ validation.message }}
-            </div>
-          </ng-container>
-        </div>
-      </ion-col>
-
-      <ion-col size="6">
-        <div class="validation-errors">
-          <ng-container *ngFor="let validation of validation_messages.toDate">
-            <div class="error-message" *ngIf="
-                deliveryFilterForm.get('toDate').hasError(validation.type) &&
-                (deliveryFilterForm.get('toDate').dirty ||
-                  deliveryFilterForm.get('toDate').touched)
-              ">
-              {{ validation.message }}
-            </div>
-          </ng-container>
-        </div>
-      </ion-col>
-    </ion-row>
+        <ion-col size="6">
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.toDate">
+              <div
+                class="error-message"
+                *ngIf="
+                  deliveryFilterForm.get('toDate').hasError(validation.type) &&
+                  (deliveryFilterForm.get('toDate').dirty ||
+                    deliveryFilterForm.get('toDate').touched)
+                "
+              >
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ng-container>
 
     <br />
 
     <ion-row>
       <ion-col size="6"></ion-col>
       <ion-col size="3" class="signin" text-end>
-        <ion-button (click)="modalController.dismiss()" color="mustard" expand="full" fill="solid">
-          {{'MY_ORDER.CLOSE' | translate}}
+        <ion-button
+          (click)="modalController.dismiss()"
+          color="mustard"
+          expand="full"
+          fill="solid"
+        >
+          {{ "MY_ORDER.CLOSE" | translate }}
         </ion-button>
       </ion-col>
       <ion-col size="3" class="create" text-end>

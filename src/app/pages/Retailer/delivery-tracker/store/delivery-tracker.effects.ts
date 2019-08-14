@@ -4,7 +4,10 @@ import {
   DeliveryTrackerSuccess,
   DeliveryTrackerFailure,
   DeliveryTrackerAction,
-  DeliveryTracker
+  DeliveryTracker,
+  StatusUpdateSuccess,
+  StatusUpdateFailure,
+  StatusUpdate
 } from './delivery-tracker.actions';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
@@ -22,13 +25,13 @@ export class DeliveryTrackerEffects {
     private router: Router
   ) {}
 
-  // DeliveryTracker 
+  // DeliveryTracker
 
   @Effect()
   DeliveryTracker: Observable<Action> = this.actions.pipe(
     ofType(DeliveryTrackerAction.DELIVERYTRACKER),
     map((action: DeliveryTracker) => action.payload),
-    switchMap((payload) => {
+    switchMap(payload => {
       return this.deliveryTrackerService.getDeliveryTrackerList(payload).pipe(
         map(data => {
           return new DeliveryTrackerSuccess({ deliveryTracker: data['data'] });
@@ -46,5 +49,37 @@ export class DeliveryTrackerEffects {
   @Effect({ dispatch: false })
   DeliveryTrackerFailure: Observable<any> = this.actions.pipe(
     ofType(DeliveryTrackerAction.DELIVERYTRACKER_FAILURE)
+  );
+
+  // StatusUpdate
+
+  @Effect()
+  StatusUpdate: Observable<Action> = this.actions.pipe(
+    ofType(DeliveryTrackerAction.STATUSUPDATE),
+    map((action: StatusUpdate) => action.payload),
+    switchMap(payload => {
+      return this.deliveryTrackerService.updateStatus(payload).pipe(
+        map(data => {
+          return new StatusUpdateSuccess({ statusUpdate: data['success'] });
+        }),
+        catchError(error => of(new StatusUpdateFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  StatusUpdateSuccess: Observable<any> = this.actions.pipe(
+    ofType(DeliveryTrackerAction.STATUSUPDATE_SUCCESS),
+    tap((res) => {
+      this.alert.presentToast('success', 'Status updated successfully');
+    })
+  );
+
+  @Effect({ dispatch: false })
+  StatusUpdateFailure: Observable<any> = this.actions.pipe(
+    ofType(DeliveryTrackerAction.STATUSUPDATE_FAILURE),
+    tap((res) => {
+      this.alert.presentToast('danger', 'Status update failed');
+    })
   );
 }

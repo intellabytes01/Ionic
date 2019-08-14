@@ -81,7 +81,6 @@ export class DistributorTabPage implements OnInit {
     this.store.dispatch(new DistributorCompanies(payload));
     this.store.select(distributorCompaniesData, untilDestroyed(this)).subscribe(
       (state: any) => {
-        console.log(state);
         this.distributorCompaniesList = state;
       },
       e => {}

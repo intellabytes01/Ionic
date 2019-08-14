@@ -55,12 +55,12 @@ export interface DistributorCompaniesContext {
 const routes = {
   products: '/global/products?',
   generic: '/global/generics?',
-  genericProducts: '/global/generic/',
-  genericStores: '/global/generic/product/stores?',
+  genericProducts: '/global/generics/',
+  genericStores: '/global/generics/products/stores?',
   companies: '/global/companies?',
-  companyStores: '/global/company/',
+  companyStores: '/global/companies/',
   distributors: '/global/stores?',
-  distributorCompanies: '/global/store/'
+  distributorCompanies: '/global/stores/'
 };
 
 @Injectable()

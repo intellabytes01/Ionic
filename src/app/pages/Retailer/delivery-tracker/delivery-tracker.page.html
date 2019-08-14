@@ -36,7 +36,7 @@
 
     <ion-row>
       <ion-col text-start>
-        <ion-label> <b>Status: </b> {{ item.Status }} </ion-label>
+        <ion-label> <b>Status: </b> <span (click)="presentModalStatus(item)">{{ item.Status }}</span> </ion-label>
       </ion-col>
     </ion-row>
 

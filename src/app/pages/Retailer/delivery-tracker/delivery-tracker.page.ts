@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { format } from 'date-fns';
 import { FilterModalPage } from './filter-modal/filter-modal.page';
 import { DeliveryTrackerState } from './store/delivery-tracker.state';
-import { DeliveryTracker } from './store/delivery-tracker.actions';
+import { DeliveryTracker, StatusUpdate } from './store/delivery-tracker.actions';
 import { deliveryTrackerData } from './store/delivery-tracker.reducers';
 
 @Component({
@@ -28,6 +28,7 @@ export class DeliveryTrackerPage implements OnInit, OnDestroy {
     amount: 0.0,
     count: 0
   };
+  selectedValue: any;
   constructor(
     public modalController: ModalController,
     public router: Router,
@@ -68,6 +69,34 @@ export class DeliveryTrackerPage implements OnInit, OnDestroy {
       }
     });
     return await modal.present();
+  }
+
+  async presentModalStatus(selectedValue) {
+    this.selectedValue = selectedValue;
+    const modal = await this.modalController.create({
+      component: FilterModalPage,
+      componentProps: { value: this.deliveryFilter, title: 'Status' }
+    });
+    modal.onDidDismiss().then(data => {
+      if (data.data) {
+        this.updateStatus(data.data);
+      }
+    });
+    return await modal.present();
+  }
+
+  updateStatus(data) {
+    const payload = {
+      invoiceDate: this.selectedValue.InvoiceDate,
+      invoiceNumber: this.selectedValue.InvoiceNo,
+      latitude: this.selectedValue.Latitude,
+      longitude: this.selectedValue.Longitude,
+      userId: this.selectedValue.UserId,
+      partyCode: this.selectedValue.PartyCode,
+      status: data.status,
+      remarks: data.remarks
+    };
+    this.store.dispatch(new StatusUpdate(payload));
   }
 
   ngOnDestroy(): void {

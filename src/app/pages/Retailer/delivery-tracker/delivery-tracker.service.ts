@@ -5,7 +5,10 @@ import * as fromDeliveryTracker from './store/delivery-tracker.state';
 import { Observable } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Logger } from '@app/core';
-import { DeliveryTrackerResponse } from './store/delivery-tracker.state';
+import {
+  DeliveryTrackerResponse,
+  StatusUpdateResponse
+} from './store/delivery-tracker.state';
 
 const log = new Logger('delivery-trackerGuard');
 
@@ -44,14 +47,18 @@ export class DeliveryTrackerService {
    * @return Array of DeliveryTracker List.
    */
   getDeliveryTrackerList(context: DeliveryTrackerContext): Observable<any> {
+    let url = `?fromDate=${context.fromDate}&toDate=${context.toDate}`;
+    if (context.status) {
+      url = url + `&status=${context.status}`;
+    }
+    if (context.store) {
+      url = url + `&store=${context.store}`;
+    }
+    if (context.query) {
+      url = url + `&query=${context.query}`;
+    }
     return this.httpClient
-      .get<DeliveryTrackerResponse>(
-        `${routes.deliveryTracker}?fromDate=${context.fromDate}&toDate=${
-          context.toDate
-        }&status=${context.status}&query=${context.query}&store=${
-          context.store
-        }`
-      )
+      .get<DeliveryTrackerResponse>(`${routes.deliveryTracker}${url}`)
       .pipe(
         map((data: any) => ({
           data
@@ -62,9 +69,7 @@ export class DeliveryTrackerService {
 
   updateStatus(context: StatusUpdateContext): Observable<any> {
     return this.httpClient
-      .put<DeliveryTrackerResponse>(
-        `${routes.deliveryTracker}`, context
-      )
+      .put<StatusUpdateResponse>(`${routes.deliveryTracker}`, context)
       .pipe(
         map((data: any) => ({
           data

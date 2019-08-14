@@ -4,7 +4,8 @@ import { DeliveryTrackerState } from './delivery-tracker.state';
 
 export const initialState: DeliveryTrackerState = {
   deliveryTrackerArray: [],
-  errorMessage: null  
+  statusUpdate: false,
+  errorMessage: null
 };
 
 export function deliveryTrackerReducer(
@@ -12,7 +13,6 @@ export function deliveryTrackerReducer(
   action: All
 ): DeliveryTrackerState {
   switch (action.type) {
-
     // DeliveryTracker List
 
     case DeliveryTrackerAction.DELIVERYTRACKER_SUCCESS: {
@@ -30,15 +30,39 @@ export function deliveryTrackerReducer(
       };
     }
 
+    // StatusUpdate List
+
+    case DeliveryTrackerAction.STATUSUPDATE_SUCCESS: {
+      return {
+        ...state,
+        statusUpdate: action.payload.statusUpdate.data,
+        errorMessage: null
+      };
+    }
+    case DeliveryTrackerAction.STATUSUPDATE_FAILURE: {
+      return {
+        ...state,
+        statusUpdate: false,
+        errorMessage: null
+      };
+    }
+
     default: {
       return state;
     }
   }
 }
 
-const deliveryTrackerState = createFeatureSelector<DeliveryTrackerState>('deliveryTracker');
+const deliveryTrackerState = createFeatureSelector<DeliveryTrackerState>(
+  'deliveryTracker'
+);
 
 export const deliveryTrackerData = createSelector(
   deliveryTrackerState,
   coursesState => coursesState.deliveryTrackerArray
+);
+
+export const statusUpdateData = createSelector(
+  deliveryTrackerState,
+  coursesState => coursesState.statusUpdate
 );
