@@ -44,7 +44,7 @@ export class SchemesPage implements OnInit {
       const payload = {
         regionId: 1
       };
-        this.store.dispatch(new Schemes(payload));      
+      this.store.dispatch(new Schemes(payload));
 
       this.store.select(schemesData, untilDestroyed(this)).subscribe(
         (state: any) => {
@@ -72,24 +72,24 @@ export class SchemesPage implements OnInit {
     );
   }
 
-  searchSchemeProducts() {   
-    if(this.searchText.length > 0){
+  searchSchemeProducts() {
+    if (this.searchText.length > 0) {
       const payload = {
         regionId: 1,
         query: this.searchText
-      };   
-      this.store.dispatch(new SchemeProducts(payload));      
-      
+      };
+      this.store.dispatch(new SchemeProducts(payload));
+
       this.store.select(schemeProductsData, untilDestroyed(this)).subscribe(
         (state: any) => {
           this.schemeProductList = state;
         },
         e => {}
       );
-    }else{
+    } else {
       this.schemeProductList = [];
-    } 
-    
+    }
+
 
   }
 

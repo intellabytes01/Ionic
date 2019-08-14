@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line: variable-name
   validation_messages = this.translateService.instant(
     'LOGIN.VALIDATION_MESSAGES'
-  );  
+  );
 
   constructor(
     private router: Router,
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   presentAlertConfirm() {
-    this.alert.exitModal(this.translateService.instant("EXIT_APP"));
+    this.alert.exitModal(this.translateService.instant('EXIT_APP'));
   }
 
   ngOnInit() {

@@ -14,7 +14,7 @@ import { salesReturnDetailsData } from '../store/view-sales-return.reducers';
   templateUrl: './sales-detail.page.html',
   styleUrls: ['./sales-detail.page.scss'],
 })
-export class SalesDetailPage implements OnInit {
+export class SalesDetailPage implements OnInit, OnDestroy {
   salesDetails: any = {};
   statusList: any = [];
   state$: Observable<object>;
@@ -43,9 +43,9 @@ export class SalesDetailPage implements OnInit {
   }
 
   getMySalesDetails(id) {
-    let payload = {
+    const payload = {
       salesreturnId: id
-    }
+    };
     this.salesReturnStore.dispatch(new SalesReturnDetails(payload));
   }
 

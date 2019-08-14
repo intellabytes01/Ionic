@@ -1,26 +1,27 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpEvent } from "@angular/common/http";
-import { Store } from "@ngrx/store";
-import { Observable } from "rxjs";
-import { map, tap, catchError } from "rxjs/operators";
-import { Logger } from "@app/core";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpEvent } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { map, tap, catchError } from 'rxjs/operators';
+import { Logger } from '@app/core';
 import {
   SalesReturnState,
   SalesReturnTypeResponse,
   SalesReturnStoreResponse,
   SalesReturnDetailsResponse,
   SalesReturnListResponse
-} from "./store/view-sales-return.state";
+} from './store/view-sales-return.state';
 
-const log = new Logger("SalesReturnGuard");
+const log = new Logger('SalesReturnGuard');
 
 const routes = {
-  salesReturntypes: "/salesreturn/types",
-  salesReturnStores: "/salesreturn/stores",
-  salesReturnList: "/salesreturn?",
-  salesReturnDetails: "/salesreturn/status/"
+  salesReturntypes: '/salesreturn/types',
+  salesReturnStores: '/salesreturn/stores',
+  salesReturnList: '/salesreturn?',
+  salesReturnDetails: '/salesreturn/status/'
 };
 
+// tslint:disable-next-line: class-name
 export interface salesReturnListContext {
   fromDate: string;
   toDate: string;
@@ -29,6 +30,7 @@ export interface salesReturnListContext {
   type: string;
 }
 
+// tslint:disable-next-line: class-name
 export interface salesReturnDetailsContext {
   salesreturnId: number;
 }
@@ -94,7 +96,7 @@ export class SalesReturnService {
   private errorHandler(response: HttpEvent<any>): Observable<HttpEvent<any>> {
     // if (!environment.production) {
     // Do something with the error
-    log.error("Request error", response);
+    log.error('Request error', response);
     // }
     throw response;
   }

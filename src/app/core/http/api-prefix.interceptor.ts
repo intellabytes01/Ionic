@@ -109,7 +109,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
               event['body']['data']['paginationData']
             ) {
               if (
-                event['body']['data']['paginationData']['totalRecords'] == 0
+                event['body']['data']['paginationData']['totalRecords'] === 0
               ) {
                 this.noRecordsFound();
               } else {

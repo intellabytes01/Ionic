@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 export class NewOrderEffects {
   constructor(
     private actions: Actions,
-    private NewOrderService: NewOrderService,
+    private newOrderService: NewOrderService,
     private alert: AlertService,
     private router: Router
   ) {}
@@ -29,7 +29,7 @@ export class NewOrderEffects {
     ofType(NewOrderAction.PRODUCTSEARCH),
     map((action: ProductSearch) => action.payload),
     switchMap((payload) => {
-      return this.NewOrderService.getProducts(payload).pipe(
+      return this.newOrderService.getProducts(payload).pipe(
         map(data => {
           return new ProductSearchSuccess({ productSearch: data['data'] });
         }),

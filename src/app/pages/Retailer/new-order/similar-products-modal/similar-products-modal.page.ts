@@ -14,19 +14,19 @@ export class SimilarProductsModalPage implements OnInit {
   constructor(public modalController: ModalController, private navParams: NavParams) { }
 
   add() {
-    this.similarProducts.forEach((element)=>{
-      if(element.quantity){
+    this.similarProducts.forEach((element) => {
+      if (element.quantity) {
         this.selectedProducts.push(element);
       }
-    })
+    });
     this.modalController.dismiss({selectedProducts: this.selectedProducts});
   }
 
   ngOnInit() {
     this.title = this.navParams.get('title');
-    if(this.navParams.get('similarProductList')){
+    if (this.navParams.get('similarProductList')) {
       this.similarProducts = this.navParams.get('similarProductList');
-    }    
+    }
   }
 
   setQuantity(product, val) {

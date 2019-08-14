@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -10,9 +10,10 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './refer-earn.page.html',
   styleUrls: ['./refer-earn.page.scss'],
 })
-export class ReferEarnPage implements OnInit {
+export class ReferEarnPage implements OnInit, OnDestroy {
 
   public referForm: FormGroup;
+  // tslint:disable-next-line: variable-name
   validation_messages = this.translateService.instant('REFER.VALIDATION_MESSAGES');
   mobnumPattern = '^((\\+91-?)|0)?[0-9]{10}$';
   validateuserStore: any;

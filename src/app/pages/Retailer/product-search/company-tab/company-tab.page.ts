@@ -103,11 +103,11 @@ export class CompanyTabPage implements OnInit {
       page: 1,
       companyId: this.companyId
     };
-    if(this.subListShow[index]){      
-      this.store.dispatch(new CompanyProducts(payload));      
-    }else{
+    if (this.subListShow[index]) {
+      this.store.dispatch(new CompanyProducts(payload));
+    } else {
       this.companyProductList[index] = [];
-    } 
+    }
     this.store.select(companyProductsData, untilDestroyed(this)).subscribe(
       (state: any) => {
         if (this.index === index) {

@@ -11,7 +11,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class PaylaterTabPage implements OnInit {
 
-  payLaterForm: FormGroup
+  payLaterForm: FormGroup;
   storeList: any[] = [];
   constructor(private store: Store<AuthState>, public formBuilder: FormBuilder) { }
 

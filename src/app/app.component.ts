@@ -129,6 +129,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.topLoaderService.norecord
       .pipe(
+        // tslint:disable-next-line: deprecation
         startWith(null),
         delay(0),
         tap(value => (this.norecord = value))

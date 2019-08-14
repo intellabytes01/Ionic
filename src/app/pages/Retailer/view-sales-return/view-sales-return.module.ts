@@ -22,10 +22,10 @@ const routes: Routes = [
     component: ViewSalesReturnPage
   },
   {
-    path: "sales-detail",
+    path: 'sales-detail',
     loadChildren:
-      "./sales-detail/sales-detail.module#SalesDetailPageModule",
-      data: { title: "My Sales Return Details", preload: false, delay: false },
+      './sales-detail/sales-detail.module#SalesDetailPageModule',
+      data: { title: 'My Sales Return Details', preload: false, delay: false },
       canActivate: [AuthenticationGuard]
   }
 ];
@@ -43,6 +43,6 @@ const routes: Routes = [
     EffectsModule.forRoot([SalesReturnEffects]),
   ],
   declarations: [ViewSalesReturnPage],
-  providers:[SalesReturnService]
+  providers: [SalesReturnService]
 })
 export class ViewSalesReturnPageModule {}
