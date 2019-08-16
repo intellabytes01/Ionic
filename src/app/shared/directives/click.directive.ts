@@ -2,7 +2,7 @@ import { Directive, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { Logger } from '@app/core';
-import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
+import { Plugins } from '@capacitor/core';
 
 const log = new Logger('ClickGuard');
 
@@ -13,8 +13,7 @@ const log = new Logger('ClickGuard');
 export class ClickDirective implements OnInit {
   constructor(
     public router: Router,
-    public platform: Platform,
-    private firebaseAnalytics: FirebaseAnalytics
+    public platform: Platform
   ) {}
 
   ngOnInit() {}
@@ -42,12 +41,12 @@ export class ClickDirective implements OnInit {
     }
   }
 
-  logClick(name: string, value: any) {
+  logClick(controlName: string, route: any) {
     if (this.platform.is('cordova')) {
-      const data = { user_id: '8', controlName: name, page: value };
-      log.info(data, 'page_view');
-      this.firebaseAnalytics
-        .logEvent('page_view', data)
+      const data = { name: 'page_view', parameters: { user_id: '8', control: controlName, page: route } };
+      console.log(data);
+      Plugins.CapacitorFirebaseAnalytics
+        .logEvent(data)
         .then((res: any) => console.log(res))
         .catch((error: any) => console.error(error));
     }
