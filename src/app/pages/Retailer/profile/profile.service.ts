@@ -66,7 +66,7 @@ export class ProfileService {
    */
   getBusinessTypes(): Observable<any> {
     return this.httpClient
-      .cache(true)
+      .cache(false)
       .get(routes.businesstypes)
       .pipe(
         tap(),
@@ -79,7 +79,7 @@ export class ProfileService {
    * @return Array of Regions.
    */
   getRegions(): Observable<any> {
-    return this.httpClient.get(routes.regions).pipe(
+    return this.httpClient.cache(false).get(routes.regions).pipe(
       tap(),
       catchError(error => this.errorHandler(error))
     );

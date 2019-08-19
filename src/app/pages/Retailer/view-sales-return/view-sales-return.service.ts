@@ -43,7 +43,7 @@ export class SalesReturnService {
   ) {}
 
   getSalesReturnTypes(): Observable<any> {
-    return this.httpClient
+    return this.httpClient.cache(false)
       .get<SalesReturnTypeResponse>(routes.salesReturntypes)
       .pipe(
         map((data: any) => ({
@@ -54,7 +54,7 @@ export class SalesReturnService {
   }
 
   getSalesReturnStores(): Observable<any> {
-    return this.httpClient
+    return this.httpClient.cache(false)
       .get<SalesReturnStoreResponse>(routes.salesReturnStores)
       .pipe(
         map((data: any) => ({

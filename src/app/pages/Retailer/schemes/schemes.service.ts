@@ -23,7 +23,7 @@ export class SchemeService {
   constructor(private httpClient: HttpClient) { }
 
   getSchemes(context: SchemesContext): Observable<any> {
-    return this.httpClient
+    return this.httpClient.cache(false)
       .get<SchemesResponse>(
         `${routes.schemes}regionId=${context.regionId}`
       )

@@ -27,7 +27,7 @@ export class RegisterService {
    * @return Array of Business Types.
    */
   getBusinessTypes(): Observable<any> {
-    return this.httpClient.get<BussinessTypeResponse>(routes.businesstypes).pipe(
+    return this.httpClient.cache(false).get<BussinessTypeResponse>(routes.businesstypes).pipe(
       map((data: any) => ({
         data
       })),
@@ -40,7 +40,7 @@ export class RegisterService {
    * @return Array of Regions.
    */
   getRegions(): Observable<any> {
-    return this.httpClient.get<RegionResponse>(routes.regions).pipe(
+    return this.httpClient.cache(false).get<RegionResponse>(routes.regions).pipe(
       map((data: any) => ({
         data
       })),

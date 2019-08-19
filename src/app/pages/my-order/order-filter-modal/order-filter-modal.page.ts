@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthState, getRetailerStoreParties } from '@app/core/authentication/auth.states';
 import { Store } from '@ngrx/store';
 import { untilDestroyed } from '@app/core/index';
+import {subDays} from 'date-fns';
 
 @Component({
   selector: 'app-order-filter-modal',
@@ -56,7 +57,7 @@ export class OrderFilterModalPage implements OnInit {
       status: [this.orderFilter.status, Validators.compose([])],
       operation: [this.orderFilter.operation, Validators.compose([])],
       fromDate: [
-        new Date().toISOString(),
+        subDays(new Date(), 7).toISOString(),
         Validators.compose([Validators.required])
       ],
       toDate: [
@@ -93,8 +94,8 @@ export class OrderFilterModalPage implements OnInit {
     this.orderFilter.status = this.orderFilterForm.value.status;
     this.orderFilter.operation = this.orderFilterForm.value.operation;
     if (
-      !isValid(new Date(this.orderFilter.fromDate)) ||
-      !isValid(new Date(this.orderFilter.toDate))
+      !isValid(new Date(this.orderFilterForm.value.fromDate)) ||
+      !isValid(new Date(this.orderFilterForm.value.toDate))
     ) {
       this.alert.presentToast('warning', 'Invalid Date');
     } else {

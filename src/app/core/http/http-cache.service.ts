@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-
 import { Logger } from '../logger.service';
+import { differenceInHours } from 'date-fns';
 
 const log = new Logger('HttpCacheService');
 const cachePersistenceKey = 'httpCache';
@@ -44,6 +44,7 @@ export class HttpCacheService {
    * @return The cached data or null if no cached data exists for this request.
    */
   getCacheData(url: string): HttpResponse<any> | null {
+    this.clearCache(url);
     const cacheEntry = this.cachedData[url];
 
     if (cacheEntry) {
@@ -68,9 +69,19 @@ export class HttpCacheService {
    * @param url The request URL.
    */
   clearCache(url: string): void {
-    delete this.cachedData[url];
-    log.debug(`Cache cleared for key: "${url}"`);
-    this.saveCacheData();
+    if (this.cachedData[url] && this.cachedData[url].lastUpdated) {
+      const dateDiffInHours = differenceInHours(
+        new Date(),
+        this.cachedData[url].lastUpdated
+      );
+      console.log(dateDiffInHours);
+      if (dateDiffInHours >= 2) {
+        delete this.cachedData[url];
+        log.debug(`Cache cleared for key: "${url}"`);
+      }
+
+      this.saveCacheData();
+    }
   }
 
   /**
@@ -98,18 +109,26 @@ export class HttpCacheService {
    */
   setPersistence(persistence?: 'local' | 'session') {
     this.cleanCache();
-    this.storage = persistence === 'local' || persistence === 'session' ? window[persistence + 'Storage'] : null;
+    this.storage =
+      persistence === 'local' || persistence === 'session'
+        ? window[persistence + 'Storage']
+        : null;
     this.loadCacheData();
   }
 
   private saveCacheData() {
     if (this.storage) {
-      this.storage.setItem(cachePersistenceKey, JSON.stringify(this.cachedData));
+      this.storage.setItem(
+        cachePersistenceKey,
+        JSON.stringify(this.cachedData)
+      );
     }
   }
 
   private loadCacheData() {
-    const data = this.storage ? this.storage.getItem(cachePersistenceKey) : null;
+    const data = this.storage
+      ? this.storage.getItem(cachePersistenceKey)
+      : null;
     this.cachedData = data ? JSON.parse(data) : {};
   }
 }

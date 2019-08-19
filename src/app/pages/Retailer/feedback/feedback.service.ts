@@ -33,7 +33,7 @@ export class FeedbackService {
    * @return Array of Feedback Types.
    */
   getFeedbackTypes(): Observable<any> {
-    return this.httpClient.get<FeedbackTypeResponse>(routes.feedbacktypes).pipe(
+    return this.httpClient.cache(false).get<FeedbackTypeResponse>(routes.feedbacktypes).pipe(
       map((data: any) => ({
         data
       })),

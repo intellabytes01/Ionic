@@ -41,7 +41,7 @@ export class AddDistributorService {
    * @return Array of Request Types.
    */
   getGetStores(retailerId): Observable<any> {
-    return this.httpClient.get<StoreResponse>(`${routes.stores}${retailerId}`).pipe(
+    return this.httpClient.cache(false).get<StoreResponse>(`${routes.stores}${retailerId}`).pipe(
       map((data: any) => ({
         data
       })),
@@ -63,7 +63,7 @@ export class AddDistributorService {
    * @return Array of Status.
    */
   getGetStatus(retailerId): Observable<any> {
-    return this.httpClient.get<StatusResponse>(`${routes.status}${retailerId}`).pipe(
+    return this.httpClient.cache(false).get<StatusResponse>(`${routes.status}${retailerId}`).pipe(
       map((data: any) => ({
         data
       })),
