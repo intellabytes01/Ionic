@@ -4,7 +4,8 @@ import { NewOrderState } from './new-order.state';
 
 export const initialState: NewOrderState = {
   errorMessage: null,
-  productSearchArray: []
+  productSearchArray: [],
+  newOrderArray: []
 };
 
 export function newOrderReducer(
@@ -30,6 +31,23 @@ export function newOrderReducer(
       };
     }
 
+    // New Order Submit
+
+    case NewOrderAction.NEWORDERSUBMIT_SUCCESS: {
+      return {
+        ...state,
+        newOrderArray: action.payload.productSearch.data,
+        errorMessage: null
+      };
+    }
+    case NewOrderAction.NEWORDERSUBMIT_FAILURE: {
+      return {
+        ...state,
+        newOrderArray: [],
+        errorMessage: null
+      };
+    }
+
     default: {
       return state;
     }
@@ -41,4 +59,9 @@ const newOrderState = createFeatureSelector<NewOrderState>('newOrder');
 export const productSearchData = createSelector(
   newOrderState,
   coursesState => coursesState.productSearchArray
+);
+
+export const newOrderSubmitData = createSelector(
+  newOrderState,
+  coursesState => coursesState.newOrderArray
 );

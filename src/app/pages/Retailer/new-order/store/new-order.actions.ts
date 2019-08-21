@@ -4,6 +4,9 @@ export enum NewOrderAction {
   PRODUCTSEARCH = '[ProductSearch] Product Search',
   PRODUCTSEARCH_SUCCESS = '[ProductSearch] Product Search Success',
   PRODUCTSEARCH_FAILURE = '[ProductSearch] Product Search Failure',
+  NEWORDERSUBMIT = '[NewOrderSubmit] New Order Submit',
+  NEWORDERSUBMIT_SUCCESS = '[NewOrderSubmit] New Order Submit Success',
+  NEWORDERSUBMIT_FAILURE = '[NewOrderSubmit] New Order Submit Failure',
 }
 
 export class ProductSearch implements Action {
@@ -21,7 +24,25 @@ export class ProductSearchFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class NewOrderSubmit implements Action {
+  readonly type = NewOrderAction.NEWORDERSUBMIT;
+  constructor(public payload: any) {}
+}
+
+export class NewOrderSubmitSuccess implements Action {
+  readonly type = NewOrderAction.NEWORDERSUBMIT_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class NewOrderSubmitFailure implements Action {
+  readonly type = NewOrderAction.NEWORDERSUBMIT_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | ProductSearch
   | ProductSearchSuccess
-  | ProductSearchFailure;
+  | ProductSearchFailure
+  | NewOrderSubmit
+  | NewOrderSubmitSuccess
+  | NewOrderSubmitFailure;

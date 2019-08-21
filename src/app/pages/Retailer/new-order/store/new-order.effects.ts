@@ -5,6 +5,9 @@ import {
   ProductSearchSuccess,
   ProductSearchFailure,
   NewOrderAction,
+  NewOrderSubmit,
+  NewOrderSubmitSuccess,
+  NewOrderSubmitFailure
 } from './new-order.actions';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
@@ -46,5 +49,31 @@ export class NewOrderEffects {
   @Effect({ dispatch: false })
   ProductSearchFailure: Observable<any> = this.actions.pipe(
     ofType(NewOrderAction.PRODUCTSEARCH_FAILURE)
+  );
+
+  // New Order Submit
+
+  @Effect()
+  NewOrderSubmit: Observable<Action> = this.actions.pipe(
+    ofType(NewOrderAction.NEWORDERSUBMIT),
+    map((action: NewOrderSubmit) => action.payload),
+    switchMap((payload) => {
+      return this.newOrderService.submitNewOrder(payload).pipe(
+        map(data => {
+          return new NewOrderSubmitSuccess({ newOrder: data['data'] });
+        }),
+        catchError(error => of(new NewOrderSubmitFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  NewOrderSubmitSuccess: Observable<any> = this.actions.pipe(
+    ofType(NewOrderAction.NEWORDERSUBMIT_SUCCESS)
+  );
+
+  @Effect({ dispatch: false })
+  NewOrderSubmitFailure: Observable<any> = this.actions.pipe(
+    ofType(NewOrderAction.NEWORDERSUBMIT_FAILURE)
   );
 }

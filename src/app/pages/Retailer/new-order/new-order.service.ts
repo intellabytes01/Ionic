@@ -3,7 +3,7 @@ import { Logger } from '@app/core';
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { ProductSearchResponse } from './store/new-order.state';
+import { ProductSearchResponse, NewOrderBody, NewOrderResponse } from './store/new-order.state';
 
 const log = new Logger('NewOrder');
 export interface ProductSearchContext {
@@ -13,7 +13,8 @@ export interface ProductSearchContext {
 }
 
 const routes = {
-  products: '/global/products?'
+  products: '/global/products?',
+  neworder: '/retailer/orders/new'
 };
 
 @Injectable({
@@ -33,6 +34,19 @@ export class NewOrderService {
         `${routes.products}regionId=${context.regionId}&query=${
         context.query
         }&page=${context.page}`
+      )
+      .pipe(
+        map((data: any) => ({
+          data
+        })),
+        catchError(error => this.errorHandler(error))
+      );
+  }
+
+  submitNewOrder(context: NewOrderBody): Observable<any> {
+    return this.httpClient
+      .post<NewOrderResponse>(
+        `${routes.neworder}`, context
       )
       .pipe(
         map((data: any) => ({
