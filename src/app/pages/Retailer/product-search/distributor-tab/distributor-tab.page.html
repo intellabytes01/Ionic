@@ -1,8 +1,12 @@
 <ion-content>
   <ion-row>
     <ion-col>
-      <ion-searchbar [(ngModel)]="searchText" [placeholder]="'PRODUCT_SEARCH.PLACEHOLDER_DISTRIBUTOR' | translate"
-        [showCancelButton]="true" (ionChange)="search()"></ion-searchbar>
+      <ion-searchbar
+        [(ngModel)]="searchText"
+        [placeholder]="'PRODUCT_SEARCH.PLACEHOLDER_DISTRIBUTOR' | translate"
+        [showCancelButton]="true"
+        (ionChange)="search()"
+      ></ion-searchbar>
     </ion-col>
   </ion-row>
 
@@ -16,20 +20,38 @@
 
   <div *ngIf="showList">
     <ion-list>
-      <ion-item *ngFor="let distributor of distributorList" (click)="distributorClick(distributor)">
+      <ion-item
+        *ngFor="let distributor of distributorList"
+        (click)="distributorClick(distributor)"
+      >
         <ion-label>{{ distributor.StoreName }}</ion-label>
       </ion-item>
     </ion-list>
   </div>
 
   <div *ngIf="!showList">
+    <ion-card>
+      <ion-row>
+        <ion-col text-start>
+          <ion-label>{{
+            "PRODUCT_SEARCH.NOTMAPPED_TEXT" | translate
+          }}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-start>
+          <ion-label [routerLink]="['/add-distributor']" class="blue-color">{{
+            "PRODUCT_SEARCH.REQUEST" | translate
+          }}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-card>
     <ion-list *ngFor="let company of distributorCompaniesList">
       <ion-row class="item-title">
         <ion-col>
           <ion-label class="product-name">{{ company.CompanyName }}</ion-label>
         </ion-col>
       </ion-row>
-
     </ion-list>
   </div>
 </ion-content>

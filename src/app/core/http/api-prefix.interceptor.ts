@@ -58,18 +58,26 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
           untilDestroyed(this)
         )
         .subscribe(data => {
-          if (data['userData'] && data['userData']['token'] && data['userData']['token']['token']) {
+          if (
+            data['userData'] &&
+            data['userData']['token'] &&
+            data['userData']['token']['token']
+          ) {
             this.token = data['userData']['token']['token'];
           }
         });
     }
-    request = request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${this.token}`
-      }
-    });
+
+    if (this.token) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${this.token}`
+        }
+      });
+    }
+
     this.showLoader();
-    console.log(request);
+
     if (!/^(http|https):/i.test(request.url)) {
       request = request.clone({ url: environment.serverUrl + request.url });
     }
@@ -91,6 +99,8 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
       }),
         untilDestroyed(this);
     }
+
+    console.log(request);
 
     return next.handle(request).pipe(
       tap(
@@ -129,9 +139,9 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
                 .subscribe(data => {
                   this.token = data['userData']['token']['token'];
                   console.log(this.token);
-                  this.handle(
-                    this.previousRequest.next,
-                    this.previousRequest.request
+                  this.intercept(
+                    this.previousRequest.request,
+                    this.previousRequest.next
                   );
                 });
             }
@@ -147,6 +157,10 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
             // Refresh our token
             this.previousRequest.request = request;
             this.previousRequest.next = next;
+            // this.intercept(
+            //   this.previousRequest.request,
+            //   this.previousRequest.next
+            // );
             this.store.dispatch(new TokenRefresh());
           }
           if (err.error.statusCode === 4050) {

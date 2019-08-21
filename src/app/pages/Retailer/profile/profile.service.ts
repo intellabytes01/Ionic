@@ -101,12 +101,8 @@ export class ProfileService {
   uploadImage(context: ImageContext): Observable<any> {
     const formData = new FormData();
     formData.append('files', context.file);
-    const headers = new HttpHeaders();
-    context.reqOpts.headers = headers
-      .append('type', `${context.type}`)
-      .append('retailerId', `${context.retailerId}`);
     return this.httpClient
-      .post(routes.upload, formData, context.reqOpts)
+      .post(`${routes.upload}?retailerId=${context.retailerId}&type=${context.type}`, formData)
       .pipe(
         map((data: any) => ({
           data

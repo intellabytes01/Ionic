@@ -274,7 +274,9 @@
     "PLACEHOLDER_COMPANY": "Company name",
     "PLACEHOLDER_DISTRIBUTOR": "Distributor name",
     "MINCHAR_TEXT": "Please enter minimum 3 characters to search",
-    "NOTFOUND": "Not Found"
+    "NOTFOUND": "Not Found",
+    "NOTMAPPED_TEXT": "Distributor not mapped, Would you like to send mapping request now?",
+    "REQUEST": "Request now"
   },
 
   "PAYMENT": {
