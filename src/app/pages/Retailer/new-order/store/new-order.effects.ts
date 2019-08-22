@@ -31,7 +31,7 @@ export class NewOrderEffects {
   ProductSearch: Observable<Action> = this.actions.pipe(
     ofType(NewOrderAction.PRODUCTSEARCH),
     map((action: ProductSearch) => action.payload),
-    switchMap((payload) => {
+    switchMap(payload => {
       return this.newOrderService.getProducts(payload).pipe(
         map(data => {
           return new ProductSearchSuccess({ productSearch: data['data'] });
@@ -57,7 +57,7 @@ export class NewOrderEffects {
   NewOrderSubmit: Observable<Action> = this.actions.pipe(
     ofType(NewOrderAction.NEWORDERSUBMIT),
     map((action: NewOrderSubmit) => action.payload),
-    switchMap((payload) => {
+    switchMap(payload => {
       return this.newOrderService.submitNewOrder(payload).pipe(
         map(data => {
           return new NewOrderSubmitSuccess({ newOrder: data['data'] });
@@ -69,11 +69,17 @@ export class NewOrderEffects {
 
   @Effect({ dispatch: false })
   NewOrderSubmitSuccess: Observable<any> = this.actions.pipe(
-    ofType(NewOrderAction.NEWORDERSUBMIT_SUCCESS)
+    ofType(NewOrderAction.NEWORDERSUBMIT_SUCCESS),
+    tap(() => {
+      this.alert.presentToast('success', 'Order created successfully');
+    })
   );
 
   @Effect({ dispatch: false })
   NewOrderSubmitFailure: Observable<any> = this.actions.pipe(
-    ofType(NewOrderAction.NEWORDERSUBMIT_FAILURE)
+    ofType(NewOrderAction.NEWORDERSUBMIT_FAILURE),
+    tap(() => {
+      this.alert.presentToast('danger', 'Order creation failed');
+    })
   );
 }

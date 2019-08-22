@@ -10,9 +10,16 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProductDetails, NewOrderState } from './store/new-order.state';
 import { Store } from '@ngrx/store';
-import { ProductSearch } from './store/new-order.actions';
-import { productSearchData } from './store/new-order.reducers';
-import { AuthState, getRetailerStoreParties } from '@app/core/authentication/auth.states.js';
+import { ProductSearch, NewOrderSubmit } from './store/new-order.actions';
+import {
+  productSearchData,
+  newOrderSubmitData
+} from './store/new-order.reducers';
+import {
+  AuthState,
+  getRetailerStoreParties,
+  getUserId
+} from '@app/core/authentication/auth.states.js';
 
 @Component({
   selector: 'pr-new-order',
@@ -31,6 +38,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   deliveryPriorityList: any[] = fromModel.deliveryPriorityList;
   state$: Observable<object>;
   similarProducts: any[] = [];
+  userId: string;
 
   constructor(
     private storage: Storage,
@@ -53,18 +61,45 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   saveToStorage() {
     this.orderData[this.key]['key'] = this.key;
+    this.orderData[this.key]['store'] = {
+      StoreName: this.neworderForm.value.store.StoreName,
+      PartyCode: this.neworderForm.value.store.PartyCode
+    };
+    this.orderData[this.key][
+      'deliveryMode'
+    ] = this.neworderForm.value.deliveryMode.name;
+    this.orderData[this.key][
+      'deliveryPriority'
+    ] = this.neworderForm.value.deliveryPriority.name;
+    this.orderData[this.key]['remarks'] = this.neworderForm.value.remarks;
     this.storage.set(this.key, this.orderData);
   }
 
   ngOnInit() {
-    this.authStore.select(getRetailerStoreParties, untilDestroyed(this)).subscribe(
+    this.authStore
+      .select(getRetailerStoreParties, untilDestroyed(this))
+      .subscribe(
+        (state: any) => {
+          this.storeList = state;
+        },
+        e => {}
+      );
+    this.authStore.select(getUserId, untilDestroyed(this)).subscribe(
       (state: any) => {
-        this.storeList = state;
+        this.userId = state;
       },
-      e => { }
+      e => {}
     );
     this.orderData[this.key] = {
-      productList: []
+      productList: [],
+      store: {
+        StoreName: '',
+        PartyCode: null
+      },
+      deliveryMode: '',
+      deliveryPriority: '',
+      remarks: '',
+      total: 0
     };
     // Draft Order Update Case
     this.state$ = this.activatedRoute.paramMap.pipe(
@@ -77,36 +112,51 @@ export class NewOrderPage implements OnInit, OnDestroy {
           if (key === this.key) {
             this.orderData = value;
             this.setTempList();
+            this.setForm();
           }
         });
       }
     });
 
+    this.setForm();
+  }
+
+  setForm() {
     this.neworderForm = this.formBuilder.group({
       searchText: ['', Validators.compose([])],
       store: [
         {
-          StoreId: null,
-          StoreName: ''
+          StoreName: this.orderData[this.key]
+            ? this.orderData[this.key].store.StoreName
+            : '',
+          PartyCode: this.orderData[this.key]
+            ? this.orderData[this.key].store.PartyCode
+            : ''
         },
         Validators.compose([])
       ],
       deliveryMode: [
         {
-          id: null,
-          name: ''
+          name: this.orderData[this.key]
+            ? this.orderData[this.key]['deliveryMode']
+            : ''
         },
         Validators.compose([Validators.required])
       ],
       deliveryPriority: [
         {
-          id: null,
-          name: ''
+          name: this.orderData[this.key]
+            ? this.orderData[this.key]['deliveryPriority']
+            : ''
         },
         Validators.compose([Validators.required])
       ],
-      remarks: ['', Validators.compose([])]
+      remarks: [
+        this.orderData[this.key] ? this.orderData[this.key]['remarks'] : '',
+        Validators.compose([])
+      ]
     });
+    console.log(this.neworderForm.value);
   }
 
   // Search in Product List
@@ -167,17 +217,29 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   add(product: object) {
     this.orderData[this.key]['productList'].push(product);
+    this.orderData[this.key].productList.forEach(element => {
+      this.orderData[this.key].total += element.quantity * element.MRP;
+    });
     this.saveToStorage();
   }
-
-  // Create order
-
-  createOrder() {}
 
   // Change Store
 
   changeStore(store) {
-    this.neworderForm.value.store.StoreId = store.StoreId;
+    this.neworderForm.value.store.StoreName = store.StoreName;
+    this.neworderForm.value.store.PartyCode = store.PartyCode;
+  }
+
+  // Change Delivery Mode
+
+  changeDeliveryTo(deliveryMode) {
+    this.neworderForm.value.deliveryMode.name = deliveryMode.name;
+  }
+
+  // Change Delivery Priority
+
+  changeDeliveryPriority(deliveryPriority) {
+    this.neworderForm.value.deliveryPriority.name = deliveryPriority.name;
   }
 
   // Delete all
@@ -216,6 +278,32 @@ export class NewOrderPage implements OnInit, OnDestroy {
     });
     modal.onDidDismiss().then(data => {});
     return await modal.present();
+  }
+
+  // Create order
+
+  createOrder() {
+    const payload = {
+      Partycode: '1007',
+      DeliveryOption: this.neworderForm.value.deliveryMode.name,
+      PriorityOption: this.neworderForm.value.deliveryPriority.name,
+      Remarks: this.neworderForm.value.remarks,
+      OrderTimestamp: new Date().toISOString(),
+      UserId: this.userId,
+      DeliveryPerson: {
+        Name: '',
+        Code: ''
+      },
+      Products: this.orderData[this.key].productList
+    };
+    this.store.dispatch(new NewOrderSubmit(payload));
+
+    this.store.select(newOrderSubmitData, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        console.log(state);
+      },
+      e => {}
+    );
   }
 
   ngOnDestroy(): void {

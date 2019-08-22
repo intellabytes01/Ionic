@@ -16,12 +16,12 @@
     }
   },
   "deliveryModeList": [
-    { "id": "1", "name": "Pickup from Counter" },
-    { "id": "2", "name": "Delivery to Store" }
+    { "name": "Pickup from Counter" },
+    { "name": "Delivery to Store" }
   ],
   "deliveryPriorityList": [
-    { "id": "1", "name": "Low" },
-    { "id": "2", "name": "Normal" },
-    { "id": "3", "name": "High" }
+    { "name": "Low" },
+    { "name": "Normal" },
+    { "name": "High" }
   ]
 }

@@ -5,12 +5,11 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-draft-tab',
   templateUrl: './draft-tab.page.html',
-  styleUrls: ['./draft-tab.page.scss'],
+  styleUrls: ['./draft-tab.page.scss']
 })
 export class DraftTabPage implements OnInit {
-
   draftList: any[] = [];
-  constructor(private storage: Storage, private router: Router) { }
+  constructor(private storage: Storage, private router: Router) {}
 
   ngOnInit() {
     this.fetchFromStorage();
@@ -22,6 +21,9 @@ export class DraftTabPage implements OnInit {
         this.draftList.push(value[key]);
       }
     });
+    setTimeout(() => {
+      console.log(this.draftList);
+    }, 1000);
   }
 
   goToNewOrder(order) {
@@ -34,5 +36,4 @@ export class DraftTabPage implements OnInit {
     this.storage.remove(order.key);
     this.draftList.splice(i, 1);
   }
-
 }
