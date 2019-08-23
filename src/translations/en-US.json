@@ -173,7 +173,9 @@
     "TOTAL": "Total",
     "DELETE": "DELETE >",
     "DRAFT_PO": "DRAFT PO >",
-    "CONFIRM": "CONFIRM >"
+    "CONFIRM": "CONFIRM >",
+    "SUCCESS_TEXT": "Order created successfully",
+    "ERROR_TEXT": "Order creation failed"
   },
 
   "MY_ORDER": {

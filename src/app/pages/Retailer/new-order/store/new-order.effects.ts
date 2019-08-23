@@ -15,6 +15,7 @@ import { Action } from '@ngrx/store';
 import { NewOrderService } from '../new-order.service';
 import { AlertService } from '@app/shared/services/alert.service';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class NewOrderEffects {
@@ -22,7 +23,8 @@ export class NewOrderEffects {
     private actions: Actions,
     private newOrderService: NewOrderService,
     private alert: AlertService,
-    private router: Router
+    private router: Router,
+    private translateService: TranslateService
   ) {}
 
   // Product Search
@@ -71,7 +73,7 @@ export class NewOrderEffects {
   NewOrderSubmitSuccess: Observable<any> = this.actions.pipe(
     ofType(NewOrderAction.NEWORDERSUBMIT_SUCCESS),
     tap(() => {
-      this.alert.presentToast('success', 'Order created successfully');
+      this.alert.presentToast('success', this.translateService.instant('NEW_ORDER.SUCCESS_TEXT'));
     })
   );
 
@@ -79,7 +81,7 @@ export class NewOrderEffects {
   NewOrderSubmitFailure: Observable<any> = this.actions.pipe(
     ofType(NewOrderAction.NEWORDERSUBMIT_FAILURE),
     tap(() => {
-      this.alert.presentToast('danger', 'Order creation failed');
+      this.alert.presentToast('danger', this.translateService.instant('NEW_ORDER.ERROR_TEXT'));
     })
   );
 }
