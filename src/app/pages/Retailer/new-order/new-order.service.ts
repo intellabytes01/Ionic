@@ -3,17 +3,23 @@ import { Logger } from '@app/core';
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { ProductSearchResponse, NewOrderBody, NewOrderResponse } from './store/new-order.state';
+import {
+  ProductSearchResponse,
+  NewOrderBody,
+  NewOrderResponse
+} from './store/new-order.state';
 
 const log = new Logger('NewOrder');
 export interface ProductSearchContext {
-  regionId: number;
   query: string;
+  storeId: number;
+  regionId: number;
   page: number;
 }
 
 const routes = {
-  products: '/global/products?',
+  productsGlobal: '/global/products?',
+  products: '/products?',
   neworder: '/retailer/orders/new'
 };
 
@@ -21,33 +27,34 @@ const routes = {
   providedIn: 'root'
 })
 export class NewOrderService {
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   /**
    * Get Products.
    * @return Array of Products.
    */
   getProducts(context: ProductSearchContext): Observable<any> {
-    return this.httpClient
-      .get<ProductSearchResponse>(
-        `${routes.products}regionId=${context.regionId}&query=${
-        context.query
-        }&page=${context.page}`
-      )
-      .pipe(
-        map((data: any) => ({
-          data
-        })),
-        catchError(error => this.errorHandler(error))
-      );
+    let url = ``;
+    if (context.storeId) {
+      url = `${routes.products}query=${context.query}&storeId=${
+        context.storeId
+      }`;
+    } else {
+      url = `${routes.productsGlobal}query=${context.query}&regionId=${
+        context.regionId
+      }&page=${context.page}`;
+    }
+    return this.httpClient.get<ProductSearchResponse>(url).pipe(
+      map((data: any) => ({
+        data
+      })),
+      catchError(error => this.errorHandler(error))
+    );
   }
 
   submitNewOrder(context: NewOrderBody): Observable<any> {
     return this.httpClient
-      .post<NewOrderResponse>(
-        `${routes.neworder}`, context
-      )
+      .post<NewOrderResponse>(`${routes.neworder}`, context)
       .pipe(
         map((data: any) => ({
           data

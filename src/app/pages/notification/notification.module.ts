@@ -8,6 +8,10 @@ import { IonicModule } from '@ionic/angular';
 import { NotificationPage } from './notification.page';
 import { NotificationFilterModalPageModule } from './notification-filter-modal/notification-filter-modal.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import * as fromnotificationReducer from './store/notification.reducers';
+import { NotificationEffects } from './store/notification.effects';
 
 const routes: Routes = [
   {
@@ -23,7 +27,9 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     NotificationFilterModalPageModule,
-    TranslateModule
+    TranslateModule,
+    StoreModule.forFeature('notification', fromnotificationReducer.notificationReducer),
+    EffectsModule.forRoot([NotificationEffects]),
   ],
   declarations: [NotificationPage]
 })

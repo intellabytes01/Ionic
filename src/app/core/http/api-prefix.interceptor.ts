@@ -149,7 +149,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
         },
         (err: any) => {
           console.log(err);
-          if (err.status === 401 && err.error.statusCode !== 4050) {
+          if (err.status === 401 && err.error.statusCode !== 4050 && err.error.statusCode !== 4022) {
             this.alert.presentToast(
               'danger',
               'Your session is expired. Please wait...'

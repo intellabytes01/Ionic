@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { untilDestroyed } from '@app/core/index.js';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import * as fromModel from './new-order.json';
 import { SimilarProductsModalPage } from './similar-products-modal/similar-products-modal.page';
@@ -39,6 +39,8 @@ export class NewOrderPage implements OnInit, OnDestroy {
   state$: Observable<object>;
   similarProducts: any[] = [];
   userId: string;
+  tabInfo: string[] = ['ORDER VIA DISTRIBUTOR', 'ORDER VIA PRODUCT'];
+  activeTab: string;
 
   constructor(
     private storage: Storage,
@@ -47,7 +49,9 @@ export class NewOrderPage implements OnInit, OnDestroy {
     private modalController: ModalController,
     public activatedRoute: ActivatedRoute,
     private store: Store<NewOrderState>,
-    private authStore: Store<AuthState>
+    private authStore: Store<AuthState>,
+    private alertController: AlertController,
+    private router: Router
   ) {}
 
   setTempList() {
@@ -62,6 +66,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   saveToStorage() {
     this.orderData[this.key]['key'] = this.key;
     this.orderData[this.key]['store'] = {
+      StoreId: this.neworderForm.value.store.StoreId,
       StoreName: this.neworderForm.value.store.StoreName,
       PartyCode: this.neworderForm.value.store.PartyCode
     };
@@ -93,6 +98,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     this.orderData[this.key] = {
       productList: [],
       store: {
+        StoreId: null,
         StoreName: '',
         PartyCode: null
       },
@@ -119,6 +125,13 @@ export class NewOrderPage implements OnInit, OnDestroy {
     });
 
     this.setForm();
+    this.setActiveTab(this.tabInfo[0]);
+  }
+
+  setActiveTab(tab) {
+    this.activeTab = tab;
+    this.deleteAll();
+    this.setForm();
   }
 
   setForm() {
@@ -126,6 +139,9 @@ export class NewOrderPage implements OnInit, OnDestroy {
       searchText: ['', Validators.compose([])],
       store: [
         {
+          StoreId: this.orderData[this.key]
+            ? this.orderData[this.key].store.StoreId
+            : null,
           StoreName: this.orderData[this.key]
             ? this.orderData[this.key].store.StoreName
             : '',
@@ -156,7 +172,6 @@ export class NewOrderPage implements OnInit, OnDestroy {
         Validators.compose([])
       ]
     });
-    console.log(this.neworderForm.value);
   }
 
   // Search in Product List
@@ -165,13 +180,21 @@ export class NewOrderPage implements OnInit, OnDestroy {
     if (this.neworderForm.value.searchText.length === 0) {
       this.searchList = [];
     } else {
-      const payload = {
-        regionId: 1,
-        query: this.neworderForm.value.searchText,
-        page: 1
-      };
+      if (this.activeTab === 'ORDER VIA DISTRIBUTOR') {
+        const payload = {
+          query: this.neworderForm.value.searchText,
+          storeId: this.neworderForm.value.store.StoreId
+        };
 
-      this.store.dispatch(new ProductSearch(payload));
+        this.store.dispatch(new ProductSearch(payload));
+      } else {
+        const payload = {
+          regionId: 1,
+          query: this.neworderForm.value.searchText,
+          page: 1
+        };
+        this.store.dispatch(new ProductSearch(payload));
+      }
 
       this.store.select(productSearchData, untilDestroyed(this)).subscribe(
         (state: any) => {
@@ -226,6 +249,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Change Store
 
   changeStore(store) {
+    this.neworderForm.value.store.StoreId = store.StoreId;
     this.neworderForm.value.store.StoreName = store.StoreName;
     this.neworderForm.value.store.PartyCode = store.PartyCode;
   }
@@ -301,9 +325,49 @@ export class NewOrderPage implements OnInit, OnDestroy {
     this.store.select(newOrderSubmitData, untilDestroyed(this)).subscribe(
       (state: any) => {
         console.log(state);
+        if (state.success) {
+          this.alertPopup('Attention', 'Order sent to Distributor', 'confirm');
+        }
       },
       e => {}
     );
+  }
+
+  async alertPopup(heading: string, msg: string, type: string) {
+    let buttonsArray = [];
+    if (type === 'draft') {
+      buttonsArray = [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {}
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.saveToStorage();
+          }
+        }
+      ];
+    }
+    if (type === 'confirm') {
+      buttonsArray = [
+        {
+          text: 'Ok',
+          role: 'cancel',
+          handler: () => {
+            this.router.navigate(['/dashboard']);
+          }
+        }
+      ];
+    }
+    const alert = await this.alertController.create({
+      header: heading,
+      message: msg,
+      buttons: buttonsArray
+    });
+
+    await alert.present();
   }
 
   ngOnDestroy(): void {
