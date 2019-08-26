@@ -12,6 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import * as fromnotificationReducer from './store/notification.reducers';
 import { NotificationEffects } from './store/notification.effects';
+import { NotificationService } from './notification.service';
 
 const routes: Routes = [
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
     StoreModule.forFeature('notification', fromnotificationReducer.notificationReducer),
     EffectsModule.forRoot([NotificationEffects]),
   ],
-  declarations: [NotificationPage]
+  declarations: [NotificationPage],
+  providers: [NotificationService]
 })
 export class NotificationPageModule {}
