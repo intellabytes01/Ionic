@@ -277,7 +277,10 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Delete all
 
   deleteAll() {
-    this.orderData[this.key].productList = [];
+    if (this.orderData[this.key] && this.orderData[this.key].productList) {
+      this.orderData[this.key].productList = [];
+    }
+
     this.tempProductList = [];
   }
 

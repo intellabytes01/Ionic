@@ -21,6 +21,19 @@ export interface ProductDetails {
   Packing: string;
   MRP: number;
   GenericName: string;
+  BoxPacking: string;
+  CasePacking: string;
+  Company: string;
+  CompanyCode: string;
+  DisplayProductCode: string;
+  PTR: number;
+  ProductCode: string;
+  ProductFullName: string;
+  Scheme: string;
+  Stock: number;
+  StoreId: number;
+  StoreName: string;
+  StoreSchemeId: number;
 }
 
 export interface NewOrderBody {
