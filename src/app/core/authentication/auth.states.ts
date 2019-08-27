@@ -50,3 +50,10 @@ export const getRetailerId = createSelector(
       return userData['userData']['userData']['retailerSummary']['retailerInfo']['RetailerId'];
   }
 );
+
+export const getRegionId = createSelector(
+  selectAuthState,
+  userData => {
+      return userData['userData']['userData']['userSummary']['RegionId'];
+  }
+);

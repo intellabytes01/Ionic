@@ -10,7 +10,7 @@ import {
 import { Store } from '@ngrx/store';
 import { companySearchData, companyStoresData, companyProductsData } from '../store/product-search.reducers';
 import { untilDestroyed } from '@app/core';
-import { AuthState, getRetailerId } from '@app/core/authentication/auth.states';
+import { AuthState, getRetailerId, getRegionId } from '@app/core/authentication/auth.states';
 
 @Component({
   selector: 'app-company-tab',
@@ -28,6 +28,7 @@ export class CompanyTabPage implements OnInit {
   subListShow: any[] = [];
   companyId: number;
   index: number;
+  regionId: number;
   constructor(
     private router: Router,
     private alertService: AlertService,
@@ -43,6 +44,12 @@ export class CompanyTabPage implements OnInit {
       },
       e => { }
     );
+    this.authStore.select(getRegionId, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.regionId = state;
+      },
+      e => {}
+    );
   }
 
   search() {
@@ -53,7 +60,7 @@ export class CompanyTabPage implements OnInit {
       this.companyStoreList = [];
     } else {
       const payload = {
-        regionId: 1,
+        regionId: this.regionId,
         query: this.searchText,
         page: 1
       };

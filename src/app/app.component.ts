@@ -8,13 +8,17 @@ import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { SaveToken } from './core/authentication/actions/auth.actions';
-import { AuthState } from './core/authentication/auth.states';
-import { Store } from '@ngrx/store';
+import {
+  SaveToken,
+  TokenRefresh
+} from './core/authentication/actions/auth.actions';
+import { AuthState, selectAuthState } from './core/authentication/auth.states';
+import { Store, select } from '@ngrx/store';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { Platform } from '@ionic/angular';
 import { TopLoaderService } from './shared/top-loader/top-loader.service';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import * as JWT from 'jwt-decode';
 
 const log = new Logger('App');
 
@@ -97,6 +101,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.store.dispatch(new SaveToken());
+    this.tokenExpiryCheck();
   }
 
   ngOnDestroy() {
@@ -135,5 +140,34 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         tap(value => (this.norecord = value))
       )
       .subscribe();
+  }
+
+  tokenExpiryCheck() {
+    this.store
+      .pipe(
+        select(selectAuthState),
+        untilDestroyed(this)
+      )
+      .subscribe(data => {
+        if (
+          data['userData'] &&
+          data['userData']['token'] &&
+          data['userData']['token']['token']
+        ) {
+          const decoded = JWT(data['userData']['token']['token']);
+
+          // Unix Timestamp
+          const currentTime = Math.round(new Date().getTime() / 1000);
+          console.log(decoded['exp'] - currentTime);
+          // Refresh token if expired otherwise refresh after expiry time
+          if (decoded['exp'] <= currentTime) {
+            this.store.dispatch(new TokenRefresh());
+          } else {
+            setTimeout(() => {
+              this.tokenExpiryCheck();
+            }, (decoded['exp'] - currentTime) * 1000);
+          }
+        }
+      });
   }
 }

@@ -18,6 +18,7 @@ import { Plugins } from '@capacitor/core';
 import { TokenRefresh } from '../authentication/actions/auth.actions';
 import { AlertService } from '@app/shared/services/alert.service';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 const { Device } = Plugins;
 
@@ -36,7 +37,8 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
     private store: Store<AuthState>,
     private topLoaderService: TopLoaderService,
     private alert: AlertService,
-    private router: Router
+    private router: Router,
+    private storage: Storage
   ) {
     Device.getInfo().then(val => {
       this.info = val;
@@ -47,7 +49,9 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    return this.handle(next, request);
+    if (request && request.url) {
+      return this.handle(next, request);
+    }
   }
 
   handle(next, request) {
@@ -129,42 +133,22 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
               }
             }
             this.hideLoader();
-            if (request.url.split('v1')[1] === '/token/refresh') {
-              console.log(this.previousRequest);
-              this.store
-                .pipe(
-                  select(selectAuthState),
-                  untilDestroyed(this)
-                )
-                .subscribe(data => {
-                  this.token = data['userData']['token']['token'];
-                  console.log(this.token);
-                  this.intercept(
-                    this.previousRequest.request,
-                    this.previousRequest.next
-                  );
-                });
-            }
           }
         },
         (err: any) => {
           console.log(err);
-          if (err.status === 401 && err.error.statusCode !== 4050 && err.error.statusCode !== 4022) {
+          if (
+            err.status === 401 &&
+            err.error.statusCode !== 4050 &&
+            err.error.statusCode !== 4022
+          ) {
             this.alert.presentToast(
               'danger',
               'Your session is expired. Please wait...'
             );
-            // Refresh our token
-            this.previousRequest.request = request;
-            this.previousRequest.next = next;
-            // this.intercept(
-            //   this.previousRequest.request,
-            //   this.previousRequest.next
-            // );
-            this.store.dispatch(new TokenRefresh());
           }
           if (err.error.statusCode === 4050) {
-            this.router.navigate(['/login']);
+            this.logout();
           }
           this.hideLoader();
         }
@@ -186,6 +170,13 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
 
   noRecordsFoundHide() {
     this.topLoaderService.norecord.next(false);
+  }
+
+  logout() {
+    this.storage.clear();
+    localStorage.clear();
+    this.router.dispose();
+    this.router.navigate(['/login']);
   }
 
   ngOnDestroy(): void {

@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 import { distributorSearchData, distributorCompaniesData } from '../store/product-search.reducers';
 import { untilDestroyed } from '@app/core';
 import { Storage } from '@ionic/storage';
-import { AuthState, getRetailerId } from '@app/core/authentication/auth.states';
+import { AuthState, getRetailerId, getRegionId } from '@app/core/authentication/auth.states';
 
 @Component({
   selector: 'app-distributor-tab',
@@ -24,6 +24,7 @@ export class DistributorTabPage implements OnInit {
   distributorDetails: object;
   showList = true;
   retailerId: number;
+  regionId: number;
   constructor(
     private router: Router,
     private alertService: AlertService,
@@ -39,6 +40,12 @@ export class DistributorTabPage implements OnInit {
       },
       e => { }
     );
+    this.authStore.select(getRegionId, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.regionId = state;
+      },
+      e => {}
+    );
   }
 
   search() {
@@ -48,7 +55,7 @@ export class DistributorTabPage implements OnInit {
     } else {
       const payload = {
         retailerId: this.retailerId,
-        regionId: 1,
+        regionId: this.regionId,
         query: this.searchText,
         page: 1
       };

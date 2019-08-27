@@ -10,6 +10,7 @@ import {
 import { Store } from '@ngrx/store';
 import { productSearchData } from '../store/product-search.reducers';
 import { untilDestroyed } from '@app/core';
+import { getRegionId, AuthState } from '@app/core/authentication/auth.states';
 @Component({
   selector: 'app-product-tab',
   templateUrl: './product-tab.page.html',
@@ -20,14 +21,23 @@ export class ProductTabPage implements OnInit {
   searchText = '';
   productDetails: ProductDetails;
   showList = true;
+  regionId: number;
   constructor(
     private router: Router,
     private alertService: AlertService,
     public events: Events,
-    private store: Store<ProductSearchState>
+    private store: Store<ProductSearchState>,
+    private authStore: Store<AuthState>
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authStore.select(getRegionId, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.regionId = state;
+      },
+      e => {}
+    );
+  }
 
   search() {
     if (this.searchText.length < 3) {
@@ -35,7 +45,7 @@ export class ProductTabPage implements OnInit {
       this.productDetails = {} as ProductDetails;
     } else {
       const payload = {
-        regionId: 1,
+        regionId: this.regionId,
         query: this.searchText,
         page: 1
       };

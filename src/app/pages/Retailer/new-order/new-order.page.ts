@@ -18,7 +18,8 @@ import {
 import {
   AuthState,
   getRetailerStoreParties,
-  getUserId
+  getUserId,
+  getRegionId
 } from '@app/core/authentication/auth.states.js';
 
 @Component({
@@ -41,6 +42,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   userId: string;
   tabInfo: string[] = ['ORDER VIA DISTRIBUTOR', 'ORDER VIA PRODUCT'];
   activeTab: string;
+  regionId: number;
 
   constructor(
     private storage: Storage,
@@ -92,6 +94,12 @@ export class NewOrderPage implements OnInit, OnDestroy {
     this.authStore.select(getUserId, untilDestroyed(this)).subscribe(
       (state: any) => {
         this.userId = state;
+      },
+      e => {}
+    );
+    this.authStore.select(getRegionId, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.regionId = state;
       },
       e => {}
     );
@@ -189,7 +197,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
         this.store.dispatch(new ProductSearch(payload));
       } else {
         const payload = {
-          regionId: 1,
+          regionId: this.regionId,
           query: this.neworderForm.value.searchText,
           page: 1
         };

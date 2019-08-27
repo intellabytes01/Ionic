@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store';
 import { genericSearchData, genericDetailData, genericStoresData } from '../store/product-search.reducers';
 import { untilDestroyed } from '@app/core';
 import { Storage } from '@ionic/storage';
-import { getRetailerId, AuthState } from '@app/core/authentication/auth.states';
+import { getRetailerId, AuthState, getRegionId } from '@app/core/authentication/auth.states';
 
 @Component({
   selector: 'app-generic-tab',
@@ -28,6 +28,7 @@ export class GenericTabPage implements OnInit {
   showList = true;
   subListShow: any[] = [];
   retailerId: number;
+  regionId: number;
   constructor(
     private router: Router,
     private alertService: AlertService,
@@ -42,6 +43,12 @@ export class GenericTabPage implements OnInit {
         this.retailerId = state;
       },
       e => { }
+    );
+    this.authStore.select(getRegionId, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.regionId = state;
+      },
+      e => {}
     );
   }
 
@@ -94,7 +101,7 @@ export class GenericTabPage implements OnInit {
     const payloadStores = {
       productId: product.ProductId,
       retailerId: this.retailerId,
-      regionId: 1,
+      regionId: this.regionId,
       page: 1
     };
     this.store.dispatch(new GenericStores(payloadStores));

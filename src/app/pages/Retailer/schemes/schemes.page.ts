@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { untilDestroyed } from '@app/core';
 import { Schemes, SchemeCompanies, SchemeProducts } from './store/schemes.actions';
 import { schemesData, schemeCompaniesData, schemeProductsData } from './store/schemes.reducers';
+import { getRegionId, AuthState } from '@app/core/authentication/auth.states';
 
 @Component({
   selector: 'app-schemes',
@@ -29,20 +30,30 @@ export class SchemesPage implements OnInit {
   retailerId: number;
   schemeId: number;
   index: number;
+  regionId: number;
   constructor(
     private router: Router,
     private alertService: AlertService,
     public events: Events,
-    private store: Store<SchemesState>
+    private store: Store<SchemesState>,
+    private authStore: Store<AuthState>
   ) {}
 
   ngOnInit() {
-    this.getSchemes();
+    this.authStore.select(getRegionId, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.regionId = state;
+        if (this.regionId) {
+          this.getSchemes();
+        }
+      },
+      e => {}
+    );
   }
 
   getSchemes() {
       const payload = {
-        regionId: 1
+        regionId: this.regionId
       };
       this.store.dispatch(new Schemes(payload));
 
@@ -75,7 +86,7 @@ export class SchemesPage implements OnInit {
   searchSchemeProducts() {
     if (this.searchText.length > 0) {
       const payload = {
-        regionId: 1,
+        regionId: this.regionId,
         query: this.searchText
       };
       this.store.dispatch(new SchemeProducts(payload));
