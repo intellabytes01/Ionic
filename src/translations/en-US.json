@@ -175,7 +175,13 @@
     "DRAFT_PO": "DRAFT PO >",
     "CONFIRM": "CONFIRM >",
     "SUCCESS_TEXT": "Order created successfully",
-    "ERROR_TEXT": "Order creation failed"
+    "ERROR_TEXT": "Order creation failed",
+    "ATTENTION": "Attention",
+    "QTY_GREATER_TEXT": "Quantity must be greater than zero.",
+    "QTY_ENTER_TEXT": "Please enter quantity of",
+    "CONFIRM_TEXT": "Order sent to Distributor",
+    "QTY_VALID_TEXT": "Please enter quantity of all the added products.",
+    "DRAFT_TEXT": "Save order as draft?"
   },
 
   "MY_ORDER": {

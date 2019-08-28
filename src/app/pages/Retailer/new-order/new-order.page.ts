@@ -21,6 +21,8 @@ import {
   getUserId,
   getRegionId
 } from '@app/core/authentication/auth.states.js';
+import { AlertService } from '@app/shared/services/alert.service.js';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'pr-new-order',
@@ -53,8 +55,12 @@ export class NewOrderPage implements OnInit, OnDestroy {
     private store: Store<NewOrderState>,
     private authStore: Store<AuthState>,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService,
+    private translateService: TranslateService
   ) {}
+
+  // Temp list of products is used for all operations
 
   setTempList() {
     this.tempProductList = Object.assign(
@@ -63,7 +69,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     );
   }
 
-  // Save to offline storage
+  // Save to offline storage in draft
 
   saveToStorage() {
     this.orderData[this.key]['key'] = this.key;
@@ -115,7 +121,9 @@ export class NewOrderPage implements OnInit, OnDestroy {
       remarks: '',
       total: 0
     };
+
     // Draft Order Update Case
+
     this.state$ = this.activatedRoute.paramMap.pipe(
       map(() => window.history.state)
     );
@@ -221,7 +229,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
       searchText: ''
     });
     const productPresent = this.tempProductList.find(element => {
-      return element.id === product['id'];
+      return element.ProductCode === product['ProductCode'];
     });
     if (!productPresent) {
       this.tempProductList.push(product);
@@ -236,18 +244,41 @@ export class NewOrderPage implements OnInit, OnDestroy {
     });
     this.orderData[this.key].productList.splice(index, 1);
     this.tempProductList.splice(index, 1);
+    this.calculateTotal();
   }
 
   // Set quantity of product selected
 
   setQuantity(index, val) {
-    this.tempProductList[index].quantity = val.target.value;
+    if (val.target.value > 0) {
+      this.tempProductList[index].quantity = val.target.value;
+    } else {
+      this.alertPopup(
+        this.translateService.instant('NEW_ORDER.ATTENTION'),
+        this.translateService.instant('NEW_ORDER.QTY_GREATER_TEXT'),
+        'quantity'
+      );
+      this.tempProductList[index].quantity = null;
+    }
   }
 
   // Add product and save as draft
 
-  add(product: object) {
-    this.orderData[this.key]['productList'].push(product);
+  add(product: ProductDetails) {
+    if (product['quantity']) {
+      this.orderData[this.key]['productList'].push(product);
+      this.calculateTotal();
+    } else {
+      this.alertService.presentToast(
+        'warning',
+        `${this.translateService.instant('NEW_ORDER.QTY_ENTER_TEXT')} ${product.ProductName}.`
+      );
+    }
+  }
+
+  // Calculate Total
+
+  calculateTotal() {
     this.orderData[this.key].productList.forEach(element => {
       this.orderData[this.key].total += element.quantity * element.MRP;
     });
@@ -318,32 +349,51 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Create order
 
   createOrder() {
-    const payload = {
-      StoreId: this.orderData[this.key].productList[0]['StoreId'],
-      Partycode: '1007',
-      DeliveryOption: this.neworderForm.value.deliveryMode.name,
-      PriorityOption: this.neworderForm.value.deliveryPriority.name,
-      Remarks: this.neworderForm.value.remarks,
-      OrderTimestamp: new Date().toISOString(),
-      UserId: this.userId,
-      DeliveryPerson: {
-        Name: '',
-        Code: ''
-      },
-      Products: this.orderData[this.key].productList
-    };
-    this.store.dispatch(new NewOrderSubmit(payload));
-
-    this.store.select(newOrderSubmitData, untilDestroyed(this)).subscribe(
-      (state: any) => {
-        console.log(state);
-        if (state.success) {
-          this.alertPopup('Attention', 'Order sent to Distributor', 'confirm');
+    const checkInvalidQuantity = this.orderData[this.key].productList.some(
+      element => {
+        if (!element.quantity) {
+          return true;
         }
-      },
-      e => {}
+      }
     );
+    if (!checkInvalidQuantity) {
+      const payload = {
+        StoreId: this.neworderForm.value.store.StoreId,
+        Partycode: this.neworderForm.value.store.PartyCode,
+        DeliveryOption: this.neworderForm.value.deliveryMode.name,
+        PriorityOption: this.neworderForm.value.deliveryPriority.name,
+        Remarks: this.neworderForm.value.remarks,
+        OrderTimestamp: new Date().toISOString(),
+        UserId: this.userId,
+        DeliveryPerson: {
+          Name: '',
+          Code: ''
+        },
+        Products: this.orderData[this.key].productList
+      };
+      this.store.dispatch(new NewOrderSubmit(payload));
+
+      this.store.select(newOrderSubmitData, untilDestroyed(this)).subscribe(
+        (state: any) => {
+          if (state.success) {
+            this.alertPopup(
+              'Attention',
+              this.translateService.instant('NEW_ORDER.CONFIRM_TEXT'),
+              'confirm'
+            );
+          }
+        },
+        e => {}
+      );
+    } else {
+      this.alertService.presentToast(
+        'warning',
+        `${this.translateService.instant('NEW_ORDER.QTY_VALID_TEXT')}`
+      );
+    }
   }
+
+  // Quantity, Draft and Confirm popup
 
   async alertPopup(heading: string, msg: string, type: string) {
     let buttonsArray = [];
@@ -370,6 +420,15 @@ export class NewOrderPage implements OnInit, OnDestroy {
           handler: () => {
             this.router.navigate(['/dashboard']);
           }
+        }
+      ];
+    }
+    if (type === 'quantity') {
+      buttonsArray = [
+        {
+          text: 'Ok',
+          role: 'cancel',
+          handler: () => {}
         }
       ];
     }

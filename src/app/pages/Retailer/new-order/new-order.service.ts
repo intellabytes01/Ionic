@@ -13,12 +13,9 @@ const log = new Logger('NewOrder');
 export interface ProductSearchContext {
   query: string;
   storeId: number;
-  regionId: number;
-  page: number;
 }
 
 const routes = {
-  productsGlobal: '/global/products?',
   products: '/products?',
   neworder: '/retailer/orders/new'
 };
@@ -34,22 +31,16 @@ export class NewOrderService {
    * @return Array of Products.
    */
   getProducts(context: ProductSearchContext): Observable<any> {
-    let url = ``;
-    if (context.storeId) {
-      url = `${routes.products}query=${context.query}&storeId=${
-        context.storeId
-      }`;
-    } else {
-      url = `${routes.productsGlobal}query=${context.query}&regionId=${
-        context.regionId
-      }&page=${context.page}`;
-    }
-    return this.httpClient.get<ProductSearchResponse>(url).pipe(
-      map((data: any) => ({
-        data
-      })),
-      catchError(error => this.errorHandler(error))
-    );
+    return this.httpClient
+      .get<ProductSearchResponse>(
+        `${routes.products}query=${context.query}&storeId=${context.storeId}`
+      )
+      .pipe(
+        map((data: any) => ({
+          data
+        })),
+        catchError(error => this.errorHandler(error))
+      );
   }
 
   submitNewOrder(context: NewOrderBody): Observable<any> {
