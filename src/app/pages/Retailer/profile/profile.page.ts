@@ -20,7 +20,7 @@ import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { ModalController } from '@ionic/angular';
 import { ModalPopupPage } from '@app/shared/modal-popup/modal-popup.page';
-import { getUserId } from '@app/core/authentication/auth.states';
+import { getUserId, getRegionId, getRetailerId } from '@app/core/authentication/auth.states';
 import { untilDestroyed } from '@app/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
@@ -47,6 +47,8 @@ export class ProfilePage implements OnInit, OnDestroy {
   photo: SafeResourceUrl;
   dataReturned: any;
   userId: any;
+  regionId: any;
+  retailerId: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -62,6 +64,18 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.getUserId();
 
     this.businessTypes$ = this.store.pipe(select(businessTypesData));
+    this.store.select(getRegionId, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.regionId = state;
+      },
+      e => {}
+    );
+    this.store.select(getRetailerId, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.retailerId = state;
+      },
+      e => { }
+    );
     this.regions$ = this.store.pipe(select(regionsData));
     // this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
 
@@ -156,10 +170,10 @@ export class ProfilePage implements OnInit, OnDestroy {
         Validators.compose([Validators.required])
       ],
       // cstNumber: [{ value: '', disabled: this.disable }],
-      retailerId: [3, Validators.compose([Validators.required])],
+      retailerId: [this.retailerId, Validators.compose([Validators.required])],
       region: [
         {
-          regionId: null,
+          regionId: this.regionId,
           regionName: ''
         },
         Validators.compose([Validators.required])
@@ -228,11 +242,9 @@ export class ProfilePage implements OnInit, OnDestroy {
       this.profileInterface = {
         // cstNumber: this.profileForm.value.cstNumber.toString(),
         pincode: this.profileForm.value.pincode.toString(),
-        regionId: this.profileForm.value.regionId
-          ? this.profileForm.value.regionId.toString()
-          : this.userProfileDetails$.RegionId,
+        regionId: this.profileForm.controls.region.value.regionId,
         firstName: this.profileForm.value.firstName,
-        retailerName: this.profileForm.value.shopName,
+        retailerName: this.profileForm.controls.shopName.value,
         retailerId: this.profileForm.value.retailerId,
         email: this.profileForm.value.email,
         mobileNumber: this.profileForm.value.mobileNumber,

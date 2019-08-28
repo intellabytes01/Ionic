@@ -85,7 +85,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
       'deliveryPriority'
     ] = this.neworderForm.value.deliveryPriority.name;
     this.orderData[this.key]['remarks'] = this.neworderForm.value.remarks;
-    this.storage.set(this.key, this.orderData);
+    this.storage.set(this.key, this.orderData[this.key]);
   }
 
   ngOnInit() {

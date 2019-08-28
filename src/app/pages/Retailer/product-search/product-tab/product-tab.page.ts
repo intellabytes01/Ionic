@@ -28,15 +28,16 @@ export class ProductTabPage implements OnInit {
     public events: Events,
     private store: Store<ProductSearchState>,
     private authStore: Store<AuthState>
-  ) {}
-
-  ngOnInit() {
-    this.authStore.select(getRegionId, untilDestroyed(this)).subscribe(
+  ) {
+    this.store.select(getRegionId, untilDestroyed(this)).subscribe(
       (state: any) => {
         this.regionId = state;
       },
       e => {}
     );
+  }
+
+  ngOnInit() {
   }
 
   search() {
