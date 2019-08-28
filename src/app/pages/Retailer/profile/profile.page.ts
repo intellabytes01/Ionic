@@ -69,15 +69,16 @@ export class ProfilePage implements OnInit, OnDestroy {
     //   this.userProfileDetails$ = data;
     // });
 
-
-    this.updates$.pipe(
-      ofType(ProfileActionTypes.SAVEPROFILE_SUCCESS),
-      untilDestroyed(this),
-      tap(res => {
-        this.alert.presentToast('success', 'Profile Updated Successfully');
-        this.editProfile(true);
-      })
-    ).subscribe();
+    this.updates$
+      .pipe(
+        ofType(ProfileActionTypes.SAVEPROFILE_SUCCESS),
+        untilDestroyed(this),
+        tap(res => {
+          this.alert.presentToast('success', 'Profile Updated Successfully');
+          this.editProfile(true);
+        })
+      )
+      .subscribe();
   }
 
   ngOnInit() {
@@ -87,10 +88,15 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   async getUserId() {
-    await this.store.pipe(select(getUserId), untilDestroyed(this)).subscribe(userId => {
-      this.userId = userId;
-      this.getProfileDetails(userId);
-    });
+    await this.store
+      .pipe(
+        select(getUserId),
+        untilDestroyed(this)
+      )
+      .subscribe(userId => {
+        this.userId = userId;
+        this.getProfileDetails(userId);
+      });
   }
 
   createForm() {
@@ -149,9 +155,7 @@ export class ProfilePage implements OnInit, OnDestroy {
         { value: '', disabled: this.disable },
         Validators.compose([Validators.required])
       ],
-      cstNumber: [
-        { value: '', disabled: this.disable }
-      ],
+      // cstNumber: [{ value: '', disabled: this.disable }],
       retailerId: [3, Validators.compose([Validators.required])],
       region: [
         {
@@ -190,7 +194,12 @@ export class ProfilePage implements OnInit, OnDestroy {
         if (key !== 'loginId' && key !== 'shopName') {
           // && key !== 'businessType'
           this.profileForm.get(key).enable();
+        } else {
+        if (key === 'shopName' && ( this.profileForm.controls.shopName.value === null
+          || this.profileForm.controls.shopName.value === '')) {
+          this.profileForm.get(key).enable();
         }
+      }
       });
     } else {
       this.getProfileDetails(this.userId);
@@ -205,9 +214,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   updateProfile() {
     // stop here if form is invalid
-    if (
-      this.profileForm.invalid
-    ) {
+    if (this.profileForm.invalid) {
       return;
     }
     if (this.profileForm.value) {
@@ -219,21 +226,23 @@ export class ProfilePage implements OnInit, OnDestroy {
       }
 
       this.profileInterface = {
-        cstNumber: this.profileForm.value.cstNumber.toString(),
+        // cstNumber: this.profileForm.value.cstNumber.toString(),
         pincode: this.profileForm.value.pincode.toString(),
-        regionId: this.profileForm.value.regionId ? this.profileForm.value.regionId.toString()
-         : this.userProfileDetails$.RegionId,
+        regionId: this.profileForm.value.regionId
+          ? this.profileForm.value.regionId.toString()
+          : this.userProfileDetails$.RegionId,
         firstName: this.profileForm.value.firstName,
+        retailerName: this.profileForm.value.shopName,
         retailerId: this.profileForm.value.retailerId,
         email: this.profileForm.value.email,
         mobileNumber: this.profileForm.value.mobileNumber,
-        telephone: this.profileForm.value.telephone,
+        telephone: this.profileForm.value.telephone.toString(),
         address1: this.profileForm.value.address1,
         licenseNumber: this.profileForm.value.licenseNumber,
         gstinNumber: this.profileForm.value.gstinNumber,
 
         lastName: 'NoName',
-        gstinOption: 'GSTIN',
+        gstinOption: 'GSTIN'
       };
 
       const payload = {

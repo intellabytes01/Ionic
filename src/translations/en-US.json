@@ -1,4 +1,7 @@
 {
+  "NO_INTERNET_CONNECTION": "No Internet Connection",
+  
+  
   "SIDEMENU": {
     "DASHBOARD_TITLE": "Dashboard",
     "LOGOUT_TITLE": "Logout",

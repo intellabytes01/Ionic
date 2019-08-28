@@ -136,7 +136,10 @@ export class ProfileEffects {
 
   @Effect({ dispatch: false })
   SaveProfileSuccess: Observable<any> = this.actions.pipe(
-    ofType(ProfileActionTypes.SAVEPROFILE_SUCCESS)
+    ofType(ProfileActionTypes.SAVEPROFILE_SUCCESS),
+    tap(user => {
+      this.alert.presentToast('success', user.payload.message);
+    })
   );
 
   @Effect({ dispatch: false })

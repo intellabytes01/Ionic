@@ -6,14 +6,14 @@ import {
   HttpRequest,
   HttpResponse
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, merge, fromEvent, of } from 'rxjs';
 
 import { environment } from '@env/environment';
 import { untilDestroyed } from '../until-destroyed';
 import { AuthState, selectAuthState } from '../authentication/auth.states';
 import { Store, select } from '@ngrx/store';
 import { TopLoaderService } from '@app/shared/top-loader/top-loader.service';
-import { tap, switchMap, catchError } from 'rxjs/operators';
+import { tap, switchMap, catchError, map, mapTo } from 'rxjs/operators';
 import { Plugins } from '@capacitor/core';
 import { TokenRefresh } from '../authentication/actions/auth.actions';
 import { AlertService } from '@app/shared/services/alert.service';
@@ -49,7 +49,25 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (request && request.url) {
+    let isConnected = true;
+    const online$ = merge(
+      of(navigator.onLine),
+      fromEvent(window, 'online').pipe(mapTo(true)),
+      fromEvent(window, 'offline').pipe(mapTo(false))
+    );
+
+    online$.subscribe(connectionStatus => {
+        isConnected = connectionStatus;
+    });
+    if (!isConnected) {
+      this.alert.presentToast(
+        'danger',
+        'No Internet Connection'
+      );
+    } else {
+      console.log('Success Internet Connection');
+    }
+    if (request && request.url && isConnected) {
       return this.handle(next, request);
     }
   }

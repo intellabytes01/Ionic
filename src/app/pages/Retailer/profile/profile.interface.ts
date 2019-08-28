@@ -9,7 +9,7 @@ export interface IProfileInterface {
     regionId: string;
     licenseNumber: string;
     gstinNumber: string;
-
+    retailerName: string;
     lastName: string;
     gstinOption: string;
     cstNumber: string;
