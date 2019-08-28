@@ -36,7 +36,7 @@ export function newOrderReducer(
     case NewOrderAction.NEWORDERSUBMIT_SUCCESS: {
       return {
         ...state,
-        newOrderArray: action.payload.productSearch.data,
+        newOrderArray: action.payload.newOrder,
         errorMessage: null
       };
     }

@@ -319,6 +319,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   createOrder() {
     const payload = {
+      StoreId: this.orderData[this.key].productList[0]['StoreId'],
       Partycode: '1007',
       DeliveryOption: this.neworderForm.value.deliveryMode.name,
       PriorityOption: this.neworderForm.value.deliveryPriority.name,
