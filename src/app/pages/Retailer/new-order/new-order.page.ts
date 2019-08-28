@@ -279,6 +279,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Calculate Total
 
   calculateTotal() {
+    this.orderData[this.key].total = 0;
     this.orderData[this.key].productList.forEach(element => {
       this.orderData[this.key].total += element.quantity * element.MRP;
     });
