@@ -15,7 +15,9 @@ export const selectAuthState = createFeatureSelector<AuthState>('auth');
 
 export const getUserId = createSelector(
   selectAuthState,
-  userData => userData['userId']
+  userData => {
+    return userData['userData']['userData']['userSummary']['UserId'];
+  }
 );
 
 export const getRetailerStoreParties = createSelector(

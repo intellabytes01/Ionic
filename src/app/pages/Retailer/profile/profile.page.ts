@@ -64,7 +64,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.businessTypes$ = this.store.pipe(select(businessTypesData));
     this.regions$ = this.store.pipe(select(regionsData));
     // this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
-    this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
 
     // .subscribe(data => {
     //   this.userProfileDetails$ = data;
@@ -84,6 +83,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   ngOnInit() {
     this.createForm();
     this.photo = 'assets/icon/gstin.png';
+    this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
   }
 
   async getUserId() {
