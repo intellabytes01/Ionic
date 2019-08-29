@@ -208,7 +208,7 @@
               (focusout)="setQuantity(i, $event, product)"
               placeholder="Qty"
             ></ion-input>
-            <ion-badge *ngIf="free">
+            <ion-badge *ngIf="product.Free">
                 {{ product.Free }}
             </ion-badge>
           </ion-item>
@@ -221,7 +221,7 @@
               product.PTR ? product.PTR : product.MRP
             }}</ion-label>
             <ion-label padding>
-                <span *ngIf = "product.PTR && product.quantity">{{ (product.PTR * product.quantity).toFixed(2) }}</span>
+                <span *ngIf = "product.PTR && product.quantity">{{ (product.MRP * product.quantity).toFixed(2) }}</span>
               </ion-label>
             <ion-button *ngIf="!(orderData[key] && orderData[key].productList[i])"
               (click)="add(product)"
@@ -295,10 +295,11 @@
         <ion-row>
           <ion-col text-center>
             <ion-label class="total"
-              >{{ "NEW_ORDER.GRAND_TOTAL" | translate }} ₹ {{ grandTotal.toFixed(2) }}
-              <!-- {{ "NEW_ORDER.GRAND_TOTAL" | translate }} ₹{{
+              >
+              <!-- {{ "NEW_ORDER.GRAND_TOTAL" | translate }} ₹ {{ grandTotal.toFixed(2) }} -->
+              {{ "NEW_ORDER.GRAND_TOTAL" | translate }} ₹{{
                 orderData[key].total
-              }} -->
+              }}
               </ion-label
             >
           </ion-col>

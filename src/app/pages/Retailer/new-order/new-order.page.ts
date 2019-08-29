@@ -45,7 +45,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   tabInfo: string[] = ['ORDER VIA DISTRIBUTOR', 'ORDER VIA PRODUCT'];
   activeTab: string;
   regionId: number;
-  free: number;
+  free = 0;
   grandTotal = 0;
 
   constructor(
@@ -276,7 +276,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   add(product: ProductDetails) {
     if (product['quantity']) {
       this.orderData[this.key]['productList'].push(product);
-      this.grandTotal = this.grandTotal + (product['quantity'] * product.PTR);
+      this.grandTotal = this.grandTotal + (product['quantity'] * product.MRP);
       this.calculateTotal();
     } else {
       this.alertService.presentToast(
