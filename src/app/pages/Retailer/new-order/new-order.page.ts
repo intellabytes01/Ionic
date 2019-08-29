@@ -46,6 +46,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   activeTab: string;
   regionId: number;
   free: number;
+  grandTotal = 0;
 
   constructor(
     private storage: Storage,
@@ -255,7 +256,9 @@ export class NewOrderPage implements OnInit, OnDestroy {
       let scheme = product.Scheme;
       scheme = scheme.toString().split('+');
       this.free = product.quantity / scheme[0];
+      this.tempProductList[index].Free = this.free;
     }
+
     if (val.target.value > 0) {
       this.tempProductList[index].Quantity = val.target.value;
     } else {
@@ -273,6 +276,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   add(product: ProductDetails) {
     if (product['quantity']) {
       this.orderData[this.key]['productList'].push(product);
+      this.grandTotal = this.grandTotal + (product['quantity'] * product.PTR);
       this.calculateTotal();
     } else {
       this.alertService.presentToast(
@@ -284,7 +288,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   // Calculate Total
 
-  calculateTotal() {
+  calculateTotal() {    
     this.orderData[this.key].total = 0;
     this.orderData[this.key].productList.forEach(element => {
       this.orderData[this.key].total += element.quantity * element.MRP;

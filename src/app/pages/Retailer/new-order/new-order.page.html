@@ -209,7 +209,7 @@
               placeholder="Qty"
             ></ion-input>
             <ion-badge *ngIf="free">
-                {{ free }}
+                {{ product.Free }}
             </ion-badge>
           </ion-item>
           </ion-col>
@@ -295,9 +295,11 @@
         <ion-row>
           <ion-col text-center>
             <ion-label class="total"
-              >{{ "NEW_ORDER.GRAND_TOTAL" | translate }} ₹{{
+              >{{ "NEW_ORDER.GRAND_TOTAL" | translate }} ₹ {{ grandTotal.toFixed(2) }}
+              <!-- {{ "NEW_ORDER.GRAND_TOTAL" | translate }} ₹{{
                 orderData[key].total
-              }}</ion-label
+              }} -->
+              </ion-label
             >
           </ion-col>
         </ion-row>
