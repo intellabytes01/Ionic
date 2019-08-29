@@ -45,6 +45,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   tabInfo: string[] = ['ORDER VIA DISTRIBUTOR', 'ORDER VIA PRODUCT'];
   activeTab: string;
   regionId: number;
+  free: number;
 
   constructor(
     private storage: Storage,
@@ -65,7 +66,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   setTempList() {
     this.tempProductList = Object.assign(
       this.tempProductList,
-      this.orderData[this.key].productList
+      this.orderData['productList']
     );
   }
 
@@ -249,16 +250,21 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   // Set quantity of product selected
 
-  setQuantity(index, val) {
+  setQuantity(index, val, product) {
+    if (product.Scheme && product.Scheme !== '') {
+      let scheme = product.Scheme;
+      scheme = scheme.toString().split('+');
+      this.free = product.quantity / scheme[0];
+    }
     if (val.target.value > 0) {
-      this.tempProductList[index].quantity = val.target.value;
+      this.tempProductList[index].Quantity = val.target.value;
     } else {
       this.alertPopup(
         this.translateService.instant('NEW_ORDER.ATTENTION'),
         this.translateService.instant('NEW_ORDER.QTY_GREATER_TEXT'),
         'quantity'
       );
-      this.tempProductList[index].quantity = null;
+      this.tempProductList[index].Quantity = null;
     }
   }
 

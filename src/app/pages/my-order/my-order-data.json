@@ -1,27 +1,19 @@
 {
   "storeList": [
     {
-      "id": 151,
-      "name": "Demo Store 1"
-    },
-    {
-      "id": 152,
-      "name": "Demo Store 2"
-    },
-    {
-      "id": 153,
-      "name": "Demo Store 3"
+      "id": 0,
+      "name": ""
     }
   ],
   "operation": ["view", "download"],
-  "status": ["isplaced", "isprocessed", "isuploaded"],
+  "status": ["Placed", "Uploaded", "Processed"],
   "orderFilter": {
-    "fromDate": "16/01/17",
-    "toDate": "21/06/19",
-    "storeId": 151,
-    "orderNo": "L1",
-    "operation": "view",
-    "status": "isplaced"
+    "fromDate": "",
+    "toDate": "",
+    "storeId": 0,
+    "orderNo": "",
+    "operation": "",
+    "status": ""
   },
   "currentPage": 1,
   "limit": 15
