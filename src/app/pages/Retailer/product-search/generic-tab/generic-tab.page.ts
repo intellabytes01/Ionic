@@ -12,6 +12,7 @@ import { genericSearchData, genericDetailData, genericStoresData } from '../stor
 import { untilDestroyed } from '@app/core';
 import { Storage } from '@ionic/storage';
 import { getRetailerId, AuthState, getRegionId } from '@app/core/authentication/auth.states';
+import { TopLoaderService } from '@app/shared/top-loader/top-loader.service';
 
 @Component({
   selector: 'app-generic-tab',
@@ -34,7 +35,8 @@ export class GenericTabPage implements OnInit {
     private alertService: AlertService,
     public events: Events,
     private store: Store<ProductSearchState>,
-    private authStore: Store<AuthState>
+    private authStore: Store<AuthState>,
+    private topLoaderService: TopLoaderService
   ) { }
 
   ngOnInit() {
@@ -108,6 +110,7 @@ export class GenericTabPage implements OnInit {
     this.store.select(genericStoresData, untilDestroyed(this)).subscribe(
       (state: any) => {
         this.genericStoresList = state;
+        this.topLoaderService.norecord.next(false);
         this.scrollTo(product.ProductId);
       },
       e => { }

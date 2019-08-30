@@ -75,9 +75,10 @@
         <div *ngFor="let product of companyProductList[i]">
           <ion-row class="products">
             <ion-col text-start>
-              <ion-label class="product-name green-color">{{
-                product.StoreProductName
-              }}</ion-label
+              <ion-label
+                class="product-name"
+                [ngClass]="[ product.TotalStock ? 'green-color' : 'red' ]"
+                >{{ product.StoreProductName }}</ion-label
               ><br />
               <ion-label>{{ product.StoreProductPacking }}</ion-label>
             </ion-col>

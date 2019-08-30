@@ -29,7 +29,7 @@
   color: #888888;
 }
 
-ion-content{
+ion-content {
   --background: white;
   --color: black;
 }
@@ -40,30 +40,30 @@ ion-input {
   margin-top: 2%;
 }
 
-ion-button{
+ion-button {
   height: 53px;
   font-size: 0.8rem;
   text-transform: inherit;
 }
 
 .mustard {
-  background: #FCA43A;
+  background: #fca43a;
 }
 
-.mustard-color{
-  color: #FCA43A;
+.mustard-color {
+  color: #fca43a;
 }
 
 .blue {
   background: #4592d6;
 }
 
-.blue-color{
+.blue-color {
   color: #3880ff;
 }
 
 ion-footer {
-  background: #FCA43A;
+  background: #fca43a;
 }
 
 .padding0 {
@@ -125,47 +125,47 @@ ion-modal {
   padding-left: 3%;
 }
 
-ionic-selectable-modal{
-  ion-content{
+ionic-selectable-modal {
+  ion-content {
     --background: white !important;
   }
 }
 
 //validation error message
 
-.error-message{
+.error-message {
   color: red;
   padding-left: 3%;
 }
 
-//sidemenu 
+//sidemenu
 
-.sidemenu{
+.sidemenu {
   background: white !important;
   color: black !important;
 }
 
-.sidemenu-header{
-  background: #4592D6 !important;
+.sidemenu-header {
+  background: #4592d6 !important;
   color: white !important;
 }
 
-.sidemenu-name{
+.sidemenu-name {
   font-size: 1.4rem;
 }
 
-.sidemenu-version{
-  color: #81BBE9;
+.sidemenu-version {
+  color: #81bbe9;
 }
 
 //header
 
 ion-toolbar {
-  --background: #FCA43A;
+  --background: #fca43a;
 }
 
 ion-header {
-  --background: #FCA43A;
+  --background: #fca43a;
 }
 
 //sidemenu icon
@@ -174,20 +174,20 @@ ion-menu-button {
   color: white !important;
 }
 
-ion-title{
+ion-title {
   color: white;
 }
 
 //header icon
 
-.header-icon{
+.header-icon {
   font-size: 1.7rem;
   padding-top: 0.2rem;
 }
 
 //header title
 
-.header-title{
+.header-title {
   padding-top: 0.4rem;
   font-size: 1.1rem;
 }
@@ -201,15 +201,15 @@ pre {
 
 //selected tab
 
-.tab-selected{
-  border-bottom: 1px solid #FCA43A !important;
+.tab-selected {
+  border-bottom: 1px solid #fca43a !important;
 }
 
-ion-list{
+ion-list {
   overflow-y: scroll;
 }
 
-.ionic-selectable-label{
+.ionic-selectable-label {
   position: absolute;
   margin: 0.7rem 0rem 0rem 0.7rem;
 }
@@ -219,11 +219,11 @@ ion-list{
   margin: 0 auto;
 }
 
-.message{
+.message {
   font-size: 0.9rem;
 }
 
-.title{
+.title {
   font-size: 1.1rem;
 }
 
@@ -231,21 +231,21 @@ ionic-selectable {
   border: 1px solid grey;
 }
 
-ion-back-button{
+ion-back-button {
   color: white !important;
 }
 
-.border-mustard{
-  border-left: 5px solid #FCA43A;
-  border-right: 5px solid #FCA43A;
+.border-mustard {
+  border-left: 5px solid #fca43a;
+  border-right: 5px solid #fca43a;
 }
 
-.grey-bg{
+.grey-bg {
   background: lightgrey;
 }
 
 .alignSelf-center {
-  align-self: center
+  align-self: center;
 }
 
 .marginTop {
@@ -264,50 +264,54 @@ ion-back-button{
   color: red !important;
 }
 
-.delete-icon{
-    font-size: 1.4rem;
+.delete-icon {
+  font-size: 1.4rem;
 }
 
-.profile-image{
+.profile-image {
   height: 8em;
 }
 
 //searchbar
 
-.searchbar-input{
+.searchbar-input {
   border-radius: 0px !important;
 }
 
 ion-searchbar {
-    ::placeholder {
-      font-size: 1rem !important; 
-    }      
-    // border: 1px solid grey !important;
-    // margin-top: 1rem;
+  ::placeholder {
+    font-size: 1rem !important;
+  }
+  // border: 1px solid grey !important;
+  // margin-top: 1rem;
 }
 
-.search-validation-text{
-    color: maroon !important;
+.search-validation-text {
+  color: maroon !important;
 }
 
-.product-name{
+.product-name {
   font-size: 1.1rem;
   font-weight: bold;
 }
 
-.norecord{
+.norecord {
   margin-bottom: 11rem;
 }
 
-.searchbar-input.sc-ion-searchbar-md{
+.searchbar-input.sc-ion-searchbar-md {
   padding-right: 0% !important;
   padding-left: 3rem !important;
 }
 
-ion-fab{
+ion-fab {
   position: fixed;
 }
 
-.mustard-color{
-  color: #FCA43A;
+.mustard-color {
+  color: #fca43a;
+}
+
+.grey-border-bottom {
+  border-bottom: 1px solid grey !important;
 }

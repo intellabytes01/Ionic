@@ -89,7 +89,7 @@ export class CompanyTabPage implements OnInit {
     this.showList = false;
     this.companyId = company.CompanyCode;
     const payload = {
-      regionId: company.RegionId,
+      regionId: this.regionId,
       retailerId: this.retailerId,
       slot: company.slot,
       companyId: company.CompanyCode

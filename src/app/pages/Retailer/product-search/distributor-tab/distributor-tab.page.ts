@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Events, IonContent } from '@ionic/angular';
 import { AlertService } from '@app/shared/services/alert.service';
-import { DistributorSearch, DistributorCompanies } from '../store/product-search.actions';
+import { DistributorSearch, DistributorCompanies, CompanyProducts } from '../store/product-search.actions';
 import {
   ProductSearchState
 } from '../store/product-search.state';
 import { Store } from '@ngrx/store';
-import { distributorSearchData, distributorCompaniesData } from '../store/product-search.reducers';
+import { distributorSearchData, distributorCompaniesData, companyProductsData } from '../store/product-search.reducers';
 import { untilDestroyed } from '@app/core';
 import { Storage } from '@ionic/storage';
 import { AuthState, getRetailerId, getRegionId } from '@app/core/authentication/auth.states';
@@ -25,6 +25,10 @@ export class DistributorTabPage implements OnInit {
   showList = true;
   retailerId: number;
   regionId: number;
+  subListShow: any[] = [];
+  index: number;
+  companyProductList: any[] = [];
+  storeId: string;
   constructor(
     private router: Router,
     private alertService: AlertService,
@@ -79,6 +83,7 @@ export class DistributorTabPage implements OnInit {
   }
 
   distributorClick(distributor) {
+    this.storeId = distributor.StoreId;
     this.distributorDetails = distributor;
     this.searchText = distributor.StoreName;
     this.showList = false;
@@ -92,5 +97,49 @@ export class DistributorTabPage implements OnInit {
       },
       e => {}
     );
+  }
+
+  companyClick(company, index) {
+    this.toggle(index);
+    const payload = {
+      storeId: this.storeId,
+      page: 1,
+      companyId: company.CompanyId
+    };
+    if (this.subListShow[index]) {
+      this.store.dispatch(new CompanyProducts(payload));
+    } else {
+      this.companyProductList[index] = [];
+    }
+    this.store.select(companyProductsData, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        if (this.index === index) {
+          this.companyProductList[index] = state;
+          this.scrollTo(company.CompanyId);
+        }
+      },
+      e => {}
+    );
+
+  }
+
+  toggle(index) {
+    this.index = index;
+    if (this.subListShow[index] === undefined) {
+      this.subListShow[index] = false;
+    }
+    this.subListShow[index] = !this.subListShow[index];
+    this.subListShow = this.subListShow.map((element, i) => {
+      if (i !== index) {
+        element = false;
+      }
+      return element;
+    });
+  }
+
+  scrollTo(id) {
+    if (document.getElementById(id)) {
+      document.getElementById(id).scrollIntoView();
+    }
   }
 }
