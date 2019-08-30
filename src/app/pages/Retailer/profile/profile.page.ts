@@ -263,11 +263,14 @@ export class ProfilePage implements OnInit, OnDestroy {
         retailerName: this.profileForm.controls.shopName.value,
         retailerId: this.profileForm.value.retailerId,
         email: this.profileForm.value.email,
-        mobileNumber: this.profileForm.value.mobileNumber,
+        mobileNumber: this.profileForm.value.mobileNumber 
+        ? this.profileForm.value.mobileNumber : this.profileForm.controls['mobileNumber'].value,
         telephone: this.profileForm.value.telephone.toString(),
         address1: this.profileForm.value.address1,
-        licenseNumber: this.profileForm.value.licenseNumber,
-        gstinNumber: this.profileForm.value.gstinNumber,
+        licenseNumber: this.profileForm.value.licenseNumber
+        ? this.profileForm.value.licenseNumber : this.profileForm.controls['licenseNumber'].value,
+        gstinNumber: this.profileForm.value.gstinNumber
+        ? this.profileForm.value.gstinNumber : this.profileForm.controls['gstinNumber'].value,
 
         lastName: 'NoName',
         gstinOption: 'GSTIN'

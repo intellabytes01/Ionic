@@ -43,6 +43,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     public router: Router,
     private splashScreen: SplashScreen
   ) {
+    this.splashScreen.show();
     this.initializeApp();
   }
 
