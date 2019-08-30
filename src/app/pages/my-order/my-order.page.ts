@@ -8,7 +8,7 @@ import { OrderFilterModalPage } from './order-filter-modal/order-filter-modal.pa
 import { untilDestroyed } from '@app/core';
 import { Router } from '@angular/router';
 import * as fromModel from './my-order-data.json';
-import { format } from 'date-fns';
+import { format, subDays } from 'date-fns';
 
 @Component({
   selector: 'pr-my-order',
@@ -33,12 +33,22 @@ export class MyOrderPage implements OnInit, OnDestroy {
     public modalController: ModalController,
     public router: Router
   ) {
+    const fromD = subDays(new Date(), 7);
+    this.orderFilter.fromDate = format(fromD, 'DD/MM/YY');
+
+    this.orderFilter.toDate = format(new Date(), 'DD/MM/YY');
+    // this.orderFilter.fromDate = subDays(this.orderFilter.fromDate, 7 );
+    // this.orderFilter.fromDate = new Date('dd/mm/yy').getDate() - 7;
+    // this.orderFilter.toDate = new Date('dd/mm/yy').getDate();
+
     this.getMyOrders();
-    this.myOrderList$ = this.store.pipe(select(myOrderData));
-    this.myOrderList$.pipe(untilDestroyed(this)).subscribe(data => {
-      if (data && data.returnData) {
-        this.count = data.returnData.length;
-        this.myOrderList = this.myOrderList.concat(data.returnData);
+
+    this.myOrderList$ = this.store
+    .select(myOrderData, untilDestroyed(this))
+    .subscribe(data => {
+      if (data && data['paginationData'] && data['paginationData']['afterMaxDateTimeData'].length > 0) {
+        this.count = data['paginationData']['afterMaxDateTimeData'].length;
+        this.myOrderList = this.myOrderList.concat(data['paginationData']['afterMaxDateTimeData']);
         this.total.amount = data.totalOrderAmount;
         this.total.count = data.paginationData.totalRecords;
         // App logic to determine if all data is loaded
@@ -48,6 +58,21 @@ export class MyOrderPage implements OnInit, OnDestroy {
         }
       }
     });
+
+    // this.myOrderList$ = this.store.pipe(select(myOrderData));
+    // this.myOrderList$.pipe(untilDestroyed(this)).subscribe(data => {
+    //   if (data && data['paginationData'] && data['paginationData']['afterMaxDateTimeData'].length > 0) {
+    //     this.count = data['paginationData']['afterMaxDateTimeData'].length;
+    //     this.myOrderList = this.myOrderList.concat(data['paginationData']['afterMaxDateTimeData']);
+    //     this.total.amount = data.totalOrderAmount;
+    //     this.total.count = data.paginationData.totalRecords;
+    //     // App logic to determine if all data is loaded
+    //     // and disable the infinite scroll
+    //     if (this.event && this.count < this.limit) {
+    //       this.event.target.disabled = true;
+    //     }
+    //   }
+    // });
   }
 
   ngOnInit() {}
@@ -64,10 +89,22 @@ export class MyOrderPage implements OnInit, OnDestroy {
         pagination: {
           currentPage: this.currentPage,
           limit: this.limit,
-          maxDateTime: format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+          maxDateTime: format(subDays(new Date(), 7), 'YYYY-MM-DD HH:mm:ss')
         }
       }
     };
+    if (!payload.orderDetails.storeId || payload.orderDetails.storeId == null) {
+      delete payload.orderDetails.storeId;
+    }
+    if (!payload.orderDetails.orderNo || payload.orderDetails.orderNo == null) {
+      delete payload.orderDetails.orderNo;
+    }
+    if (!payload.orderDetails.status || payload.orderDetails.status == null) {
+      payload.orderDetails.status = 'all';
+    }
+    if (!payload.orderDetails.operation || payload.orderDetails.operation == null) {
+      payload.orderDetails.operation = 'view';
+    }
     this.store.dispatch(new MyOrderList(payload));
   }
 
