@@ -1,9 +1,9 @@
 <ion-content padding>
-  <div *ngFor="let order of orderDetails">
+  <div>
     <ion-row>
       <ion-col text-start>
         <ion-label class="storename"
-          ><b>{{ order.ProductName }}</b></ion-label
+          ><b>Demo Store 1</b></ion-label
         >
         &nbsp;&nbsp;
         <ion-icon
@@ -21,7 +21,7 @@
         </ion-label>
       </ion-col>
       <ion-col text-end size="6">
-        <ion-label>{{ order.OrderNo }}</ion-label>
+        <ion-label>{{ orderDetails.OrderNo }}</ion-label>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -32,7 +32,7 @@
       </ion-col>
       <ion-col text-end size="6">
         <ion-label>{{
-          order.CreatedDate | date: "dd MMM yyyy h:mm a"
+          orderDetails[0].CreatedDate | date: "dd MMM yyyy h:mm a"
         }}</ion-label>
       </ion-col>
     </ion-row>
@@ -43,9 +43,7 @@
         </ion-label>
       </ion-col>
       <ion-col text-end size="6">
-        <ion-label>{{
-          order.CreatedDate | date: "dd MMM yyyy h:mm a"
-        }}</ion-label>
+        <ion-label>NA</ion-label>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -55,12 +53,10 @@
         </ion-label>
       </ion-col>
       <ion-col text-end size="6">
-        <ion-label>{{
-          order.CreatedDate | date: "dd MMM yyyy h:mm a"
-        }}</ion-label>
+        <ion-label>NA</ion-label>
       </ion-col>
     </ion-row>
-    <ion-row (click)="call(order.OrderDetailId)">
+    <ion-row (click)="call(orderDetails[0].OrderDetailId)">
       <ion-col text-start size="6">
         <ion-label class="blue-color">
           <b>{{ "MY_ORDER.CALL" | translate }}</b>
@@ -72,10 +68,10 @@
     </ion-row>
     <ion-row>
       <ion-col text-start size="6">
-        <ion-label> </ion-label>
+        <ion-label>Items {{orderDetails.length}} </ion-label>
       </ion-col>
       <ion-col text-end size="6">
-        <ion-label>₹{{ order.StoreId }}</ion-label>
+        <ion-label>₹{{ totalOrderValue }}</ion-label>
       </ion-col>
     </ion-row>
 
@@ -85,7 +81,7 @@
           <ion-col text-start>
             <ion-label>
               <b>{{ "MY_ORDER.REMARKS" | translate }}: </b
-              >{{ order.ProductRemarks }}
+              >{{ orderDetails[0].ProductRemarks }}
             </ion-label>
           </ion-col>
         </ion-row>
@@ -123,7 +119,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
+    <ion-row *ngFor="let order of orderDetails">
       <ion-col size="3" text-center>
         <ion-label>{{ order.Quantity }}</ion-label>
       </ion-col>

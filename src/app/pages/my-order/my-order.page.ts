@@ -46,7 +46,8 @@ export class MyOrderPage implements OnInit, OnDestroy {
     this.myOrderList$ = this.store
     .select(myOrderData, untilDestroyed(this))
     .subscribe(data => {
-      if (data && data['paginationData'] && data['paginationData']['afterMaxDateTimeData'].length > 0) {
+      if (data && data['paginationData'] &&  data['paginationData']['afterMaxDateTimeData'] !== null
+      && data['paginationData']['afterMaxDateTimeData'].length > 0) {
         this.count = data['paginationData']['afterMaxDateTimeData'].length;
         this.myOrderList = this.myOrderList.concat(data['paginationData']['afterMaxDateTimeData']);
         this.total.amount = data.totalOrderAmount;

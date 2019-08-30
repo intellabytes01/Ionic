@@ -59,7 +59,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     private alertController: AlertController,
     private router: Router,
     private alertService: AlertService,
-    private translateService: TranslateService
+    public translateService: TranslateService
   ) {}
 
   // Temp list of products is used for all operations

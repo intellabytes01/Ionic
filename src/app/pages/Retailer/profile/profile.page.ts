@@ -257,16 +257,27 @@ export class ProfilePage implements OnInit, OnDestroy {
 
       this.profileInterface = {
         // cstNumber: this.profileForm.value.cstNumber.toString(),
-        pincode: this.profileForm.value.pincode.toString(),
-        regionId: this.profileForm.controls.region.value.regionId,
-        firstName: this.profileForm.value.firstName,
-        retailerName: this.profileForm.controls.shopName.value,
-        retailerId: this.profileForm.value.retailerId,
-        email: this.profileForm.value.email,
+        pincode: this.profileForm.value.pincode.toString()
+        ? this.profileForm.value.pincode : this.profileForm.controls['pincode'].value,
+        regionId: this.profileForm.controls.region.value.regionId
+        ? this.profileForm.value.regionId : this.profileForm.controls['regionId'].value,
+        firstName: this.profileForm.value.firstName
+        ? this.profileForm.value.firstName : this.profileForm.controls['firstName'].value,
+        retailerName: this.profileForm.controls.shopName.value
+        ? this.profileForm.value.shopName : this.profileForm.controls['shopName'].value,
+        retailerId: this.profileForm.value.retailerId
+        ? this.profileForm.value.retailerId : this.profileForm.controls['retailerId'].value,
+
+
+
+        email: this.profileForm.value.email
+        ? this.profileForm.value.email : this.profileForm.controls['email'].value,
         mobileNumber: this.profileForm.value.mobileNumber 
         ? this.profileForm.value.mobileNumber : this.profileForm.controls['mobileNumber'].value,
-        telephone: this.profileForm.value.telephone.toString(),
-        address1: this.profileForm.value.address1,
+        telephone: this.profileForm.value.telephone.toString()
+        ? this.profileForm.value.telephone : this.profileForm.controls['telephone'].value,
+        address1: this.profileForm.value.address1
+        ? this.profileForm.value.address1 : this.profileForm.controls['address1'].value,
         licenseNumber: this.profileForm.value.licenseNumber
         ? this.profileForm.value.licenseNumber : this.profileForm.controls['licenseNumber'].value,
         gstinNumber: this.profileForm.value.gstinNumber

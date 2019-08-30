@@ -18,6 +18,7 @@ export class MyOrderDetailsPage implements OnInit, OnDestroy {
   state$: Observable<object>;
   orderDetails: any = [];
   myOrderDetails$: any;
+  totalOrderValue = 0;
   constructor(
     public activatedRoute: ActivatedRoute,
     public iab: InAppBrowser,
@@ -29,6 +30,13 @@ export class MyOrderDetailsPage implements OnInit, OnDestroy {
         this.orderDetails = data;
       }
     });
+
+
+    if (this.orderDetails.length > 0) {
+      this.orderDetails.forEach(element => {
+        this.totalOrderValue += element['PTR'] * element['Quantity'];
+      });
+    }
   }
 
   ngOnInit() {
