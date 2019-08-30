@@ -6,14 +6,14 @@
     }
   ],
   "operation": ["view", "download"],
-  "status": ["Placed", "Uploaded", "Processed"],
+  "status": ["All, Placed", "Uploaded", "Processed"],
   "orderFilter": {
     "fromDate": "",
     "toDate": "",
-    "storeId": 0,
+    "storeId": "",
     "orderNo": "",
-    "operation": "",
-    "status": ""
+    "operation": "view",
+    "status": "all"
   },
   "currentPage": 1,
   "limit": 15

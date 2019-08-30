@@ -249,13 +249,13 @@ export class NewOrderPage implements OnInit, OnDestroy {
     this.calculateTotal();
   }
 
-  // Set quantity of product selected
+  // Set Quantity of product selected
 
   setQuantity(index, val, product) {
     if (product.Scheme && product.Scheme !== '') {
       let scheme = product.Scheme;
       scheme = scheme.toString().split('+');
-      this.free = product.quantity / scheme[0];
+      this.free = product.Quantity / scheme[0];
       this.tempProductList[index].Free = this.free;
     }
 
@@ -265,7 +265,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
       this.alertPopup(
         this.translateService.instant('NEW_ORDER.ATTENTION'),
         this.translateService.instant('NEW_ORDER.QTY_GREATER_TEXT'),
-        'quantity'
+        'Quantity'
       );
       this.tempProductList[index].Quantity = null;
     }
@@ -274,9 +274,9 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Add product and save as draft
 
   add(product: ProductDetails) {
-    if (product['quantity']) {
+    if (product['Quantity']) {
       this.orderData[this.key]['productList'].push(product);
-      this.grandTotal = this.grandTotal + (product['quantity'] * product.MRP);
+      this.grandTotal = this.grandTotal + (product['Quantity'] * product.PTR);
       this.calculateTotal();
     } else {
       this.alertService.presentToast(
@@ -288,10 +288,10 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   // Calculate Total
 
-  calculateTotal() {    
+  calculateTotal() {
     this.orderData[this.key].total = 0;
     this.orderData[this.key].productList.forEach(element => {
-      this.orderData[this.key].total += element.quantity * element.MRP;
+      this.orderData[this.key].total += element.Quantity * element.PTR;
     });
     this.saveToStorage();
   }
@@ -362,7 +362,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   createOrder() {
     const checkInvalidQuantity = this.orderData[this.key].productList.some(
       element => {
-        if (!element.quantity) {
+        if (!element.Quantity) {
           return true;
         }
       }

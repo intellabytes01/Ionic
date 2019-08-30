@@ -203,7 +203,7 @@
             <ion-input
               name="qty"
               type="number"
-              [(ngModel)]="product.quantity"
+              [(ngModel)]="product.Quantity"
               [ngModelOptions]="{standalone: true}"
               (focusout)="setQuantity(i, $event, product)"
               placeholder="Qty"
@@ -221,7 +221,7 @@
               product.PTR ? product.PTR : product.MRP
             }}</ion-label>
             <ion-label padding>
-                <span *ngIf = "product.PTR && product.quantity">{{ (product.MRP * product.quantity).toFixed(2) }}</span>
+                <span *ngIf = "product.PTR && product.Quantity">{{ (product.PTR * product.Quantity).toFixed(2) }}</span>
               </ion-label>
             <ion-button *ngIf="!(orderData[key] && orderData[key].productList[i])"
               (click)="add(product)"

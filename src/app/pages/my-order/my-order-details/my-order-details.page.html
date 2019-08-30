@@ -85,7 +85,7 @@
           <ion-col text-start>
             <ion-label>
               <b>{{ "MY_ORDER.REMARKS" | translate }}: </b
-              >{{ order.ProductName }}
+              >{{ order.ProductRemarks }}
             </ion-label>
           </ion-col>
         </ion-row>
@@ -93,7 +93,7 @@
           <ion-col text-start>
             <ion-label>
               <b>{{ "MY_ORDER.MODE" | translate }}: </b>
-              {{ order.ProductName }}
+              
             </ion-label>
           </ion-col>
         </ion-row>
@@ -101,7 +101,7 @@
           <ion-col text-start>
             <ion-label>
               <b>{{ "MY_ORDER.PRIORITY" | translate }}: </b>
-              {{ order.ProductName }}
+              
             </ion-label>
           </ion-col>
         </ion-row>
@@ -134,7 +134,7 @@
         <ion-label>{{ order.PTR }}</ion-label>
       </ion-col>
       <ion-col size="3" text-center>
-        <ion-label>{{ order.DisplayProductCode }}</ion-label>
+        <ion-label>{{ (order.Quantity * order.PTR).toFixed(2) }}</ion-label>
       </ion-col>
     </ion-row>
   </div>

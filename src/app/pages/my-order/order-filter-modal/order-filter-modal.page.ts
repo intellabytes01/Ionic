@@ -89,10 +89,10 @@ export class OrderFilterModalPage implements OnInit {
       this.orderFilterForm.value.toDate,
       'DD/MM/YY'
     );
-    this.orderFilter.storeId = this.orderFilterForm.value.store.id;
-    this.orderFilter.orderNo = this.orderFilterForm.value.orderNo;
-    this.orderFilter.status = this.orderFilterForm.value.status;
-    this.orderFilter.operation = this.orderFilterForm.value.operation;
+    this.orderFilter.storeId = this.orderFilterForm.value.store.id ? this.orderFilterForm.value.store.id : null;
+    this.orderFilter.orderNo = this.orderFilterForm.value.orderNo ? this.orderFilterForm.value.orderNo : null;
+    this.orderFilter.status = this.orderFilterForm.value.status ? this.orderFilterForm.value.status : null;
+    this.orderFilter.operation = this.orderFilterForm.value.operation ? this.orderFilterForm.value.operation : null;
     if (
       !isValid(new Date(this.orderFilterForm.value.fromDate)) ||
       !isValid(new Date(this.orderFilterForm.value.toDate))
