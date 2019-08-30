@@ -59,3 +59,10 @@ export const getRegionId = createSelector(
       return userData['userData']['userData']['userSummary']['RegionId'];
   }
 );
+
+export const isUserAuthorized = createSelector(
+  selectAuthState,
+  userData => {
+      return userData['userData']['userData']['retailerSummary']['retailerStatus'];
+  }
+);

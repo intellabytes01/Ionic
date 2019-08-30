@@ -40,3 +40,12 @@ ionic-selectable {
   -webkit-padding-end: var(--ion-padding, 4px);
   padding-inline-end: var(--ion-padding, 4px);
 }
+
+.disableClick {
+  pointer-events:none; //This makes it not clickable
+    opacity:0.6;         //This grays it out to look disabled
+}
+
+pr-select {
+  min-width: 100%;
+}

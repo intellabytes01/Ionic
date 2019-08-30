@@ -20,7 +20,12 @@ import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { ModalController } from '@ionic/angular';
 import { ModalPopupPage } from '@app/shared/modal-popup/modal-popup.page';
-import { getUserId, getRegionId, getRetailerId } from '@app/core/authentication/auth.states';
+import {
+  getUserId,
+  getRegionId,
+  getRetailerId,
+  isUserAuthorized
+} from '@app/core/authentication/auth.states';
 import { untilDestroyed } from '@app/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
@@ -49,6 +54,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   userId: any;
   regionId: any;
   retailerId: any;
+  isAuthorized: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -74,8 +80,16 @@ export class ProfilePage implements OnInit, OnDestroy {
       (state: any) => {
         this.retailerId = state;
       },
-      e => { }
+      e => {}
     );
+
+    this.store.select(isUserAuthorized, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.isAuthorized = state;
+      },
+      e => {}
+    );
+
     this.regions$ = this.store.pipe(select(regionsData));
     // this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
 
@@ -205,16 +219,18 @@ export class ProfilePage implements OnInit, OnDestroy {
     // this.profileForm.get('firstName').enable();
     if (!val) {
       Object.keys(this.profileForm.controls).forEach(key => {
-        if (key !== 'loginId' && key !== 'shopName') {
+        if (key !== 'loginId' && key !== 'mobileNumber') {
           // && key !== 'businessType'
           this.profileForm.get(key).enable();
         } else {
-        if (key === 'shopName' && ( this.profileForm.controls.shopName.value === null
-          || this.profileForm.controls.shopName.value === '')) {
-          this.profileForm.get(key).enable();
+          this.profileForm.get(key).disable();
         }
-      }
       });
+      if (this.isAuthorized) {
+        this.profileForm.get('shopName').disable();
+        this.profileForm.get('licenseNumber').disable();
+        this.profileForm.get('gstinNumber').disable();
+      }
     } else {
       this.getProfileDetails(this.userId);
       Object.keys(this.profileForm.controls).forEach(key => {
