@@ -145,7 +145,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
               if (
                 event['body']['data']['paginationData']['totalRecords'] === 0
               ) {
-                this.noRecordsFound();
+                // this.noRecordsFound();
               } else {
                 this.noRecordsFoundHide();
               }
@@ -163,7 +163,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
               'danger',
               'Your session is expired. Please login.'
             );
-            this.logout();
+            // this.logout();
           }
 
           this.hideLoader();

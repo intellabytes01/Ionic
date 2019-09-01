@@ -33,6 +33,7 @@ export class MyOrderDetailsPage implements OnInit, OnDestroy {
 
 
     if (this.orderDetails.length > 0) {
+      this.totalOrderValue = 0;
       this.orderDetails.forEach(element => {
         this.totalOrderValue += element['PTR'] * element['Quantity'];
       });
