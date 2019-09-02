@@ -9,6 +9,11 @@ import { MyInvoicesPage } from './my-invoices.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { InvoiceFilterModalPageModule } from './invoice-filter-modal/invoice-filter-modal.module';
 import { SharedModule } from '@app/shared';
+import { InvoiceService } from './my-invoices.service';
+import { InvoiceEffects } from './store/my-invoices.effects';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import * as frominvoiceReducer from './store/my-invoices.reducers';
 
 const routes: Routes = [
   {
@@ -25,8 +30,11 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateModule,
     InvoiceFilterModalPageModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature('invoice', frominvoiceReducer.invoiceReducer),
+    EffectsModule.forRoot([InvoiceEffects]),
   ],
-  declarations: [MyInvoicesPage]
+  declarations: [MyInvoicesPage],
+  providers: [InvoiceService]
 })
 export class MyInvoicesPageModule {}

@@ -25,7 +25,7 @@ export class InvoiceFilterModalPage implements OnInit {
     'MY_ORDER.VALIDATION_MESSAGES'
   );
   storeList: any[] = [];
-  invoiceFilter: any = { storeId: '', invoiceNo: ''};
+  invoiceFilter: any = { storeId: '', invoiceNo: '', partyCode: ''};
   constructor(
     public formBuilder: FormBuilder,
     public modalController: ModalController,
@@ -47,7 +47,8 @@ export class InvoiceFilterModalPage implements OnInit {
       store: [
         {
           StoreId: this.invoiceFilter.storeId,
-          StoreName: ''
+          StoreName: '',
+          PartyCode: ''
         },
         Validators.compose([])
       ],
@@ -65,6 +66,7 @@ export class InvoiceFilterModalPage implements OnInit {
 
   updateStore(val) {
     this.invoiceFilterForm.value.StoreId = val.StoreId;
+    this.invoiceFilterForm.value.PartyCode = val.PartyCode;
   }
 
   invoiceFilterSubmit() {
@@ -82,6 +84,7 @@ export class InvoiceFilterModalPage implements OnInit {
     );
     this.invoiceFilter.storeId = this.invoiceFilterForm.value.store.id;
     this.invoiceFilter.invoiceNo = this.invoiceFilterForm.value.invoiceNo;
+    this.invoiceFilter.partyCode = this.invoiceFilterForm.value.store.PartyCode;
     if (
       !isValid(new Date(this.invoiceFilter.fromDate)) ||
       !isValid(new Date(this.invoiceFilter.toDate))

@@ -5,28 +5,30 @@ import { untilDestroyed } from '@app/core';
 import { Router } from '@angular/router';
 import { format } from 'date-fns';
 import { InvoiceFilterModalPage } from './invoice-filter-modal/invoice-filter-modal.page';
+import { InvoiceState } from './store/my-invoices.state';
+import { InvoiceList } from './store/my-invoices.actions';
+import { invoiceData } from './store/my-invoices.reducers';
 
 @Component({
   selector: 'pr-my-invoices',
   templateUrl: './my-invoices.page.html',
-  styleUrls: ['./my-invoices.page.scss'],
+  styleUrls: ['./my-invoices.page.scss']
 })
 export class MyInvoicesPage implements OnInit, OnDestroy {
-
-  myInvoiceList$: any;
   myInvoiceList: any[] = [];
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   currentPage = 1;
   limit = 15;
   count = 0;
-  invoiceFilter: any = { storeId: '', invoiceNo: ''};
+  invoiceFilter: any = { storeId: '151', invoiceNo: '', partyCode: '60917' };
   total: any = {
     amount: 0.0,
     count: 0
   };
   constructor(
     public modalController: ModalController,
-    public router: Router
+    public router: Router,
+    private store: Store<InvoiceState>
   ) {
     this.getMyInvoices();
   }
@@ -34,6 +36,19 @@ export class MyInvoicesPage implements OnInit, OnDestroy {
   ngOnInit() {}
 
   getMyInvoices() {
+    const payload = {
+      storeId: this.invoiceFilter.storeId,
+      partyCode: this.invoiceFilter.partyCode
+    };
+    this.store.dispatch(new InvoiceList(payload));
+    this.store
+      .pipe(
+        select(invoiceData),
+        untilDestroyed(this)
+      )
+      .subscribe(state => {
+        this.myInvoiceList = state;
+      });
   }
 
   async presentModalInvoiceFilter() {
@@ -49,21 +64,6 @@ export class MyInvoicesPage implements OnInit, OnDestroy {
       }
     });
     return await modal.present();
-  }
-
-  loadData(event) {
-    this.currentPage += 1;
-    this.limit += this.limit;
-    setTimeout(() => {
-      this.getMyInvoices();
-      event.target.complete();
-
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      if (this.count < this.limit) {
-        event.target.disabled = true;
-      }
-    }, 500);
   }
 
   ngOnDestroy(): void {
