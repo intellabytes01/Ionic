@@ -32,7 +32,7 @@ export class MallService {
    * @return Array of Mall Products.
    */
   getPharmaProducts(): Observable<any> {
-    return this.httpClient.cache(false).get<MallTypeResponse>(routes.mallProducts).pipe(
+    return this.httpClient.cache(true).get<MallTypeResponse>(routes.mallProducts).pipe(
       map((data: any) => ({
         data
       })),

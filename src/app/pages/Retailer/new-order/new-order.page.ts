@@ -59,7 +59,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     private alertController: AlertController,
     private router: Router,
     private alertService: AlertService,
-    private translateService: TranslateService
+    public translateService: TranslateService
   ) {}
 
   // Temp list of products is used for all operations
@@ -276,7 +276,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   add(product: ProductDetails) {
     if (product['Quantity']) {
       this.orderData[this.key]['productList'].push(product);
-      this.grandTotal = this.grandTotal + (product['Quantity'] * product.PTR);
+      this.grandTotal = Math.round(this.grandTotal + (product['Quantity'] * product.PTR));
       this.calculateTotal();
     } else {
       this.alertService.presentToast(
@@ -293,6 +293,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     this.orderData[this.key].productList.forEach(element => {
       this.orderData[this.key].total += element.Quantity * element.PTR;
     });
+    this.orderData[this.key].total = parseFloat(this.orderData[this.key].total).toFixed(2);
     this.saveToStorage();
   }
 
