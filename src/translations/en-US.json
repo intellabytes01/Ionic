@@ -22,7 +22,9 @@
     "PROFILE_ROUTE": "profile",
     "REFER_ROUTE": "refer-earn",
     "FEEDBACK_ROUTE": "feedback",
-    "PRODUCT_SEARCH_ROUTE": "product-search"
+    "PRODUCT_SEARCH_ROUTE": "product-search",
+    "LANGUAGE_TITLE": "Language",
+    "LANGUAGE_ROUTE": "language"
   },
 
   "DASHBOARD": {

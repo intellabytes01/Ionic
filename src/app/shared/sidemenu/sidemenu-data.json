@@ -36,6 +36,11 @@
       "icon": "dashboard"
     },
     {
+      "title": "SIDEMENU.LANGUAGE_TITLE",
+      "url": "SIDEMENU.LANGUAGE_ROUTE",
+      "icon": "dashboard"
+    },
+    {
       "title": "SIDEMENU.LOGOUT_TITLE",
       "url": "SIDEMENU.LOGIN_ROUTE",
       "icon": "dashboard"

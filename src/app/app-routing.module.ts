@@ -164,6 +164,12 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard]
   },
   {
+    path: 'language',
+    loadChildren: './pages/language/language.module#LanguagePageModule',
+    data: { title: 'Language', preload: false, delay: false },
+    canActivate: [AuthenticationGuard]
+  },
+  {
     path: '**',
     component: NoComponentPage
   }

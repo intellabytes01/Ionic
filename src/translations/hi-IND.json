@@ -19,7 +19,8 @@
     "PROFILE_ROUTE": "प्रोफ़ाइल",
     "REFER_ROUTE": "देखें-कमाने",
     "FEEDBACK_ROUTE": "प्रतिक्रिया",
-    "PRODUCT_SEARCH_ROUTE": "उत्पाद खोज"
+    "PRODUCT_SEARCH_ROUTE": "उत्पाद खोज",
+    "LANGUAGE_TITLE": "भाषा"
   },
   "DASHBOARD": {
     "SUBMIT": "प्रस्तुत",

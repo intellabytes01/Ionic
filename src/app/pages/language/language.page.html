@@ -1,0 +1,18 @@
+<ion-content padding>
+  <ion-list *ngIf="isWeb" color="mustard" lines="none" no-padding>
+    <ion-item lines="none" color="mustard">
+      <ion-label><span>{{'SIDEMENU.LANGUAGE_TITLE' | translate}}</span></ion-label>
+      <ion-select
+        [ngModel]="currentLanguage"
+        (ngModelChange)="setLanguage($event)"
+        interface="popover"
+      >
+        <ion-select-option
+          *ngFor="let language of languages"
+          [value]="language"
+          >{{ language }}</ion-select-option
+        >
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-content>
