@@ -9,9 +9,13 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { format, isValid } from 'date-fns';
 import { AlertService } from '@app/shared/services/alert.service.js';
 import { TranslateService } from '@ngx-translate/core';
-import { getRetailerStoreParties, AuthState } from '@app/core/authentication/auth.states';
+import {
+  getRetailerStoreParties,
+  AuthState
+} from '@app/core/authentication/auth.states';
 import { untilDestroyed } from '@app/core';
 import { Store } from '@ngrx/store';
+import { differenceInDays } from 'date-fns';
 
 @Component({
   selector: 'pr-invoice-filter-modal',
@@ -25,7 +29,7 @@ export class InvoiceFilterModalPage implements OnInit {
     'MY_ORDER.VALIDATION_MESSAGES'
   );
   storeList: any[] = [];
-  invoiceFilter: any = { storeId: '', invoiceNo: '', partyCode: ''};
+  invoiceFilter: any = { storeId: '', invoiceNo: '', partyCode: '' };
   constructor(
     public formBuilder: FormBuilder,
     public modalController: ModalController,
@@ -39,16 +43,20 @@ export class InvoiceFilterModalPage implements OnInit {
     this.store.select(getRetailerStoreParties, untilDestroyed(this)).subscribe(
       (state: any) => {
         this.storeList = state;
+        this.setForm();
       },
-      e => { }
+      e => {}
     );
     this.invoiceFilter = this.navParams.get('value');
+  }
+
+  setForm() {
     this.invoiceFilterForm = this.formBuilder.group({
       store: [
         {
           StoreId: this.invoiceFilter.storeId,
           StoreName: '',
-          PartyCode: ''
+          PartyCode: this.invoiceFilter.partyCode
         },
         Validators.compose([])
       ],
@@ -65,33 +73,45 @@ export class InvoiceFilterModalPage implements OnInit {
   }
 
   updateStore(val) {
-    this.invoiceFilterForm.value.StoreId = val.StoreId;
-    this.invoiceFilterForm.value.PartyCode = val.PartyCode;
+    this.invoiceFilterForm.value.store.StoreId = val.StoreId;
+    this.invoiceFilterForm.value.store.PartyCode = val.PartyCode;
   }
 
   invoiceFilterSubmit() {
-    if (this.invoiceFilterForm.invalid) {
-      return;
-    }
-
-    this.invoiceFilter.fromDate = format(
-      this.invoiceFilterForm.value.fromDate,
-      'DD/MM/YY'
-    );
-    this.invoiceFilter.toDate = format(
+    const dateDiffDays = differenceInDays(
       this.invoiceFilterForm.value.toDate,
-      'DD/MM/YY'
+      this.invoiceFilterForm.value.fromDate
     );
-    this.invoiceFilter.storeId = this.invoiceFilterForm.value.store.id;
-    this.invoiceFilter.invoiceNo = this.invoiceFilterForm.value.invoiceNo;
-    this.invoiceFilter.partyCode = this.invoiceFilterForm.value.store.PartyCode;
-    if (
-      !isValid(new Date(this.invoiceFilter.fromDate)) ||
-      !isValid(new Date(this.invoiceFilter.toDate))
-    ) {
-      this.alert.presentToast('warning', 'Invalid Date');
+    if (dateDiffDays > 31) {
+      this.alert.presentToast(
+        'warning',
+        this.translateService.instant('INVOICE.DATE_VALIDATION_DAYS')
+      );
+    } else if (dateDiffDays < 0) {
+      this.alert.presentToast(
+        'warning',
+        this.translateService.instant('INVOICE.DATE_VALIDATION_VALID')
+      );
     } else {
-      this.modalController.dismiss(this.invoiceFilter);
+      this.invoiceFilter.fromDate = format(
+        this.invoiceFilterForm.value.fromDate,
+        'DD/MM/YY'
+      );
+      this.invoiceFilter.toDate = format(
+        this.invoiceFilterForm.value.toDate,
+        'DD/MM/YY'
+      );
+      this.invoiceFilter.storeId = this.invoiceFilterForm.value.store.StoreId;
+      this.invoiceFilter.invoiceNo = this.invoiceFilterForm.value.invoiceNo;
+      this.invoiceFilter.partyCode = this.invoiceFilterForm.value.store.PartyCode;
+      if (
+        !isValid(new Date(this.invoiceFilter.fromDate)) ||
+        !isValid(new Date(this.invoiceFilter.toDate))
+      ) {
+        this.alert.presentToast('warning', 'Invalid Date');
+      } else {
+        this.modalController.dismiss(this.invoiceFilter);
+      }
     }
   }
 }

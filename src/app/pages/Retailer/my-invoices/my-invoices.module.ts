@@ -19,6 +19,12 @@ const routes: Routes = [
   {
     path: '',
     component: MyInvoicesPage
+  },
+  {
+    path: 'invoice-details',
+    loadChildren:
+      './invoice-details/invoice-details.module#InvoiceDetailsPageModule',
+    data: { title: 'My Invoice Details', preload: false, delay: true }
   }
 ];
 
@@ -32,7 +38,7 @@ const routes: Routes = [
     InvoiceFilterModalPageModule,
     SharedModule,
     StoreModule.forFeature('invoice', frominvoiceReducer.invoiceReducer),
-    EffectsModule.forRoot([InvoiceEffects]),
+    EffectsModule.forRoot([InvoiceEffects])
   ],
   declarations: [MyInvoicesPage],
   providers: [InvoiceService]

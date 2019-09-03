@@ -339,7 +339,15 @@
   "INVOICE": {
     "FILTER": "Filter Invoice",
     "AI": "Amount | Invoice",
-    "HEADER": "Invoice Filter"
+    "HEADER": "Invoice Filter",
+    "DETAILS": "Details",
+    "ALL": "Select all",
+    "DOWNLOAD": "Download",
+    "CT": "Change Template",
+    "DOWNLOAD_TEXT": "Please select atleast one invoice to download.",
+    "ATTENTION": "Attention",
+    "DATE_VALIDATION_DAYS": "Maximum 31 Days date range can be selected.",
+    "DATE_VALIDATION_VALID": "To Date should be greater than From Date."
   },
 
   "DELIVERY": {

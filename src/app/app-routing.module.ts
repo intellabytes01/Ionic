@@ -173,6 +173,7 @@ const routes: Routes = [
     path: '**',
     component: NoComponentPage
   }
+
 ];
 
 @NgModule({

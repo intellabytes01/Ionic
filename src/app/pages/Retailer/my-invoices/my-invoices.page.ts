@@ -8,6 +8,8 @@ import { InvoiceFilterModalPage } from './invoice-filter-modal/invoice-filter-mo
 import { InvoiceState } from './store/my-invoices.state';
 import { InvoiceList } from './store/my-invoices.actions';
 import { invoiceData } from './store/my-invoices.reducers';
+import { AlertService } from '@app/shared/services/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'pr-my-invoices',
@@ -25,10 +27,14 @@ export class MyInvoicesPage implements OnInit, OnDestroy {
     amount: 0.0,
     count: 0
   };
+  masterCheck = false;
+  templates = ['Pharmarack', 'Technomax', 'Skyway', 'Wondersoft'];
   constructor(
     public modalController: ModalController,
     public router: Router,
-    private store: Store<InvoiceState>
+    private store: Store<InvoiceState>,
+    private alertService: AlertService,
+    private translateService: TranslateService
   ) {
     this.getMyInvoices();
   }
@@ -47,7 +53,14 @@ export class MyInvoicesPage implements OnInit, OnDestroy {
         untilDestroyed(this)
       )
       .subscribe(state => {
-        this.myInvoiceList = state;
+        // Set isChecked false initially
+        if (state) {
+          state.forEach(obj => {
+            obj.isChecked = false;
+            obj.template = this.templates[3];
+          });
+          this.myInvoiceList = state;
+        }
       });
   }
 
@@ -57,6 +70,7 @@ export class MyInvoicesPage implements OnInit, OnDestroy {
       componentProps: { value: this.invoiceFilter }
     });
     modal.onDidDismiss().then(data => {
+      console.log(data);
       if (data.data) {
         this.invoiceFilter = data.data;
         this.myInvoiceList = [];
@@ -64,6 +78,68 @@ export class MyInvoicesPage implements OnInit, OnDestroy {
       }
     });
     return await modal.present();
+  }
+
+  // Check for select all
+
+  checkMaster() {
+    if (this.myInvoiceList) {
+      this.myInvoiceList = this.myInvoiceList.map(obj => {
+        obj.isChecked = this.masterCheck;
+        return obj;
+      });
+    }
+  }
+
+  // User selects invoice
+
+  checkEvent(invoiceNo?: any) {
+    const totalItems = this.myInvoiceList.length;
+    let checked = 0;
+    this.myInvoiceList = this.myInvoiceList.map(obj => {
+      if (invoiceNo && obj.InvoiceNo === invoiceNo) {
+        obj.isChecked = !obj.isChecked;
+      }
+      if (obj.isChecked) {
+        checked++;
+      }
+      return obj;
+    });
+    if (checked > 0 && checked < totalItems) {
+      // If even one item is checked but not all
+      this.masterCheck = false;
+    } else if (checked === totalItems) {
+      // If all are checked
+      this.masterCheck = true;
+    } else {
+      // If none is checked
+      this.masterCheck = false;
+    }
+  }
+
+  goToInvoiceDetails() {
+    this.router.navigateByUrl('my-invoices/invoice-details');
+  }
+
+  download() {
+    let checked = 0;
+    this.myInvoiceList.map(obj => {
+      if (obj.isChecked) {
+        checked++;
+      }
+      return obj;
+    });
+    if (checked === 0) {
+      this.alertService.basicAlert(
+        this.translateService.instant('INVOICE.DOWNLOAD_TEXT'),
+        this.translateService.instant('INVOICE.ATTENTION')
+      );
+    } else {
+    }
+  }
+
+  setTemplate(template, i) {
+    this.myInvoiceList[i].template = template;
   }
 
   ngOnDestroy(): void {

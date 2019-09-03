@@ -20,10 +20,9 @@ export class AlertService {
     private router: Router
   ) {}
 
-  async basicAlert(message) {
+  async basicAlert(message, header) {
     const alert = await this.alertCtrl.create({
-      header: 'Alert',
-      subHeader: 'Alert',
+      header,
       message,
       buttons: ['OK']
     });
