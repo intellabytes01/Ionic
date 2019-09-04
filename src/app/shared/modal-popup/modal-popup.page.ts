@@ -41,10 +41,11 @@ export class ModalPopupPage implements OnInit {
   }
 
   takePhoto(sourceType) {
+
     const options: CameraOptions = {
-      quality: 80,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.PNG,
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
       sourceType,
@@ -52,13 +53,16 @@ export class ModalPopupPage implements OnInit {
       targetHeight: 500
     };
 
-    this.camera.getPicture(options).then(
-      imageData => {
-        this.uploadMedia(imageData);
-      },
-      () => {}
-    );
-  }
+    this.camera.getPicture(options).then((imageData) => {
+     // imageData is either a base64 encoded string or a file URI
+     // If it's base64 (DATA_URL):
+     const base64Image = 'data:image/jpeg;base64,' + imageData;
+     this.uploadMedia(base64Image);
+    }, (err) => {
+      console.log('#' + err);
+     // Handle error
+    });
+      }
 
   uploadMedia(imageData) {
     this.file.resolveLocalFilesystemUrl(imageData).then(

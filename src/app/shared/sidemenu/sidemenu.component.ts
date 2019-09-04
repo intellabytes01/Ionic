@@ -7,6 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import * as fromSideMenuJson from './sidemenu-Data.json';
 import { ModalPopupPage } from '../modal-popup/modal-popup.page';
 import { DomSanitizer } from '@angular/platform-browser';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-sidemenu',
@@ -14,7 +16,6 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./sidemenu.component.scss']
 })
 export class SidemenuComponent implements OnInit {
-
   public leftMenuPages = fromSideMenuJson.leftMenuData;
 
   public rightMenuPages = fromSideMenuJson.rightMenuData;
@@ -28,10 +29,16 @@ export class SidemenuComponent implements OnInit {
     private translateService: TranslateService,
     public modalController: ModalController,
     private sanitizer: DomSanitizer,
+    private emailComposer: EmailComposer,
+    public iab: InAppBrowser
   ) {}
 
   ngOnInit() {
     this.photo = 'assets/icon/user-default.png';
+  }
+
+  callNow(numberToCall) {
+    this.iab.create(`tel:${numberToCall}`);
   }
 
   openPage(page) {
@@ -40,7 +47,48 @@ export class SidemenuComponent implements OnInit {
       this.logout();
     }
     if (page.title === 'SIDEMENU.TERMS_TITLE') {
-      window.open(this.translateService.instant('SIDEMENU.TERMS_URL'), '_system');
+      window.open(
+        this.translateService.instant('SIDEMENU.TERMS_URL'),
+        '_system'
+      );
+    }
+    if (page.title === 'SIDEMENU.PRIVACY_POLICY') {
+      window.open(
+        this.translateService.instant('SIDEMENU.PRIVACY_URL'),
+        '_system'
+      );
+    }
+    if (page.title === 'SIDEMENU.CALL_US') {
+      this.callNow('02067660011');
+    }
+    if (page.title === 'SIDEMENU.EMAIL_US') {
+      this.emailComposer.requestPermission().then((reqPermission: boolean) => {
+        console.log('*' + reqPermission);
+        if (reqPermission) {
+          this.emailComposer.hasPermission().then((permission: boolean) => {
+            console.log('**' + permission);
+            if (permission) {
+              this.emailComposer.isAvailable().then((available: boolean) => {
+                console.log('***' + available);
+                if (available) {
+                  // Now we know we can send
+                  const email = {
+                    to: 'care@pharmarack.com',
+                    cc: '',
+                    bcc: [],
+                    attachments: [],
+                    subject: '',
+                    body: '',
+                    isHtml: true
+                  };
+                  // Send a text message using default options
+                  this.emailComposer.open(email);
+                }
+              });
+            }
+          });
+        }
+      });
     }
     this.router.navigate([this.translateService.instant(page.url)]);
   }
@@ -55,7 +103,6 @@ export class SidemenuComponent implements OnInit {
     return index;
   }
 
-
   async openModal() {
     const modal = await this.modalController.create({
       component: ModalPopupPage,
@@ -65,7 +112,7 @@ export class SidemenuComponent implements OnInit {
       }
     });
 
-    modal.onDidDismiss().then((dataReturned) => {
+    modal.onDidDismiss().then(dataReturned => {
       if (dataReturned.data) {
         this.photo = 'data:image/jpeg;base64,' + dataReturned.data;
       }

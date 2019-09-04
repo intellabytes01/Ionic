@@ -8,7 +8,7 @@ import * as fromModel from './new-order.json';
 import { SimilarProductsModalPage } from './similar-products-modal/similar-products-modal.page';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ProductDetails, NewOrderState } from './store/new-order.state';
+import { NewOrderState } from './store/new-order.state';
 import { Store } from '@ngrx/store';
 import { ProductSearch, NewOrderSubmit } from './store/new-order.actions';
 import {
@@ -48,9 +48,48 @@ export class NewOrderPage implements OnInit, OnDestroy {
   free = 0;
   grandTotal = 0;
 
+  newOrderModel = {
+    "StoreId": null,
+    "StoreName": null,
+    "Partycode": "",
+    "DeliveryOption": "",
+    "PriorityOption": "",
+    "Remarks": "",
+    "OrderTimestamp": "",
+    "UserId": null,
+    "Total": 0,
+    "Key": '',
+    "DeliveryPerson": {
+      "Name": "",
+      "Code": ""
+    },
+    "Products": [
+      {
+        "StoreId": null,
+        "StoreName": "",
+        "ProductCode": "",
+        "DisplayProductCode": "",
+        "ProductName": "",
+        "Packing": "",
+        "BoxPacking": "",
+        "CasePacking": "",
+        "MRP": null,
+        "PTR": null,
+        "Company": "",
+        "CompanyCode": "",
+        "Scheme": "",
+        "Stock": null,
+        "ProductFullName": "",
+        "StoreSchemeId": null,
+        "Quantity": 0,
+        "Free": "",
+        "Added": false
+      }
+    ]
+  }
+
   constructor(
     private storage: Storage,
-    private route: ActivatedRoute,
     public formBuilder: FormBuilder,
     private modalController: ModalController,
     public activatedRoute: ActivatedRoute,
@@ -60,34 +99,20 @@ export class NewOrderPage implements OnInit, OnDestroy {
     private router: Router,
     private alertService: AlertService,
     public translateService: TranslateService
-  ) {}
+  ) {
+    this.key = 'Order' + '#' + new Date().toISOString();
+    this.newOrderModel.Key = this.key;
+  }
 
   // Temp list of products is used for all operations
 
-  setTempList() {
-    this.tempProductList = Object.assign(
-      this.tempProductList,
-      this.orderData['productList']
-    );
+  setTempList(value) {
+    this.newOrderModel = value;
   }
-
   // Save to offline storage in draft
 
   saveToStorage() {
-    this.orderData[this.key]['key'] = this.key;
-    this.orderData[this.key]['store'] = {
-      StoreId: this.neworderForm.value.store.StoreId,
-      StoreName: this.neworderForm.value.store.StoreName,
-      PartyCode: this.neworderForm.value.store.PartyCode
-    };
-    this.orderData[this.key][
-      'deliveryMode'
-    ] = this.neworderForm.value.deliveryMode.name;
-    this.orderData[this.key][
-      'deliveryPriority'
-    ] = this.neworderForm.value.deliveryPriority.name;
-    this.orderData[this.key]['remarks'] = this.neworderForm.value.remarks;
-    this.storage.set(this.key, this.orderData[this.key]);
+    this.storage.set(this.key, this.newOrderModel);
   }
 
   ngOnInit() {
@@ -97,19 +122,20 @@ export class NewOrderPage implements OnInit, OnDestroy {
         (state: any) => {
           this.storeList = state;
         },
-        e => {}
+        e => { }
       );
     this.authStore.select(getUserId, untilDestroyed(this)).subscribe(
       (state: any) => {
         this.userId = state;
+        this.newOrderModel.UserId = state;
       },
-      e => {}
+      e => { }
     );
     this.authStore.select(getRegionId, untilDestroyed(this)).subscribe(
       (state: any) => {
         this.regionId = state;
       },
-      e => {}
+      e => { }
     );
     this.orderData[this.key] = {
       productList: [],
@@ -134,8 +160,8 @@ export class NewOrderPage implements OnInit, OnDestroy {
         this.key = data.orderKey;
         this.storage.forEach((value, key, index) => {
           if (key === this.key) {
-            this.orderData = value;
-            this.setTempList();
+            // this.orderData = value;
+            this.setTempList(value);
             this.setForm();
           }
         });
@@ -201,7 +227,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
       if (this.activeTab === 'ORDER VIA DISTRIBUTOR') {
         const payload = {
           query: this.neworderForm.value.searchText,
-          storeId: this.neworderForm.value.store.StoreId
+          storeId: this.newOrderModel.StoreId
         };
 
         this.store.dispatch(new ProductSearch(payload));
@@ -218,7 +244,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
         (state: any) => {
           this.searchList = state;
         },
-        e => {}
+        e => { }
       );
     }
   }
@@ -230,11 +256,13 @@ export class NewOrderPage implements OnInit, OnDestroy {
     this.neworderForm.patchValue({
       searchText: ''
     });
-    const productPresent = this.tempProductList.find(element => {
+
+    const productPresent = this.newOrderModel.Products.find(element => {
       return element.ProductCode === product['ProductCode'];
     });
+
     if (!productPresent) {
-      this.tempProductList.push(product);
+      this.newOrderModel.Products.push(product);
     }
   }
 
@@ -256,26 +284,29 @@ export class NewOrderPage implements OnInit, OnDestroy {
       let scheme = product.Scheme;
       scheme = scheme.toString().split('+');
       this.free = product.Quantity / scheme[0];
-      this.tempProductList[index].Free = this.free;
+
+      this.newOrderModel.Products[index].Free = this.free.toString();
     }
 
     if (val.target.value > 0) {
-      this.tempProductList[index].Quantity = val.target.value;
+      this.newOrderModel.Products[index].Quantity = val.target.value;
     } else {
       this.alertPopup(
         this.translateService.instant('NEW_ORDER.ATTENTION'),
         this.translateService.instant('NEW_ORDER.QTY_GREATER_TEXT'),
         'Quantity'
       );
-      this.tempProductList[index].Quantity = null;
+
+      this.newOrderModel.Products[index].Quantity = null;
     }
   }
 
   // Add product and save as draft
 
-  add(product: ProductDetails) {
+  add(product) {
     if (product['Quantity']) {
-      this.orderData[this.key]['productList'].push(product);
+
+      product['Added'] = true;
       this.grandTotal = Math.round(this.grandTotal + (product['Quantity'] * product.PTR));
       this.calculateTotal();
     } else {
@@ -289,32 +320,40 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Calculate Total
 
   calculateTotal() {
-    this.orderData[this.key].total = 0;
-    this.orderData[this.key].productList.forEach(element => {
-      this.orderData[this.key].total += element.Quantity * element.PTR;
-    });
-    this.orderData[this.key].total = parseFloat(this.orderData[this.key].total).toFixed(2);
+    this.newOrderModel.Total = 0;
+    // this.orderData[this.key].total = 0;
+
+    let totalValue = 0;
+
+    this.newOrderModel.Products.forEach(element => {
+      if (element['Added']) {
+        totalValue += element.Quantity * element.PTR;
+      }
+    })
+
+    this.newOrderModel.Total = Number(totalValue.toFixed(2));
     this.saveToStorage();
   }
 
   // Change Store
 
   changeStore(store) {
-    this.neworderForm.value.store.StoreId = store.StoreId;
-    this.neworderForm.value.store.StoreName = store.StoreName;
-    this.neworderForm.value.store.PartyCode = store.PartyCode;
+
+    this.newOrderModel.StoreId = store.StoreId;
+    this.newOrderModel.StoreName = store.StoreName;
+    this.newOrderModel.Partycode = store.PartyCode;
   }
 
   // Change Delivery Mode
 
   changeDeliveryTo(deliveryMode) {
-    this.neworderForm.value.deliveryMode.name = deliveryMode.name;
+    this.newOrderModel.DeliveryOption = deliveryMode.name;
   }
 
   // Change Delivery Priority
 
   changeDeliveryPriority(deliveryPriority) {
-    this.neworderForm.value.deliveryPriority.name = deliveryPriority.name;
+    this.newOrderModel.PriorityOption = deliveryPriority.name;
   }
 
   // Delete all
@@ -323,8 +362,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     if (this.orderData[this.key] && this.orderData[this.key].productList) {
       this.orderData[this.key].productList = [];
     }
-
-    this.tempProductList = [];
+    this.newOrderModel.Products = [];
   }
 
   // Similar Products modal
@@ -354,34 +392,41 @@ export class NewOrderPage implements OnInit, OnDestroy {
       component: SimilarProductsModalPage,
       componentProps: { title: 'View Order History' }
     });
-    modal.onDidDismiss().then(data => {});
+    modal.onDidDismiss().then(data => { });
     return await modal.present();
   }
 
   // Create order
 
   createOrder() {
-    const checkInvalidQuantity = this.orderData[this.key].productList.some(
+    const checkInvalidQuantity = this.newOrderModel.Products.some(
       element => {
         if (!element.Quantity) {
           return true;
         }
       }
     );
+    this.newOrderModel.Products.forEach(element => {
+      if (!element['Added']) {
+        this.alertPopup('Error', 'Please add all items', 'confirm');
+        return;
+      }
+    });
+
     if (!checkInvalidQuantity) {
       const payload = {
-        StoreId: this.neworderForm.value.store.StoreId,
-        Partycode: this.neworderForm.value.store.PartyCode,
-        DeliveryOption: this.neworderForm.value.deliveryMode.name,
-        PriorityOption: this.neworderForm.value.deliveryPriority.name,
-        Remarks: this.neworderForm.value.remarks,
-        OrderTimestamp: new Date().toISOString(),
-        UserId: this.userId,
+        StoreId: this.newOrderModel.StoreId,
+        PartyCode: this.newOrderModel.Partycode,
+        DeliveryOption: this.newOrderModel.DeliveryOption,
+        PriorityOption: this.newOrderModel.PriorityOption,
+        Remarks: this.newOrderModel.Remarks,
+        OrderTimestamp: this.newOrderModel.OrderTimestamp,
+        UserId: this.newOrderModel.UserId,
         DeliveryPerson: {
           Name: '',
           Code: ''
         },
-        Products: this.orderData[this.key].productList
+        Products: this.newOrderModel.Products
       };
       this.store.dispatch(new NewOrderSubmit(payload));
 
@@ -395,7 +440,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
             );
           }
         },
-        e => {}
+        e => { }
       );
     } else {
       this.alertService.presentToast(
@@ -414,7 +459,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
         {
           text: 'No',
           role: 'cancel',
-          handler: () => {}
+          handler: () => { }
         },
         {
           text: 'Yes',
@@ -440,7 +485,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
         {
           text: 'Ok',
           role: 'cancel',
-          handler: () => {}
+          handler: () => { }
         }
       ];
     }

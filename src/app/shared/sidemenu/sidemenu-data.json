@@ -26,12 +26,22 @@
       "icon": "dashboard"
     },
     {
-      "title": "SIDEMENU.NOTIFICATION_TITLE",
+      "title": "SIDEMENU.CALL_US",
+      "url": "SIDEMENU.DASHBOARD_ROUTE",
+      "icon": "dashboard"
+    },
+    {
+      "title": "SIDEMENU.EMAIL_US",
       "url": "SIDEMENU.DASHBOARD_ROUTE",
       "icon": "dashboard"
     },
     {
       "title": "SIDEMENU.TERMS_TITLE",
+      "url": "SIDEMENU.DASHBOARD_ROUTE",
+      "icon": "dashboard"
+    },
+    {
+      "title": "SIDEMENU.PRIVACY_POLICY",
       "url": "SIDEMENU.DASHBOARD_ROUTE",
       "icon": "dashboard"
     },

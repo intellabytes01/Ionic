@@ -6,7 +6,7 @@
     }
   ],
   "operation": ["view", "download"],
-  "status": ["All, Placed", "Uploaded", "Processed"],
+  "status": ["All", "Placed", "Uploaded", "Processed"],
   "orderFilter": {
     "fromDate": "",
     "toDate": "",

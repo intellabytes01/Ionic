@@ -111,3 +111,43 @@ export interface OrderDetails {
   CreatedDate: string;
   ModifiedDate: string;
 }
+
+
+export interface InewOrderModel {
+  "StoreId":  number,
+  "StoreName": number,
+  "Partycode": string,
+  "DeliveryOption": string,
+  "PriorityOption": string,
+  "Remarks": string,
+  "OrderTimestamp": string,
+  "UserId": number,
+  "Total": number,
+  "Key": string,
+  "DeliveryPerson": {
+    "Name": string,
+    "Code": string
+  },
+  "Products": [
+    {
+      "StoreId": number,
+      "StoreName": string,
+      "ProductCode": string,
+      "DisplayProductCode": string,
+      "ProductName": string,
+      "Packing": string,
+      "BoxPacking": string,
+      "CasePacking": string,
+      "MRP": number,
+      "PTR": number,
+      "Company": string,
+      "CompanyCode": string,
+      "Scheme": string,
+      "Stock": number,
+      "ProductFullName": string,
+      "StoreSchemeId": number,
+      "Quantity": string,
+      "Free":string
+    }
+  ]
+}

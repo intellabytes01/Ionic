@@ -28,7 +28,7 @@ export class DraftTabPage implements OnInit {
 
   goToNewOrder(order) {
     this.router.navigateByUrl('new-order', {
-      state: { orderKey: order.key }
+      state: { orderKey: order.Key }
     });
   }
 
