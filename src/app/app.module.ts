@@ -27,6 +27,7 @@ import { Device } from '@ionic-native/device/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,7 +44,7 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
     StoreModule.forRoot(authReducers),
     IonicStorageModule.forRoot({
       name: '__prdb',
-driverOrder: ['sqlite', 'indexeddb', 'websql', 'localstorage']
+      driverOrder: ['sqlite', 'indexeddb', 'websql', 'localstorage']
     }),
     EffectsModule.forRoot([AuthEffects]),
     NgxPermissionsModule.forRoot(),
@@ -54,7 +55,15 @@ driverOrder: ['sqlite', 'indexeddb', 'websql', 'localstorage']
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AppPreloadingStrategy,
-    Camera, NgxPermissionsService, OneSignal, InAppBrowser, Device, File, FirebaseAnalytics, EmailComposer
+    Camera,
+    NgxPermissionsService,
+    OneSignal,
+    InAppBrowser,
+    Device,
+    File,
+    FirebaseAnalytics,
+    EmailComposer,
+    SocialSharing
   ],
   bootstrap: [AppComponent]
 })

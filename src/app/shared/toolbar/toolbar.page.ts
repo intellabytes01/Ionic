@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router, ResolveStart } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
+import { AlertController } from '@ionic/angular';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'pr-toolbar',
@@ -14,7 +17,56 @@ export class ToolbarPage implements OnInit {
   title$: Observable<string>;
   backUrl = '/dashboard';
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private alertCtrl: AlertController,
+    private socialSharing: SocialSharing,
+    private translateService: TranslateService
+  ) {}
+
+  async share() {
+    const alert = await this.alertCtrl.create({
+      header: this.translateService.instant('TOOLBAR.POPUP_HEADER'),
+      message: this.translateService.instant('TOOLBAR.POPUP_MESSAGE'),
+      buttons: [
+        {
+          text: this.translateService.instant('TOOLBAR.DISTRIBUTOR'),
+          cssClass: 'blue-color',
+          handler: () => {
+            this.socialSharing
+              .share(
+                this.translateService.instant(
+                  'TOOLBAR.INVITE_MESSAGE_DISTRIBUTOR'
+                )
+              )
+              .then(() => {
+                console.log('success');
+              })
+              .catch(e => {
+                console.log('share error: ', e);
+              });
+          }
+        },
+        {
+          text: this.translateService.instant('TOOLBAR.RETAILER'),
+          cssClass: 'blue-color',
+          handler: () => {
+            this.socialSharing
+              .share(
+                this.translateService.instant('TOOLBAR.INVITE_MESSAGE_RETAILER')
+              )
+              .then(() => {
+                console.log('success');
+              })
+              .catch(e => {
+                console.log('share error: ', e);
+              });
+          }
+        }
+      ]
+    });
+
+    alert.present();
   }
 
   ngOnInit() {

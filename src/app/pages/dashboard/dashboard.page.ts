@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MenuController, Platform } from '@ionic/angular';
+import { MenuController, Platform, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import {
   AuthState,
@@ -13,6 +13,7 @@ import { Storage } from '@ionic/storage';
 import * as fromModel from './dashboard-data.json';
 import { AlertService } from '@app/shared/services/alert.service';
 import { Router, NavigationEnd } from '@angular/router';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,7 +32,9 @@ export class DashboardPage implements OnInit, OnDestroy {
     private storage: Storage,
     private platform: Platform,
     private alert: AlertService,
-    private router: Router
+    private router: Router,
+    private socialSharing: SocialSharing,
+    private alertCtrl: AlertController
   ) {
 
     this.getRetailerName();
@@ -152,6 +155,51 @@ export class DashboardPage implements OnInit, OnDestroy {
       }
       return val;
     });
+  }
+
+  async share() {
+    const alert = await this.alertCtrl.create({
+      header: this.translateService.instant('TOOLBAR.POPUP_HEADER'),
+      message: this.translateService.instant('TOOLBAR.POPUP_MESSAGE'),
+      buttons: [
+        {
+          text: this.translateService.instant('TOOLBAR.DISTRIBUTOR'),
+          cssClass: 'blue-color',
+          handler: () => {
+            this.socialSharing
+              .share(
+                this.translateService.instant(
+                  'TOOLBAR.INVITE_MESSAGE_DISTRIBUTOR'
+                )
+              )
+              .then(() => {
+                console.log('success');
+              })
+              .catch(e => {
+                console.log('share error: ', e);
+              });
+          }
+        },
+        {
+          text: this.translateService.instant('TOOLBAR.RETAILER'),
+          cssClass: 'blue-color',
+          handler: () => {
+            this.socialSharing
+              .share(
+                this.translateService.instant('TOOLBAR.INVITE_MESSAGE_RETAILER')
+              )
+              .then(() => {
+                console.log('success');
+              })
+              .catch(e => {
+                console.log('share error: ', e);
+              });
+          }
+        }
+      ]
+    });
+
+    alert.present();
   }
 
   ngOnDestroy(): void {

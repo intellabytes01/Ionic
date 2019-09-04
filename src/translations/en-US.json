@@ -407,5 +407,14 @@
     "FEEDBACKSTATUS_PLACEHOLDER": "Select Status",
     "MESSAGE_PLACEHOLDER": "Type your message",
     "FEEDBACK_TEXT": "We value your feedback. Please send your feedback in the below form"
+  },
+
+  "TOOLBAR": {
+    "POPUP_HEADER": "Invite a Chemist / Stockist",
+    "POPUP_MESSAGE": "Invite your chemist friends & distributors to join Pharmarack platform.",
+    "INVITE_MESSAGE_DISTRIBUTOR": "Hi! I am using Pharmarack app, with this app you can do anytime and anywhere ordering. Download it is free - https://play.google.com/store/apps/details?id=com.growthaccel.pharmarack",
+    "INVITE_MESSAGE_RETAILER": "Hi! I am using Pharmarack app, with this app you can do anytime and anywhere ordering. Download it is free - https://play.google.com/store/apps/details?id=com.growthaccel.pharmarack_retailer",
+    "DISTRIBUTOR": "DISTRIBUTOR",
+    "RETAILER": "RETAILER"
   }
 }

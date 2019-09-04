@@ -62,33 +62,7 @@ export class SidemenuComponent implements OnInit {
       this.callNow('02067660011');
     }
     if (page.title === 'SIDEMENU.EMAIL_US') {
-      this.emailComposer.requestPermission().then((reqPermission: boolean) => {
-        console.log('*' + reqPermission);
-        if (reqPermission) {
-          this.emailComposer.hasPermission().then((permission: boolean) => {
-            console.log('**' + permission);
-            if (permission) {
-              this.emailComposer.isAvailable().then((available: boolean) => {
-                console.log('***' + available);
-                if (available) {
-                  // Now we know we can send
-                  const email = {
-                    to: 'care@pharmarack.com',
-                    cc: '',
-                    bcc: [],
-                    attachments: [],
-                    subject: '',
-                    body: '',
-                    isHtml: true
-                  };
-                  // Send a text message using default options
-                  this.emailComposer.open(email);
-                }
-              });
-            }
-          });
-        }
-      });
+      this.iab.create('mailto:care@pharmarack.com', '_system');
     }
     this.router.navigate([this.translateService.instant(page.url)]);
   }
