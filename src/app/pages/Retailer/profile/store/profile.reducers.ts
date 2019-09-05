@@ -86,22 +86,6 @@ export function profileReducer(
         errorMessage: null
       };
     }
-
-    case ProfileActionTypes.IMAGEUPLOAD_SUCCESS: {
-      return {
-        ...state,
-        imageUrl: action.payload.imageUrl,
-        errorMessage: null
-      };
-    }
-    case ProfileActionTypes.IMAGEUPLOAD_FAILURE: {
-      return {
-        ...state,
-        imageUrl: '',
-        errorMessage: null
-      };
-    }
-
     default: {
       return state;
     }
@@ -128,9 +112,4 @@ export const businessTypesData = createSelector(
 export const regionsData = createSelector(
   ProfileState,
   profileState2 => profileState2.regionsArray
-);
-
-export const imageUpload = createSelector(
-  ProfileState,
-  imageUploadState => imageUploadState.imageUrl
 );

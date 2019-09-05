@@ -166,7 +166,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           } else {
             setTimeout(() => {
               this.tokenExpiryCheck();
-            }, (decoded['exp'] - currentTime) * 1000);
+            }, (decoded['exp'] - currentTime) * 600000);
           }
         }
       });

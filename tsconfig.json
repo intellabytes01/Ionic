@@ -35,7 +35,7 @@
 			"@pages/*": ["src/app/pages/*"],
 			"@app-core/*": ["src/app/core/*"],
 			"@app-shared/*": ["src/app/shared/*"],
-			"@constants/*": ["src/constants/constants/*"]
+			"@constants/*": ["src/constants/*"]
     }
   }
 }

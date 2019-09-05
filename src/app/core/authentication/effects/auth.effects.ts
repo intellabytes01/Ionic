@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Storage } from '@ionic/storage';
 // tslint:disable-next-line: max-line-length
-import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure, SaveToken, SaveTokenSuccess, SaveTokenFail, UserExists, UserExistsSuccess, UserExistsFailure, TokenRefresh, TokenRefreshSuccess, TokenRefreshFailure } from '../actions/auth.actions';
+import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure, SaveToken, SaveTokenSuccess, SaveTokenFail, UserExists, UserExistsSuccess, UserExistsFailure, TokenRefresh, TokenRefreshSuccess, TokenRefreshFailure, ImageUpload, ImageUploadSuccess, ImageUploadFailure } from '../actions/auth.actions';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { AlertService } from '@app/shared/services/alert.service';
 
@@ -191,5 +191,35 @@ export class AuthEffects {
     tap((res) => {
       this.alert.presentToast('danger', 'Token refresh failed');
     })
+  );
+
+  @Effect()
+  ImageUpload: Observable<Action> = this.actions.pipe(
+    ofType(AuthActionTypes.IMAGEUPLOAD),
+    map((action: ImageUpload) => action.payload),
+    switchMap(payload => {
+      return this.authService
+        .uploadImage(payload)
+        .pipe(
+          map(data => {
+            if (data) {
+              return new ImageUploadSuccess({ imageUrl: data['data'] });
+            } else {
+              return new ImageUploadFailure({ data });
+            }
+          }),
+          catchError(error => of(new ImageUploadFailure({ error })))
+        );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  ImageUploadSuccess: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.IMAGEUPLOAD_SUCCESS)
+  );
+
+  @Effect({ dispatch: false })
+  ImageUploadFailure: Observable<any> = this.actions.pipe(
+    ofType(AuthActionTypes.IMAGEUPLOAD_FAILURE)
   );
 }
