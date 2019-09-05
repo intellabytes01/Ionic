@@ -64,5 +64,10 @@ export const isUserAuthorized = createSelector(
   selectAuthState,
   userData => {
       return userData['userData']['userData']['retailerSummary']['retailerStatus'];
-  }
-);
+  });
+
+export const getUserImage = createSelector(
+    selectAuthState,
+    userData => {
+        return userData['imageUrl'];
+    });

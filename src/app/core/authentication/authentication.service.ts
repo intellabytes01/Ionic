@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ContentChild } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
@@ -32,12 +32,19 @@ export interface UserExistsContext {
   mobile: string;
 }
 
+export interface ImageContext {
+  file: File;
+  type: string;
+  retailerId: number;
+}
+
 const routes = {
   login: (c: LoginContext) => '/login',
   signup: (c: SignupContext) => '/register/retailer',
   userExists: (c: UserExistsContext) => '/user/exists',
   refreshToken: '/token/refresh',
-  savetoken: ''
+  savetoken: '',
+  upload: '/retailer/upload'
 };
 
 /**
@@ -128,6 +135,18 @@ export class AuthenticationService {
       }),
       catchError(error => this.errorHandler(error))
     );
+  }
+
+  uploadImage(context: ImageContext): Observable<any> {
+    console.log('imageContext: ' + JSON.stringify(context));
+    return this.httpClient
+      .post(`${routes.upload}`, JSON.stringify(context))
+      .pipe(
+        map((data: any) => ({
+          data
+        })),
+        catchError(error => this.errorHandler(error))
+      );
   }
 
   // Customize the default error handler here if needed

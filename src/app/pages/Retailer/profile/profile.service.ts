@@ -14,18 +14,10 @@ export interface GetProfileContext {
   userId: number;
 }
 
-export interface ImageContext {
-  file: File;
-  type: string;
-  reqOpts: any;
-  retailerId: number;
-}
-
 const routes = {
   profileRoute: (c: ProfileContext) => `/retailer`,
   businesstypes: '/businesstypes',
-  regions: '/regions',
-  upload: '/retailer/upload'
+  regions: '/regions'
 };
 
 const routes1 = {
@@ -94,19 +86,6 @@ export class ProfileService {
       .put(routes.profileRoute(context), JSON.stringify(context.saveObj))
       .pipe(
         tap(),
-        catchError(error => this.errorHandler(error))
-      );
-  }
-
-  uploadImage(context: ImageContext): Observable<any> {
-    const formData = new FormData();
-    formData.append('files', context.file);
-    return this.httpClient
-      .post(`${routes.upload}?retailerId=${context.retailerId}&type=${context.type}`, formData)
-      .pipe(
-        map((data: any) => ({
-          data
-        })),
         catchError(error => this.errorHandler(error))
       );
   }

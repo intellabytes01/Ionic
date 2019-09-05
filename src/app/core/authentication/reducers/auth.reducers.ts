@@ -15,6 +15,8 @@ export interface State {
   userId: string | null;
 
   isUserExists: boolean | null;
+
+  imageUrl: string | null;
 }
 
 export const initialState: State = {
@@ -23,7 +25,8 @@ export const initialState: State = {
   errorMessage: null,
   previousUrl: null,
   userId: null,
-  isUserExists: null
+  isUserExists: null,
+  imageUrl: null
 };
 
 export function authReducer(state = initialState, action: All): State {
@@ -110,7 +113,20 @@ export function authReducer(state = initialState, action: All): State {
         errorMessage: action.payload.error
       };
     }
-
+    case AuthActionTypes.IMAGEUPLOAD_SUCCESS: {
+      return {
+        ...state,
+        imageUrl: action.payload,
+        errorMessage: null
+      };
+    }
+    case AuthActionTypes.IMAGEUPLOAD_FAILURE: {
+      return {
+        ...state,
+        imageUrl: '',
+        errorMessage: null
+      };
+    }
     default: {
       return state;
     }

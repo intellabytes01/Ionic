@@ -13,10 +13,7 @@ import {
   RegionsFailure,
   GetProfileDetails,
   GetProfileSuccess,
-  GetProfileFailure,
-  ImageUpload,
-  ImageUploadSuccess,
-  ImageUploadFailure
+  GetProfileFailure
 } from './profile.actions';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
@@ -145,35 +142,5 @@ export class ProfileEffects {
   @Effect({ dispatch: false })
   SaveProfileFailure: Observable<any> = this.actions.pipe(
     ofType(ProfileActionTypes.SAVEPROFILE_FAILURE)
-  );
-
-  @Effect()
-  ImageUpload: Observable<Action> = this.actions.pipe(
-    ofType(ProfileActionTypes.IMAGEUPLOAD),
-    map((action: ImageUpload) => action.payload),
-    switchMap(payload => {
-      return this.profileService
-        .uploadImage(payload)
-        .pipe(
-          map(data => {
-            if (data) {
-              return new ImageUploadSuccess({ imageUrl: data['data'] });
-            } else {
-              return new ImageUploadFailure({ data });
-            }
-          }),
-          catchError(error => of(new ImageUploadFailure({ error })))
-        );
-    })
-  );
-
-  @Effect({ dispatch: false })
-  ImageUploadSuccess: Observable<any> = this.actions.pipe(
-    ofType(ProfileActionTypes.IMAGEUPLOAD_SUCCESS)
-  );
-
-  @Effect({ dispatch: false })
-  ImageUploadFailure: Observable<any> = this.actions.pipe(
-    ofType(ProfileActionTypes.IMAGEUPLOAD_FAILURE)
   );
 }

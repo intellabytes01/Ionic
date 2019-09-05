@@ -115,7 +115,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
       this.store.pipe(select(selectAuthState)).subscribe(data => {
         request = request.clone({
           setHeaders: {
-            refreshToken: `Bearer ${data['userData']['token']['refreshToken']}`
+            RefreshToken: `Bearer ${data['userData']['token']['refreshToken']}`
           }
         });
       }),

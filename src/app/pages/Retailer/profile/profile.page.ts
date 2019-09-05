@@ -54,7 +54,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   userId: any;
   regionId: any;
   retailerId: any;
-  isAuthorized: boolean;
+  isAuthorized = false;
   gstinStatus = [
     { name: 'Select GSTIN Option', selected: true },
     { name: 'I have GSTIN Number', selected: false },
@@ -92,7 +92,9 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     this.store.select(isUserAuthorized, untilDestroyed(this)).subscribe(
       (state: any) => {
-        this.isAuthorized = state;
+        if (state === 'Authorized') {
+          this.isAuthorized = true;
+        }
       },
       e => {}
     );
@@ -332,14 +334,15 @@ export class ProfilePage implements OnInit, OnDestroy {
       component: ModalPopupPage,
       componentProps: {
         paramID: 123,
-        paramTitle: 'Test Title'
+        paramTitle: 'Test Title',
+        paramUserImageType: 'DL'
       }
     });
 
     modal.onDidDismiss().then(dataReturned => {
       console.log(dataReturned);
       if (dataReturned.data) {
-        this.photo = dataReturned.data;
+        this.photo = dataReturned.data['imageUrl']['data'];
       }
     });
     return await modal.present();

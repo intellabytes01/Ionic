@@ -19,7 +19,10 @@ export enum AuthActionTypes {
   USEREXISTS_FAILURE = '[Auth] User Exists Failure',
   TOKENREFRESH = '[Auth] TokenRefresh',
   TOKENREFRESH_SUCCESS = '[Auth] TokenRefresh Success',
-  TOKENREFRESH_FAILURE = '[Auth] TokenRefresh Failure'
+  TOKENREFRESH_FAILURE = '[Auth] TokenRefresh Failure',
+  IMAGEUPLOAD = '[ImageUpload] Image Upload',
+  IMAGEUPLOAD_SUCCESS = '[ImageUpload] Image Upload Success',
+  IMAGEUPLOAD_FAILURE = '[ImageUpload] Image Upload Failure'
 }
 
 export class LogIn implements Action {
@@ -109,6 +112,21 @@ export class TokenRefreshFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class ImageUpload implements Action {
+  readonly type = AuthActionTypes.IMAGEUPLOAD;
+  constructor(public payload: any) {}
+}
+
+export class ImageUploadSuccess implements Action {
+  readonly type = AuthActionTypes.IMAGEUPLOAD_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class ImageUploadFailure implements Action {
+  readonly type = AuthActionTypes.IMAGEUPLOAD_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | LogIn
   | LogInSuccess
@@ -127,4 +145,7 @@ export type All =
   | UserExistsFailure
   | TokenRefresh
   | TokenRefreshSuccess
-  | TokenRefreshFailure;
+  | TokenRefreshFailure
+  | ImageUpload
+  | ImageUploadSuccess
+  | ImageUploadFailure;

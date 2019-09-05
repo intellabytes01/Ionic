@@ -1,15 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { AlertService } from '../services/alert.service';
-import {
-  ProfileState,
-  imageUpload
-} from '@app/pages/Retailer/profile/store/profile.reducers';
 import { Store, select } from '@ngrx/store';
-import { ImageUpload } from '@app/pages/Retailer/profile/store/profile.actions';
 import { untilDestroyed } from '@app/core';
-import { File, FileEntry } from '@ionic-native/file/ngx';
+import { ImageUpload } from '@app/core/authentication/actions/auth.actions';
+import { AuthState, getUserImage, getRetailerId } from '@app/core/authentication/auth.states';
 
 @Component({
   selector: 'pr-modal-popup',
@@ -20,20 +15,53 @@ import { File, FileEntry } from '@ionic-native/file/ngx';
 export class ModalPopupPage implements OnInit {
   modalTitle: string;
   modelId: number;
+  modelImageType: string;
   imgUrl: string;
+  retailerId: string;
+
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
     private camera: Camera,
-    private alert: AlertService,
-    private store: Store<ProfileState>,
-    private file: File
-  ) {}
+    private store: Store<AuthState>  ) {}
 
   ngOnInit() {
     console.table(this.navParams);
     this.modelId = this.navParams.data.paramID;
     this.modalTitle = this.navParams.data.paramTitle;
+    this.modelImageType = this.navParams.data.paramUserImageType;
+
+    this.store
+    .pipe(
+      select(getRetailerId),
+      untilDestroyed(this)
+    )
+    .subscribe(retId => {
+      this.retailerId = retId;
+    }, err => {
+      console.log(err);
+      this.imgUrl = '';
+      this.closeModal();
+    });
+
+
+
+    this.store
+      .pipe(
+        select(getUserImage),
+        untilDestroyed(this)
+      )
+      .subscribe(imgUrl => {
+        console.log(imgUrl);
+        this.imgUrl = imgUrl;
+        if (this.imgUrl) {
+          this.closeModal();
+        }
+      }, err => {
+        console.log(err);
+        this.imgUrl = '';
+        this.closeModal();
+      });
   }
 
   async closeModal() {
@@ -41,10 +69,9 @@ export class ModalPopupPage implements OnInit {
   }
 
   takePhoto(sourceType) {
-
     const options: CameraOptions = {
       quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
@@ -53,63 +80,32 @@ export class ModalPopupPage implements OnInit {
       targetHeight: 500
     };
 
-    this.camera.getPicture(options).then((imageData) => {
-     // imageData is either a base64 encoded string or a file URI
-     // If it's base64 (DATA_URL):
-     const base64Image = 'data:image/jpeg;base64,' + imageData;
-     this.uploadMedia(base64Image);
-    }, (err) => {
-      console.log('#' + err);
-     // Handle error
-    });
-      }
-
-  uploadMedia(imageData) {
-    this.file.resolveLocalFilesystemUrl(imageData).then(
-      (fileEntry: FileEntry) => {
-        console.log('fileEntry: ', fileEntry);
-        fileEntry.file(
-          fileObj => {
-            console.log('fileObj: ', fileObj);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-              const imgBlob = new Blob([reader.result], {
-                type: fileObj.type
-              });
-              const payload = {
-                file: imgBlob,
-                type: 'DL',
-                reqOpts: {
-                  headers: null
-                },
-                retailerId: 3
-              };
-              console.log('payload: ', payload);
-              this.store.dispatch(new ImageUpload(payload));
-              this.store
-                .pipe(
-                  select(imageUpload),
-                  untilDestroyed(this)
-                )
-                .subscribe(imgUrl => {
-                  console.log(imgUrl);
-                  this.imgUrl = imgUrl;
-                  if (this.imgUrl) {
-                    this.closeModal();
-                  }
-                });
-            };
-            reader.readAsArrayBuffer(fileObj);
-          },
-          e => {
-            console.log(e);
-          }
-        );
+    this.camera.getPicture(options).then(
+      imageData => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        const base64Image = 'data:image/jpeg;base64,' + imageData;
+        console.log('*' + base64Image);
+        this.uploadMedia(base64Image);
       },
-      e => {
-        console.log(e);
+      err => {
+        console.log('#' + err);
+        // Handle error
       }
     );
+  }
+
+  uploadMedia(imageData) {
+    const payload = {
+      file: {
+        name: this.retailerId + '_' + this.modelImageType + '.jpeg',
+        data: imageData
+      },
+      type: this.modelImageType,
+      retailerId: Number(this.retailerId)
+    };
+    console.log('payload: ', payload);
+    this.store.dispatch(new ImageUpload(payload));
   }
 
   // tslint:disable-next-line: use-life-cycle-interface

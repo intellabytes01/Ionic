@@ -82,13 +82,15 @@ export class SidemenuComponent implements OnInit {
       component: ModalPopupPage,
       componentProps: {
         paramID: 123,
-        paramTitle: 'Test Title'
+        paramTitle: 'Test Title',
+        paramUserImageType: 'PP'
       }
     });
 
     modal.onDidDismiss().then(dataReturned => {
+      console.log(dataReturned);
       if (dataReturned.data) {
-        this.photo = 'data:image/jpeg;base64,' + dataReturned.data;
+        this.photo = dataReturned.data['imageUrl']['data'];
       }
     });
     return await modal.present();
