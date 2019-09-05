@@ -20,7 +20,11 @@
 
   <div *ngIf="showList">
     <ion-list *ngIf="productList.length > 0">
-      <div class="grey-border-bottom" *ngFor="let item of productList" (click)="productClick(item)">
+      <div
+        class="grey-border-bottom"
+        *ngFor="let item of productList"
+        (click)="productClick(item)"
+      >
         <ion-row>
           <ion-col text-start>
             <ion-label>{{ item.ProductName }}</ion-label>
@@ -79,4 +83,6 @@
       </ion-col>
     </ion-row>
   </ion-card>
+
+  <pr-ads></pr-ads>
 </ion-content>

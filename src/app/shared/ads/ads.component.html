@@ -1,0 +1,25 @@
+<ion-content>
+  <div *ngIf="!slide">
+    <ion-card *ngFor="let ad of adList">
+      <div [innerHtml]="domSanitizer.bypassSecurityTrustHtml(ad.WebHtml)"></div>
+      <!-- <div
+        *ngIf="platform.is('tablet')"
+        [innerHtml]="domSanitizer.bypassSecurityTrustHtml(ad.TabHtml)"
+      ></div>
+      <div
+        *ngIf="platform.is('desktop')"
+        [innerHtml]="domSanitizer.bypassSecurityTrustHtml(ad.WebHtml)"
+      ></div>
+      <div
+        *ngIf="platform.is('mobile')"
+        [innerHtml]="domSanitizer.bypassSecurityTrustHtml(ad.MobileHtml)"
+      ></div> -->
+    </ion-card>
+  </div>
+
+  <ion-slides pager="true" [options]="slideOpts" *ngIf="slide">
+    <ion-slide *ngFor="let ad of adList">
+      <div [innerHtml]="domSanitizer.bypassSecurityTrustHtml(ad.WebHtml)"></div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

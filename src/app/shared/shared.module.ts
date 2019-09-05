@@ -29,6 +29,8 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { NewOrderButtonComponent } from './new-order-button/new-order-button.component';
 import { SearchComponent } from './search/search.component';
 import { ClickDirective } from './directives/click.directive';
+import { AdsComponent } from './ads/ads.component';
+import { AdsService } from './ads/ads.service';
 
 @NgModule({
   imports: [IonicModule, CommonModule, RouterModule, TranslateModule, IonicSelectableModule, FormsModule,
@@ -52,7 +54,8 @@ import { ClickDirective } from './directives/click.directive';
     ModalPopupPage,
     NewOrderButtonComponent,
     SearchComponent,
-    ClickDirective
+    ClickDirective,
+    AdsComponent
   ],
   exports: [
     LoaderComponent,
@@ -73,10 +76,11 @@ import { ClickDirective } from './directives/click.directive';
     ModalPopupPage,
     NewOrderButtonComponent,
     SearchComponent,
-    ClickDirective
+    ClickDirective,
+    AdsComponent
   ],
   entryComponents: [ModalPopupPage],
-  providers: [AlertService, UtilityService, ImagePicker],
+  providers: [AlertService, UtilityService, ImagePicker, AdsService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class SharedModule {}

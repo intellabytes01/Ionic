@@ -93,13 +93,7 @@
             name="reorder"
           ></ion-icon>
         </ion-col>
-      </ion-row>
-
-      <!-- <ion-list *ngIf="searchList.length == 0 && neworderForm.value.searchText">
-      <ion-item>
-        <ion-label>{{ "NEW_ORDER.NOTFOUND" | translate }}</ion-label>
-      </ion-item>
-    </ion-list> -->
+      </ion-row>      
 
       <ion-list
         *ngIf="searchList.length !== 0 && neworderForm.value.searchText"
@@ -337,4 +331,6 @@
       </div>
     </ng-container>
   </form>
+
+  <pr-ads *ngIf="neworderForm.value.searchText || newOrderModel.Products.length !== 0"></pr-ads>
 </ion-content>
