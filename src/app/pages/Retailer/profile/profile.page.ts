@@ -54,7 +54,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   userId: any;
   regionId: any;
   retailerId: any;
-  isAuthorized: false;
+  isAuthorized = false;
   gstinStatus = [
     { name: 'Select GSTIN Option', selected: true },
     { name: 'I have GSTIN Number', selected: false },
@@ -94,7 +94,7 @@ export class ProfilePage implements OnInit, OnDestroy {
       (state: any) => {
         if (state === 'Authorized') {
           this.isAuthorized = true;
-          }
+        }
       },
       e => {}
     );
