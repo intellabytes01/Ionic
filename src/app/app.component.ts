@@ -162,7 +162,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log(decoded['exp'] - currentTime);
           // Refresh token if expired otherwise refresh after expiry time
           if (decoded['exp'] <= currentTime) {
-            this.store.dispatch(new TokenRefresh());
+            // this.store.dispatch(new TokenRefresh());
           } else {
             setTimeout(() => {
               this.tokenExpiryCheck();

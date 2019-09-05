@@ -54,7 +54,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   userId: any;
   regionId: any;
   retailerId: any;
-  isAuthorized: string;
+  isAuthorized: false;
   gstinStatus = [
     { name: 'Select GSTIN Option', selected: true },
     { name: 'I have GSTIN Number', selected: false },
@@ -92,7 +92,9 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     this.store.select(isUserAuthorized, untilDestroyed(this)).subscribe(
       (state: any) => {
-        this.isAuthorized = state;
+        if (state === 'Authorized') {
+          this.isAuthorized = true;
+          }
       },
       e => {}
     );
@@ -237,7 +239,7 @@ export class ProfilePage implements OnInit, OnDestroy {
           this.profileForm.get(key).disable();
         }
       });
-      if (this.isAuthorized === 'Authorized') {
+      if (this.isAuthorized) {
         this.profileForm.get('shopName').disable();
         this.profileForm.get('licenseNumber').disable();
         this.profileForm.get('gstinNumber').disable();
