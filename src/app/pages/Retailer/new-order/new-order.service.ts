@@ -13,11 +13,13 @@ const log = new Logger('NewOrder');
 export interface ProductSearchContext {
   query: string;
   storeId: number;
+  retailerId: number;
 }
 
 const routes = {
   products: '/products?',
-  neworder: '/retailer/orders/new'
+  neworder: '/retailer/orders/new',
+  orderViaProduct: '/retailer/orders/products?'
 };
 
 @Injectable({
@@ -34,6 +36,19 @@ export class NewOrderService {
     return this.httpClient
       .get<ProductSearchResponse>(
         `${routes.products}query=${context.query}&storeId=${context.storeId}`
+      )
+      .pipe(
+        map((data: any) => ({
+          data
+        })),
+        catchError(error => this.errorHandler(error))
+      );
+  }
+
+  getProductsTab2(context: ProductSearchContext): Observable<any> {
+    return this.httpClient
+      .get<ProductSearchResponse>(
+        `${routes.orderViaProduct}query=${context.query}&retailerId=${context.retailerId}`
       )
       .pipe(
         map((data: any) => ({
