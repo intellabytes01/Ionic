@@ -1,4 +1,4 @@
-<ion-content>
+<ng-container>
   <div *ngIf="!slide">
     <ion-card *ngFor="let ad of adList">
       <div [innerHtml]="domSanitizer.bypassSecurityTrustHtml(ad.WebHtml)"></div>
@@ -22,4 +22,4 @@
       <div [innerHtml]="domSanitizer.bypassSecurityTrustHtml(ad.WebHtml)"></div>
     </ion-slide>
   </ion-slides>
-</ion-content>
+</ng-container>

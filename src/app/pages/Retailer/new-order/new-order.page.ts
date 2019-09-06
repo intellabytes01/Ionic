@@ -19,7 +19,8 @@ import {
   AuthState,
   getRetailerStoreParties,
   getUserId,
-  getRegionId
+  getRegionId,
+  getRetailerId
 } from '@app/core/authentication/auth.states.js';
 import { AlertService } from '@app/shared/services/alert.service.js';
 import { TranslateService } from '@ngx-translate/core';
@@ -45,48 +46,49 @@ export class NewOrderPage implements OnInit, OnDestroy {
   tabInfo: string[] = ['ORDER VIA DISTRIBUTOR', 'ORDER VIA PRODUCT'];
   activeTab: string;
   regionId: number;
+  retailerId: number;
   free = 0;
   grandTotal = 0;
 
   newOrderModel = {
-    "StoreId": null,
-    "StoreName": null,
-    "Partycode": "",
-    "DeliveryOption": "",
-    "PriorityOption": "",
-    "Remarks": "",
-    "OrderTimestamp": "",
-    "UserId": null,
-    "Total": 0,
-    "Key": '',
-    "DeliveryPerson": {
-      "Name": "",
-      "Code": ""
+    StoreId: null,
+    StoreName: null,
+    Partycode: '',
+    DeliveryOption: '',
+    PriorityOption: '',
+    Remarks: '',
+    OrderTimestamp: '',
+    UserId: null,
+    Total: 0,
+    Key: '',
+    DeliveryPerson: {
+      Name: '',
+      Code: ''
     },
-    "Products": [
+    Products: [
       {
-        "StoreId": null,
-        "StoreName": "",
-        "ProductCode": "",
-        "DisplayProductCode": "",
-        "ProductName": "",
-        "Packing": "",
-        "BoxPacking": "",
-        "CasePacking": "",
-        "MRP": null,
-        "PTR": null,
-        "Company": "",
-        "CompanyCode": "",
-        "Scheme": "",
-        "Stock": null,
-        "ProductFullName": "",
-        "StoreSchemeId": null,
-        "Quantity": 0,
-        "Free": "",
-        "Added": false
+        StoreId: null,
+        StoreName: '',
+        ProductCode: '',
+        DisplayProductCode: '',
+        ProductName: '',
+        Packing: '',
+        BoxPacking: '',
+        CasePacking: '',
+        MRP: null,
+        PTR: null,
+        Company: '',
+        CompanyCode: '',
+        Scheme: '',
+        Stock: null,
+        ProductFullName: '',
+        StoreSchemeId: null,
+        Quantity: 0,
+        Free: '',
+        Added: false
       }
     ]
-  }
+  };
 
   constructor(
     private storage: Storage,
@@ -122,20 +124,27 @@ export class NewOrderPage implements OnInit, OnDestroy {
         (state: any) => {
           this.storeList = state;
         },
-        e => { }
+        e => {}
       );
     this.authStore.select(getUserId, untilDestroyed(this)).subscribe(
       (state: any) => {
         this.userId = state;
         this.newOrderModel.UserId = state;
       },
-      e => { }
+      e => {}
     );
     this.authStore.select(getRegionId, untilDestroyed(this)).subscribe(
       (state: any) => {
         this.regionId = state;
       },
-      e => { }
+      e => {}
+    );
+
+    this.authStore.select(getRetailerId, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.retailerId = state;
+      },
+      e => {}
     );
     this.orderData[this.key] = {
       productList: [],
@@ -233,9 +242,8 @@ export class NewOrderPage implements OnInit, OnDestroy {
         this.store.dispatch(new ProductSearch(payload));
       } else {
         const payload = {
-          regionId: this.regionId,
-          query: this.neworderForm.value.searchText,
-          page: 1
+          retailerId: this.retailerId,
+          query: this.neworderForm.value.searchText
         };
         this.store.dispatch(new ProductSearch(payload));
       }
@@ -244,7 +252,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
         (state: any) => {
           this.searchList = state;
         },
-        e => { }
+        e => {}
       );
     }
   }
@@ -305,14 +313,17 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   add(product) {
     if (product['Quantity']) {
-
       product['Added'] = true;
-      this.grandTotal = Math.round(this.grandTotal + (product['Quantity'] * product.PTR));
+      this.grandTotal = Math.round(
+        this.grandTotal + product['Quantity'] * product.PTR
+      );
       this.calculateTotal();
     } else {
       this.alertService.presentToast(
         'warning',
-        `${this.translateService.instant('NEW_ORDER.QTY_ENTER_TEXT')} ${product.ProductName}.`
+        `${this.translateService.instant('NEW_ORDER.QTY_ENTER_TEXT')} ${
+          product.ProductName
+        }.`
       );
     }
   }
@@ -329,7 +340,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
       if (element['Added']) {
         totalValue += element.Quantity * element.PTR;
       }
-    })
+    });
 
     this.newOrderModel.Total = Number(totalValue.toFixed(2));
     this.saveToStorage();
@@ -338,7 +349,6 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Change Store
 
   changeStore(store) {
-
     this.newOrderModel.StoreId = store.StoreId;
     this.newOrderModel.StoreName = store.StoreName;
     this.newOrderModel.Partycode = store.PartyCode;
@@ -392,20 +402,18 @@ export class NewOrderPage implements OnInit, OnDestroy {
       component: SimilarProductsModalPage,
       componentProps: { title: 'View Order History' }
     });
-    modal.onDidDismiss().then(data => { });
+    modal.onDidDismiss().then(data => {});
     return await modal.present();
   }
 
   // Create order
 
   createOrder() {
-    const checkInvalidQuantity = this.newOrderModel.Products.some(
-      element => {
-        if (!element.Quantity) {
-          return true;
-        }
+    const checkInvalidQuantity = this.newOrderModel.Products.some(element => {
+      if (!element.Quantity) {
+        return true;
       }
-    );
+    });
     this.newOrderModel.Products.forEach(element => {
       if (!element['Added']) {
         this.alertPopup('Error', 'Please add all items', 'confirm');
@@ -440,7 +448,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
             );
           }
         },
-        e => { }
+        e => {}
       );
     } else {
       this.alertService.presentToast(
@@ -459,7 +467,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
         {
           text: 'No',
           role: 'cancel',
-          handler: () => { }
+          handler: () => {}
         },
         {
           text: 'Yes',
@@ -485,7 +493,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
         {
           text: 'Ok',
           role: 'cancel',
-          handler: () => { }
+          handler: () => {}
         }
       ];
     }

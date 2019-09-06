@@ -34,12 +34,21 @@ export class NewOrderEffects {
     ofType(NewOrderAction.PRODUCTSEARCH),
     map((action: ProductSearch) => action.payload),
     switchMap(payload => {
-      return this.newOrderService.getProducts(payload).pipe(
-        map(data => {
-          return new ProductSearchSuccess({ productSearch: data['data'] });
-        }),
-        catchError(error => of(new ProductSearchFailure({ error })))
-      );
+      if (payload.storeId) {
+        return this.newOrderService.getProducts(payload).pipe(
+          map(data => {
+            return new ProductSearchSuccess({ productSearch: data['data'] });
+          }),
+          catchError(error => of(new ProductSearchFailure({ error })))
+        );
+      } else {
+        return this.newOrderService.getProductsTab2(payload).pipe(
+          map(data => {
+            return new ProductSearchSuccess({ productSearch: data['data'] });
+          }),
+          catchError(error => of(new ProductSearchFailure({ error })))
+        );
+      }
     })
   );
 
@@ -73,7 +82,10 @@ export class NewOrderEffects {
   NewOrderSubmitSuccess: Observable<any> = this.actions.pipe(
     ofType(NewOrderAction.NEWORDERSUBMIT_SUCCESS),
     tap(() => {
-      this.alert.presentToast('success', this.translateService.instant('NEW_ORDER.SUCCESS_TEXT'));
+      this.alert.presentToast(
+        'success',
+        this.translateService.instant('NEW_ORDER.SUCCESS_TEXT')
+      );
     })
   );
 
@@ -81,7 +93,10 @@ export class NewOrderEffects {
   NewOrderSubmitFailure: Observable<any> = this.actions.pipe(
     ofType(NewOrderAction.NEWORDERSUBMIT_FAILURE),
     tap(() => {
-      this.alert.presentToast('danger', this.translateService.instant('NEW_ORDER.ERROR_TEXT'));
+      this.alert.presentToast(
+        'danger',
+        this.translateService.instant('NEW_ORDER.ERROR_TEXT')
+      );
     })
   );
 }
