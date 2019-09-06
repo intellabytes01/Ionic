@@ -155,6 +155,9 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
         },
         (err: any) => {
           console.log(err);
+          if (request.url.split('v1')[1] === '/token/refresh') {
+            this.logout();
+          }
           if (
             err.error.statusCode === 401 ||
             err.error.statusCode === 4050

@@ -31,6 +31,7 @@ import { SearchComponent } from './search/search.component';
 import { ClickDirective } from './directives/click.directive';
 import { AdsComponent } from './ads/ads.component';
 import { AdsService } from './ads/ads.service';
+import { RefreshComponent } from './refresh/refresh.component';
 
 @NgModule({
   imports: [IonicModule, CommonModule, RouterModule, TranslateModule, IonicSelectableModule, FormsModule,
@@ -55,7 +56,8 @@ import { AdsService } from './ads/ads.service';
     NewOrderButtonComponent,
     SearchComponent,
     ClickDirective,
-    AdsComponent
+    AdsComponent,
+    RefreshComponent
   ],
   exports: [
     LoaderComponent,
@@ -77,7 +79,8 @@ import { AdsService } from './ads/ads.service';
     NewOrderButtonComponent,
     SearchComponent,
     ClickDirective,
-    AdsComponent
+    AdsComponent,
+    RefreshComponent
   ],
   entryComponents: [ModalPopupPage],
   providers: [AlertService, UtilityService, ImagePicker, AdsService],

@@ -319,3 +319,7 @@ ion-fab {
 form {
   overflow-y: scroll !important;
 }
+
+ion-refresher {
+  z-index: 1 !important;
+}
