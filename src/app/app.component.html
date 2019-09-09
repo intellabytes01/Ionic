@@ -13,7 +13,7 @@
   <pr-toolbar></pr-toolbar>
   <pr-top-loader></pr-top-loader>
   <ion-content>
-    <pr-refresh></pr-refresh>
+    <pr-refresh *ngIf="!disablePullRefresh()"></pr-refresh>
     <app-sidemenu></app-sidemenu>
   </ion-content>
 

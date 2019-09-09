@@ -10,18 +10,16 @@
     </ion-col>
   </ion-row>
 
-  <ion-card>
+  <ion-card *ngFor="let notification of notificationList$ | async">
     <ion-card-header>
-      <ion-label class="blue-color">Credit Note Status Change</ion-label>
+      <ion-label class="blue-color">{{notification.Title}}</ion-label>
     </ion-card-header>
 
     <ion-card-content>
       <ion-row>
         <ion-col text-start>
           <ion-label>
-            Keep close to Nature's heart... and break clear away, once in a
-            while, and climb a mountain or spend a week in the woods. Wash your
-            spirit clean.
+            {{notification.Message}}
           </ion-label>
         </ion-col>
       </ion-row>
@@ -29,7 +27,7 @@
       <ion-row>
         <ion-col text-end>
           <ion-label>
-            26 July 1:07 PM
+            {{notification.SentDate | date: "dd MMM yyyy h:mm a"}}
           </ion-label>
         </ion-col>
       </ion-row>

@@ -44,21 +44,25 @@ export class MyOrderPage implements OnInit, OnDestroy {
     this.getMyOrders();
 
     this.myOrderList$ = this.store
-    .select(myOrderData, untilDestroyed(this))
-    .subscribe(data => {
-      if (data && data['paginationData'] &&  data['paginationData']['afterMaxDateTimeData'] !== null
-      && data['paginationData']['afterMaxDateTimeData'].length > 0) {
-        this.count = data['paginationData']['afterMaxDateTimeData'].length;
-        this.myOrderList = this.myOrderList.concat(data['paginationData']['afterMaxDateTimeData']);
-        this.total.amount = data.totalOrderAmount;
-        this.total.count = data.paginationData.totalRecords;
-        // App logic to determine if all data is loaded
-        // and disable the infinite scroll
-        if (this.event && this.count < this.limit) {
-          this.event.target.disabled = true;
+      .select(myOrderData, untilDestroyed(this))
+      .subscribe(data => {
+        if (
+          data &&
+          data['paginationData'] &&
+          data['paginationData']['afterMaxDateTimeData'] !== null &&
+          data['paginationData']['afterMaxDateTimeData'].length > 0
+        ) {
+          this.count = data['paginationData']['afterMaxDateTimeData'].length;
+          this.myOrderList = data['paginationData']['afterMaxDateTimeData'];
+          this.total.amount = data.totalOrderAmount;
+          this.total.count = data.paginationData.totalRecords;
+          // App logic to determine if all data is loaded
+          // and disable the infinite scroll
+          if (this.event && this.count < this.limit) {
+            this.event.target.disabled = true;
+          }
         }
-      }
-    });
+      });
 
     // this.myOrderList$ = this.store.pipe(select(myOrderData));
     // this.myOrderList$.pipe(untilDestroyed(this)).subscribe(data => {
@@ -103,7 +107,10 @@ export class MyOrderPage implements OnInit, OnDestroy {
     if (!payload.orderDetails.status || payload.orderDetails.status == null) {
       payload.orderDetails.status = 'all';
     }
-    if (!payload.orderDetails.operation || payload.orderDetails.operation == null) {
+    if (
+      !payload.orderDetails.operation ||
+      payload.orderDetails.operation == null
+    ) {
       payload.orderDetails.operation = 'view';
     }
     this.store.dispatch(new MyOrderList(payload));

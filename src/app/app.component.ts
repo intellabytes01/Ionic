@@ -171,4 +171,24 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
   }
+
+  disablePullRefresh() {
+    let disable = true;
+    if (
+      this.router.url === '/profile' ||
+      this.router.url === '/add-distributor/tab/request' ||
+      this.router.url === '/add-distributor/tab/status' ||
+      this.router.url === '/feedback' ||
+      this.router.url === '/myorder' ||
+      this.router.url === '/schemes' ||
+      this.router.url === '/my-invoices' ||
+      this.router.url === '/delivery-tracker' ||
+      this.router.url === '/mall' ||
+      this.router.url === '/notification' ||
+      this.router.url === '/view-sales-return'
+    ) {
+      disable = false;
+    }
+    return disable;
+  }
 }

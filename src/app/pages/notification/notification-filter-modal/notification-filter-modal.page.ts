@@ -37,7 +37,7 @@ export class NotificationFilterModalPage implements OnInit {
   }
 
   notificationFilterSubmit() {
-
+    this.modalController.dismiss();
   }
 
 }
