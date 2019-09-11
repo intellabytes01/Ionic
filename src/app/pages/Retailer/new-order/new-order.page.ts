@@ -20,7 +20,8 @@ import {
   getRetailerStoreParties,
   getUserId,
   getRegionId,
-  getRetailerId
+  getRetailerId,
+  mappedParties
 } from '@app/core/authentication/auth.states.js';
 import { AlertService } from '@app/shared/services/alert.service.js';
 import { TranslateService } from '@ngx-translate/core';
@@ -47,11 +48,15 @@ export class NewOrderPage implements OnInit, OnDestroy {
   activeTab: string;
   regionId: number;
   retailerId: number;
+  mappedParties: string[];
   free = 0;
   grandTotal = 0;
+  sourceType = ['Mobile', 'MobilePS'];
 
   newOrderModel = {
-    StoreId: null,
+    StoreId: [],
+    Stores: [{ StoreId: null, PartyCode: null }],
+    Source: this.sourceType[0],
     StoreName: null,
     Partycode: '',
     DeliveryOption: '',
@@ -61,6 +66,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     UserId: null,
     Total: 0,
     Key: '',
+    OrderFromTab: 0,
     DeliveryPerson: {
       Name: '',
       Code: ''
@@ -110,6 +116,12 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   setTempList(value) {
     this.newOrderModel = value;
+
+    if (this.newOrderModel.OrderFromTab === 0) {
+      this.activeTab = this.tabInfo[0];
+    } else {
+      this.activeTab = this.tabInfo[1];
+    }
   }
   // Save to offline storage in draft
 
@@ -146,6 +158,14 @@ export class NewOrderPage implements OnInit, OnDestroy {
       },
       e => {}
     );
+
+    this.authStore.select(mappedParties, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.mappedParties = state;
+      },
+      e => {}
+    );
+
     this.orderData[this.key] = {
       productList: [],
       store: {
@@ -183,6 +203,12 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   setActiveTab(tab) {
     this.activeTab = tab;
+    if (tab === 'ORDER VIA PRODUCT') {
+      this.newOrderModel.OrderFromTab = 1;
+      this.newOrderModel.Source = this.sourceType[1];
+    } else {
+      this.newOrderModel.OrderFromTab = 0;
+    }
     this.deleteAll();
     this.setForm();
   }
@@ -194,7 +220,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
         {
           StoreId: this.orderData[this.key]
             ? this.orderData[this.key].store.StoreId
-            : null,
+            : [],
           StoreName: this.orderData[this.key]
             ? this.orderData[this.key].store.StoreName
             : '',
@@ -315,7 +341,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     if (product['Quantity']) {
       product['Added'] = true;
       this.grandTotal = Math.round(
-        this.grandTotal + product['Quantity'] * product.PTR
+        this.grandTotal + (product['Quantity'] * product.PTR)
       );
       this.calculateTotal();
     } else {
@@ -373,6 +399,12 @@ export class NewOrderPage implements OnInit, OnDestroy {
       this.orderData[this.key].productList = [];
     }
     this.newOrderModel.Products = [];
+
+    this.newOrderModel.Partycode = '';
+    (this.newOrderModel.DeliveryOption = ''),
+      (this.newOrderModel.PriorityOption = '');
+    this.newOrderModel.Remarks = '';
+    this.newOrderModel.OrderTimestamp = '';
   }
 
   // Similar Products modal
@@ -422,8 +454,39 @@ export class NewOrderPage implements OnInit, OnDestroy {
     });
 
     if (!checkInvalidQuantity) {
+      const storeArray = [];
+
+      // StoreId: this.newOrderModel.StoreId
+
+      const arrayStoreId = [];
+      const arrayStoreIdParty = [];
+      this.newOrderModel.Products.forEach(product => {
+        arrayStoreId.includes(product.StoreId)
+          ? null
+          : arrayStoreId.push(product.StoreId);
+      });
+
+      arrayStoreId.forEach(store => {
+        this.mappedParties.forEach(party => {
+          if (store == party['StoreId']) {
+            const index = arrayStoreIdParty.findIndex(
+              x => x['PartyCode'] === party['PartyCode']
+            );
+            if (index === -1) {
+              arrayStoreIdParty.push({
+                StoreId: party['StoreId'],
+                PartyCode: party['PartyCode']
+              });
+            }
+          }
+          // storeArray.includes(party['PartyCode']) ? null : storeArray.push(product.StoreId);
+        });
+      });
+
+      this.newOrderModel.Stores = arrayStoreIdParty;
+
       const payload = {
-        StoreId: this.newOrderModel.StoreId,
+        Stores: this.newOrderModel.Stores,
         PartyCode: this.newOrderModel.Partycode,
         DeliveryOption: this.newOrderModel.DeliveryOption,
         PriorityOption: this.newOrderModel.PriorityOption,
@@ -434,13 +497,17 @@ export class NewOrderPage implements OnInit, OnDestroy {
           Name: '',
           Code: ''
         },
+        Source: this.newOrderModel.Source,
         Products: this.newOrderModel.Products
       };
       this.store.dispatch(new NewOrderSubmit(payload));
 
+      // this.saveToStorage();
+
       this.store.select(newOrderSubmitData, untilDestroyed(this)).subscribe(
         (state: any) => {
           if (state.success) {
+            this.deleteAll();
             this.alertPopup(
               'Attention',
               this.translateService.instant('NEW_ORDER.CONFIRM_TEXT'),

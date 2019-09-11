@@ -119,15 +119,20 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       this.oneSignal.OSInFocusDisplayOption.Notification
     );
 
-    this.oneSignal.handleNotificationReceived().subscribe(() => {
+    this.oneSignal.handleNotificationReceived().subscribe((data) => {
+      console.log('recivedNotification' + JSON.stringify(data));
       // do something when notification is received
     });
 
     this.oneSignal.handleNotificationOpened().subscribe(() => {
+      this.router.navigate(['/notification']);
       // do something when a notification is opened
     });
 
-    this.oneSignal.getIds().then(data => console.log(data));
+    this.oneSignal.getIds().then(data => {
+        console.log('GetIdsDataObject* ' + JSON.stringify(data));
+        console.log('GetUserId* ' + data.userId);
+      });
 
     this.oneSignal.endInit();
   }
@@ -159,7 +164,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // Unix Timestamp
           const currentTime = Math.round(new Date().getTime() / 1000);
-          console.log(decoded['exp'] - currentTime);
+          // console.log(decoded['exp'] - currentTime);
           // Refresh token if expired otherwise refresh after expiry time
           if (decoded['exp'] <= currentTime) {
             this.store.dispatch(new TokenRefresh());

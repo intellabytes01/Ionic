@@ -66,6 +66,12 @@ export const isUserAuthorized = createSelector(
       return userData['userData']['userData']['retailerSummary']['retailerStatus'];
   });
 
+export const mappedParties = createSelector(
+    selectAuthState,
+    userData => {
+        return userData['userData']['userData']['retailerSummary']['retailerStoreParties'];
+    });
+
 export const getUserImage = createSelector(
     selectAuthState,
     userData => {

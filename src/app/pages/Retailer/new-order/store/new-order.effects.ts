@@ -82,10 +82,10 @@ export class NewOrderEffects {
   NewOrderSubmitSuccess: Observable<any> = this.actions.pipe(
     ofType(NewOrderAction.NEWORDERSUBMIT_SUCCESS),
     tap(() => {
-      this.alert.presentToast(
-        'success',
-        this.translateService.instant('NEW_ORDER.SUCCESS_TEXT')
-      );
+      // this.alert.presentToast(
+      //   'success',
+      //   this.translateService.instant('NEW_ORDER.CONFIRM_TEXT')
+      // );
     })
   );
 

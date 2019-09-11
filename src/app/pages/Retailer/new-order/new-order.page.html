@@ -179,7 +179,7 @@
             text-end
           >
           <ion-label padding>{{
-              product.PTR ? product.PTR : product.MRP
+              product.PTR ? product.PTR : 0
             }}</ion-label>
             <ion-label padding>
                 <span *ngIf = "product.PTR && product.Quantity">{{ (product.PTR * product.Quantity).toFixed(2) }}</span>
