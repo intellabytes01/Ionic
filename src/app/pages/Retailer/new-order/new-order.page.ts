@@ -31,6 +31,7 @@ import {
 } from '@app/core/authentication/auth.states.js';
 import { AlertService } from '@app/shared/services/alert.service.js';
 import { TranslateService } from '@ngx-translate/core';
+import { UtilityService } from '@app/shared/services/utility.service.js';
 
 @Component({
   selector: 'pr-new-order',
@@ -116,7 +117,8 @@ export class NewOrderPage implements OnInit, OnDestroy {
     private alertController: AlertController,
     private router: Router,
     private alertService: AlertService,
-    public translateService: TranslateService
+    public translateService: TranslateService,
+    private utilityService: UtilityService
   ) {
     this.key = 'Order' + '#' + new Date().toISOString();
     this.newOrderModel.Key = this.key;
@@ -342,17 +344,17 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   setQuantity(index, val, product) {
     this.storeConfigData =
-      this.checkNull(this.storeConfigInfo) != 'null'
-        ? this.isJSON(this.storeConfigInfo)
+      this.utilityService.checkNull(this.storeConfigInfo) != 'null'
+        ? this.utilityService.isJSON(this.storeConfigInfo)
         : [];
     this.storeConfigData = this.storeConfigInfo[product.StoreId];
     if (
-      this.checkNull(product.Quantity) !== 'null' &&
+      this.utilityService.checkNull(product.Quantity) !== 'null' &&
       product.Quantity > 0 &&
       this.storeConfigData['RetailerSchemePreference'] === 1
     ) {
       product.Free = this.setScheme(product);
-      if (this.checkNull(product.Free) == 'null' || product.Free <= 0) {
+      if (this.utilityService.checkNull(product.Free) == 'null' || product.Free <= 0) {
         product.HS = this.displayHalfScheme(product.Quantity, product);
         // $("#pHalfScheme").html(HS);
       } else {
@@ -392,19 +394,19 @@ export class NewOrderPage implements OnInit, OnDestroy {
   displayHalfScheme(EnteredQty, displaystoreproduct) {
   // $("#pHalfScheme").html("");
   const storeConfig = this.storeConfigData;
-  // storeConfig = this.checkNull(storeConfig) != 'null' ? this.isJSON(storeConfig) : [];
+  // storeConfig = this.utilityService.checkNull(storeConfig) != 'null' ? this.utilityService.isJSON(storeConfig) : [];
   // let storeIdExists = findIndexByKeyValue(storeConfig, 'StoreId', Number($('#ddlStores').val()));
   // if (storeIdExists != '-1') { storeConfig = storeConfig[storeIdExists]; }
   let HS = '';
-  if (this.checkNull(storeConfig) !== 'null') {
+  if (this.utilityService.checkNull(storeConfig) !== 'null') {
     if (storeConfig['DisplayHalfScheme'] === '1' || storeConfig['DisplayHalfScheme'] === 1) {
               // var displaystoreproduct = JSON.parse(window.localStorage["DisplayStoreProduct"]);
               const AllSchemes = displaystoreproduct.Scheme;
-              if (this.checkNull(AllSchemes) !== 'null') {
+              if (this.utilityService.checkNull(AllSchemes) !== 'null') {
                   const Scheme = AllSchemes.split(',');
                   // tslint:disable-next-line: radix
                   EnteredQty = parseInt(EnteredQty);
-                  if (this.checkNull(Scheme) !== 'null') {
+                  if (this.utilityService.checkNull(Scheme) !== 'null') {
                       if (Scheme.length === 1) {
                           const schemeunits = Scheme[0].split('+');
                           if (schemeunits.length > 1) {
@@ -487,7 +489,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
           const schemeunits = schemes[0].split('+');
           // $('#pSchemeValue').text('');
           let qty = displaystoreproduct.Quantity;
-          if (this.checkNull(qty) === 'null') {
+          if (this.utilityService.checkNull(qty) === 'null') {
             qty = 0;
           }
           if (!isNaN(qty)) {
@@ -737,40 +739,6 @@ export class NewOrderPage implements OnInit, OnDestroy {
         `${this.translateService.instant('NEW_ORDER.QTY_VALID_TEXT')}`
       );
     }
-  }
-
-  checkNull(response) {
-    const responseText =
-      response === '' ||
-      response === undefined ||
-      response === null ||
-      response === 'null'
-        ? 'null'
-        : response;
-    return responseText;
-  }
-
-  /************
-   * Check JSON
-   * @param jsonString
-   * @returns
-   */
-  isJSON(jsonString) {
-    let json = null;
-    // console.log('at type of ' + typeof jsonString);
-    if (typeof jsonString === 'object') {
-      json = jsonString;
-      // console.log('at jsonString ' + json);
-    } else {
-      try {
-        // console.log('at try ' + jsonString);
-        json = JSON.parse(jsonString);
-      } catch (exception) {
-        console.log('json exception' + exception);
-        json = null;
-      }
-    }
-    return json;
   }
 
   // Quantity, Draft and Confirm popup
