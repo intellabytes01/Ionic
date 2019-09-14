@@ -7,7 +7,10 @@ import {
   NewOrderAction,
   NewOrderSubmit,
   NewOrderSubmitSuccess,
-  NewOrderSubmitFailure
+  NewOrderSubmitFailure,
+  NewOrderStoreConfig,
+  NewOrderGetStoreConfigSucess,
+  NewOrderGetStoreConfigFailure
 } from './new-order.actions';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
@@ -81,12 +84,7 @@ export class NewOrderEffects {
   @Effect({ dispatch: false })
   NewOrderSubmitSuccess: Observable<any> = this.actions.pipe(
     ofType(NewOrderAction.NEWORDERSUBMIT_SUCCESS),
-    tap(() => {
-      // this.alert.presentToast(
-      //   'success',
-      //   this.translateService.instant('NEW_ORDER.CONFIRM_TEXT')
-      // );
-    })
+    tap(() => {})
   );
 
   @Effect({ dispatch: false })
@@ -96,6 +94,40 @@ export class NewOrderEffects {
       this.alert.presentToast(
         'danger',
         this.translateService.instant('NEW_ORDER.ERROR_TEXT')
+      );
+    })
+  );
+
+  // Get Store Config
+  @Effect()
+  StoreConfig: Observable<Action> = this.actions.pipe(
+    ofType(NewOrderAction.NEWORDERSTORECONFIG),
+    map((action: NewOrderStoreConfig) => action.payload),
+    switchMap(payload => {
+      return this.newOrderService.getStoreConfig(payload).pipe(
+        map(data => {
+          return new NewOrderGetStoreConfigSucess({
+            storeConfig: data['data']['data']
+          });
+        }),
+        catchError(error => of(new NewOrderGetStoreConfigFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  NewOrderGetStoreConfigSucess: Observable<any> = this.actions.pipe(
+    ofType(NewOrderAction.NEWORDERSTORECONFIG_SUCCESS),
+    tap(() => {})
+  );
+
+  @Effect({ dispatch: false })
+  NewOrderGetStoreConfigFailure: Observable<any> = this.actions.pipe(
+    ofType(NewOrderAction.NEWORDERSTORECONFIG_FAILURE),
+    tap(() => {
+      this.alert.presentToast(
+        'danger',
+        this.translateService.instant('NEW_ORDER.STORE_CONFIG_ERR')
       );
     })
   );

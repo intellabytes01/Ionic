@@ -16,10 +16,15 @@ export interface ProductSearchContext {
   retailerId: number;
 }
 
+export interface StoreConfigContext {
+  retailerId: number;
+}
+
 const routes = {
   products: '/products?',
   neworder: '/retailer/orders/new',
-  orderViaProduct: '/retailer/orders/products?'
+  orderViaProduct: '/retailer/orders/products?',
+  storeConfig: '/retailer/stores/configs?'
 };
 
 @Injectable({
@@ -61,6 +66,19 @@ export class NewOrderService {
   submitNewOrder(context: NewOrderBody): Observable<any> {
     return this.httpClient
       .post<NewOrderResponse>(`${routes.neworder}`, context)
+      .pipe(
+        map((data: any) => ({
+          data
+        })),
+        catchError(error => this.errorHandler(error))
+      );
+  }
+
+  getStoreConfig(context: StoreConfigContext): Observable<any> {
+    return this.httpClient
+      .get<ProductSearchResponse>(
+        `${routes.storeConfig}retailerId=${context.retailerId}`
+      )
       .pipe(
         map((data: any) => ({
           data

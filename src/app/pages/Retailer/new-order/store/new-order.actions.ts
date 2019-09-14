@@ -7,6 +7,9 @@ export enum NewOrderAction {
   NEWORDERSUBMIT = '[NewOrderSubmit] New Order Submit',
   NEWORDERSUBMIT_SUCCESS = '[NewOrderSubmit] New Order Submit Success',
   NEWORDERSUBMIT_FAILURE = '[NewOrderSubmit] New Order Submit Failure',
+  NEWORDERSTORECONFIG = '[NewOrderStoreConfig] New Order Get Store Config',
+  NEWORDERSTORECONFIG_SUCCESS = '[NewOrderStoreConfig] New Order Get Store Config Success',
+  NEWORDERSTORECONFIG_FAILURE = '[NewOrderStoreConfig] New Order Get Store Config Failure'
 }
 
 export class ProductSearch implements Action {
@@ -39,10 +42,28 @@ export class NewOrderSubmitFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class NewOrderStoreConfig implements Action {
+  readonly type = NewOrderAction.NEWORDERSTORECONFIG;
+  constructor(public payload: any) {}
+}
+
+export class NewOrderGetStoreConfigSucess implements Action {
+  readonly type = NewOrderAction.NEWORDERSTORECONFIG_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class NewOrderGetStoreConfigFailure implements Action {
+  readonly type = NewOrderAction.NEWORDERSTORECONFIG_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | ProductSearch
   | ProductSearchSuccess
   | ProductSearchFailure
   | NewOrderSubmit
   | NewOrderSubmitSuccess
-  | NewOrderSubmitFailure;
+  | NewOrderSubmitFailure
+  | NewOrderStoreConfig
+  | NewOrderGetStoreConfigSucess
+  | NewOrderGetStoreConfigFailure;

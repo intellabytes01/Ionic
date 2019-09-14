@@ -8,13 +8,19 @@ import * as fromModel from './new-order.json';
 import { SimilarProductsModalPage } from './similar-products-modal/similar-products-modal.page';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NewOrderState } from './store/new-order.state';
-import { Store } from '@ngrx/store';
-import { ProductSearch, NewOrderSubmit } from './store/new-order.actions';
 import {
+  NewOrderState,
+  newOrderGetStoreConfigData,
   productSearchData,
   newOrderSubmitData
-} from './store/new-order.reducers';
+} from './store/new-order.state';
+import { Store } from '@ngrx/store';
+import {
+  ProductSearch,
+  NewOrderSubmit,
+  NewOrderStoreConfig
+} from './store/new-order.actions';
+
 import {
   AuthState,
   getRetailerStoreParties,
@@ -52,6 +58,9 @@ export class NewOrderPage implements OnInit, OnDestroy {
   free = 0;
   grandTotal = 0;
   sourceType = ['Mobile', 'MobilePS'];
+  storeConfigInfo = [];
+  storeConfigData = [];
+  recentSearchedItem = '';
 
   newOrderModel = {
     StoreId: [],
@@ -91,7 +100,8 @@ export class NewOrderPage implements OnInit, OnDestroy {
         StoreSchemeId: null,
         Quantity: 0,
         Free: '',
-        Added: false
+        Added: false,
+        HS: ''
       }
     ]
   };
@@ -199,6 +209,22 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
     this.setForm();
     this.setActiveTab(this.tabInfo[0]);
+
+    const payload = {
+      retailerId: this.retailerId
+    };
+    this.store.dispatch(new NewOrderStoreConfig(payload));
+
+    this.store
+      .select(newOrderGetStoreConfigData, untilDestroyed(this))
+      .subscribe(
+        (state: any) => {
+          if (state && state.length > 0) {
+            this.storeConfigInfo = state;
+          }
+        },
+        e => {}
+      );
   }
 
   setActiveTab(tab) {
@@ -286,6 +312,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Select Product from search list
 
   selectProduct(product) {
+    this.recentSearchedItem = product.ProductName;
     this.similarProducts = Object.assign(this.similarProducts, this.searchList);
     this.neworderForm.patchValue({
       searchText: ''
@@ -314,13 +341,39 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Set Quantity of product selected
 
   setQuantity(index, val, product) {
-    if (product.Scheme && product.Scheme !== '') {
-      let scheme = product.Scheme;
-      scheme = scheme.toString().split('+');
-      this.free = product.Quantity / scheme[0];
-
-      this.newOrderModel.Products[index].Free = this.free.toString();
+    this.storeConfigData =
+      this.checkNull(this.storeConfigInfo) != 'null'
+        ? this.isJSON(this.storeConfigInfo)
+        : [];
+    this.storeConfigData = this.storeConfigInfo[product.StoreId];
+    if (
+      this.checkNull(product.Quantity) !== 'null' &&
+      product.Quantity > 0 &&
+      this.storeConfigData['RetailerSchemePreference'] === 1
+    ) {
+      product.Free = this.setScheme(product);
+      if (this.checkNull(product.Free) == 'null' || product.Free <= 0) {
+        product.HS = this.displayHalfScheme(product.Quantity, product);
+        // $("#pHalfScheme").html(HS);
+      } else {
+        product.HS = '';
+        // $("#pHalfScheme").html("");
+      }
+    } else {
+      product.HS = '';
+      // $("#pHalfScheme").html("");
+      // $("#pSchemeValue").text("");
     }
+
+    // if (product.Scheme && product.Scheme !== '') {
+    //   let scheme = product.Scheme;
+    //   scheme = scheme.toString().split('+');
+    //   if (product.Quantity != null && product.Quantity !== '') {
+    //     this.free = product.Quantity / scheme[0];
+    //   }
+
+    //   this.newOrderModel.Products[index].Free = this.free.toString();
+    // }
 
     if (val.target.value > 0) {
       this.newOrderModel.Products[index].Quantity = val.target.value;
@@ -331,7 +384,168 @@ export class NewOrderPage implements OnInit, OnDestroy {
         'Quantity'
       );
 
-      this.newOrderModel.Products[index].Quantity = null;
+      this.newOrderModel.Products[index].Quantity = 0;
+    }
+  }
+
+
+  displayHalfScheme(EnteredQty, displaystoreproduct) {
+  // $("#pHalfScheme").html("");
+  const storeConfig = this.storeConfigData;
+  // storeConfig = this.checkNull(storeConfig) != 'null' ? this.isJSON(storeConfig) : [];
+  // let storeIdExists = findIndexByKeyValue(storeConfig, 'StoreId', Number($('#ddlStores').val()));
+  // if (storeIdExists != '-1') { storeConfig = storeConfig[storeIdExists]; }
+  let HS = '';
+  if (this.checkNull(storeConfig) !== 'null') {
+    if (storeConfig['DisplayHalfScheme'] === '1' || storeConfig['DisplayHalfScheme'] === 1) {
+              // var displaystoreproduct = JSON.parse(window.localStorage["DisplayStoreProduct"]);
+              const AllSchemes = displaystoreproduct.Scheme;
+              if (this.checkNull(AllSchemes) !== 'null') {
+                  const Scheme = AllSchemes.split(',');
+                  // tslint:disable-next-line: radix
+                  EnteredQty = parseInt(EnteredQty);
+                  if (this.checkNull(Scheme) !== 'null') {
+                      if (Scheme.length === 1) {
+                          const schemeunits = Scheme[0].split('+');
+                          if (schemeunits.length > 1) {
+                              // tslint:disable-next-line: radix
+                              let forqty = parseInt(schemeunits[0]);
+                              // tslint:disable-next-line: radix
+                              const freeqty = parseInt(schemeunits[1]);
+                              forqty = forqty / 2;
+                              if ((storeConfig['DisplayHalfSchemeOn'] === 'gte' && EnteredQty >= forqty)
+                              || storeConfig['DisplayHalfSchemeOn'] === 'gt' && EnteredQty > forqty) {
+                                  if ((storeConfig['RoundOffDisplayHalfScheme'] === 'true' ||
+                                  storeConfig['RoundOffDisplayHalfScheme'] === true)
+                                  && freeqty % 2 === 1) {
+                                      if (EnteredQty === forqty) {
+                                          HS = (EnteredQty + 0.5) + ' + ' + (parseFloat(schemeunits[1]) / 2);
+                                      } else {
+                                          HS = (EnteredQty - 0.5) + ' + ' + (parseFloat(schemeunits[1]) / 2);
+                                      }
+                                  } else {
+                                      HS = EnteredQty + ' + ' + (parseFloat(schemeunits[1]) / 2);
+                                  }
+                              }
+                          }
+                      } else {
+                          let schemetouseid = -1;
+                          let maxvalue = 0;
+                          for (let i = 0; i < Scheme.length; i++) {
+                              const schemeunits = Scheme[i].split('+');
+                              if (schemeunits.length > 1) {
+                                  // tslint:disable-next-line: radix
+                                  let forqty = parseInt(schemeunits[0]);
+                                  forqty = forqty / 2;
+                                  if ((storeConfig['DisplayHalfSchemeOn'] === 'gte' && EnteredQty >= forqty && forqty > maxvalue)
+                                  || storeConfig['DisplayHalfSchemeOn'] === 'gt' && EnteredQty > forqty && forqty > maxvalue) {
+                                      schemetouseid = i;
+                                      maxvalue = forqty;
+                                  }
+                              }
+                          }
+                          if (schemetouseid > -1) {
+                              const schemeunits = Scheme[schemetouseid].split('+');
+                              if (schemeunits.length > 1) {
+                                  // tslint:disable-next-line: radix
+                                  let forqty = parseInt(schemeunits[0]);
+                                  // tslint:disable-next-line: radix
+                                  const freeqty = parseInt(schemeunits[1]);
+                                  forqty = forqty / 2;
+                                  if ((storeConfig['RoundOffDisplayHalfScheme'] === '1' ||
+                                  storeConfig['RoundOffDisplayHalfScheme'] === 1)
+                                  && freeqty % 2 === 1) {
+                                      if (EnteredQty === forqty) {
+                                          HS = (EnteredQty + 0.5) + ' + ' + (freeqty / 2).toFixed(2);
+                                      } else {
+                                          HS = (EnteredQty - 0.5) + ' + ' + (freeqty / 2).toFixed(2);
+                                      }
+                                  } else {
+                                      HS = EnteredQty + ' + ' + (freeqty / 2).toFixed(2);
+                                  }
+                              }
+                          }
+                      }
+                  }
+                  return HS;
+              }
+              return HS;
+          }
+    }
+  }
+
+
+  setScheme(displaystoreproduct) {
+    if (displaystoreproduct != null) {
+      // $("#pSchemeValue").text("");
+      // var displaystoreproduct = JSON.parse(window.localStorage["DisplayStoreProduct"]);
+      const schemevalue = displaystoreproduct.Scheme;
+
+      if (schemevalue != null) {
+        const schemes = schemevalue.split(',');
+        if (schemes.length === 1) {
+          const schemeunits = schemes[0].split('+');
+          // $('#pSchemeValue').text('');
+          let qty = displaystoreproduct.Quantity;
+          if (this.checkNull(qty) === 'null') {
+            qty = 0;
+          }
+          if (!isNaN(qty)) {
+            let quantity = null;
+            if (qty <= 0) {
+              quantity = 0;
+            } else {
+              quantity = displaystoreproduct.Quantity;
+            }
+            if (schemeunits.length > 1) {
+              const forqty = parseInt(schemeunits[0], 10);
+              const freeqty = parseInt(schemeunits[1], 10);
+              let scheme = 0;
+              if (forqty > 0 && freeqty > 0 && quantity >= forqty) {
+                scheme = Math.floor(quantity / forqty) * freeqty;
+              }
+              return scheme;
+            }
+          } else {
+            return 0;
+          }
+        } else {
+          let schemetouseid = -1;
+          let maxvalue = 0;
+          let maxfreevalue = 0;
+          if (!isNaN(displaystoreproduct.Quantity)) {
+            const quantity = parseInt(displaystoreproduct.Quantity, 10);
+            for (let i = 0; i < schemes.length; i++) {
+              const schemeunits = schemes[i].split('+');
+              if (schemeunits.length > 1) {
+                let forqty = 0;
+                forqty = parseInt(schemeunits[0], 10);
+                const freeqty = parseInt(schemeunits[1], 10);
+                if (quantity >= forqty && forqty > maxvalue) {
+                  schemetouseid = i;
+                  maxvalue = forqty;
+                  maxfreevalue = freeqty;
+                }
+              }
+            }
+
+            if (schemetouseid > -1) {
+              const schemeunits = schemes[schemetouseid].split('+');
+              if (schemeunits.length > 1) {
+                const forqty = parseInt(schemeunits[0], 10);
+                const freeqty = parseInt(schemeunits[1], 10);
+                let scheme = 0;
+                if (forqty > 0 && freeqty > 0) {
+                  scheme = Math.floor(quantity / forqty) * freeqty;
+                }
+                return scheme;
+              }
+            }
+          } else {
+            return 0;
+          }
+        }
+      }
     }
   }
 
@@ -523,6 +737,40 @@ export class NewOrderPage implements OnInit, OnDestroy {
         `${this.translateService.instant('NEW_ORDER.QTY_VALID_TEXT')}`
       );
     }
+  }
+
+  checkNull(response) {
+    const responseText =
+      response === '' ||
+      response === undefined ||
+      response === null ||
+      response === 'null'
+        ? 'null'
+        : response;
+    return responseText;
+  }
+
+  /************
+   * Check JSON
+   * @param jsonString
+   * @returns
+   */
+  isJSON(jsonString) {
+    let json = null;
+    // console.log('at type of ' + typeof jsonString);
+    if (typeof jsonString === 'object') {
+      json = jsonString;
+      // console.log('at jsonString ' + json);
+    } else {
+      try {
+        // console.log('at try ' + jsonString);
+        json = JSON.parse(jsonString);
+      } catch (exception) {
+        console.log('json exception' + exception);
+        json = null;
+      }
+    }
+    return json;
   }
 
   // Quantity, Draft and Confirm popup

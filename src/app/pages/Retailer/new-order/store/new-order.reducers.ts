@@ -5,7 +5,8 @@ import { NewOrderState } from './new-order.state';
 export const initialState: NewOrderState = {
   errorMessage: null,
   productSearchArray: [],
-  newOrderArray: []
+  newOrderArray: [],
+  storeConfigArray: []
 };
 
 export function newOrderReducer(
@@ -48,20 +49,23 @@ export function newOrderReducer(
       };
     }
 
+    case NewOrderAction.NEWORDERSTORECONFIG_SUCCESS: {
+      return {
+        ...state,
+        storeConfigArray: action.payload.storeConfig,
+        errorMessage: null
+      };
+    }
+    case NewOrderAction.NEWORDERSTORECONFIG_FAILURE: {
+      return {
+        ...state,
+        storeConfigArray: [],
+        errorMessage: null
+      };
+    }
+
     default: {
       return state;
     }
   }
 }
-
-const newOrderState = createFeatureSelector<NewOrderState>('newOrder');
-
-export const productSearchData = createSelector(
-  newOrderState,
-  coursesState => coursesState.productSearchArray
-);
-
-export const newOrderSubmitData = createSelector(
-  newOrderState,
-  coursesState => coursesState.newOrderArray
-);

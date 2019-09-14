@@ -186,6 +186,7 @@
     "CONFIRM": "CONFIRM >",
     "SUCCESS_TEXT": "Order created successfully",
     "ERROR_TEXT": "Order creation failed",
+    "STORE_CONFIG_ERR": "Error while getting store configuration",
     "ATTENTION": "Attention",
     "QTY_GREATER_TEXT": "Quantity must be greater than zero.",
     "QTY_ENTER_TEXT": "Please enter quantity of",
