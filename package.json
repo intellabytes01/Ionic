@@ -24,6 +24,7 @@
     "@capacitor/cli": "1.0.0",
     "@capacitor/core": "1.0.0",
     "@ionic-native/camera": "^5.7.0",
+    "@ionic-native/clevertap": "^5.14.0",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/device": "^5.11.0",
     "@ionic-native/email-composer": "^5.13.0",
@@ -117,6 +118,10 @@
       "cordova-plugin-email-composer": {},
       "cordova-plugin-x-socialsharing": {
         "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
+      },
+      "clevertap-cordova": {
+        "CLEVERTAP_ACCOUNT_ID": "TEST-5R8-KZW-865Z",
+        "CLEVERTAP_TOKEN": "TEST-013-b25"
       }
     },
     "platforms": [

@@ -28,6 +28,7 @@ import { File } from '@ionic-native/file/ngx';
 import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { CleverTap } from '@ionic-native/clevertap/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -63,7 +64,8 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
     File,
     FirebaseAnalytics,
     EmailComposer,
-    SocialSharing
+    SocialSharing,
+    CleverTap
   ],
   bootstrap: [AppComponent]
 })

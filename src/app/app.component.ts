@@ -19,6 +19,7 @@ import { Platform } from '@ionic/angular';
 import { TopLoaderService } from './shared/top-loader/top-loader.service';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import * as JWT from 'jwt-decode';
+import { UtilityService } from './shared/services/utility.service';
 
 const log = new Logger('App');
 
@@ -41,7 +42,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private platform: Platform,
     private topLoaderService: TopLoaderService,
     public router: Router,
-    private splashScreen: SplashScreen
+    private splashScreen: SplashScreen,
+    private utilityService: UtilityService
   ) {
     this.splashScreen.show();
     this.initializeApp();
@@ -99,6 +101,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.platform.ready().then(() => {
       // this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.utilityService.cleverTapInit();
+      document.addEventListener('onCleverTapProfileSync', this.utilityService.onCleverTapProfileSync, false);
+      document.addEventListener('onCleverTapProfileDidInitialize', this.utilityService.onCleverTapProfileDidInitialize, false);
+      document.addEventListener('onCleverTapInAppNotificationDismissed', this.utilityService.onCleverTapInAppNotificationDismissed, false);
     });
 
     this.store.dispatch(new SaveToken());
