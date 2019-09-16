@@ -353,7 +353,9 @@
     "DOWNLOAD_TEXT": "Please select atleast one invoice to download.",
     "ATTENTION": "Attention",
     "DATE_VALIDATION_DAYS": "Maximum 31 Days date range can be selected.",
-    "DATE_VALIDATION_VALID": "To Date should be greater than From Date."
+    "DATE_VALIDATION_VALID": "To Date should be greater than From Date.",
+    "DOWNLOAD_INVOICE": "Download Invoice",
+    "DOWNLOADED_TEXT": "File saved to download folder."
   },
 
   "DELIVERY": {

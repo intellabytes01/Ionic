@@ -15,7 +15,7 @@ import {
 } from '@app/core/authentication/auth.states';
 import { untilDestroyed } from '@app/core';
 import { Store } from '@ngrx/store';
-import { differenceInDays } from 'date-fns';
+import { differenceInDays, subMonths } from 'date-fns';
 
 @Component({
   selector: 'pr-invoice-filter-modal',
@@ -29,7 +29,22 @@ export class InvoiceFilterModalPage implements OnInit {
     'MY_ORDER.VALIDATION_MESSAGES'
   );
   storeList: any[] = [];
-  invoiceFilter: any = { storeId: '', invoiceNo: '', partyCode: '' };
+  invoiceFilter: any = {
+    storeId: null,
+    retailerId: null,
+    toDate: '2019-03-01',
+    fromDate: '2019-02-01',
+    query: ''
+  };
+  title = '';
+  templates = [
+    'Select invoice template',
+    'Pharmarack',
+    'Technomax',
+    'Skyway',
+    'Wondersoft'
+  ];
+  invoice = { template: 'Select invoice template' };
   constructor(
     public formBuilder: FormBuilder,
     public modalController: ModalController,
@@ -40,14 +55,22 @@ export class InvoiceFilterModalPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.store.select(getRetailerStoreParties, untilDestroyed(this)).subscribe(
-      (state: any) => {
-        this.storeList = state;
-        this.setForm();
-      },
-      e => {}
-    );
-    this.invoiceFilter = this.navParams.get('value');
+    if (this.navParams.get('value')) {
+      this.store
+        .select(getRetailerStoreParties, untilDestroyed(this))
+        .subscribe(
+          (state: any) => {
+            this.storeList = state;
+            this.setForm();
+          },
+          e => {}
+        );
+      this.invoiceFilter = this.navParams.get('value');
+    }
+
+    if (this.navParams.get('title')) {
+      this.title = this.navParams.get('title');
+    }
   }
 
   setForm() {
@@ -60,9 +83,9 @@ export class InvoiceFilterModalPage implements OnInit {
         },
         Validators.compose([])
       ],
-      invoiceNo: [this.invoiceFilter.invoiceNo, Validators.compose([])],
+      query: [this.invoiceFilter.query, Validators.compose([])],
       fromDate: [
-        new Date().toISOString(),
+        subMonths(new Date(), 1).toISOString(),
         Validators.compose([Validators.required])
       ],
       toDate: [
@@ -74,7 +97,32 @@ export class InvoiceFilterModalPage implements OnInit {
 
   updateStore(val) {
     this.invoiceFilterForm.value.store.StoreId = val.StoreId;
-    this.invoiceFilterForm.value.store.PartyCode = val.PartyCode;
+  }
+
+  dateCheck(type) {
+    if (type === 'from') {
+      this.invoiceFilterForm
+        .get('toDate')
+        .setValue(
+          subMonths(this.invoiceFilterForm.value.fromDate, -1).toISOString()
+        );
+      this.invoiceFilterForm
+        .get('fromDate')
+        .setValue(
+          subMonths(this.invoiceFilterForm.value.toDate, 1).toISOString()
+        );
+    } else {
+      this.invoiceFilterForm
+        .get('fromDate')
+        .setValue(
+          subMonths(this.invoiceFilterForm.value.toDate, 1).toISOString()
+        );
+      this.invoiceFilterForm
+        .get('toDate')
+        .setValue(
+          subMonths(this.invoiceFilterForm.value.fromDate, -1).toISOString()
+        );
+    }
   }
 
   invoiceFilterSubmit() {
@@ -102,16 +150,13 @@ export class InvoiceFilterModalPage implements OnInit {
         'DD/MM/YY'
       );
       this.invoiceFilter.storeId = this.invoiceFilterForm.value.store.StoreId;
-      this.invoiceFilter.invoiceNo = this.invoiceFilterForm.value.invoiceNo;
+      this.invoiceFilter.query = this.invoiceFilterForm.value.query;
       this.invoiceFilter.partyCode = this.invoiceFilterForm.value.store.PartyCode;
-      if (
-        !isValid(new Date(this.invoiceFilter.fromDate)) ||
-        !isValid(new Date(this.invoiceFilter.toDate))
-      ) {
-        this.alert.presentToast('warning', 'Invalid Date');
-      } else {
-        this.modalController.dismiss(this.invoiceFilter);
-      }
+      this.modalController.dismiss(this.invoiceFilter);
     }
+  }
+
+  invoiceDownloadSubmit() {
+    this.modalController.dismiss(this.invoice.template);
   }
 }

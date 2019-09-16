@@ -4,7 +4,8 @@ import { InvoiceState } from './my-invoices.state';
 
 export const initialState: InvoiceState = {
   errorMessage: null,
-  invoiceArray: []
+  invoiceArray: [],
+  invoiceDetail: []
 };
 
 export function invoiceReducer(
@@ -12,7 +13,7 @@ export function invoiceReducer(
   action: All
 ): InvoiceState {
   switch (action.type) {
-    // Invoice
+    // Invoice List
 
     case InvoiceAction.INVOICELIST_SUCCESS: {
       return {
@@ -29,6 +30,23 @@ export function invoiceReducer(
       };
     }
 
+    // Invoice Detail
+
+    case InvoiceAction.INVOICEDETAIL_SUCCESS: {
+      return {
+        ...state,
+        invoiceDetail: action.payload.invoiceDetail.data,
+        errorMessage: null
+      };
+    }
+    case InvoiceAction.INVOICEDETAIL_FAILURE: {
+      return {
+        ...state,
+        invoiceDetail: [],
+        errorMessage: null
+      };
+    }
+
     default: {
       return state;
     }
@@ -40,4 +58,9 @@ const invoiceState = createFeatureSelector<InvoiceState>('invoice');
 export const invoiceData = createSelector(
   invoiceState,
   coursesState => coursesState.invoiceArray
+);
+
+export const invoiceDetailData = createSelector(
+  invoiceState,
+  coursesState => coursesState.invoiceDetail
 );

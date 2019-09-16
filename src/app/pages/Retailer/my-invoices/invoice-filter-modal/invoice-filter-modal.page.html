@@ -3,7 +3,7 @@
     <ion-row>
       <ion-col size="10">
         <ion-title class="header-title">{{
-          "INVOICE.FILTER" | translate
+          title ? title : ("INVOICE.FILTER" | translate)
         }}</ion-title>
       </ion-col>
       <ion-col size="2" text-end>
@@ -18,7 +18,7 @@
 </ion-header>
 
 <ion-content padding>
-  <form [formGroup]="invoiceFilterForm">
+  <form *ngIf="!title" [formGroup]="invoiceFilterForm">
     <ion-row>
       <ion-col>
         <pr-select
@@ -36,7 +36,7 @@
     <ion-row>
       <ion-col>
         <ion-input
-          formControlName="invoiceNo"
+          formControlName="query"
           type="text"
           placeholder="Invoice No"
         ></ion-input>
@@ -55,6 +55,7 @@
           pickerFormat="DD/MM/YY"
           display-format="DD/MM/YY"
           formControlName="fromDate"
+          (ionChange)="dateCheck('from')"
         ></ion-datetime>
       </ion-col>
       <ion-col size="2" text-start>
@@ -68,6 +69,7 @@
           pickerFormat="DD/MM/YY"
           display-format="DD/MM/YY"
           formControlName="toDate"
+          (ionChange)="dateCheck('to')"
         ></ion-datetime>
       </ion-col>
     </ion-row>
@@ -127,4 +129,39 @@
       </ion-col>
     </ion-row>
   </form>
+
+  <div *ngIf="title">
+    <ion-row>
+      <ion-col text-start>
+        <ion-select
+          [(ngModel)]="invoice.template"
+          interface="popover"
+        >
+          <ion-select-option
+            *ngFor="let template of templates"
+            [value]="template"
+            >{{ template }}</ion-select-option
+          >
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <br />
+
+    <ion-row>
+      <ion-col size="6"></ion-col>
+      <ion-col size="3" class="signin" text-end>
+        <ion-button
+          (click)="modalController.dismiss()"
+          color="mustard"
+          expand="full"
+          fill="solid"
+        >
+          {{ "MY_ORDER.CLOSE" | translate }}
+        </ion-button>
+      </ion-col>
+      <ion-col size="3" class="create" text-end>
+        <app-submit-button (click)="invoiceDownloadSubmit()"></app-submit-button>
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-content>

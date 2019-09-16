@@ -5,17 +5,21 @@ import * as fromInvoice from './store/my-invoices.reducers';
 import { Observable } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Logger } from '@app/core';
-import { InvoiceTypeResponse, InvoiceState } from './store/my-invoices.state';
+import { InvoiceListResponse, InvoiceState, InvoiceDetailResponse } from './store/my-invoices.state';
 
 const log = new Logger('InvoiceGuard');
 
 export interface InvoiceContext {
   storeId: number;
-  partyCode: string;
+  retailerId: number;
+  toDate: string;
+  fromDate: string;
+  query: string;
+  invoiceId: string;
 }
 
 const routes = {
-  invoiceList: '/retailer/order/outstanding/invoices '
+  invoiceList: '/retailer/invoices'
 };
 
 @Injectable()
@@ -31,12 +35,38 @@ export class InvoiceService {
    */
 
   getInvoiceList(context: InvoiceContext): Observable<any> {
-    return this.httpClient.post<InvoiceTypeResponse>(routes.invoiceList, context).pipe(
-      map((data: any) => ({
-        data
-      })),
-      catchError(error => this.errorHandler(error))
-    );
+    let url = `retailerId=${context.retailerId}&toDate=${context.toDate}&fromDate=${context.fromDate}`;
+    if (context.query) {
+      url += `&query=${context.query}`;
+    }
+    if (context.storeId) {
+      url += `&storeId=${context.storeId}`;
+    }
+    return this.httpClient
+      .get<InvoiceListResponse>(
+        `${routes.invoiceList}?${url}
+    `
+      )
+      .pipe(
+        map((data: any) => ({
+          data
+        })),
+        catchError(error => this.errorHandler(error))
+      );
+  }
+
+  getInvoiceDetail(context: InvoiceContext): Observable<any> {
+    return this.httpClient
+      .get<InvoiceDetailResponse>(
+        `${routes.invoiceList}/${context.invoiceId}?retailerId=${context.retailerId}&action=view
+    `
+      )
+      .pipe(
+        map((data: any) => ({
+          data
+        })),
+        catchError(error => this.errorHandler(error))
+      );
   }
 
   // Customize the default error handler here if needed

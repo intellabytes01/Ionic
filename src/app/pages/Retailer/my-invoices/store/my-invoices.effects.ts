@@ -4,7 +4,10 @@ import {
   InvoiceListSuccess,
   InvoiceListFailure,
   InvoiceAction,
-  InvoiceList
+  InvoiceList,
+  InvoiceDetail,
+  InvoiceDetailSuccess,
+  InvoiceDetailFailure
 } from './my-invoices.actions';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
@@ -46,5 +49,31 @@ export class InvoiceEffects {
   @Effect({ dispatch: false })
   InvoiceListFailure: Observable<any> = this.actions.pipe(
     ofType(InvoiceAction.INVOICELIST_FAILURE)
+  );
+
+  // Invoice Detail
+
+  @Effect()
+  InvoiceDetail: Observable<Action> = this.actions.pipe(
+    ofType(InvoiceAction.INVOICEDETAIL),
+    map((action: InvoiceDetail) => action.payload),
+    switchMap(payload => {
+      return this.invoiceService.getInvoiceDetail(payload).pipe(
+        map(data => {
+          return new InvoiceDetailSuccess({ invoiceDetail: data['data'] });
+        }),
+        catchError(error => of(new InvoiceDetailFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  InvoiceDetailSuccess: Observable<any> = this.actions.pipe(
+    ofType(InvoiceAction.INVOICEDETAIL_SUCCESS)
+  );
+
+  @Effect({ dispatch: false })
+  InvoiceDetailFailure: Observable<any> = this.actions.pipe(
+    ofType(InvoiceAction.INVOICEDETAIL_FAILURE)
   );
 }

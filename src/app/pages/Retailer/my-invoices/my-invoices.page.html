@@ -50,7 +50,7 @@
           >
         </ion-col>
         <ion-col text-end size="4">
-          <ion-label (click)="goToInvoiceDetails()" class="blue-color">{{ invoice.InvoiceNo }}</ion-label>
+          <ion-label (click)="goToInvoiceDetails(invoice.StoreInvoiceId)" class="blue-color">{{ invoice.InvoiceNo }}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -60,32 +60,15 @@
           }}</ion-label>
         </ion-col>
         <ion-col text-center size="3">
-          <ion-label (click)="goToInvoiceDetails()" class="blue-color"
+          <ion-label (click)="goToInvoiceDetails(invoice.StoreInvoiceId)" class="blue-color"
             >{{ "INVOICE.DETAILS" | translate }} ></ion-label
           >
         </ion-col>
         <ion-col text-end size="3">
-          <ion-label>₹{{ invoice.InvoiceAmt }}</ion-label>
+          <ion-label>₹{{ invoice.InvoiceAmount }}</ion-label>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col text-start>
-          <ion-label class="blue-color"
-            >{{ "INVOICE.CT" | translate }}: {{invoice.template}}</ion-label
-          >
-          <ion-select
-            [ngModel]="invoice.template"
-            (ngModelChange)="setTemplate($event, i)"
-            interface="popover"
-          >
-            <ion-select-option
-              *ngFor="let template of templates"
-              [value]="template"
-              >{{ template }}</ion-select-option
-            >
-          </ion-select>
-        </ion-col>
-      </ion-row>
+      
     </div>
   </ion-list>
 
