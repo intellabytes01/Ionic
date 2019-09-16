@@ -1,0 +1,88 @@
+# Getting started
+
+1. Go to project folder and install dependencies:
+ ```bash
+ npm install
+ ```
+ 
+2. Launch development server, and open `localhost:4200` in your browser:
+ ```bash
+ npm start
+ ```
+ 
+# Project structure
+
+```
+dist/                        compiled version
+docs/                        project docs and coding guides
+e2e/                         end-to-end tests
+src/                         project source code
+|- app/                      app components
+|  |- core/                  core module (singleton services and single-use components)
+|  |- shared/                shared module  (common components, directives and pipes)
+|  |- app.component.*        app root component (shell)
+|  |- app.module.ts          app root module definition
+|  |- app-routing.module.ts  app routes
+|  +- ...                    additional modules and components
+|- assets/                   app assets (images, fonts, sounds...)
+|- environments/             values for various build environments
+|- theme/                    app global scss variables and theme
+|- translations/             translations files
+|- index.html                html entry point
+|- main.scss                 global style entry point
+|- main.ts                   app entry point
+|- polyfills.ts              polyfills needed by Angular
++- test.ts                   unit tests entry point
+reports/                     test and coverage reports
+proxy.conf.js                backend proxy configuration
+```
+
+# Main tasks
+
+Task automation is based on [NPM scripts](https://docs.npmjs.com/misc/scripts).
+
+Tasks                         | Description
+------------------------------|---------------------------------------------------------------------------------------
+npm start                     | Run development server on `http://localhost:4200/`
+npm run build [-- --env=prod] | Lint code and build app for production in `dist/` folder
+npm test                      | Run unit tests via [Karma](https://karma-runner.github.io) in watch mode
+npm run test:ci               | Lint code and run unit tests once for continuous integration
+npm run e2e                   | Run e2e tests using [Protractor](http://www.protractortest.org)
+npm run lint                  | Lint code
+
+When building the application, you can specify the target environment using the additional flag `--env <name>` (do not
+forget to prepend `--` to pass arguments to npm scripts).
+
+The default build environment is `prod`.
+
+## Development server
+
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change
+any of the source files.
+You should not use `ionic serve` directly, as it does not use the backend proxy configuration by default.
+
+## Code scaffolding
+
+Run `ionic generate page <name>` to generate a new component. You can also use
+`ionic generate directive|pipe|service|class|module`.
+
+## Changes in AndroidManifest xml
+
+1. To Fix Cleartext Traffic Error in Android 9 Pie Add "android:usesCleartextTraffic="true"
+   Indicates whether the app intends to use cleartext network traffic, such as cleartext HTTP. 
+   The default value for apps that target API level 27 or lower is "true". 
+   Apps that target API level 28 or higher default to "false". 
+2. Additional plugins you've installed needs to add in MainActivity.java
+    Add firebase plugin:
+    add(com.philmerrell.firebaseanalytics.CapacitorFirebaseAnalytics.class);
+3. Add CleverTap dependencies in app build.gradle
+    implementation 'com.clevertap.android:clevertap-android-sdk:3.5.1'
+4. Add android name in application tag in AndroidManifest xml
+    android:name="com.clevertap.android.sdk.Application"
+5. Add meta-data inside application tag
+    <meta-data
+            android:name="CLEVERTAP_ACCOUNT_ID"
+            android:value="YOUR ACCOUNT ID"/>
+    <meta-data
+            android:name="CLEVERTAP_TOKEN"
+            android:value="YOUR ACCOUNT TOKEN"/>
