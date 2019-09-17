@@ -54,7 +54,7 @@
       </ion-row>
 
       <div *ngIf="subListShow[i]">
-        <ion-card>
+        <ion-card *ngIf="distributorMapping">
           <ion-row>
             <ion-col text-start>
               <ion-label>{{

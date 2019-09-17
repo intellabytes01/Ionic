@@ -10,6 +10,7 @@ import { AuthState, getRetailerId } from '@app/core/authentication/auth.states';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'pr-invoice-details',
@@ -25,7 +26,8 @@ export class InvoiceDetailsPage implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private store: Store<InvoiceState>,
     private authStore: Store<AuthState>,
-    public activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute,
+    private iab: InAppBrowser
   ) {}
 
   download() {
@@ -68,6 +70,10 @@ export class InvoiceDetailsPage implements OnInit, OnDestroy {
         );
       }
     });
+  }
+
+  call(mobile) {
+    this.iab.create(`tel:${mobile}`);
   }
 
   ngOnDestroy() {}

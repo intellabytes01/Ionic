@@ -9,7 +9,7 @@
           &nbsp;&nbsp;
           <ion-icon
             style="font-size: 1.4rem !important;"
-            (click)="call()"
+            (click)="call(invoiceDetails[0].StoreMobileNumber)"
             class="blue-color"
             name="call"
           ></ion-icon>
@@ -82,10 +82,49 @@
 
       <ion-row>
         <ion-col text-start size="6">
+          <ion-label
+            ><b>{{ "INVOICE.DISCOUNT_AMOUNT" | translate }}</b></ion-label
+          >
+        </ion-col>
+        <ion-col text-end size="6">
+          <ion-label>₹{{ invoiceDetails[0].TotalDiscountAmount }}</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col text-start size="6">
+          <ion-label
+            ><b>{{ "INVOICE.GST_AMOUNT" | translate }}</b></ion-label
+          >
+        </ion-col>
+        <ion-col text-end size="6">
+          <ion-label
+            >₹{{
+              1 * invoiceDetails[0].TotalSGSTAmount +
+                1 * invoiceDetails[0].TotalCGSTAmount +
+                1 * invoiceDetails[0].TotalIGSTAmount
+            }}</ion-label
+          >
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col text-start size="6">
+          <ion-label
+            ><b>{{ "INVOICE.ROUNDOFF" | translate }}</b></ion-label
+          >
+        </ion-col>
+        <ion-col text-end size="6">
+          <ion-label>₹{{ invoiceDetails[0].RoundOff }}</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col text-start size="6">
           <ion-label>Items {{ invoiceDetails.length }} </ion-label>
         </ion-col>
         <ion-col text-end size="6">
-          <ion-label>₹{{ invoiceDetails.InvoiceGrossAmount }}</ion-label>
+          <ion-label>₹{{ invoiceDetails[0].InvoiceGrossAmount }}</ion-label>
         </ion-col>
       </ion-row>
     </ion-card-content>
