@@ -30,6 +30,7 @@ import { untilDestroyed } from '@app/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
 import { AlertService } from '@app/shared/services/alert.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-profile',
@@ -62,6 +63,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     { name: 'I have not applied', selected: false },
     { name: 'I am not eligible', selected: false }
   ];
+  licenseImage = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -70,7 +72,8 @@ export class ProfilePage implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     public modalController: ModalController,
     private updates$: Actions,
-    private alert: AlertService
+    private alert: AlertService,
+    private storage: Storage
   ) {
     this.getBusinessTypes();
     this.getRegions();
@@ -122,6 +125,13 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.createForm();
     this.photo = 'assets/icon/gstin.png';
     this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
+    this.storage.get('userData').then(data => {
+      data = JSON.parse(data);
+      if (data && data['userData']) {
+        console.log('data: ', data['userData']['userSummary']);
+        this.licenseImage = data['userData']['userSummary']['Druglicenseimage'];
+      }
+    });
   }
 
   async getUserId() {

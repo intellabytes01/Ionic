@@ -40,7 +40,8 @@ export class InvoiceDetailsPage implements OnInit, OnDestroy {
   getMyInvoicesDetail(retailerId) {
     const payload = {
       retailerId,
-      invoiceId: this.invoiceId
+      invoices: [this.invoiceId],
+      action: 'view'
     };
     this.store.dispatch(new InvoiceDetail(payload));
     this.store

@@ -234,7 +234,7 @@
       <ion-item no-lines class="alignSelf-center">
         <ion-card (click)="openModal()">
           <ion-card-content>
-            <img [src]="photo" *ngIf="photo" />
+            <img [src]="licenseImage ? licenseImage : photo"/>
           </ion-card-content>
         </ion-card>
       </ion-item>

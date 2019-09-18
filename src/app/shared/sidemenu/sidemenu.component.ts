@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { MenuController, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -9,19 +9,22 @@ import { ModalPopupPage } from '../modal-popup/modal-popup.page';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { AuthState, getUserImage } from '@app/core/authentication/auth.states';
+import { Store } from '@ngrx/store';
+import { untilDestroyed } from '@app/core/index.js';
 
 @Component({
   selector: 'app-sidemenu',
   templateUrl: './sidemenu.component.html',
   styleUrls: ['./sidemenu.component.scss']
 })
-export class SidemenuComponent implements OnInit {
+export class SidemenuComponent implements OnInit, OnDestroy {
   public leftMenuPages = fromSideMenuJson.leftMenuData;
 
   public rightMenuPages = fromSideMenuJson.rightMenuData;
   dataReturned: any;
   photo: any;
-
+  userImage: string;
   constructor(
     private router: Router,
     private menuCtrl: MenuController,
@@ -30,12 +33,22 @@ export class SidemenuComponent implements OnInit {
     public modalController: ModalController,
     private sanitizer: DomSanitizer,
     private emailComposer: EmailComposer,
-    public iab: InAppBrowser
+    public iab: InAppBrowser,
+    private authStore: Store<AuthState>
   ) {}
 
   ngOnInit() {
     this.photo = 'assets/icon/user-default.png';
+    this.storage.get('userData').then(data => {
+      data = JSON.parse(data);
+      if (data && data['userData']) {
+        console.log('data: ', data['userData']['userSummary']);
+        this.userImage = data['userData']['userSummary']['Userimage'];
+      }
+    });
   }
+
+  ngOnDestroy() {}
 
   callNow(numberToCall) {
     this.iab.create(`tel:${numberToCall}`);

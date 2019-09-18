@@ -2,18 +2,18 @@
   <ion-menu side="start" type="overlay" menuId="menuLeft">
     <ion-content>
       <div class="sidemenu-header">
-          <!-- <div text-center>             
+        <!-- <div text-center>             
                 <ion-button (click)="openModal()"><ion-icon ios="ios-camera" md="md-camera"></ion-icon></ion-button>             
           </div> -->
-          <ion-row class="cardLayout">
-              <ion-item no-lines class="alignSelf-center marginTop">
-                  <ion-card (click)="openModal()" style="height: 91%">
-                      <ion-card-content>
-                          <img [src]="photo" *ngIf="photo" />
-                      </ion-card-content>
-                  </ion-card>
-              </ion-item>
-          </ion-row>
+        <ion-row class="cardLayout">
+          <ion-item no-lines class="alignSelf-center marginTop">
+            <ion-card (click)="openModal()" style="height: 91%">
+              <ion-card-content>
+                <img [src]="userImage ? userImage : photo" />
+              </ion-card-content>
+            </ion-card>
+          </ion-item>
+        </ion-row>
 
         <ion-row>
           <ion-col text-center>
@@ -28,7 +28,10 @@
         </ion-row>
       </div>
       <ion-list class="sidemenu">
-        <ion-menu-toggle auto-hide="false" *ngFor="let page of leftMenuPages; trackBy: trackByFn">
+        <ion-menu-toggle
+          auto-hide="false"
+          *ngFor="let page of leftMenuPages; trackBy: trackByFn"
+        >
           <ion-item [routerDirection]="'root'" (click)="openPage(page)">
             <ion-icon
               style="color: black !important"
@@ -47,7 +50,10 @@
   <ion-menu side="end" type="overlay" menuId="menuRight">
     <ion-content>
       <ion-list class="sidemenu">
-        <ion-menu-toggle auto-hide="false" *ngFor="let page of rightMenuPages; trackBy: trackByFn">
+        <ion-menu-toggle
+          auto-hide="false"
+          *ngFor="let page of rightMenuPages; trackBy: trackByFn"
+        >
           <ion-item [routerDirection]="'root'" (click)="openPage(page)">
             <!-- [routerLink]="[p.url]" -->
             <ion-icon

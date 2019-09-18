@@ -4,12 +4,12 @@
       <ion-row>
         <ion-col text-start>
           <ion-label class="storename"
-            ><b>{{ invoiceDetails[0].StoreName }}</b></ion-label
+            ><b>{{ invoiceDetails[0].data[0].StoreName }}</b></ion-label
           >
           &nbsp;&nbsp;
           <ion-icon
             style="font-size: 1.4rem !important;"
-            (click)="call(invoiceDetails[0].StoreMobileNumber)"
+            (click)="call(invoiceDetails[0].data[0].StoreMobileNumber)"
             class="blue-color"
             name="call"
           ></ion-icon>
@@ -22,7 +22,7 @@
           </ion-label>
         </ion-col>
         <ion-col text-end size="6">
-          <ion-label>{{ invoiceDetails[0].InvoiceNo }}</ion-label>
+          <ion-label>{{ invoiceDetails[0].data[0].InvoiceNo }}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -33,7 +33,7 @@
         </ion-col>
         <ion-col text-end size="6">
           <ion-label>{{
-            invoiceDetails[0].InvoiceDate | date: "dd MMM yyyy h:mm a"
+            invoiceDetails[0].data[0].InvoiceDate | date: "dd MMM yyyy h:mm a"
           }}</ion-label>
         </ion-col>
       </ion-row>
@@ -60,17 +60,17 @@
               <h3>
                 <ion-row>
                   <ion-col size="3" text-center>
-                    <ion-label>{{ invoiceDetails[0].TotalQuantity }}</ion-label>
+                    <ion-label>{{ invoiceDetails[0].data[0].TotalQuantity }}</ion-label>
                   </ion-col>
                   <ion-col size="3" text-center>
-                    <ion-label>{{ invoiceDetails[0].Free }}</ion-label>
+                    <ion-label>{{ invoiceDetails[0].data[0].Free }}</ion-label>
                   </ion-col>
                   <ion-col size="3" text-center>
-                    <ion-label>{{ invoiceDetails[0].Rate }}</ion-label>
+                    <ion-label>{{ invoiceDetails[0].data[0].Rate }}</ion-label>
                   </ion-col>
                   <ion-col size="3" text-center>
                     <ion-label>{{
-                      invoiceDetails[0].TotalProductAmount
+                      invoiceDetails[0].data[0].TotalProductAmount
                     }}</ion-label>
                   </ion-col>
                 </ion-row>
@@ -87,7 +87,7 @@
           >
         </ion-col>
         <ion-col text-end size="6">
-          <ion-label>₹{{ invoiceDetails[0].TotalDiscountAmount }}</ion-label>
+          <ion-label>₹{{ invoiceDetails[0].data[0].TotalDiscountAmount }}</ion-label>
         </ion-col>
       </ion-row>
 
@@ -100,9 +100,9 @@
         <ion-col text-end size="6">
           <ion-label
             >₹{{
-              1 * invoiceDetails[0].TotalSGSTAmount +
-                1 * invoiceDetails[0].TotalCGSTAmount +
-                1 * invoiceDetails[0].TotalIGSTAmount
+              1 * invoiceDetails[0].data[0].TotalSGSTAmount +
+                1 * invoiceDetails[0].data[0].TotalCGSTAmount +
+                1 * invoiceDetails[0].data[0].TotalIGSTAmount
             }}</ion-label
           >
         </ion-col>
@@ -115,7 +115,7 @@
           >
         </ion-col>
         <ion-col text-end size="6">
-          <ion-label>₹{{ invoiceDetails[0].RoundOff }}</ion-label>
+          <ion-label>₹{{ invoiceDetails[0].data[0].RoundOff }}</ion-label>
         </ion-col>
       </ion-row>
 
@@ -124,7 +124,7 @@
           <ion-label>Items {{ invoiceDetails.length }} </ion-label>
         </ion-col>
         <ion-col text-end size="6">
-          <ion-label>₹{{ invoiceDetails[0].InvoiceGrossAmount }}</ion-label>
+          <ion-label>₹{{ invoiceDetails[0].data[0].InvoiceGrossAmount }}</ion-label>
         </ion-col>
       </ion-row>
     </ion-card-content>

@@ -5,7 +5,11 @@ import * as fromInvoice from './store/my-invoices.reducers';
 import { Observable } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { Logger } from '@app/core';
-import { InvoiceListResponse, InvoiceState, InvoiceDetailResponse } from './store/my-invoices.state';
+import {
+  InvoiceListResponse,
+  InvoiceState,
+  InvoiceDetailResponse
+} from './store/my-invoices.state';
 
 const log = new Logger('InvoiceGuard');
 
@@ -57,10 +61,7 @@ export class InvoiceService {
 
   getInvoiceDetail(context: InvoiceContext): Observable<any> {
     return this.httpClient
-      .get<InvoiceDetailResponse>(
-        `${routes.invoiceList}/${context.invoiceId}?retailerId=${context.retailerId}&action=view
-    `
-      )
+      .post<InvoiceDetailResponse>(`${routes.invoiceList}`, context)
       .pipe(
         map((data: any) => ({
           data
