@@ -21,6 +21,7 @@ export class InvoiceDetailsPage implements OnInit, OnDestroy {
   state$: Observable<object>;
   invoiceDetails = [];
   invoiceId: string;
+  retailerId: number;
   constructor(
     private alertService: AlertService,
     private translateService: TranslateService,
@@ -35,6 +36,22 @@ export class InvoiceDetailsPage implements OnInit, OnDestroy {
       this.translateService.instant('INVOICE.DOWNLOADED_TEXT'),
       this.translateService.instant('INVOICE.ATTENTION')
     );
+    const payload = {
+      retailerId: this.retailerId,
+      invoices: [this.invoiceId],
+      action: 'download'
+    };
+    this.store.dispatch(new InvoiceDetail(payload));
+    this.store
+      .pipe(
+        select(invoiceDetailData),
+        untilDestroyed(this)
+      )
+      .subscribe(state => {
+        if (state) {
+          state.forEach(element => {});
+        }
+      });
   }
 
   getMyInvoicesDetail(retailerId) {
@@ -65,6 +82,7 @@ export class InvoiceDetailsPage implements OnInit, OnDestroy {
           (state: any) => {
             if (state) {
               this.getMyInvoicesDetail(state);
+              this.retailerId = state;
             }
           },
           e => {}

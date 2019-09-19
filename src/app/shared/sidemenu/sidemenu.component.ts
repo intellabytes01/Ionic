@@ -42,7 +42,6 @@ export class SidemenuComponent implements OnInit, OnDestroy {
     this.storage.get('userData').then(data => {
       data = JSON.parse(data);
       if (data && data['userData']) {
-        console.log('data: ', data['userData']['userSummary']);
         this.userImage = data['userData']['userSummary']['Userimage'];
       }
     });
