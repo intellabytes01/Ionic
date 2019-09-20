@@ -1,11 +1,36 @@
 import { Injectable } from '@angular/core';
 import { CleverTap } from '@ionic-native/clevertap/ngx';
+import {
+  AuthState,
+  getUserDetailsFromState
+} from '@app/core/authentication/auth.states';
+import { Store } from '@ngrx/store';
+import { untilDestroyed } from '@app/core';
+import { Device } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilityService {
-  constructor(private cleverTap: CleverTap) {}
+  userDetails: any;
+  deviceInfo: any;
+  constructor(
+    private cleverTap: CleverTap,
+    private authStore: Store<AuthState>
+  ) {
+    this.authStore
+      .select(getUserDetailsFromState, untilDestroyed(this))
+      .subscribe(
+        (state: any) => {
+          this.userDetails = state;
+        },
+        e => {}
+      );
+
+    Device.getInfo().then(val => {
+      this.deviceInfo = val;
+    });
+  }
 
   objectToArray(obj) {
     const mapped = Object.keys(obj).map(key => ({
@@ -59,7 +84,7 @@ export class UtilityService {
     profileObj['Phone'] = '';
     profileObj['Email'] = '';
     profileObj['Stores'] = '';
-    profileObj['AppVersion'] = '';
+    profileObj['AppVersion'] = this.deviceInfo.AppVersion;
     profileObj['Region'] = '';
     profileObj['Pincode'] = '';
     return profileObj;
@@ -102,12 +127,24 @@ export class UtilityService {
       a_title === 'requestmapping'
     ) {
     } else if (this.checkNull(a_title) !== 'null' && a_title === 'addpo') {
-    } else if (this.checkNull(a_title) !== 'null' && a_title === 'draftorders') {
-    } else if (this.checkNull(a_title) !== 'null' && a_title === 'orderdetails') {
+    } else if (
+      this.checkNull(a_title) !== 'null' &&
+      a_title === 'draftorders'
+    ) {
+    } else if (
+      this.checkNull(a_title) !== 'null' &&
+      a_title === 'orderdetails'
+    ) {
     } else if (this.checkNull(a_title) !== 'null' && title === 'addDist_req') {
-    } else if (this.checkNull(a_title) !== 'null' && title === 'addDist_status') {
+    } else if (
+      this.checkNull(a_title) !== 'null' &&
+      title === 'addDist_status'
+    ) {
     } else if (this.checkNull(a_title) !== 'null' && title === 'addDist_add') {
-    } else if (this.checkNull(a_title) !== 'null' && a_title === 'notification') {
+    } else if (
+      this.checkNull(a_title) !== 'null' &&
+      a_title === 'notification'
+    ) {
     } else if (this.checkNull(title) !== 'null' && title === 'register') {
     } else if (
       this.checkNull(title) !== 'null' &&
@@ -271,5 +308,50 @@ export class UtilityService {
       }
     }
     return json;
+  }
+
+  groupBy(items) {
+    const temporaryObject = {};
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (
+        typeof temporaryObject[item.StoreId] ===
+        'undefined'
+      ) {
+        temporaryObject[item.StoreId] = [];
+      }
+      // Push the item to the its StoreId of the `temporaryObject`.
+      temporaryObject[item.StoreId].push(item);
+    }
+    return temporaryObject;
+  }
+
+  mergeObjects(data, keyToMerge) {
+    const resultArray = [];
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        const obj = {};
+        obj[keyToMerge] = key;
+        for (let i = 0; i < data[key].length; i++) {
+          obj[i] = data[key][i];
+        }
+        resultArray.push(obj);
+      }
+    }
+    return resultArray;
+  }
+
+  isNumber(value) {
+    return value != null && typeof value === 'number';
+  }
+
+  checkReturnValue(chkVal, rtnVal) {
+    return chkVal === 'null' ||
+      chkVal === '' ||
+      chkVal === undefined ||
+      chkVal === null
+      ? rtnVal
+      : chkVal;
   }
 }

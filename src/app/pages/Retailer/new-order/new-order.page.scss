@@ -25,3 +25,50 @@ ion-input {
     font-size: 1.5rem;
     color: darkblue;
 }
+
+.tagbubble {
+  min-width: 38px;
+  padding-right: 3px;
+  padding-left: 10px;
+  display: inline-block;
+  line-height: 0px;
+  margin-top: 3px;
+  background: #4592d6;
+  position: relative;
+  text-align: center;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  color: #fff;
+}
+
+.tagbubble:before {
+	content: "";
+	position: absolute;
+	left: -1px;
+	top: 0;
+	width: 0;
+	height: 0;
+	border-top: 11px solid transparent;
+	border-left: 10px solid #fff;
+	border-bottom: 15px solid transparent;
+}
+
+.product-name {
+  padding-left: 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.padding-4 {
+  padding: 4px;
+}
+
+.sc-ion-card-ios-h {
+  margin-left: unset;
+  margin-right: unset;
+  -webkit-margin-start: 4px;
+  margin-inline-start: 4px;
+  -webkit-margin-end: 4px;
+  margin-inline-end: 4px;
+}
