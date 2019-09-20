@@ -32,26 +32,26 @@ export class InvoiceDetailsPage implements OnInit, OnDestroy {
   ) {}
 
   download() {
-    this.alertService.basicAlert(
-      this.translateService.instant('INVOICE.DOWNLOADED_TEXT'),
-      this.translateService.instant('INVOICE.ATTENTION')
-    );
-    const payload = {
-      retailerId: this.retailerId,
-      invoices: [this.invoiceId],
-      action: 'download'
-    };
-    this.store.dispatch(new InvoiceDetail(payload));
-    this.store
-      .pipe(
-        select(invoiceDetailData),
-        untilDestroyed(this)
-      )
-      .subscribe(state => {
-        if (state) {
-          state.forEach(element => {});
-        }
-      });
+    // const payload = {
+    //   retailerId: this.retailerId,
+    //   invoices: [this.invoiceId],
+    //   action: 'download'
+    // };
+    // this.store.dispatch(new InvoiceDetail(payload));
+    // this.store
+    //   .pipe(
+    //     select(invoiceDetailData),
+    //     untilDestroyed(this)
+    //   )
+    //   .subscribe(state => {
+    //     if (state) {
+    //       state.forEach(element => {});
+    //       this.alertService.basicAlert(
+    //         this.translateService.instant('INVOICE.DOWNLOADED_TEXT'),
+    //         this.translateService.instant('INVOICE.ATTENTION')
+    //       );
+    //     }
+    //   });
   }
 
   getMyInvoicesDetail(retailerId) {

@@ -28,16 +28,14 @@ export class MyOrderDetailsPage implements OnInit, OnDestroy {
     this.myOrderDetails$.pipe(untilDestroyed(this)).subscribe(data => {
       if (data) {
         this.orderDetails = data;
+        if (this.orderDetails.length > 0) {
+          this.totalOrderValue = 0;
+          this.orderDetails.forEach(element => {
+            this.totalOrderValue += element['PTR'] * element['Quantity'];
+          });
+        }
       }
     });
-
-
-    if (this.orderDetails.length > 0) {
-      this.totalOrderValue = 0;
-      this.orderDetails.forEach(element => {
-        this.totalOrderValue += element['PTR'] * element['Quantity'];
-      });
-    }
   }
 
   ngOnInit() {

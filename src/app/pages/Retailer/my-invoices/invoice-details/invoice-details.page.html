@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-card *ngIf="invoiceDetails.length > 0" class="ion-no-padding">
+  <ion-card *ngIf="invoiceDetails[0] && invoiceDetails[0].data.length > 0" class="ion-no-padding">
     <ion-card-content>
       <ion-row>
         <ion-col text-start>
@@ -60,7 +60,9 @@
               <h3>
                 <ion-row>
                   <ion-col size="3" text-center>
-                    <ion-label>{{ invoiceDetails[0].data[0].TotalQuantity }}</ion-label>
+                    <ion-label>{{
+                      invoiceDetails[0].data[0].TotalQuantity
+                    }}</ion-label>
                   </ion-col>
                   <ion-col size="3" text-center>
                     <ion-label>{{ invoiceDetails[0].data[0].Free }}</ion-label>
@@ -87,7 +89,9 @@
           >
         </ion-col>
         <ion-col text-end size="6">
-          <ion-label>₹{{ invoiceDetails[0].data[0].TotalDiscountAmount }}</ion-label>
+          <ion-label
+            >₹{{ invoiceDetails[0].data[0].TotalDiscountAmount }}</ion-label
+          >
         </ion-col>
       </ion-row>
 
@@ -124,7 +128,9 @@
           <ion-label>Items {{ invoiceDetails.length }} </ion-label>
         </ion-col>
         <ion-col text-end size="6">
-          <ion-label>₹{{ invoiceDetails[0].data[0].InvoiceGrossAmount }}</ion-label>
+          <ion-label
+            >₹{{ invoiceDetails[0].data[0].InvoiceGrossAmount }}</ion-label
+          >
         </ion-col>
       </ion-row>
     </ion-card-content>
@@ -136,9 +142,9 @@
       <app-back-button [link]="['/my-invoices']"></app-back-button>
     </ion-col>
     <ion-col class="create ion-padding" size="6">
-      <ion-button expand="full" fill="solid" (click)="download()" translate
-        >INVOICE.DOWNLOAD_INVOICE</ion-button
-      >
+      <ion-button expand="full" fill="solid" (click)="download()">{{
+        "INVOICE.DOWNLOAD_INVOICE" | translate
+      }}</ion-button>
     </ion-col>
   </ion-row>
 

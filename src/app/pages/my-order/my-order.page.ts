@@ -9,6 +9,7 @@ import { untilDestroyed } from '@app/core';
 import { Router } from '@angular/router';
 import * as fromModel from './my-order-data.json';
 import { format, subDays } from 'date-fns';
+import { TopLoaderService } from '@app/shared/top-loader/top-loader.service';
 
 @Component({
   selector: 'pr-my-order',
@@ -31,7 +32,8 @@ export class MyOrderPage implements OnInit, OnDestroy {
   constructor(
     private store: Store<MyOrderState>,
     public modalController: ModalController,
-    public router: Router
+    public router: Router,
+    private topLoaderService: TopLoaderService
   ) {
     const fromD = subDays(new Date(), 7);
     this.orderFilter.fromDate = format(fromD, 'DD/MM/YY');
@@ -48,12 +50,12 @@ export class MyOrderPage implements OnInit, OnDestroy {
       .subscribe(data => {
         if (
           data &&
-          data['paginationData'] &&
-          data['paginationData']['afterMaxDateTimeData'] !== null &&
-          data['paginationData']['afterMaxDateTimeData'].length > 0
+          data['returnData'] &&
+          data['returnData'] !== null &&
+          data['returnData'].length > 0
         ) {
-          this.count = data['paginationData']['afterMaxDateTimeData'].length;
-          this.myOrderList = data['paginationData']['afterMaxDateTimeData'];
+          this.count = data['returnData'].length;
+          this.myOrderList = data['returnData'];
           this.total.amount = data.totalOrderAmount;
           this.total.count = data.paginationData.totalRecords;
           // App logic to determine if all data is loaded
@@ -66,9 +68,9 @@ export class MyOrderPage implements OnInit, OnDestroy {
 
     // this.myOrderList$ = this.store.pipe(select(myOrderData));
     // this.myOrderList$.pipe(untilDestroyed(this)).subscribe(data => {
-    //   if (data && data['paginationData'] && data['paginationData']['afterMaxDateTimeData'].length > 0) {
-    //     this.count = data['paginationData']['afterMaxDateTimeData'].length;
-    //     this.myOrderList = this.myOrderList.concat(data['paginationData']['afterMaxDateTimeData']);
+    //   if (data && data['paginationData'] && data['paginationData']['returnData'].length > 0) {
+    //     this.count = data['paginationData']['returnData'].length;
+    //     this.myOrderList = this.myOrderList.concat(data['paginationData']['returnData']);
     //     this.total.amount = data.totalOrderAmount;
     //     this.total.count = data.paginationData.totalRecords;
     //     // App logic to determine if all data is loaded
