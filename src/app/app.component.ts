@@ -20,6 +20,7 @@ import { TopLoaderService } from './shared/top-loader/top-loader.service';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import * as JWT from 'jwt-decode';
 import { UtilityService } from './shared/services/utility.service';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 const log = new Logger('App');
 
@@ -43,6 +44,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private topLoaderService: TopLoaderService,
     public router: Router,
     private splashScreen: SplashScreen,
+    private statusBar: StatusBar,
     private utilityService: UtilityService
   ) {
     this.splashScreen.show();
@@ -99,7 +101,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // this.statusBar.styleDefault();
+      this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.utilityService.cleverTapInit();
       document.addEventListener('onCleverTapProfileSync', this.utilityService.onCleverTapProfileSync, false);

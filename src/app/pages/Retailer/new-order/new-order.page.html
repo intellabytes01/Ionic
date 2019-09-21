@@ -82,6 +82,7 @@
             (ionChange)="search($event)"
             (ionClear)="clearSearchInput()"
             [value]="recentSearchedItem"
+            autofocus="true"
           ></ion-searchbar>
         </ion-col>
         <ion-col size="2">
@@ -171,14 +172,14 @@
         <ion-row>
           <ion-col size="3" text-center>
             <ion-item>
-              <ion-input
+              <ion-input class="ion-no-padding"
                 name="qty"
                 type="number"
                 [(ngModel)]="product.Quantity"
                 [ngModelOptions]="{ standalone: true }"
                 (ionChange)="setQuantity(i, $event, product)"
                 placeholder="Qty"
-                
+                autofocus="true"
               ></ion-input>
             </ion-item>
           </ion-col>

@@ -4,7 +4,7 @@
 }
 
 ion-input {
-  border-bottom: 1px solid grey;
+  // border-bottom: 1px solid grey;
   font-weight: bold;
 }
 
@@ -31,8 +31,6 @@ ion-input {
   padding-right: 3px;
   padding-left: 10px;
   display: inline-block;
-  line-height: 0px;
-  margin-top: 3px;
   background: #4592d6;
   position: relative;
   text-align: center;
@@ -40,13 +38,14 @@ ion-input {
   -webkit-border-radius: 0px;
   border-radius: 0px;
   color: #fff;
+  height: 24px;
 }
 
 .tagbubble:before {
 	content: "";
 	position: absolute;
-	left: -1px;
-	top: 0;
+	left: -2px;
+	top: 1;
 	width: 0;
 	height: 0;
 	border-top: 11px solid transparent;
@@ -65,10 +64,30 @@ ion-input {
 }
 
 .sc-ion-card-ios-h {
-  margin-left: unset;
-  margin-right: unset;
-  -webkit-margin-start: 4px;
-  margin-inline-start: 4px;
-  -webkit-margin-end: 4px;
-  margin-inline-end: 4px;
+  margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+.sc-ion-card-md-h {
+  margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+
+.list-ios {
+  border: 1px solid gray;
+  margin-left: 4px;
+    margin-right: 4px;
+}
+
+.list-md {
+  border: 1px solid gray;
+  margin-left: 4px;
+    margin-right: 4px;
+}
+
+ion-button {
+  height: 38px;
 }

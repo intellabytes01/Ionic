@@ -5,13 +5,21 @@
 }
 
 .sc-ion-card-md-h {
-  height: auto;
-  min-height: 132px;
+  height: 100px;
+  min-height: 100px;
+  margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 12px;
+    margin-bottom: 4px;
 }
 
 .sc-ion-card-ios-h{
-  height: auto;
-  min-height: 132px;
+  height: 100px;
+  min-height: 100px;
+  margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 12px;
+    margin-bottom: 4px;
 }
 
 ::ng-deep .swiper-slide img {

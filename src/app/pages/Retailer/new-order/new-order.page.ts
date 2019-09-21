@@ -714,6 +714,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
           } else {
             displaystoreproduct['Added'] = true;
             this.calculateTotal();
+            
           }
         });
       }
