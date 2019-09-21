@@ -1,8 +1,12 @@
 row-box-shadow {
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
 }
 
-.filter{
-    border: 1px solid grey;
-    padding: 0.7rem;
+.filter {
+  border: 1px solid grey;
+  padding: 0.7rem;
+}
+
+ion-card {
+  padding: 0.5rem;
 }

@@ -29,6 +29,7 @@ import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { CleverTap } from '@ionic-native/clevertap/ngx';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -65,7 +66,8 @@ import { CleverTap } from '@ionic-native/clevertap/ngx';
     FirebaseAnalytics,
     EmailComposer,
     SocialSharing,
-    CleverTap
+    CleverTap,
+    AppVersion
   ],
   bootstrap: [AppComponent]
 })

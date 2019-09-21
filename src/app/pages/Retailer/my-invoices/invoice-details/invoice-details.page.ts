@@ -10,6 +10,7 @@ import { AuthState, getRetailerId } from '@app/core/authentication/auth.states';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'pr-invoice-details',
@@ -20,25 +21,44 @@ export class InvoiceDetailsPage implements OnInit, OnDestroy {
   state$: Observable<object>;
   invoiceDetails = [];
   invoiceId: string;
+  retailerId: number;
   constructor(
     private alertService: AlertService,
     private translateService: TranslateService,
     private store: Store<InvoiceState>,
     private authStore: Store<AuthState>,
-    public activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute,
+    private iab: InAppBrowser
   ) {}
 
   download() {
-    this.alertService.basicAlert(
-      this.translateService.instant('INVOICE.DOWNLOADED_TEXT'),
-      this.translateService.instant('INVOICE.ATTENTION')
-    );
+    // const payload = {
+    //   retailerId: this.retailerId,
+    //   invoices: [this.invoiceId],
+    //   action: 'download'
+    // };
+    // this.store.dispatch(new InvoiceDetail(payload));
+    // this.store
+    //   .pipe(
+    //     select(invoiceDetailData),
+    //     untilDestroyed(this)
+    //   )
+    //   .subscribe(state => {
+    //     if (state) {
+    //       state.forEach(element => {});
+    //       this.alertService.basicAlert(
+    //         this.translateService.instant('INVOICE.DOWNLOADED_TEXT'),
+    //         this.translateService.instant('INVOICE.ATTENTION')
+    //       );
+    //     }
+    //   });
   }
 
   getMyInvoicesDetail(retailerId) {
     const payload = {
       retailerId,
-      invoiceId: this.invoiceId
+      invoices: [this.invoiceId],
+      action: 'view'
     };
     this.store.dispatch(new InvoiceDetail(payload));
     this.store
@@ -62,12 +82,17 @@ export class InvoiceDetailsPage implements OnInit, OnDestroy {
           (state: any) => {
             if (state) {
               this.getMyInvoicesDetail(state);
+              this.retailerId = state;
             }
           },
           e => {}
         );
       }
     });
+  }
+
+  call(mobile) {
+    this.iab.create(`tel:${mobile}`);
   }
 
   ngOnDestroy() {}

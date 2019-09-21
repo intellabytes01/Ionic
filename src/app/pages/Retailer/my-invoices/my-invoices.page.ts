@@ -48,7 +48,7 @@ export class MyInvoicesPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.authStore.select(getRetailerId, untilDestroyed(this)).subscribe(
       (state: any) => {
-        this.invoiceFilter.retailerId = state;
+        this.invoiceFilter.retailerId = 28421;
         if (this.invoiceFilter.retailerId) {
           this.getMyInvoices();
         }

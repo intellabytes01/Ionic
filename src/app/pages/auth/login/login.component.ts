@@ -78,8 +78,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = this.formBuilder.group({
       username: [
         // '',
-        // '7775924331',
-        '8000666878',
+         '7775924331',
+        // '8000666878',
         Validators.compose([
           Validators.minLength(5),
           Validators.maxLength(25),
@@ -88,8 +88,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       ],
       password: [
         // '',
-        // '7775924331',
-        '123456',
+         '7775924331',
+        // '123456',
         Validators.compose([Validators.minLength(6), Validators.required])
       ]
     });

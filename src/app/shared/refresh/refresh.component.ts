@@ -6,7 +6,8 @@ import {
   getUserId,
   AuthState,
   selectAuthState,
-  getRegionId
+  getRegionId,
+  getRetailerId
 } from '@app/core/authentication/auth.states';
 import { untilDestroyed } from '@app/core';
 import {
@@ -221,11 +222,21 @@ export class RefreshComponent implements OnInit, OnDestroy {
   // Invoices
 
   getMyInvoices() {
-    const payload = {
-      storeId: '151',
-      partyCode: '60917'
-    };
-    this.storeInvoice.dispatch(new InvoiceList(payload));
+    this.storeAuth.select(getRetailerId, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        const payload = {
+          storeId: null,
+          retailerId: state,
+          toDate: '2019-03-01',
+          fromDate: '2019-02-01',
+          query: ''
+        };
+        if (state) {
+          this.storeInvoice.dispatch(new InvoiceList(payload));
+        }
+      },
+      e => {}
+    );
   }
 
   // Delivery Tracker

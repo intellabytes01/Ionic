@@ -12,6 +12,8 @@ export interface ProductSearchContext {
   regionId: number;
   query: string;
   page: number;
+  retailerId: number;
+  productId: number;
 }
 
 export interface GenericSearchContext {
@@ -55,7 +57,7 @@ export interface DistributorCompaniesContext {
 }
 
 const routes = {
-  products: '/global/products?',
+  products: '/global/products',
   generic: '/global/generics?',
   genericProducts: '/global/generics/',
   genericStores: '/global/generics/products/stores?',
@@ -76,7 +78,7 @@ export class ProductSearchService {
   getProducts(context: ProductSearchContext): Observable<any> {
     return this.httpClient
       .get<ProductSearchResponse>(
-        `${routes.products}regionId=${context.regionId}&query=${
+        `${routes.products}?regionId=${context.regionId}&query=${
         context.query
         }&page=${context.page}`
       )
@@ -85,6 +87,15 @@ export class ProductSearchService {
           data
         })),
         catchError(error => this.errorHandler(error))
+      );
+  }
+
+  getProductDetails(context: ProductSearchContext): Observable<any> {
+    return this.httpClient
+      .get<ProductSearchResponse>(
+        `${routes.products}/${context.productId}?regionId=${context.regionId}&retailerId=${
+        context.retailerId
+        }&slot=1`
       );
   }
 

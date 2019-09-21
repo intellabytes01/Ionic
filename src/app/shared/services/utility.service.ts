@@ -1,36 +1,18 @@
 import { Injectable } from '@angular/core';
 import { CleverTap } from '@ionic-native/clevertap/ngx';
-import {
-  AuthState,
-  getUserDetailsFromState
-} from '@app/core/authentication/auth.states';
-import { Store } from '@ngrx/store';
+import { ProfileState, getProfileDetails } from '@app/pages/Retailer/profile/store/profile.reducers';
+import { Store, select } from '@ngrx/store';
+import { getUserId } from '@app/core/authentication/auth.states';
 import { untilDestroyed } from '@app/core';
-import { Device } from '@capacitor/core';
+import { GetProfileDetails } from '@app/pages/Retailer/profile/store/profile.actions';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilityService {
-  userDetails: any;
-  deviceInfo: any;
-  constructor(
-    private cleverTap: CleverTap,
-    private authStore: Store<AuthState>
-  ) {
-    this.authStore
-      .select(getUserDetailsFromState, untilDestroyed(this))
-      .subscribe(
-        (state: any) => {
-          this.userDetails = state;
-        },
-        e => {}
-      );
-
-    Device.getInfo().then(val => {
-      this.deviceInfo = val;
-    });
-  }
+  profileDetails: any;
+  constructor(private cleverTap: CleverTap, private store: Store<ProfileState>, private appVersion: AppVersion) {}
 
   objectToArray(obj) {
     const mapped = Object.keys(obj).map(key => ({
@@ -78,15 +60,16 @@ export class UtilityService {
 
   getUserObjCleverTap() {
     const profileObj = {};
-    profileObj['Name'] = '';
-    profileObj['Identity'] = '';
-    profileObj['UserId'] = '';
-    profileObj['Phone'] = '';
-    profileObj['Email'] = '';
-    profileObj['Stores'] = '';
-    profileObj['AppVersion'] = this.deviceInfo.AppVersion;
-    profileObj['Region'] = '';
-    profileObj['Pincode'] = '';
+    profileObj['Name'] = this.profileDetails.RetailerName ? this.profileDetails.RetailerName : '';
+    profileObj['Identity'] = this.profileDetails.Address1 ? this.profileDetails.Address1 : '';
+    profileObj['UserId'] = this.profileDetails.RetailerId ? this.profileDetails.RetailerId : '';
+    profileObj['Phone'] = this.profileDetails.MobileNumber ? this.profileDetails.MobileNumber : '';
+    profileObj['Email'] = this.profileDetails.Email ? this.profileDetails.Email : '';
+    profileObj['Stores'] = this.profileDetails.RetailerName ? this.profileDetails.RetailerName : '';
+    profileObj['AppVersion'] = this.appVersion.getVersionNumber() ? this.appVersion.getVersionNumber() : '';
+    profileObj['Region'] = this.profileDetails.RegionName ? this.profileDetails.RegionName : '';
+    profileObj['Pincode'] = this.profileDetails.Pincode ? this.profileDetails.Pincode : '';
+    console.log(profileObj);
     return profileObj;
   }
 
@@ -308,6 +291,29 @@ export class UtilityService {
       }
     }
     return json;
+  }
+
+  getUserId() {
+    this.store
+      .pipe(
+        select(getUserId),
+        untilDestroyed(this)
+      )
+      .subscribe(userId => {
+        this.getProfileDetails(userId);
+      });
+  }
+
+  getProfileDetails(userId) {
+    this.store.dispatch(new GetProfileDetails(userId));
+    this.store
+      .pipe(
+        select(getProfileDetails),
+        untilDestroyed(this)
+      )
+      .subscribe(data => {
+        this.profileDetails = data;
+      });
   }
 
   groupBy(items) {

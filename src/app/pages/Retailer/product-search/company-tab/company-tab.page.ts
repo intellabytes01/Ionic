@@ -10,7 +10,7 @@ import {
 import { Store } from '@ngrx/store';
 import { companySearchData, companyStoresData, companyProductsData } from '../store/product-search.reducers';
 import { untilDestroyed } from '@app/core';
-import { AuthState, getRetailerId, getRegionId } from '@app/core/authentication/auth.states';
+import { AuthState, getRetailerId, getRegionId, getRetailerStoreParties } from '@app/core/authentication/auth.states';
 
 @Component({
   selector: 'app-company-tab',
@@ -29,6 +29,8 @@ export class CompanyTabPage implements OnInit {
   companyId: number;
   index: number;
   regionId: number;
+  distributorMapping = false;
+  stores: any[] = [];
   constructor(
     private router: Router,
     private alertService: AlertService,
@@ -50,14 +52,20 @@ export class CompanyTabPage implements OnInit {
       },
       e => {}
     );
+    this.authStore.select(getRetailerStoreParties, untilDestroyed(this)).subscribe(
+      (state: any) => {
+        this.stores = state;
+      },
+      e => {}
+    );
   }
 
   search() {
+    this.companyProductList = [];
+    this.companyStoreList = [];
     if (this.searchText.length < 3) {
       this.companyList = [];
       this.companyDetails = {} as CompanyDetails;
-      this.companyProductList = [];
-      this.companyStoreList = [];
     } else {
       const payload = {
         regionId: this.regionId,
@@ -104,6 +112,7 @@ export class CompanyTabPage implements OnInit {
   }
 
   storeClick(store, index) {
+    this.distributorMapping = !this.stores.some((element) => element.StoreId === store.StoreId);
     this.toggle(index);
     const payload = {
       storeId: store.StoreId,

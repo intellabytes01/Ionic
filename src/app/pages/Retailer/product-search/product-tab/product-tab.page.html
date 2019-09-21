@@ -69,7 +69,7 @@
       </ion-col>
     </ion-row>
   </ion-card>
-  <ion-card>
+  <ion-card *ngIf="distributorMapping">
     <ion-row>
       <ion-col text-start>
         <ion-label>{{ "PRODUCT_SEARCH.NOTMAPPED_TEXT" | translate }}</ion-label>

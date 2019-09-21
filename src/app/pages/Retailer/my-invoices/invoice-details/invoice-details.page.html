@@ -1,15 +1,15 @@
 <ion-content>
-  <ion-card *ngIf="invoiceDetails.length > 0" class="ion-no-padding">
+  <ion-card *ngIf="invoiceDetails[0] && invoiceDetails[0].data.length > 0" class="ion-no-padding">
     <ion-card-content>
       <ion-row>
         <ion-col text-start>
           <ion-label class="storename"
-            ><b>{{ invoiceDetails[0].StoreName }}</b></ion-label
+            ><b>{{ invoiceDetails[0].data[0].StoreName }}</b></ion-label
           >
           &nbsp;&nbsp;
           <ion-icon
             style="font-size: 1.4rem !important;"
-            (click)="call()"
+            (click)="call(invoiceDetails[0].data[0].StoreMobileNumber)"
             class="blue-color"
             name="call"
           ></ion-icon>
@@ -22,7 +22,7 @@
           </ion-label>
         </ion-col>
         <ion-col text-end size="6">
-          <ion-label>{{ invoiceDetails[0].InvoiceNo }}</ion-label>
+          <ion-label>{{ invoiceDetails[0].data[0].InvoiceNo }}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -33,7 +33,7 @@
         </ion-col>
         <ion-col text-end size="6">
           <ion-label>{{
-            invoiceDetails[0].InvoiceDate | date: "dd MMM yyyy h:mm a"
+            invoiceDetails[0].data[0].InvoiceDate | date: "dd MMM yyyy h:mm a"
           }}</ion-label>
         </ion-col>
       </ion-row>
@@ -60,17 +60,19 @@
               <h3>
                 <ion-row>
                   <ion-col size="3" text-center>
-                    <ion-label>{{ invoiceDetails[0].TotalQuantity }}</ion-label>
+                    <ion-label>{{
+                      invoiceDetails[0].data[0].TotalQuantity
+                    }}</ion-label>
                   </ion-col>
                   <ion-col size="3" text-center>
-                    <ion-label>{{ invoiceDetails[0].Free }}</ion-label>
+                    <ion-label>{{ invoiceDetails[0].data[0].Free }}</ion-label>
                   </ion-col>
                   <ion-col size="3" text-center>
-                    <ion-label>{{ invoiceDetails[0].Rate }}</ion-label>
+                    <ion-label>{{ invoiceDetails[0].data[0].Rate }}</ion-label>
                   </ion-col>
                   <ion-col size="3" text-center>
                     <ion-label>{{
-                      invoiceDetails[0].TotalProductAmount
+                      invoiceDetails[0].data[0].TotalProductAmount
                     }}</ion-label>
                   </ion-col>
                 </ion-row>
@@ -82,10 +84,53 @@
 
       <ion-row>
         <ion-col text-start size="6">
+          <ion-label
+            ><b>{{ "INVOICE.DISCOUNT_AMOUNT" | translate }}</b></ion-label
+          >
+        </ion-col>
+        <ion-col text-end size="6">
+          <ion-label
+            >₹{{ invoiceDetails[0].data[0].TotalDiscountAmount }}</ion-label
+          >
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col text-start size="6">
+          <ion-label
+            ><b>{{ "INVOICE.GST_AMOUNT" | translate }}</b></ion-label
+          >
+        </ion-col>
+        <ion-col text-end size="6">
+          <ion-label
+            >₹{{
+              1 * invoiceDetails[0].data[0].TotalSGSTAmount +
+                1 * invoiceDetails[0].data[0].TotalCGSTAmount +
+                1 * invoiceDetails[0].data[0].TotalIGSTAmount
+            }}</ion-label
+          >
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col text-start size="6">
+          <ion-label
+            ><b>{{ "INVOICE.ROUNDOFF" | translate }}</b></ion-label
+          >
+        </ion-col>
+        <ion-col text-end size="6">
+          <ion-label>₹{{ invoiceDetails[0].data[0].RoundOff }}</ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col text-start size="6">
           <ion-label>Items {{ invoiceDetails.length }} </ion-label>
         </ion-col>
         <ion-col text-end size="6">
-          <ion-label>₹{{ invoiceDetails.InvoiceGrossAmount }}</ion-label>
+          <ion-label
+            >₹{{ invoiceDetails[0].data[0].InvoiceGrossAmount }}</ion-label
+          >
         </ion-col>
       </ion-row>
     </ion-card-content>
@@ -97,9 +142,9 @@
       <app-back-button [link]="['/my-invoices']"></app-back-button>
     </ion-col>
     <ion-col class="create ion-padding" size="6">
-      <ion-button expand="full" fill="solid" (click)="download()" translate
-        >INVOICE.DOWNLOAD_INVOICE</ion-button
-      >
+      <ion-button expand="full" fill="solid" (click)="download()">{{
+        "INVOICE.DOWNLOAD_INVOICE" | translate
+      }}</ion-button>
     </ion-col>
   </ion-row>
 
