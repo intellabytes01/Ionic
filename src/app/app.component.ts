@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 
 import { environment } from '@env/environment';
-import { merge } from 'rxjs';
+import { merge, timer } from 'rxjs';
 import { filter, map, mergeMap, startWith, delay, tap } from 'rxjs/operators';
 import { Logger, I18nService, untilDestroyed } from './core';
 import { TranslateService } from '@ngx-translate/core';
@@ -31,6 +31,7 @@ const log = new Logger('App');
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   title: string;
   norecord: boolean;
+  // showSplash = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -102,7 +103,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      this.splashScreen.hide();  // <-- hide static image
+      // timer(2000).subscribe(() => this.showSplash = false) // <-- hide animation after 3s
       this.utilityService.cleverTapInit();
       document.addEventListener('onCleverTapProfileSync', this.utilityService.onCleverTapProfileSync, false);
       document.addEventListener('onCleverTapProfileDidInitialize', this.utilityService.onCleverTapProfileDidInitialize, false);

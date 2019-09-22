@@ -252,6 +252,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     }
     this.deleteAll();
     this.setForm();
+    this.showHeaderLabel = false;
   }
 
   setForm() {
