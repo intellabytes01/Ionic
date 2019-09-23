@@ -134,9 +134,6 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // });
   // }
 
-  // Quantity, Draft and Confirm popup
-
-  async;
   // Temp list of products is used for all operations
 
   setTempList(value) {
@@ -155,36 +152,34 @@ export class NewOrderPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.authStore
-      .select(getRetailerStoreParties, untilDestroyed(this))
-      .subscribe(
-        (state: any) => {
-          this.storeList = state;
-        },
-        () => {}
-      );
-    this.authStore.select(getUserId, untilDestroyed(this)).subscribe(
+    this.authStore.select(getRetailerStoreParties).subscribe(
+      (state: any) => {
+        this.storeList = state;
+      },
+      () => {}
+    );
+    this.authStore.select(getUserId).subscribe(
       (state: any) => {
         this.userId = state;
         this.newOrderModel.UserId = state;
       },
       () => {}
     );
-    this.authStore.select(getRegionId, untilDestroyed(this)).subscribe(
+    this.authStore.select(getRegionId).subscribe(
       (state: any) => {
         this.regionId = state;
       },
       () => {}
     );
 
-    this.authStore.select(getRetailerId, untilDestroyed(this)).subscribe(
+    this.authStore.select(getRetailerId).subscribe(
       (state: any) => {
         this.retailerId = state;
       },
       () => {}
     );
 
-    this.authStore.select(mappedParties, untilDestroyed(this)).subscribe(
+    this.authStore.select(mappedParties).subscribe(
       (state: any) => {
         this.mappedParties = state;
       },
@@ -225,21 +220,33 @@ export class NewOrderPage implements OnInit, OnDestroy {
     this.setForm();
     this.setActiveTab(this.tabInfo[0]);
 
-    const payload = {
-      retailerId: this.retailerId
-    };
-    this.store.dispatch(new NewOrderStoreConfig(payload));
+    if (!this.retailerId) {
+      this.storage.get('userData').then(data => {
+        data = JSON.parse(data);
+        if (data && data['userData']) {
+          this.retailerId =
+            data['userData']['retailerSummary']['retailerInfo']['RetailerId'];
+          const payload = {
+            retailerId: this.retailerId
+          };
+          this.store.dispatch(new NewOrderStoreConfig(payload));
+        }
+      });
+    } else {
+      const payload = {
+        retailerId: this.retailerId
+      };
+      this.store.dispatch(new NewOrderStoreConfig(payload));
+    }
 
-    this.store
-      .select(newOrderGetStoreConfigData, untilDestroyed(this))
-      .subscribe(
-        (state: any) => {
-          if (state && state.length > 0) {
-            this.storeConfigInfo = state;
-          }
-        },
-        () => {}
-      );
+    this.store.select(newOrderGetStoreConfigData).subscribe(
+      (state: any) => {
+        if (state && state.length > 0) {
+          this.storeConfigInfo = state;
+        }
+      },
+      () => {}
+    );
   }
 
   setActiveTab(tab) {
@@ -253,6 +260,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     this.deleteAll();
     this.setForm();
     this.showHeaderLabel = false;
+    this.recentSearchedItem = '';
   }
 
   setForm() {
@@ -317,7 +325,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
         this.store.dispatch(new ProductSearch(payload));
       }
 
-      this.store.select(productSearchData, untilDestroyed(this)).subscribe(
+      this.store.select(productSearchData).subscribe(
         (state: any) => {
           this.searchList = state;
         },
@@ -686,10 +694,12 @@ export class NewOrderPage implements OnInit, OnDestroy {
       );
       // let poAmount = $('#pApproxPOAmount').text().replace(',', '');
 
-      this.grandTotal = Math.round(
-        this.grandTotal +
-          displaystoreproduct['Quantity'] * displaystoreproduct.PTR
-      );
+      if (displaystoreproduct['Stock'] > 0) {
+        this.grandTotal = Math.round(
+          this.grandTotal +
+            displaystoreproduct['Quantity'] * displaystoreproduct.PTR
+        );
+      }
 
       displaystoreproduct['HSQty'] = qvaluQty;
       displaystoreproduct['HSFree'] = qvaluFree;
@@ -715,7 +725,6 @@ export class NewOrderPage implements OnInit, OnDestroy {
           } else {
             displaystoreproduct['Added'] = true;
             this.calculateTotal();
-            
           }
         });
       }
@@ -758,7 +767,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     let totalValue = 0;
 
     this.newOrderModel.Products.forEach(element => {
-      if (element['Added']) {
+      if (element['Added'] && element['Stock'] > 0) {
         totalValue += element.Quantity * element.PTR;
       }
     });
@@ -908,7 +917,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
         // this.saveToStorage();
 
-        this.store.select(newOrderSubmitData, untilDestroyed(this)).subscribe(
+        this.store.select(newOrderSubmitData).subscribe(
           (state: any) => {
             if (state.success) {
               this.deleteAll();

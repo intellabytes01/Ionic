@@ -53,7 +53,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row *ngIf="newOrderModel.StoreId.length > 0">
+      <ion-row *ngIf="searchList.length !== 0">
         <ion-col size="4" text-center>
           <ion-label class="green">{{
             "NEW_ORDER.IN_STOCK" | translate
@@ -71,7 +71,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row *ngIf="newOrderModel.StoreId.length > 0">
+      <ion-row *ngIf="newOrderModel.StoreId.length > 0 || activeTab == tabInfo[1]">
         <ion-col size="10">
           <ion-searchbar
             animated
@@ -208,9 +208,12 @@
               >{{ "NEW_ORDER.ADD" | translate }}</ion-button
             >
             <ion-label  *ngIf="product.Added">
-              <span *ngIf="product.Quantity">{{
-                (product.PTR * product.Quantity) ? (product.PTR * product.Quantity) : 0 
+              <span *ngIf="product.Quantity && product.Stock > 0">{{
+                (product.PTR * product.Quantity) ? (product.PTR * product.Quantity).toFixed(2) : 0 
               }}</span>
+              <span *ngIf="product.Quantity && product.Stock == 0">{{
+                  0
+                }}</span>
             </ion-label>
           </ion-col>
         </ion-row>

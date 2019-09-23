@@ -30,6 +30,7 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { CleverTap } from '@ionic-native/clevertap/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
+import { ChangePasswordPageModule } from './pages/auth/change-password/change-password.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -50,7 +51,8 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
     }),
     EffectsModule.forRoot([AuthEffects]),
     NgxPermissionsModule.forRoot(),
-    NoComponentPageModule
+    NoComponentPageModule,
+    ChangePasswordPageModule
   ],
   providers: [
     StatusBar,

@@ -168,13 +168,20 @@
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="!isAuthorized">
+    <ion-row>
       <ion-col>
         <ion-item>
           <ion-label position="floating" translate
             >PROFILE.GSTIN_NUMBER</ion-label
           >
-          <ion-select
+
+
+
+
+
+          <ion-select *ngIf="
+          (userProfileDetails$ | async)?.GSTINNumber == null
+          && (userProfileDetails$ | async)?.GSTINNumber == ''"
             (ionChange)="setGstinStatus($event)"
             [disabled]="disable"
             interface="popover"
@@ -186,6 +193,9 @@
               >{{ status.name }}</ion-select-option
             >
           </ion-select>
+
+
+
           <ion-input
             formControlName="gstinNumber"
             type="text"

@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { AuthState, selectAuthState } from '@app/core/authentication/auth.states';
 import { ChangePassword } from './store/change-password.actions';
 import { TranslateService } from '@ngx-translate/core';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'pr-change-password',
@@ -18,9 +19,18 @@ export class ChangePasswordPage implements OnInit {
   validation_messages = this.translateService.instant('CHANGE_PASSWORD.VALIDATION_MESSAGES');
   previousRouteUrl$: any;
   matchPasswordError = false;
+  oldPwd = '';
 
-  constructor(public formBuilder: FormBuilder, private store: Store<AuthState>, private translateService: TranslateService) {
+  constructor(public formBuilder: FormBuilder, private store: Store<AuthState>, private translateService: TranslateService,
+              private storage: Storage) {
     this.previousRouteUrl$ = this.store.select(selectAuthState);
+    this.storage.get('tempPwd').then(data => {
+      if (data) {
+        this.oldPwd = data;
+        // setting temp value to old password
+        this.changePasswordForm.controls['oldPassword'].setValue('pharmarack');
+      }
+    });
     // this.store.select(selectAuthState).subscribe(data => {
     //   this.previousRouteUrl$ = data['previousUrl'];
     // });
@@ -50,9 +60,10 @@ export class ChangePasswordPage implements OnInit {
     // }
     const payload = {
       cred: {
-        oldPassword: this.changePasswordForm.get('oldPassword').value,
+        oldPassword: this.oldPwd ? this.oldPwd : this.changePasswordForm.get('oldPassword').value,
         newPassword: this.changePasswordForm.get('newPassword').value}
     };
     this.store.dispatch(new ChangePassword(payload));
+    this.storage.remove('tempPwd');
   }
 }

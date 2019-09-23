@@ -40,7 +40,16 @@ export class AuthEffects {
     ofType(AuthActionTypes.LOGIN_SUCCESS),
     tap((user) => {
       this.storage.set('userData', JSON.stringify(user.payload));
-      this.router.navigateByUrl('/dashboard');
+      this.storage.get('fromForgetPassword').then(data => {
+        if (data) {
+          this.storage.set('fromForgetPassword', false);
+          this.router.navigateByUrl('/change-password');
+        } else {
+          this.router.navigateByUrl('/dashboard');
+        }
+      });
+
+
     })
   );
 

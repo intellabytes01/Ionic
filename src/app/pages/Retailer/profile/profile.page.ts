@@ -57,11 +57,11 @@ export class ProfilePage implements OnInit, OnDestroy {
   retailerId: any;
   isAuthorized = false;
   gstinStatus = [
-    { name: 'Select GSTIN Option', selected: true },
-    { name: 'I have GSTIN Number', selected: false },
-    { name: 'I have applied', selected: false },
-    { name: 'I have not applied', selected: false },
-    { name: 'I am not eligible', selected: false }
+    { id: 1, name: 'Select GSTIN Option', selected: true },
+    { id: 2, name: 'I have GSTIN Number', selected: false },
+    { id: 3, name: 'I have applied', selected: false },
+    { id: 4, name: 'I have not applied', selected: false },
+    { id: 5, name: 'I am not eligible', selected: false }
   ];
   licenseImage = '';
 
@@ -125,6 +125,9 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.createForm();
     this.photo = 'assets/icon/gstin.png';
     this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
+    this.store.pipe(select(getProfileDetails)).subscribe(res => {
+      console.log(res);
+    });
     this.storage.get('userData').then(data => {
       data = JSON.parse(data);
       if (data && data['userData']) {
@@ -281,17 +284,17 @@ export class ProfilePage implements OnInit, OnDestroy {
       this.profileInterface = {
         // cstNumber: this.profileForm.value.cstNumber.toString(),
         pincode: this.profileForm.value.pincode.toString()
-          ? this.profileForm.value.pincode
-          : this.profileForm.controls['pincode'].value,
-        regionId: this.profileForm.controls.region.value.regionId
-          ? this.profileForm.value.regionId
-          : this.profileForm.controls['regionId'].value,
+          ? this.profileForm.value.pincode.toString()
+          : this.profileForm.controls['pincode'].value.toString(),
+        // regionId: this.profileForm.controls.region.value.regionId
+        //   ? this.profileForm.controls.region.value.regionId
+        //   : this.profileForm.value.regionId,
         firstName: this.profileForm.value.firstName
           ? this.profileForm.value.firstName
           : this.profileForm.controls['firstName'].value,
         retailerName: this.profileForm.controls.shopName.value
-          ? this.profileForm.value.shopName
-          : this.profileForm.controls['shopName'].value,
+          ? this.profileForm.controls['shopName'].value
+          : this.profileForm.value.shopName.value,
         retailerId: this.profileForm.value.retailerId
           ? this.profileForm.value.retailerId
           : this.profileForm.controls['retailerId'].value,
@@ -314,11 +317,13 @@ export class ProfilePage implements OnInit, OnDestroy {
         gstinNumber: this.profileForm.value.gstinNumber
           ? this.profileForm.value.gstinNumber
           : this.profileForm.controls['gstinNumber'].value,
-
         lastName: 'NoName',
         gstinOption: 'GSTIN'
       };
 
+      if(!this.profileInterface.gstinNumber || this.profileInterface.gstinNumber == null) {
+        this.profileInterface.gstinNumber = '';
+      }
       const payload = {
         userProfileDetails: this.profileInterface
         // businessTypeId: this.profileForm.value.businessType.BusinessTypeId

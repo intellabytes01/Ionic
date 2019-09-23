@@ -19,8 +19,7 @@ import { ChangePasswordEffects } from './store/change-password.effects';
 const routes: Routes = [
   {
     path: '',
-    component: ChangePasswordPage,
-    canActivate: [AuthenticationGuard],
+    component: ChangePasswordPage
   }
 ];
 

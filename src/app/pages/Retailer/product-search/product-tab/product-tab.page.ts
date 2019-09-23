@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Events } from '@ionic/angular';
 import { AlertService } from '@app/shared/services/alert.service';
@@ -23,7 +23,7 @@ import { TopLoaderService } from '@app/shared/top-loader/top-loader.service';
   templateUrl: './product-tab.page.html',
   styleUrls: ['./product-tab.page.scss']
 })
-export class ProductTabPage implements OnInit {
+export class ProductTabPage implements OnInit, OnDestroy {
   productList: any[] = [];
   searchText = '';
   productDetails: ProductDetails;
@@ -111,8 +111,8 @@ export class ProductTabPage implements OnInit {
             .subscribe(stores => {
               if (stores) {
                 stores.map(element1 => {
-                  const storePresent = state.some(
-                    element2 => element2.StoreName === element1.StoreName
+                  const storePresent = state.data.some(
+                    element2 => element2.StoreName.toLowerCase() === element1.StoreName.toLowerCase()
                   );
                   if (storePresent) {
                     this.distributorMapping = true;
@@ -126,5 +126,9 @@ export class ProductTabPage implements OnInit {
       e => {}
     ),
       untilDestroyed(this);
+  }
+
+  ngOnDestroy() {
+
   }
 }

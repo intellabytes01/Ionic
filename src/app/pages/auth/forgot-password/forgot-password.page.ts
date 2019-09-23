@@ -7,9 +7,10 @@ import { SendOtp, VerifyOtp } from './store/forgot-password.actions';
 import { Router } from '@angular/router';
 import { sendOtpData, verifyOtpData } from './store/forgot-password.reducers';
 import { AlertService } from '@app/shared/services/alert.service';
-import { untilDestroyed } from '@app/core';
+import { untilDestroyed, AuthenticationService } from '@app/core';
 import { TranslateService } from '@ngx-translate/core';
-import { GetPreviousUrl } from '@app/core/authentication/actions/auth.actions';
+import { GetPreviousUrl, LogIn } from '@app/core/authentication/actions/auth.actions';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-forgot-password',
@@ -28,7 +29,9 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
     private store: Store<OtpState>,
     private router: Router,
     private alert: AlertService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private authenticationService: AuthenticationService,
+    private storage: Storage
   ) {}
 
   ionViewWillEnter() {
@@ -95,7 +98,27 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
     this.store.pipe(select(verifyOtpData),
     untilDestroyed(this)).subscribe(data => {
       if (data && data.password) {
+        // this.alert.presentToast('success', 'Password has been sent on your register mobile number');
+        // this.authenticationService.logout();
+        this.storage.set('tempPwd', data.password);
+        this.storage.set('fromForgetPassword', true);
+
+        let cred;
+        if (data.password && data.password !== '') {
+          cred = {
+            password: data.password,
+            username: this.forgotPasswordForm.value.mobile
+          };
+        }
+
+        // tslint:disable-next-line: no-shadowed-variable
+        const payload = {
+          cred
+        };
+        this.store.dispatch(new LogIn(payload));
+
         this.router.navigate(['/change-password']);
+        // this.router.navigate(['/login']);
       }
     });
   }

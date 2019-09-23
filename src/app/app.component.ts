@@ -48,8 +48,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private statusBar: StatusBar,
     private utilityService: UtilityService
   ) {
-    this.splashScreen.show();
-    this.initializeApp();
   }
 
   ngOnInit() {
@@ -59,7 +57,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (this.platform.is('cordova')) {
+      this.splashScreen.show();
+      this.initializeApp();
       this.pushSetup();
+      this.InitializeCleverTap();
     }
 
     // log.debug('init');
@@ -98,6 +99,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.events.subscribe(val => {
       this.topLoaderService.norecord.next(false);
     }, untilDestroyed(this));
+
+    this.store.dispatch(new SaveToken());
+    this.tokenExpiryCheck();
   }
 
   initializeApp() {
@@ -105,14 +109,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       this.statusBar.styleDefault();
       this.splashScreen.hide();  // <-- hide static image
       // timer(2000).subscribe(() => this.showSplash = false) // <-- hide animation after 3s
-      this.utilityService.cleverTapInit();
-      document.addEventListener('onCleverTapProfileSync', this.utilityService.onCleverTapProfileSync, false);
-      document.addEventListener('onCleverTapProfileDidInitialize', this.utilityService.onCleverTapProfileDidInitialize, false);
-      document.addEventListener('onCleverTapInAppNotificationDismissed', this.utilityService.onCleverTapInAppNotificationDismissed, false);
     });
-
-    this.store.dispatch(new SaveToken());
-    this.tokenExpiryCheck();
   }
 
   ngOnDestroy() {
@@ -205,5 +202,12 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       disable = false;
     }
     return disable;
+  }
+
+  InitializeCleverTap() {
+    this.utilityService.cleverTapInit();
+    document.addEventListener('onCleverTapProfileSync', this.utilityService.onCleverTapProfileSync, false);
+    document.addEventListener('onCleverTapProfileDidInitialize', this.utilityService.onCleverTapProfileDidInitialize, false);
+    document.addEventListener('onCleverTapInAppNotificationDismissed', this.utilityService.onCleverTapInAppNotificationDismissed, false);
   }
 }

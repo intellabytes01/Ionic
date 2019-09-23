@@ -14,6 +14,7 @@ import * as fromModel from './dashboard-data.json';
 import { AlertService } from '@app/shared/services/alert.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { GetPreviousUrl } from '@app/core/authentication/actions/auth.actions.js';
 
 @Component({
   selector: 'app-dashboard',
@@ -65,6 +66,11 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const payload = {
+      previousUrl: this.router.url
+    };
+    this.store.dispatch(new GetPreviousUrl(payload));
+    
     this.pages = fromModel.data;
     this.permissions = fromModel.permissions;
     this.setPermissions();
