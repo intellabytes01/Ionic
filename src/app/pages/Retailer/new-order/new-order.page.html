@@ -1,4 +1,4 @@
-<ion-content padding>
+<ion-content class="padding-4">
   <ion-tabs>
     <ion-tab-bar slot="top">
       <ion-button
@@ -19,34 +19,28 @@
       </ion-button>
     </ion-tab-bar>
   </ion-tabs>
-  <br /><br /><br />
+  <br /><br />
 
   <form [formGroup]="neworderForm">
-    <ion-row *ngIf="activeTab == 'ORDER VIA DISTRIBUTOR'">
-      <ion-col>
-        <pr-select
-          [placeHolder]="'NEW_ORDER.STORE_PLACEHOLDER' | translate"
-          [ctrName]="'store'"
-          [items]="storeList"
-          [id]="'PartyCode'"
-          [name]="'StoreName'"
-          [canSearch]="true"
-          [preSelectedOn]="'StoreId'"
-          [preSelectedValue]="newOrderModel.StoreId"
-          (valueChange)="changeStore($event)"
-        ></pr-select>
-      </ion-col>
-    </ion-row>
-    <br />
-
-    <ng-container
-      *ngIf="
-        (newOrderModel.StoreName &&
-          activeTab == 'ORDER VIA DISTRIBUTOR') ||
-        activeTab == 'ORDER VIA PRODUCT'
-      "
-    >
-      <ion-row>
+    <ion-card>
+      <ion-row *ngIf="activeTab == 'ORDER VIA DISTRIBUTOR'">
+        <ion-col>
+          <pr-select
+            [placeHolder]="'NEW_ORDER.STORE_PLACEHOLDER' | translate"
+            [ctrName]="'store'"
+            [items]="storeList"
+            [id]="'PartyCode'"
+            [name]="'StoreName'"
+            [canSearch]="true"
+            [preSelectedOn]="'StoreId'"
+            [preSelectedValue]="newOrderModel.StoreId"
+            (valueChange)="changeStore($event)"
+          ></pr-select>
+        </ion-col>
+      </ion-row>
+      <br />
+      <!-- <div *ngIf="newOrderModel.StoreId.length > 0"> -->
+      <ion-row *ngIf="newOrderModel.StoreId.length > 0">
         <ion-col size="6" text-start>
           <ion-label
             ><b>{{ "NEW_ORDER.TOTAL_BAL" | translate }}</b></ion-label
@@ -59,7 +53,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row *ngIf="newOrderModel.StoreId.length > 0">
         <ion-col size="4" text-center>
           <ion-label class="green">{{
             "NEW_ORDER.IN_STOCK" | translate
@@ -77,14 +71,18 @@
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row *ngIf="newOrderModel.StoreId.length > 0">
         <ion-col size="10">
           <ion-searchbar
+            animated
+            clearInput
             formControlName="searchText"
             [placeholder]="'NEW_ORDER.SEARCH_PRODUCT_PLACEHOLDER' | translate"
             [showCancelButton]="false"
-            [(ngModel)]="recentSearchedItem"
             (ionChange)="search($event)"
+            (ionClear)="clearSearchInput()"
+            [value]="recentSearchedItem"
+            autofocus="true"
           ></ion-searchbar>
         </ion-col>
         <ion-col size="2">
@@ -94,68 +92,76 @@
             name="reorder"
           ></ion-icon>
         </ion-col>
-      </ion-row>      
+      </ion-row>
 
-      <ion-list
-        *ngIf="searchList.length !== 0 && neworderForm.value.searchText"
-      >
+    <!-- </div> -->
 
-      <ion-item *ngFor="let product of searchList"
-      (click)="selectProduct(product)">
-          <ion-label [ngClass]="{
-            red: product.Stock == 0,
-            green: product.Stock >= 50,
-            'dark-blue': product.Stock < 50
-          }">
+      </ion-card>
+
+      <ion-list *ngIf="searchList.length !== 0">
+        <ion-item
+          *ngFor="let product of searchList"
+          (click)="selectProduct(product)"
+        >
+          <ion-label
+            [ngClass]="{
+              red: product.Stock == 0,
+              green: product.Stock >= 50,
+              'dark-blue': product.Stock < 50
+            }"
+          >
             <h2>{{ product.ProductName }}</h2>
             <h3>
-                    <ion-label>
-                        {{ product.Packing }}
-                      </ion-label>
-                      <ion-label>
-                          Stk:{{ product.Stock }}
-                      </ion-label>
-                    <ion-label>
-                        {{ product.Company }}
-                      </ion-label>
-                </h3>
+              <ion-label>
+                {{ product.Packing }}
+              </ion-label>
+              <ion-label> Stk:{{ product.Stock }} </ion-label>
+              <ion-label>
+                {{ product.Company }}
+              </ion-label>
+            </h3>
           </ion-label>
         </ion-item>
       </ion-list>
 
       <!-- <div *ngIf="newOrderModel.Products.length != 0"> -->
-      <div *ngFor="let product of newOrderModel.Products; let i = index">
+        <ion-card>
+      <div *ngIf="showHeaderLabel">
         <ion-row>
-          <ion-col size="3" text-center padding>
+          <ion-col size="3" text-center >
             <ion-label>{{ "NEW_ORDER.QTY" | translate }}</ion-label>
           </ion-col>
-          <ion-col size="3" text-center padding>
+          <ion-col size="3" text-center >
             <ion-label>{{ "NEW_ORDER.FREE" | translate }}</ion-label>
           </ion-col>
-          <ion-col size="3" text-center padding *ngIf="!product['Added']">
-              <ion-label>{{ "NEW_ORDER.HS" | translate }}</ion-label>
-            </ion-col>
-          <ion-col size="3" text-center padding *ngIf="product['Added']">
+          <ion-col size="3" text-center >
             <ion-label>{{ "NEW_ORDER.PTR" | translate }}</ion-label>
           </ion-col>
-          <ion-col size="3" text-center padding *ngIf="product['Added']">
-              <ion-label>{{ "NEW_ORDER.TOTAL" | translate }}</ion-label>
-            </ion-col>
+          <ion-col size="3" text-center >
+            <ion-label>{{ "NEW_ORDER.TOTAL" | translate }}</ion-label>
+          </ion-col>
         </ion-row>
       </div>
 
       <div *ngFor="let product of newOrderModel.Products; let i = index">
+        <ion-row *ngIf="!product['Added']">
+          <ion-col size="3" text-center>
+            <ion-label>{{ "NEW_ORDER.QTY" | translate }}</ion-label>
+          </ion-col>
+          <ion-col size="3" text-center>
+            <ion-label>{{ "NEW_ORDER.FREE" | translate }}</ion-label>
+          </ion-col>
+          <ion-col size="3" text-center>
+            <ion-label>{{ "NEW_ORDER.HS" | translate }}</ion-label>
+          </ion-col>
+        </ion-row>
         <ion-row>
-          <ion-col size="10" text-start>
+          <ion-col size="10" text-start *ngIf="product['Added']" class="product-name">
             <ion-label class="mustard-color">{{
               product.ProductName
             }}</ion-label>
           </ion-col>
-          <ion-col
-            *ngIf="orderData[key] && orderData[key].productList[i]"
-            size="2"
-            text-end
-          >
+          <ion-col *ngIf="product['Added']" size="2" text-center>
             <ion-icon
               (click)="deleteProduct(i)"
               class="delete-icon red"
@@ -164,53 +170,55 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="4" text-start>
+          <ion-col size="3" text-center>
             <ion-item>
-            <ion-input
-              name="qty"
-              type="number"
-              [(ngModel)]="product.Quantity"
-              [ngModelOptions]="{standalone: true}"
-              (focusout)="setQuantity(i, $event, product)"
-              placeholder="Qty"
-              padding
-            ></ion-input>
-            <ion-badge *ngIf="product.Free" padding>
-                {{ product.Free }}
-            </ion-badge>
-            <ion-label *ngIf="product.Added && product.HS">
-                    HS
-            </ion-label>
-          </ion-item>
+              <ion-input class="ion-no-padding"
+                name="qty"
+                type="number"
+                [(ngModel)]="product.Quantity"
+                [ngModelOptions]="{ standalone: true }"
+                (ionChange)="setQuantity(i, $event, product)"
+                placeholder="Qty"
+                autofocus="true"
+              ></ion-input>
+            </ion-item>
           </ion-col>
-          <ion-col            
-            size="8"
-            text-end
-          >
-          <ion-label padding *ngIf="!product.Added">{{
-              product.HS ? product.HS : ''
-            }}</ion-label> 
-          <ion-label padding *ngIf="product.Added">{{
+          <ion-col size="3" text-center>
+            <div class="tagbubble" *ngIf="product.Free" >
+              {{ product.Free }}
+            </div>
+            <ion-label *ngIf="product.Added && product.HS">
+              HS
+            </ion-label>
+          </ion-col>
+          <ion-col size="3" text-center>
+            <ion-label  *ngIf="!product.Added">{{
+              product.HS ? product.HS : ""
+            }}</ion-label>
+            <ion-label  *ngIf="product.Added">{{
               product.PTR ? product.PTR : 0
             }}</ion-label>
-            <ion-label padding *ngIf="product.Added">
-                <span *ngIf = "product.PTR && product.Quantity">{{ (product.PTR * product.Quantity).toFixed(2) }}</span>
-              </ion-label>
-            <ion-button *ngIf="!product['Added']"
-              (click)="add(product)"
+          </ion-col>
+          <ion-col size="3" text-center>
+            <ion-button
+              *ngIf="!product['Added']"
+              (click)="addProduct(product)"
               class="add-button"
               color="mustard"
               >{{ "NEW_ORDER.ADD" | translate }}</ion-button
             >
+            <ion-label  *ngIf="product.Added">
+              <span *ngIf="product.Quantity">{{
+                (product.PTR * product.Quantity) ? (product.PTR * product.Quantity) : 0 
+              }}</span>
+            </ion-label>
           </ion-col>
         </ion-row>
 
-        <div *ngIf="!product['Added']">
-            <ion-row>
-              <ion-col>
-                <b>Scheme: </b>{{product.Scheme}}
-              </ion-col>
-            </ion-row>
+        <div *ngIf="!product['Added'] && product.Scheme != ''">
+          <ion-row>
+            <ion-col> <b>Scheme: </b>{{ product.Scheme }} </ion-col>
+          </ion-row>
         </div>
         <div *ngIf="!product['Added']">
           <ion-row>
@@ -243,7 +251,8 @@
             </ion-col>
             <ion-col size="2" text-center>
               <ion-label>{{
-                product.CasePacking ? product.CasePacking : product.Slot }}</ion-label>
+                product.CasePacking ? product.CasePacking : product["Slot"]
+              }}</ion-label>
             </ion-col>
             <ion-col size="2" text-center>
               <ion-label>{{
@@ -262,23 +271,17 @@
         </div>
       </div>
 
-      <br />
+    </ion-card>
 
-      <div
-        *ngIf="
-          newOrderModel.Products.length > 0
-        "
-      >
+      <div *ngIf="newOrderModel.Products.length > 0">
         <ion-row>
           <ion-col text-center>
-            <ion-label class="total"
-              >
+            <ion-label class="total">
               <!-- {{ "NEW_ORDER.GRAND_TOTAL" | translate }} ₹ {{ grandTotal.toFixed(2) }} -->
               {{ "NEW_ORDER.GRAND_TOTAL" | translate }} ₹{{
                 newOrderModel.Total
               }}
-              </ion-label
-            >
+            </ion-label>
           </ion-col>
         </ion-row>
 
@@ -335,7 +338,11 @@
           <ion-col text-center class="border-right-grey">
             <ion-label
               (click)="
-                alertPopup('Draft Order', translateService.instant('NEW_ORDER.DRAFT_TEXT'), 'draft')
+                alertPopup(
+                  'Draft Order',
+                  translateService.instant('NEW_ORDER.DRAFT_TEXT'),
+                  'draft'
+                )
               "
               class="mustard-color"
               >{{ "NEW_ORDER.DRAFT_PO" | translate }}</ion-label
@@ -348,7 +355,7 @@
           </ion-col>
         </ion-row>
       </div>
-    </ng-container>
+    
   </form>
 
   <!-- <pr-ads *ngIf="neworderForm.value.searchText || newOrderModel.Products.length !== 0"></pr-ads> -->

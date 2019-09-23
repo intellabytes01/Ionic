@@ -65,7 +65,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
         'No Internet Connection'
       );
     } else {
-      console.log('Success Internet Connection');
+      // console.log('Success Internet Connection');
     }
     if (request && request.url && isConnected) {
       return this.handle(next, request);
@@ -122,7 +122,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
         untilDestroyed(this);
     }
 
-    console.log(request);
+    // console.log(request);
 
     return next.handle(request).pipe(
       tap(
@@ -184,7 +184,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor, OnDestroy {
   }
 
   noRecordsFound() {
-    this.topLoaderService.norecord.next(true);
+    // this.topLoaderService.norecord.next(true);
   }
 
   noRecordsFoundHide() {

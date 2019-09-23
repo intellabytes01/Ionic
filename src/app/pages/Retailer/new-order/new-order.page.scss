@@ -4,7 +4,7 @@
 }
 
 ion-input {
-  border-bottom: 1px solid grey;
+  // border-bottom: 1px solid grey;
   font-weight: bold;
 }
 
@@ -24,4 +24,70 @@ ion-input {
 .total{
     font-size: 1.5rem;
     color: darkblue;
+}
+
+.tagbubble {
+  min-width: 38px;
+  padding-right: 3px;
+  padding-left: 10px;
+  display: inline-block;
+  background: #4592d6;
+  position: relative;
+  text-align: center;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  color: #fff;
+  height: 24px;
+}
+
+.tagbubble:before {
+	content: "";
+	position: absolute;
+	left: -2px;
+	top: 1;
+	width: 0;
+	height: 0;
+	border-top: 11px solid transparent;
+	border-left: 10px solid #fff;
+	border-bottom: 15px solid transparent;
+}
+
+.product-name {
+  padding-left: 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.padding-4 {
+  padding: 4px;
+}
+
+.sc-ion-card-ios-h {
+  margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+.sc-ion-card-md-h {
+  margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+
+.list-ios {
+  border: 1px solid gray;
+  margin-left: 4px;
+    margin-right: 4px;
+}
+
+.list-md {
+  border: 1px solid gray;
+  margin-left: 4px;
+    margin-right: 4px;
+}
+
+ion-button {
+  height: 38px;
 }
