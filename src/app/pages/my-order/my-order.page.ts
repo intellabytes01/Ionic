@@ -8,7 +8,7 @@ import { OrderFilterModalPage } from './order-filter-modal/order-filter-modal.pa
 import { untilDestroyed } from '@app/core';
 import { Router } from '@angular/router';
 import * as fromModel from './my-order-data.json';
-import { format, subDays } from 'date-fns';
+import { format, subDays, addDays } from 'date-fns';
 import { TopLoaderService } from '@app/shared/top-loader/top-loader.service';
 
 @Component({
@@ -38,7 +38,8 @@ export class MyOrderPage implements OnInit, OnDestroy {
     const fromD = subDays(new Date(), 7);
     this.orderFilter.fromDate = format(fromD, 'DD/MM/YY');
 
-    this.orderFilter.toDate = format(new Date(), 'DD/MM/YY');
+    const toD = addDays(new Date(), 1);
+    this.orderFilter.toDate = format(toD, 'DD/MM/YY');
     // this.orderFilter.fromDate = subDays(this.orderFilter.fromDate, 7 );
     // this.orderFilter.fromDate = new Date('dd/mm/yy').getDate() - 7;
     // this.orderFilter.toDate = new Date('dd/mm/yy').getDate();
@@ -48,14 +49,25 @@ export class MyOrderPage implements OnInit, OnDestroy {
     this.myOrderList$ = this.store
       .select(myOrderData, untilDestroyed(this))
       .subscribe(data => {
+        let res;
         if (
           data &&
           data['returnData'] &&
           data['returnData'] !== null &&
           data['returnData'].length > 0
         ) {
-          this.count = data['returnData'].length;
-          this.myOrderList = data['returnData'];
+          res = data['returnData'];
+        } else if (
+          data &&
+          data['afterMaxDateTimeData'] &&
+          data['afterMaxDateTimeData'] !== null &&
+          data['afterMaxDateTimeData'].length > 0
+        ) {
+          res = data['afterMaxDateTimeData'];
+        }
+        if (res && res !== null && res.length > 0) {
+          this.count = res.length;
+          this.myOrderList = res;
           this.total.amount = data.totalOrderAmount;
           this.total.count = data.paginationData.totalRecords;
           // App logic to determine if all data is loaded
@@ -85,6 +97,7 @@ export class MyOrderPage implements OnInit, OnDestroy {
   ngOnInit() {}
 
   getMyOrders() {
+    const toD = addDays(new Date(), 1);
     const payload = {
       orderDetails: {
         fromDate: this.orderFilter.fromDate,
@@ -96,7 +109,7 @@ export class MyOrderPage implements OnInit, OnDestroy {
         pagination: {
           currentPage: this.currentPage,
           limit: this.limit,
-          maxDateTime: format(subDays(new Date(), 7), 'YYYY-MM-DD HH:mm:ss')
+          maxDateTime: format(toD, 'YYYY-MM-DD HH:mm:ss')
         }
       }
     };

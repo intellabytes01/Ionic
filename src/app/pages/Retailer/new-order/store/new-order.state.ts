@@ -117,20 +117,20 @@ export interface OrderDetails {
 
 
 export interface InewOrderModel {
-  'StoreId':  number,
-  'StoreName': number,
-  'Partycode': string,
-  'DeliveryOption': string,
-  'PriorityOption': string,
-  'Remarks': string,
-  'OrderTimestamp': string,
-  'UserId': number,
-  'Total': number,
-  'Key': string,
+  'StoreId': number;
+  'StoreName': number;
+  'Partycode': string;
+  'DeliveryOption': string;
+  'PriorityOption': string;
+  'Remarks': string;
+  'OrderTimestamp': string;
+  'UserId': number;
+  'Total': number;
+  'Key': string;
   'DeliveryPerson': {
     'Name': string,
     'Code': string
-  },
+  };
   'Products': [
     {
       'StoreId': number,
@@ -152,7 +152,7 @@ export interface InewOrderModel {
       'Quantity': string,
       'Free': string
     }
-  ]
+  ];
 }
 
 const newOrderState = createFeatureSelector<NewOrderState>('newOrder');

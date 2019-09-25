@@ -405,29 +405,37 @@ export class NewOrderPage implements OnInit, OnDestroy {
       this.addProduct(product);
     }
 
-    // if (product.Scheme && product.Scheme !== '') {
-    //   let scheme = product.Scheme;
-    //   scheme = scheme.toString().split('+');
-    //   if (product.Quantity != null && product.Quantity !== '') {
-    //     this.free = product.Quantity / scheme[0];
-    //   }
+    if (val.target) {
+      if (val.target.value >= 0) {
+        this.newOrderModel.Products[index].Quantity = val.target.value;
+      } else if (val.target.value === '' || val.target.value == null) {
+        val.target.value = 0;
+        this.newOrderModel.Products[index].Quantity = val.target.value;
+      } else {
+        this.alertPopup(
+          this.translateService.instant('NEW_ORDER.ATTENTION'),
+          this.translateService.instant('NEW_ORDER.QTY_GREATER_TEXT'),
+          'Quantity'
+        );
 
-    //   this.newOrderModel.Products[index].Free = this.free.toString();
-    // }
-
-    if (val.target.value >= 0) {
-      this.newOrderModel.Products[index].Quantity = val.target.value;
-    } else if (val.target.value == '' || val.target.value == null) {
-      val.target.value = 0;
-      this.newOrderModel.Products[index].Quantity = val.target.value;
+        this.newOrderModel.Products[index].Quantity = 0;
+      }
     } else {
-      this.alertPopup(
-        this.translateService.instant('NEW_ORDER.ATTENTION'),
-        this.translateService.instant('NEW_ORDER.QTY_GREATER_TEXT'),
-        'Quantity'
-      );
+      if (val >= 0) {
+        this.newOrderModel.Products[index].Quantity = val;
+      } else if (val === '' || val == null) {
+        val = 0;
+        this.newOrderModel.Products[index].Quantity = val;
+      } else {
+        this.alertPopup(
+          this.translateService.instant('NEW_ORDER.ATTENTION'),
+          this.translateService.instant('NEW_ORDER.QTY_GREATER_TEXT'),
+          'Quantity'
+        );
 
-      this.newOrderModel.Products[index].Quantity = 0;
+        this.newOrderModel.Products[index].Quantity = 0;
+      }
+      this.addProduct(product);
     }
   }
 
@@ -717,10 +725,10 @@ export class NewOrderPage implements OnInit, OnDestroy {
         this.newOrderModel.Products.forEach(element => {
           if (element['Added']) {
             if (element['ProductCode'] === displaystoreproduct['ProductCode']) {
-              this.alertService.presentToast(
-                'warning',
-                'Product already added.'
-              );
+              // this.alertService.presentToast(
+              //   'warning',
+              //   'Product already added.'
+              // );
             }
           } else {
             displaystoreproduct['Added'] = true;
@@ -823,9 +831,44 @@ export class NewOrderPage implements OnInit, OnDestroy {
     });
     modal.onDidDismiss().then(data => {
       if (data.data && data.data.selectedProducts.length > 0) {
-        this.tempProductList = data.data.selectedProducts;
-        this.orderData[this.key].productList = data.data.selectedProducts;
-        this.saveToStorage();
+        // this.tempProductList = data.data.selectedProducts;
+        // this.orderData[this.key].productList = data.data.selectedProducts;
+        // this.saveToStorage();
+
+        let tempArray = [];
+
+        // for (let i = 0; i < data.data.selectedProducts.length; i++) {
+        //   for (let j = 0; j < this.newOrderModel.Products.length; j++) {
+        //     if (this.newOrderModel.Products[j]['ProductCode'] === data.data.selectedProducts[i]['ProductCode']) {
+        //       if (data.data.selectedProducts[i]['Quantity']) {
+        //         this.newOrderModel.Products[j]['Quantity'] = data.data.selectedProducts[i]['Quantity'];
+        //         break;
+        //       }
+        //     } else if (data.data.selectedProducts[i]['Quantity'] > 0) {
+        //       data.data.selectedProducts[i]['Added'] = true;
+        //       tempArray.push(data.data.selectedProducts[i]);
+        //       break;
+        //     }
+        //   };
+        // }
+
+
+        data.data.selectedProducts.forEach(similarProd => {
+        this.newOrderModel.Products.forEach(prod => {
+            if (prod['ProductCode'] === similarProd['ProductCode']) {
+              if (similarProd['Quantity']) {
+                prod['Quantity'] = similarProd['Quantity'];
+              }
+            }
+          });
+        });
+
+        tempArray = data.data.selectedProducts.filter(o => !this.newOrderModel.Products.find(o2 => o['ProductCode'] === o2['ProductCode']));
+
+        this.newOrderModel.Products = this.newOrderModel.Products.concat(tempArray);
+        this.newOrderModel.Products.forEach((prod, index) => {
+          this.setQuantity(index, prod.Quantity, prod);
+        });
       }
     });
     return await modal.present();

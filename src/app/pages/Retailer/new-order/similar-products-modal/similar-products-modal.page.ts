@@ -15,7 +15,7 @@ export class SimilarProductsModalPage implements OnInit {
 
   add() {
     this.similarProducts.forEach((element) => {
-      if (element.quantity) {
+      if (element.Quantity) {
         this.selectedProducts.push(element);
       }
     });
@@ -30,7 +30,7 @@ export class SimilarProductsModalPage implements OnInit {
   }
 
   setQuantity(product, val) {
-    product['quantity'] = val.target.value;
+    product['Quantity'] = val.target.value;
   }
 
 }

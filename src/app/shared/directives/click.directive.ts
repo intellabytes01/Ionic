@@ -24,13 +24,9 @@ export class ClickDirective implements OnInit {
     // Button
     if (event.srcElement.innerText) {
       this.logClick(event.srcElement.innerText, this.router.url);
-    }
-    // Input
-    else if (event.srcElement.form && event.srcElement.form.innerText) {
+    } else if (event.srcElement.form && event.srcElement.form.innerText) {
       this.logClick(event.srcElement.form.innerText, this.router.url);
-    }
-    // Selectable
-    else if (
+    } else if (
       event.srcElement.parentElement &&
       event.srcElement.parentElement.textContent
     ) {

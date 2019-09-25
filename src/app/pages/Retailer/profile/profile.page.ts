@@ -321,7 +321,7 @@ export class ProfilePage implements OnInit, OnDestroy {
         gstinOption: 'GSTIN'
       };
 
-      if(!this.profileInterface.gstinNumber || this.profileInterface.gstinNumber == null) {
+      if (!this.profileInterface.gstinNumber || this.profileInterface.gstinNumber == null) {
         this.profileInterface.gstinNumber = '';
       }
       const payload = {
