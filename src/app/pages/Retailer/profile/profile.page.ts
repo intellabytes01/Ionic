@@ -245,7 +245,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     // this.profileForm.get('firstName').enable();
     if (!val) {
       Object.keys(this.profileForm.controls).forEach(key => {
-        if (key !== 'loginId' && key !== 'mobileNumber') {
+        if (key !== 'loginId' && key !== 'mobileNumber' && key !== 'gstinNumber') {
           // && key !== 'businessType'
           this.profileForm.get(key).enable();
         } else {
@@ -306,8 +306,8 @@ export class ProfilePage implements OnInit, OnDestroy {
           ? this.profileForm.value.mobileNumber
           : this.profileForm.controls['mobileNumber'].value,
         telephone: this.profileForm.value.telephone.toString()
-          ? this.profileForm.value.telephone
-          : this.profileForm.controls['telephone'].value,
+          ? this.profileForm.value.telephone.toString()
+          : this.profileForm.controls['telephone'].value.toString(),
         address1: this.profileForm.value.address1
           ? this.profileForm.value.address1
           : this.profileForm.controls['address1'].value,

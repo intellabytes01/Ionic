@@ -37,11 +37,10 @@ export class DashboardPage implements OnInit, OnDestroy {
     private socialSharing: SocialSharing,
     private alertCtrl: AlertController
   ) {
-
-    this.getRetailerName();
     this.router.events.subscribe(e => {
       if (e instanceof NavigationEnd) {
         if (e.url === '/dashboard') {
+          this.getRetailerName();
           this.getRetailerStatus();
         }
       }

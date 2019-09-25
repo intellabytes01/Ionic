@@ -10,7 +10,7 @@ ionic-selectable {
 
 .native-input[disabled].sc-ion-input-md {
   opacity: .4;
-  background-color: lightgray;
+  // background-color: lightgray;
 }
 
 .camera {
@@ -31,7 +31,8 @@ ionic-selectable {
 }
 
 .label-floating.sc-ion-label-md-h, .label-stacked.sc-ion-label-md-h {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  opacity: 1;
 }
 
 .ion-padding {
@@ -43,9 +44,36 @@ ionic-selectable {
 
 .disableClick {
   pointer-events:none; //This makes it not clickable
-    opacity:0.6;         //This grays it out to look disabled
+}
+
+.select-opacity4 {
+ opacity: 0.4;
 }
 
 pr-select {
   min-width: 100%;
+}
+
+.height250 {
+  height: 250px;
+}
+
+.width70 {
+width: 70%
+}
+
+.width30 {
+  width: 30;
+}
+
+.ionic-selectable {
+  height: 2rem;
+}
+
+ion-select {
+  max-width: 100%;
+}
+
+.error-message-profile {
+  color: red;
 }

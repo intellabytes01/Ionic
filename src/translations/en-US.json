@@ -46,7 +46,7 @@
     "PRODUCTSEARCH": "Product Search",
     "SCHEMES": "Schemes",
     "PRLOGO": "assets/icon/logo.png",
-    "USER_ACTIVATION": "Your account shall be activated once details are verified. Please call 9579870870 between 9.30am to 7pm",
+    "USER_ACTIVATION": "Your account shall be activated once details are verified. Please call 02067660011 between 9.30am to 7pm",
     "EXIT_APP": "Are you sure you want to exit the app?",
     "UPDATE_PROFILE_MODAL_TITLE": "Update Your Profile",
     "UPDATE_PROFILE_MODAL_MESSAGE": "We are glad to serve you. Kindly update your profile details for a seamless experience"
@@ -154,7 +154,7 @@
     "UPDATE_BUTTON": "Update Profile",
     "EDIT_PROFILE": "Edit Profile",
     "UPLOAD_TEXT": "Upload / Capture Drug License or Bill Copy",
-    "GSTIN_TEXT": "Please Enter Valid GSTIN Number eg: XX-XXXXXXXXXX-XZX"
+    "GSTIN_TEXT": "eg: XX-XXXXXXXXXX-XZX"
   },
 
   "NEW_ORDER": {
