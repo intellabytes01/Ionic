@@ -30,7 +30,6 @@ export class NotificationService {
    */
   getNotificationList(context: NotificationContext): Observable<any> {
     return this.httpClient
-      .cache(false)
       .get<NotificationTypeResponse>(
         `${routes.notificationList}userId=${context.userId}`
       )
