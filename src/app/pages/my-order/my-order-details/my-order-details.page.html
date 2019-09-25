@@ -87,8 +87,8 @@
           <ion-col text-start>
             <ion-label>
               <b>{{ "MY_ORDER.REMARKS" | translate }}: </b
-              ><span *ngIf="orderDetails.length > 0"
-                >{{ orderDetails[0].ProductRemarks }}
+              ><span *ngIf="orderListDetails && orderListDetails.Remarks"
+                >{{ orderListDetails.Remarks }}
               </span>
             </ion-label>
           </ion-col>
@@ -97,6 +97,9 @@
           <ion-col text-start>
             <ion-label>
               <b>{{ "MY_ORDER.MODE" | translate }}: </b>
+              <span *ngIf="orderListDetails && orderListDetails.DeliveryOption"
+                >{{ orderListDetails.DeliveryOption }}
+              </span>
             </ion-label>
           </ion-col>
         </ion-row>
@@ -104,6 +107,9 @@
           <ion-col text-start>
             <ion-label>
               <b>{{ "MY_ORDER.PRIORITY" | translate }}: </b>
+              <span *ngIf="orderListDetails && orderListDetails.Priority"
+                >{{ orderListDetails.Priority }}
+              </span>
             </ion-label>
           </ion-col>
         </ion-row>

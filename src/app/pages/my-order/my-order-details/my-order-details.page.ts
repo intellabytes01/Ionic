@@ -19,6 +19,7 @@ export class MyOrderDetailsPage implements OnInit, OnDestroy {
   orderDetails: any = [];
   myOrderDetails$: any;
   totalOrderValue = 0;
+  orderListDetails: any;
   constructor(
     public activatedRoute: ActivatedRoute,
     public iab: InAppBrowser,
@@ -45,6 +46,7 @@ export class MyOrderDetailsPage implements OnInit, OnDestroy {
     );
     this.state$.pipe(untilDestroyed(this)).subscribe((data: any) => {
       if (data.data) {
+        this.orderListDetails = JSON.parse(data.data);
         this.getMyOrderDetails(JSON.parse(data.data).OrderId);
       }
     });
