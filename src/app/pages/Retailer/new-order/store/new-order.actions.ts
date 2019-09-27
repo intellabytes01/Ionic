@@ -9,7 +9,10 @@ export enum NewOrderAction {
   NEWORDERSUBMIT_FAILURE = '[NewOrderSubmit] New Order Submit Failure',
   NEWORDERSTORECONFIG = '[NewOrderStoreConfig] New Order Get Store Config',
   NEWORDERSTORECONFIG_SUCCESS = '[NewOrderStoreConfig] New Order Get Store Config Success',
-  NEWORDERSTORECONFIG_FAILURE = '[NewOrderStoreConfig] New Order Get Store Config Failure'
+  NEWORDERSTORECONFIG_FAILURE = '[NewOrderStoreConfig] New Order Get Store Config Failure',
+  NEWORDERHISTOY = '[NewOrderHistory] New Order Get Order History',
+  NEWORDERHISTOY_SUCCESS = '[NewOrderHistory] New Order Get Order History Success',
+  NEWORDERHISTOY_FAILURE = '[NewOrderHistory] New Order Get Order History Failure'
 }
 
 export class ProductSearch implements Action {
@@ -57,6 +60,21 @@ export class NewOrderGetStoreConfigFailure implements Action {
   constructor(public payload: any) {}
 }
 
+export class NewOrderHistory implements Action {
+  readonly type = NewOrderAction.NEWORDERHISTOY;
+  constructor(public payload: any) {}
+}
+
+export class NewOrderHistorySucess implements Action {
+  readonly type = NewOrderAction.NEWORDERHISTOY_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class NewOrderHistoryFailure implements Action {
+  readonly type = NewOrderAction.NEWORDERHISTOY_FAILURE;
+  constructor(public payload: any) {}
+}
+
 export type All =
   | ProductSearch
   | ProductSearchSuccess
@@ -66,4 +84,7 @@ export type All =
   | NewOrderSubmitFailure
   | NewOrderStoreConfig
   | NewOrderGetStoreConfigSucess
-  | NewOrderGetStoreConfigFailure;
+  | NewOrderGetStoreConfigFailure
+  | NewOrderHistory
+  | NewOrderHistorySucess
+  | NewOrderHistoryFailure;

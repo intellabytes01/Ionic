@@ -6,7 +6,8 @@ export const initialState: NewOrderState = {
   errorMessage: null,
   productSearchArray: [],
   newOrderArray: [],
-  storeConfigArray: []
+  storeConfigArray: [],
+  orderHistory: []
 };
 
 export function newOrderReducer(
@@ -60,6 +61,21 @@ export function newOrderReducer(
       return {
         ...state,
         storeConfigArray: [],
+        errorMessage: null
+      };
+    }
+
+    case NewOrderAction.NEWORDERHISTOY_SUCCESS: {
+      return {
+        ...state,
+        orderHistory: action.payload.orderHistory,
+        errorMessage: null
+      };
+    }
+    case NewOrderAction.NEWORDERHISTOY_FAILURE: {
+      return {
+        ...state,
+        orderHistory: [],
         errorMessage: null
       };
     }

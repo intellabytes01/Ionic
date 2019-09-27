@@ -18,7 +18,9 @@ export class DraftTabPage implements OnInit {
   fetchFromStorage() {
     this.storage.forEach((value, key, index) => {
       if (key.split('#')[0] === 'Order') {
-        this.draftList.push(value);
+        if (!value['Deleted'] && !value['Confirmed']) {
+          this.draftList.push(value);
+        }
       }
     });
     setTimeout(() => {

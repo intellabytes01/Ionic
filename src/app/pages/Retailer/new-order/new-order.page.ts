@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { untilDestroyed } from '@app/core/index.js';
@@ -12,13 +12,15 @@ import {
   NewOrderState,
   newOrderGetStoreConfigData,
   productSearchData,
-  newOrderSubmitData
+  newOrderSubmitData,
+  newOrderHistory
 } from './store/new-order.state';
 import { Store } from '@ngrx/store';
 import {
   ProductSearch,
   NewOrderSubmit,
-  NewOrderStoreConfig
+  NewOrderStoreConfig,
+  NewOrderHistory
 } from './store/new-order.actions';
 
 import {
@@ -39,6 +41,8 @@ import { UtilityService } from '@app/shared/services/utility.service.js';
   styleUrls: ['./new-order.page.scss']
 })
 export class NewOrderPage implements OnInit, OnDestroy {
+  @ViewChild('qtyInput') qtyInput;
+
   constructor(
     private storage: Storage,
     public formBuilder: FormBuilder,
@@ -75,6 +79,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   free = 0;
   grandTotal = 0;
   sourceType = ['Mobile', 'MobilePS'];
+  orderHistoryData = [];
   storeConfigInfo = [];
   storeConfigData = [];
   recentSearchedItem = '';
@@ -94,6 +99,10 @@ export class NewOrderPage implements OnInit, OnDestroy {
     Total: 0,
     Key: '',
     OrderFromTab: 0,
+    Drafted: false,
+    Confirmed: false,
+    Deleted: false,
+    OrderFromDtraft: false,
     DeliveryPerson: {
       Name: '',
       Code: ''
@@ -137,6 +146,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Temp list of products is used for all operations
 
   setTempList(value) {
+    value['OrderFromDtraft'] = true;
     this.newOrderModel = value;
 
     if (this.newOrderModel.OrderFromTab === 0) {
@@ -147,7 +157,14 @@ export class NewOrderPage implements OnInit, OnDestroy {
   }
   // Save to offline storage in draft
 
-  saveToStorage() {
+  saveToStorage(value?) {
+    // if (this.newOrderModel.OrderFromDtraft && value === 'confirm') {
+    //   this.newOrderModel.Confirmed = true;
+    // } else if (this.newOrderModel.OrderFromDtraft && value === 'delete') {
+    //   this.newOrderModel.Deleted = true;
+    // } else if (this.newOrderModel.OrderFromDtraft && value === 'draft') {
+    //   this.newOrderModel.Drafted = true;
+    // }
     this.storage.set(this.key, this.newOrderModel);
   }
 
@@ -247,11 +264,28 @@ export class NewOrderPage implements OnInit, OnDestroy {
       },
       () => {}
     );
+
+    this.store.select(newOrderHistory).subscribe(
+      (state: any) => {
+        if (state && state.length > 0) {
+          this.orderHistoryData = state;
+        }
+      },
+      () => {}
+    );
+  }
+
+  getOrderHistory() {
+    const payload = {
+      storeId: this.newOrderModel.StoreId[0],
+      partyCode: this.newOrderModel.Partycode
+    };
+    this.store.dispatch(new NewOrderHistory(payload));
   }
 
   setActiveTab(tab) {
     this.activeTab = tab;
-    if (tab === 'ORDER VIA PRODUCT') {
+    if (tab === 'tab1') {
       this.newOrderModel.OrderFromTab = 1;
       this.newOrderModel.Source = this.sourceType[1];
     } else {
@@ -261,6 +295,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     this.setForm();
     this.showHeaderLabel = false;
     this.recentSearchedItem = '';
+    this.newOrderModel.StoreId = [];
   }
 
   setForm() {
@@ -359,6 +394,10 @@ export class NewOrderPage implements OnInit, OnDestroy {
     if (!productPresent) {
       this.newOrderModel.Products.push(product);
     }
+    // setTimeout(() => {
+    //   const index = 'qtyInput' + (this.newOrderModel.Products.length - 1).toString();
+    //   document.getElementById(index).focus();
+    // }, 2000);
   }
 
   // Delete product
@@ -790,6 +829,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     this.newOrderModel.StoreId.push(store.StoreId);
     this.newOrderModel.StoreName = store.StoreName;
     this.newOrderModel.Partycode = store.PartyCode;
+    this.getOrderHistory();
   }
 
   // Change Delivery Mode
@@ -821,12 +861,18 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   // Similar Products modal
 
-  async presentModalSimilarProducts() {
+  async presentModalSimilarProducts(type) {
+    let value = [];
+    if (type === 'similarProduct') {
+      value = this.similarProducts;
+    } else if (type === 'orderHistory') {
+      value = this.orderHistoryData;
+    }
     const modal = await this.modalController.create({
       component: SimilarProductsModalPage,
       componentProps: {
         title: 'Similar Products',
-        similarProductList: this.similarProducts
+        similarProductList: value
       }
     });
     modal.onDidDismiss().then(data => {
@@ -837,24 +883,8 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
         let tempArray = [];
 
-        // for (let i = 0; i < data.data.selectedProducts.length; i++) {
-        //   for (let j = 0; j < this.newOrderModel.Products.length; j++) {
-        //     if (this.newOrderModel.Products[j]['ProductCode'] === data.data.selectedProducts[i]['ProductCode']) {
-        //       if (data.data.selectedProducts[i]['Quantity']) {
-        //         this.newOrderModel.Products[j]['Quantity'] = data.data.selectedProducts[i]['Quantity'];
-        //         break;
-        //       }
-        //     } else if (data.data.selectedProducts[i]['Quantity'] > 0) {
-        //       data.data.selectedProducts[i]['Added'] = true;
-        //       tempArray.push(data.data.selectedProducts[i]);
-        //       break;
-        //     }
-        //   };
-        // }
-
-
         data.data.selectedProducts.forEach(similarProd => {
-        this.newOrderModel.Products.forEach(prod => {
+          this.newOrderModel.Products.forEach(prod => {
             if (prod['ProductCode'] === similarProd['ProductCode']) {
               if (similarProd['Quantity']) {
                 prod['Quantity'] = similarProd['Quantity'];
@@ -863,9 +893,16 @@ export class NewOrderPage implements OnInit, OnDestroy {
           });
         });
 
-        tempArray = data.data.selectedProducts.filter(o => !this.newOrderModel.Products.find(o2 => o['ProductCode'] === o2['ProductCode']));
+        tempArray = data.data.selectedProducts.filter(
+          o =>
+            !this.newOrderModel.Products.find(
+              o2 => o['ProductCode'] === o2['ProductCode']
+            )
+        );
 
-        this.newOrderModel.Products = this.newOrderModel.Products.concat(tempArray);
+        this.newOrderModel.Products = this.newOrderModel.Products.concat(
+          tempArray
+        );
         this.newOrderModel.Products.forEach((prod, index) => {
           this.setQuantity(index, prod.Quantity, prod);
         });
@@ -963,7 +1000,8 @@ export class NewOrderPage implements OnInit, OnDestroy {
         this.store.select(newOrderSubmitData).subscribe(
           (state: any) => {
             if (state.success) {
-              this.deleteAll();
+              this.saveToStorage('confirm');
+              // this.deleteAll();
               this.alertPopup(
                 'Attention',
                 this.translateService.instant('NEW_ORDER.CONFIRM_TEXT'),
@@ -1020,14 +1058,14 @@ export class NewOrderPage implements OnInit, OnDestroy {
           totalStoreWise,
           amountStoreWise,
           item[index].StoreId,
-          item[index].id
+          item[index].StoreName
         );
       } else if (min_max === 'max') {
         item[index].status = this.checkmaxlimit(
           totalStoreWise,
           amountStoreWise,
           item[index].StoreId,
-          item[index].id
+          item[index].StoreName
         );
       }
     });
@@ -1397,6 +1435,10 @@ export class NewOrderPage implements OnInit, OnDestroy {
     }
   }
 
+  DeleteFromStorage() {
+    this.storage.remove(this.key);
+  }
+
   // tslint:disable-next-line: align
   async alertPopup(heading: string, msg: string, type: string) {
     let buttonsArray = [];
@@ -1405,12 +1447,51 @@ export class NewOrderPage implements OnInit, OnDestroy {
         {
           text: 'No',
           role: 'cancel',
+          handler: () => {
+            this.DeleteFromStorage();
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
           handler: () => {}
         },
         {
           text: 'Yes',
           handler: () => {
-            this.saveToStorage();
+            this.newOrderModel.Drafted = true;
+            this.newOrderModel.Confirmed = false;
+            this.newOrderModel.Deleted = false;
+            this.saveToStorage('draft');
+            this.router.navigate(['/dashboard']);
+          }
+        }
+      ];
+    }
+    if (type === 'delete') {
+      buttonsArray = [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            this.DeleteFromStorage();
+            this.router.navigate(['/dashboard']);
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {}
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.saveToStorage('delete');
+            this.newOrderModel.Deleted = true;
+            this.newOrderModel.Drafted = false;
+            this.newOrderModel.Confirmed = false;
+            this.router.navigate(['/dashboard']);
+            // this.deleteAll();
           }
         }
       ];
@@ -1421,6 +1502,10 @@ export class NewOrderPage implements OnInit, OnDestroy {
           text: 'Ok',
           role: 'cancel',
           handler: () => {
+            this.newOrderModel.Drafted = false;
+            this.newOrderModel.Confirmed = true;
+            this.newOrderModel.Deleted = false;
+            this.saveToStorage('confirm');
             this.router.navigate(['/dashboard']);
           }
         }

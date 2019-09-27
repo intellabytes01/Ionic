@@ -10,7 +10,10 @@ import {
   NewOrderSubmitFailure,
   NewOrderStoreConfig,
   NewOrderGetStoreConfigSucess,
-  NewOrderGetStoreConfigFailure
+  NewOrderGetStoreConfigFailure,
+  NewOrderHistory,
+  NewOrderHistorySucess,
+  NewOrderHistoryFailure
 } from './new-order.actions';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
@@ -129,6 +132,41 @@ export class NewOrderEffects {
         'danger',
         this.translateService.instant('NEW_ORDER.STORE_CONFIG_ERR')
       );
+    })
+  );
+
+
+  // Get Order History
+  @Effect()
+  OrderHistory: Observable<Action> = this.actions.pipe(
+    ofType(NewOrderAction.NEWORDERHISTOY),
+    map((action: NewOrderHistory) => action.payload),
+    switchMap(payload => {
+      return this.newOrderService.getOrderHistory(payload).pipe(
+        map(data => {
+          return new NewOrderHistorySucess({
+            orderHistory: data['data']['data']
+          });
+        }),
+        catchError(error => of(new NewOrderHistoryFailure({ error })))
+      );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  NewOrderHistorySucess: Observable<any> = this.actions.pipe(
+    ofType(NewOrderAction.NEWORDERHISTOY_SUCCESS),
+    tap(() => {})
+  );
+
+  @Effect({ dispatch: false })
+  NewOrderHistoryFailure: Observable<any> = this.actions.pipe(
+    ofType(NewOrderAction.NEWORDERHISTOY_FAILURE),
+    tap(() => {
+      // this.alert.presentToast(
+      //   'danger',
+      //   this.translateService.instant('NEW_ORDER.STORE_CONFIG_ERR')
+      // );
     })
   );
 }

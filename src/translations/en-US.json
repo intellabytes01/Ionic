@@ -192,7 +192,8 @@
     "QTY_ENTER_TEXT": "Please enter quantity of",
     "CONFIRM_TEXT": "Order sent to Distributor",
     "QTY_VALID_TEXT": "Please enter quantity of all the added products.",
-    "DRAFT_TEXT": "Save order as draft?"
+    "DRAFT_TEXT": "Save order as draft?",
+    "DELETE_TEXT": "Are you sure you want to delete this order?"
   },
 
   "MY_ORDER": {
@@ -339,6 +340,12 @@
   },
 
   "DRAFT_ORDER": {
+    "RESTORE": "Restore"
+  },
+  "CONFIRM_ORDER": {
+    "REORDER": "Reorder"
+  },
+  "DELETE_ORDER": {
     "RESTORE": "Restore"
   },
 

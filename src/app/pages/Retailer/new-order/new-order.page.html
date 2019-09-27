@@ -6,7 +6,7 @@
         color="dark"
         (click)="setActiveTab(tab)"
         [ngClass]="{
-          'tab-selected': activeTab == tab
+          'tab-border-bottom': activeTab == tab
         }"
         *ngFor="let tab of tabInfo"
       >
@@ -38,16 +38,15 @@
           ></pr-select>
         </ion-col>
       </ion-row>
-      <br />
       <!-- <div *ngIf="newOrderModel.StoreId.length > 0"> -->
-      <ion-row *ngIf="newOrderModel.StoreId.length > 0">
+      <ion-row *ngIf="newOrderModel.StoreId.length > 0 || activeTab == 'ORDER VIA PRODUCT'">
         <ion-col size="6" text-start>
           <ion-label
             ><b>{{ "NEW_ORDER.TOTAL_BAL" | translate }}</b></ion-label
           >
         </ion-col>
         <ion-col size="6" text-end>
-          <ion-label (click)="presentModalOrderHistory()" class="blue-color">{{
+          <ion-label (click)="presentModalSimilarProducts('orderHistory')" class="blue-color">{{
             "NEW_ORDER.ORDER" | translate
           }}</ion-label>
         </ion-col>
@@ -85,9 +84,9 @@
             autofocus="true"
           ></ion-searchbar>
         </ion-col>
-        <ion-col size="2">
+        <ion-col size="2" class="text-align-center">
           <ion-icon
-            (click)="presentModalSimilarProducts()"
+            (click)="presentModalSimilarProducts('similarProduct')"
             class="modal-icon"
             name="reorder"
           ></ion-icon>
@@ -125,9 +124,9 @@
       </ion-list>
 
       <!-- <div *ngIf="newOrderModel.Products.length != 0"> -->
-        <ion-card>
+        <ion-card class="marginTop8">
       <div *ngIf="showHeaderLabel">
-        <ion-row>
+        <ion-row class="marginTop4">
           <ion-col size="3" text-center >
             <ion-label>{{ "NEW_ORDER.QTY" | translate }}</ion-label>
           </ion-col>
@@ -141,10 +140,12 @@
             <ion-label>{{ "NEW_ORDER.TOTAL" | translate }}</ion-label>
           </ion-col>
         </ion-row>
+        <ion-row class="thinLine">
+        </ion-row>
       </div>
 
       <div *ngFor="let product of newOrderModel.Products; let i = index">
-        <ion-row *ngIf="!product['Added']">
+        <ion-row *ngIf="!product['Added']" style="margin-top: 12px;" class="margin-top12">
           <ion-col size="3" text-center>
             <ion-label>{{ "NEW_ORDER.QTY" | translate }}</ion-label>
           </ion-col>
@@ -155,7 +156,13 @@
             <ion-label>{{ "NEW_ORDER.HS" | translate }}</ion-label>
           </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row class="thinLine" *ngIf="!product['Added']">
+          </ion-row>
+        <ion-row class="marginTop4">
+
+            <!-- <ion-row class="thinLine">
+              </ion-row> -->
+
           <ion-col size="10" text-start *ngIf="product['Added']" class="product-name">
             <ion-label class="mustard-color">{{
               product.ProductName
@@ -170,7 +177,7 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="3" text-center>
+          <ion-col size="3" text-center class="alignSelfCenter">
             <ion-item>
               <ion-input class="ion-no-padding"
                 name="qty"
@@ -179,11 +186,12 @@
                 [ngModelOptions]="{ standalone: true }"
                 (ionChange)="setQuantity(i, $event, product)"
                 placeholder="Qty"
-                autofocus="true"
+                autofocus="!product['Added'] ? true : false"
+                class="input-min-height"
               ></ion-input>
             </ion-item>
           </ion-col>
-          <ion-col size="3" text-center>
+          <ion-col size="3" text-center class="alignSelfCenter">
             <div class="tagbubble" *ngIf="product.Free" >
               {{ product.Free }}
             </div>
@@ -191,7 +199,7 @@
               HS
             </ion-label>
           </ion-col>
-          <ion-col size="3" text-center>
+          <ion-col size="3" text-center class="alignSelfCenter">
             <ion-label  *ngIf="!product.Added">{{
               product.HS ? product.HS : ""
             }}</ion-label>
@@ -199,7 +207,7 @@
               product.PTR ? product.PTR : 0
             }}</ion-label>
           </ion-col>
-          <ion-col size="3" text-center>
+          <ion-col size="3" text-center class="alignSelfCenter">
             <ion-button
               *ngIf="!product['Added']"
               (click)="addProduct(product)"
@@ -276,7 +284,7 @@
 
     </ion-card>
 
-      <div *ngIf="newOrderModel.Products.length > 0">
+      <div *ngIf="newOrderModel.Products.length > 0 && newOrderModel.Products[0]['Added']">
         <ion-row>
           <ion-col text-center>
             <ion-label class="total">
@@ -290,7 +298,8 @@
 
         <ion-row>
           <ion-col>
-            <ion-input
+            <ion-input 
+              class="border-grey input-min-height"
               formControlName="remarks"
               [placeholder]="'NEW_ORDER.REMARKS_PLACEHOLDER' | translate"
               [(ngModel)]="newOrderModel.Remarks"
@@ -332,9 +341,15 @@
 
         <br />
 
-        <ion-row class="border-grey">
+        <ion-row class="border-grey marginLeftRight4">
           <ion-col text-center class="border-right-grey">
-            <ion-label (click)="deleteAll()" class="red">{{
+            <ion-label (click)="
+            alertPopup(
+              'Delete Purchase Order',
+              translateService.instant('NEW_ORDER.DELETE_TEXT'),
+              'delete'
+            )
+          " class="red">{{
               "NEW_ORDER.DELETE" | translate
             }}</ion-label>
           </ion-col>

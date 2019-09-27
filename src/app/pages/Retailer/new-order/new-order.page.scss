@@ -66,13 +66,13 @@ ion-input {
 .sc-ion-card-ios-h {
   margin-left: 4px;
     margin-right: 4px;
-    margin-top: 12px;
+    margin-top: 23px;
     margin-bottom: 4px;
 }
 .sc-ion-card-md-h {
   margin-left: 4px;
     margin-right: 4px;
-    margin-top: 12px;
+    margin-top: 23px;
     margin-bottom: 4px;
 }
 
@@ -90,4 +90,67 @@ ion-input {
 
 ion-button {
   height: 38px;
+}
+
+.marginTop4 {
+  margin-top: 4px;
+}
+
+.thinLine {
+  border: 0.4px solid #DCDCDC;
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-top: 4px;
+}
+
+.marginLeftRight4 {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.marginTop8 {
+  margin-top: 8px;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.paddingLeftRight0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+ion-tab-button {
+  --padding-start: 0px;
+  --padding-end: 0px;
+}
+
+.tab-style {
+  color: orange;
+  border-bottom: 2px solid orange;
+}
+
+.tab-border-bottom {
+  border-bottom: 2px solid orange;
+}
+
+.input-min-height {
+ min-height: 30px;
+}
+
+.margin-top12 {
+  margin-top: 12px;
+}
+
+.alignSelfCenter {
+  align-self: center;
+}
+
+.sc-ion-input-md-h {
+  --placeholder-font-weight: 500;
+}
+
+.sc-ion-input-ios-h {
+  --placeholder-font-weight: 500;
 }

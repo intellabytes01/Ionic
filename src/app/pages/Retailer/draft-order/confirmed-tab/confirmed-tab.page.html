@@ -1,3 +1,27 @@
-<ion-content>
-  confirmed-tab works!
-</ion-content>
+<ion-content padding>
+    <div *ngFor="let order of draftList; let i = index">
+      <ion-row>
+        <ion-col>
+          <ion-icon (click)="deleteOrder(order, i)" class="delete-icon red" name="trash"></ion-icon> &nbsp;
+          <ion-label>{{ order.StoreName }}</ion-label>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row class="pt">
+        <ion-col text-start size="6">
+          <ion-label>{{
+            order.Key.split("#")[1] | date: "dd MMM yyyy h:mm a"
+          }}</ion-label>
+        </ion-col>
+        <ion-col text-center size="3">
+          <ion-label (click)="goToNewOrder(order)" class="blue-color"
+            >{{'CONFIRM_ORDER.REORDER' | translate}} ></ion-label
+          >
+        </ion-col>
+        <ion-col text-end size="3">
+          <ion-label>₹{{ order.Total }}</ion-label>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-content>
+  

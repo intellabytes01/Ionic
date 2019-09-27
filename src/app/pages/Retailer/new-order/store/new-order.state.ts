@@ -5,6 +5,7 @@ export interface NewOrderState {
   newOrderArray: [];
   storeConfigArray: [];
   errorMessage: string | null;
+  orderHistory: [];
 }
 
 export interface ProductSearchResponse {
@@ -170,4 +171,9 @@ export const newOrderSubmitData = createSelector(
 export const newOrderGetStoreConfigData = createSelector(
   newOrderState,
   coursesState => coursesState.storeConfigArray
+);
+
+export const newOrderHistory = createSelector(
+  newOrderState,
+  coursesState => coursesState.orderHistory
 );

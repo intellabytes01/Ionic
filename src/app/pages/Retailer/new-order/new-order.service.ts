@@ -20,11 +20,17 @@ export interface StoreConfigContext {
   retailerId: number;
 }
 
+export interface OrderHistoryContext {
+  storeId: number;
+  partyCode: string;
+}
+
 const routes = {
   products: '/products?',
   neworder: '/retailer/orders/new',
   orderViaProduct: '/retailer/orders/products?',
-  storeConfig: '/retailer/stores/configs?'
+  storeConfig: '/retailer/stores/configs?',
+  orderHistory: '/retailer/order/product/history'
 };
 
 @Injectable({
@@ -79,6 +85,17 @@ export class NewOrderService {
       .get<ProductSearchResponse>(
         `${routes.storeConfig}retailerId=${context.retailerId}`
       )
+      .pipe(
+        map((data: any) => ({
+          data
+        })),
+        catchError(error => this.errorHandler(error))
+      );
+  }
+
+  getOrderHistory(context: OrderHistoryContext): Observable<any> {
+    return this.httpClient
+      .post<any>(`${routes.orderHistory}`, JSON.stringify(context))
       .pipe(
         map((data: any) => ({
           data
