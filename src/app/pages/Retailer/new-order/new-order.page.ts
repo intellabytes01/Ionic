@@ -29,7 +29,8 @@ import {
   getUserId,
   getRegionId,
   getRetailerId,
-  mappedParties
+  mappedParties,
+  getRetailerName
 } from '@app/core/authentication/auth.states.js';
 import { AlertService } from '@app/shared/services/alert.service.js';
 import { TranslateService } from '@ngx-translate/core';
@@ -84,6 +85,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   storeConfigData = [];
   recentSearchedItem = '';
   showHeaderLabel = false;
+  retailerName = '';
 
   newOrderModel = {
     StoreId: [],
@@ -199,6 +201,13 @@ export class NewOrderPage implements OnInit, OnDestroy {
     this.authStore.select(mappedParties).subscribe(
       (state: any) => {
         this.mappedParties = state;
+      },
+      () => {}
+    );
+
+    this.authStore.select(getRetailerName).subscribe(
+      (state: any) => {
+        this.retailerName = state;
       },
       () => {}
     );
@@ -392,6 +401,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
     });
 
     if (!productPresent) {
+      this.utilityService.recordEventWithNameAndPropsMehod('Item selected on New Order', product);
       this.newOrderModel.Products.push(product);
     }
     // setTimeout(() => {
@@ -826,6 +836,7 @@ export class NewOrderPage implements OnInit, OnDestroy {
   // Change Store
 
   changeStore(store) {
+    this.utilityService.setCleverTapNewOrderDistributorSelected(store.StoreId);
     this.newOrderModel.StoreId.push(store.StoreId);
     this.newOrderModel.StoreName = store.StoreName;
     this.newOrderModel.Partycode = store.PartyCode;
@@ -863,15 +874,19 @@ export class NewOrderPage implements OnInit, OnDestroy {
 
   async presentModalSimilarProducts(type) {
     let value = [];
+    let title = '';
     if (type === 'similarProduct') {
       value = this.similarProducts;
+      title = 'Similar Products';
+
     } else if (type === 'orderHistory') {
       value = this.orderHistoryData;
+      title = 'Order History';
     }
     const modal = await this.modalController.create({
       component: SimilarProductsModalPage,
       componentProps: {
-        title: 'Similar Products',
+        title,
         similarProductList: value
       }
     });
@@ -994,6 +1009,16 @@ export class NewOrderPage implements OnInit, OnDestroy {
           Products: this.newOrderModel.Products
         };
         this.store.dispatch(new NewOrderSubmit(payload));
+
+        const UUID = this.utilityService.generateUUID();
+        let newdate = new Date();
+        newdate.setHours(newdate.getHours() + 5);
+        newdate.setMinutes(newdate.getMinutes() + 30);
+        newdate = JSON.parse(JSON.stringify(newdate));
+        const addTransactionID = UUID + '_' + newdate + '_' + this.retailerName;
+        const addTransactionStoreName = this.newOrderModel.StoreName;
+        this.utilityService.setCleverTapTransactionDetails(addTransactionID, addTransactionStoreName,
+          this.newOrderModel.Total, this.newOrderModel.Products, this.newOrderModel.StoreId[0], this.newOrderModel.Partycode);
 
         // this.saveToStorage();
 

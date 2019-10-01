@@ -3,57 +3,57 @@
     {
       "title": "SIDEMENU.DASHBOARD_TITLE",
       "url": "SIDEMENU.DASHBOARD_ROUTE",
-      "icon": "dashboard"
+      "icon": "home"
     },
     {
       "title": "SIDEMENU.PROFILE_TITLE",
       "url": "SIDEMENU.PROFILE_ROUTE",
-      "icon": "dashboard"
+      "icon": "person"
     },
     {
       "title": "SIDEMENU.REFER_TITLE",
       "url": "SIDEMENU.REFER_ROUTE",
-      "icon": "dashboard"
+      "icon": "link"
     },
     {
       "title": "SIDEMENU.CHANGE_PASSWORD_TITLE",
       "url": "SIDEMENU.CHANGE_PASSWORD_ROUTE",
-      "icon": "dashboard"
+      "icon": "lock"
     },
     {
       "title": "SIDEMENU.FEEDBACK_TITLE",
       "url": "SIDEMENU.FEEDBACK_ROUTE",
-      "icon": "dashboard"
+      "icon": "chatbubbles"
     },
     {
       "title": "SIDEMENU.CALL_US",
       "url": "SIDEMENU.DASHBOARD_ROUTE",
-      "icon": "dashboard"
+      "icon": "call"
     },
     {
       "title": "SIDEMENU.EMAIL_US",
       "url": "SIDEMENU.DASHBOARD_ROUTE",
-      "icon": "dashboard"
+      "icon": "mail"
     },
     {
       "title": "SIDEMENU.TERMS_TITLE",
       "url": "SIDEMENU.DASHBOARD_ROUTE",
-      "icon": "dashboard"
+      "icon": "lock"
     },
     {
       "title": "SIDEMENU.PRIVACY_POLICY",
       "url": "SIDEMENU.DASHBOARD_ROUTE",
-      "icon": "dashboard"
+      "icon": "lock"
     },
     {
       "title": "SIDEMENU.LANGUAGE_TITLE",
       "url": "SIDEMENU.LANGUAGE_ROUTE",
-      "icon": "dashboard"
+      "icon": "mic"
     },
     {
       "title": "SIDEMENU.LOGOUT_TITLE",
       "url": "SIDEMENU.LOGIN_ROUTE",
-      "icon": "dashboard"
+      "icon": "log-out"
     }
   ],
 

@@ -15,6 +15,7 @@ import { businessTypesData, regionsData } from './store/register.reducers';
 import { untilDestroyed } from '@app/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { UtilityService } from '@app/shared/services/utility.service';
 
 @Component({
   selector: 'app-register',
@@ -49,7 +50,8 @@ export class RegisterPage implements OnInit, OnDestroy {
     public menuCtrl: MenuController,
     private store: Store<AuthState>,
     private router: Router,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private utilityService: UtilityService
   ) {
     this.getBusinessTypes();
     this.store.pipe(select(businessTypesData)).subscribe(data => {
@@ -130,6 +132,7 @@ export class RegisterPage implements OnInit, OnDestroy {
           DevicePlatform: 'android'
         }
       };
+      this.utilityService.setCleverTapButtonClick('Sign Up Submit');
       this.store.dispatch(new SignUp(payload));
     } else {
       this.alertService.presentToast(
