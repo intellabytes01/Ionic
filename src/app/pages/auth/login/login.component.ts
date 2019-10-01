@@ -16,6 +16,7 @@ import { ModalController } from '@ionic/angular';
 import { ModalPopupPage } from '@app/shared/modal-popup/modal-popup.page';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from '@app/shared/services/alert.service';
+import { UtilityService } from '@app/shared/services/utility.service';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +45,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     public menuCtrl: MenuController,
     public modalController: ModalController,
     private translateService: TranslateService,
-    private alert: AlertService
+    private alert: AlertService,
+    private utilityService: UtilityService
   ) {
     this.createForm();
   }
@@ -70,7 +72,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.alert.exitModal(this.translateService.instant('EXIT_APP'));
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.utilityService.cleverTapInit();
+    document.addEventListener('onCleverTapProfileSync', this.utilityService.onCleverTapProfileSync, false);
+    document.addEventListener('onCleverTapProfileDidInitialize', this.utilityService.onCleverTapProfileDidInitialize, false);
+    document.addEventListener('onCleverTapInAppNotificationDismissed', this.utilityService.onCleverTapInAppNotificationDismissed, false);
+  }
 
   ngOnDestroy() {}
 

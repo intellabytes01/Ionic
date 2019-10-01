@@ -5,6 +5,7 @@ import { filter, map } from 'rxjs/operators';
 import { AlertController } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { TranslateService } from '@ngx-translate/core';
+import { UtilityService } from '../services/utility.service';
 
 @Component({
   selector: 'pr-toolbar',
@@ -21,7 +22,8 @@ export class ToolbarPage implements OnInit {
     private router: Router,
     private alertCtrl: AlertController,
     private socialSharing: SocialSharing,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private utilityService: UtilityService
   ) {}
 
   async share() {
@@ -76,6 +78,8 @@ export class ToolbarPage implements OnInit {
       map(event => {
         let data = null;
         let route = event['state'].root;
+
+        this.utilityService.setCleverTapPageView(event['url']);
 
         // Back Button Url
         if (event['url'].split('?')[0] === '/myorder/my-order-details') {

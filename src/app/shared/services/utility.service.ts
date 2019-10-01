@@ -84,77 +84,8 @@ export class UtilityService {
   }
 
   // tslint:disable-next-line: variable-name
-  setCleverTapPageView(title, a_title: any) {
-    if (this.checkNull(a_title) !== 'null' && a_title === 'dashboard') {
-      if (
-        this.checkNull(sessionStorage.getItem('setCTPVDashboard')) === 'null' &&
-        sessionStorage.getItem('setCTPVDashboard') !== 'true'
-      ) {
-        // this.cleverTap.recordEventWithName('Dashboard page viewed');
-        sessionStorage.setItem('setCTPVDashboard', 'true');
-      }
-    } else if (this.checkNull(title) !== 'null' && title === 'login') {
-      if (
-        this.checkNull(sessionStorage.getItem('setCTPVLogin')) === 'null' &&
-        sessionStorage.getItem('setCTPVLogin') !== 'true'
-      ) {
-        // this.cleverTap.recordEventWithName('Login page viewed');
-        sessionStorage.setItem('setCTPVLogin', 'true');
-      }
-    } else if (
-      this.checkNull(a_title) !== 'null' &&
-      a_title === 'ProductSearch'
-    ) {
-    } else if (
-      this.checkNull(a_title) !== 'null' &&
-      a_title === 'requestmapping'
-    ) {
-    } else if (this.checkNull(a_title) !== 'null' && a_title === 'addpo') {
-    } else if (
-      this.checkNull(a_title) !== 'null' &&
-      a_title === 'draftorders'
-    ) {
-    } else if (
-      this.checkNull(a_title) !== 'null' &&
-      a_title === 'orderdetails'
-    ) {
-    } else if (this.checkNull(a_title) !== 'null' && title === 'addDist_req') {
-    } else if (
-      this.checkNull(a_title) !== 'null' &&
-      title === 'addDist_status'
-    ) {
-    } else if (this.checkNull(a_title) !== 'null' && title === 'addDist_add') {
-    } else if (
-      this.checkNull(a_title) !== 'null' &&
-      a_title === 'notification'
-    ) {
-    } else if (this.checkNull(title) !== 'null' && title === 'register') {
-    } else if (
-      this.checkNull(title) !== 'null' &&
-      title === 'forgotusernamepass'
-    ) {
-    } else if (this.checkNull(title) !== 'null' && title === 'otpLogin') {
-    } else if (
-      this.checkNull(title) !== 'null' &&
-      a_title === 'deliveryTracker'
-    ) {
-    } else if (this.checkNull(title) !== 'null' && a_title === 'myprofile') {
-    } else if (this.checkNull(title) !== 'null' && title === 'PRStore') {
-      if (
-        this.checkNull(localStorage.getItem('prLaunchProdTour') !== 'null') &&
-        localStorage.getItem('prLaunchProdTour') !== 'true'
-      ) {
-        this.cleverTap.recordEventWithName(
-          this.toTitleCase(title) + ' page viewed'
-        );
-      }
-    } else {
-      if (this.checkNull(title) !== 'null') {
-        this.cleverTap.recordEventWithName(
-          this.toTitleCase(title) + ' page viewed'
-        );
-      }
-    }
+  setCleverTapPageView(title) {
+    this.cleverTap.recordEventWithName(this.toTitleCase(title) + ' page viewed');
   }
 
   setCleverTapButtonClick(title: any) {
@@ -239,6 +170,13 @@ export class UtilityService {
     this.cleverTap.recordEventWithNameAndProps(
       'Distributor selected',
       propertiesObj
+    );
+  }
+
+  recordEventWithNameAndPropsMehod(title?, obj?) {
+    this.cleverTap.recordEventWithNameAndProps(
+      'Distributor selected',
+      obj
     );
   }
 
@@ -359,5 +297,27 @@ export class UtilityService {
       chkVal === null
       ? rtnVal
       : chkVal;
+  }
+
+  generateUUID() {
+    let d: any;
+    d = new Date();
+    d.setHours(d.getHours() + 5);
+    d.setMinutes(d.getMinutes() + 30);
+    d = d.getTime();
+    const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      // tslint:disable-next-line: no-bitwise
+      const r = (Number(d) + Math.random() * 16) % 16 | 0;
+      d = Math.floor(Number(d) / 16);
+      // tslint:disable-next-line: no-bitwise
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+  }
+
+  onUserLoginMethod(name) {
+    const obj = {};
+    obj['Identity'] = name;
+    this.cleverTap.onUserLogin(obj);
   }
 }
