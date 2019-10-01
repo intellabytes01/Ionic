@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   presentAlertConfirm() {
-    this.alert.exitModal(this.translateService.instant('EXIT_APP'));
+    this.alert.exitModal(this.translateService.instant('DASHBOARD.EXIT_APP'));
   }
 
   ngOnInit() {}
@@ -97,6 +97,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   async login() {
+    if (!this.loginForm.value.username) {
+      this.alert.presentToast(
+        'danger',
+        this.translateService.instant('VALIDATIONS.EMPTYUSERNAME')
+      );
+      return;
+    }
     const payload = {
       cred: this.loginForm.value
     };

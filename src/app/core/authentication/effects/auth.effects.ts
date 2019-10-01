@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 import { AuthActionTypes, LogIn, LogInSuccess, LogInFailure, SignUp, SignUpSuccess, SignUpFailure, SaveToken, SaveTokenSuccess, SaveTokenFail, UserExists, UserExistsSuccess, UserExistsFailure, TokenRefresh, TokenRefreshSuccess, TokenRefreshFailure, ImageUpload, ImageUploadSuccess, ImageUploadFailure } from '../actions/auth.actions';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { AlertService } from '@app/shared/services/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Injectable()
@@ -19,7 +20,8 @@ export class AuthEffects {
     private authService: AuthenticationService,
     private router: Router,
     private storage: Storage,
-    private alert: AlertService
+    private alert: AlertService,
+    public translateService: TranslateService
   ) {}
 
   @Effect()
@@ -57,7 +59,7 @@ export class AuthEffects {
   LogInFailure: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.LOGIN_FAILURE),
     tap((res) => {
-      this.alert.presentToast('danger', 'Please provide valid credentials.');
+      this.alert.presentToast('danger', this.translateService.instant('VALIDATIONS.REGISTERNOW'));
     })
   );
 

@@ -433,6 +433,8 @@
 
   "VALIDATIONS": {
     "MOBILEREQUIRED": "Mobile number is required",
-    "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number"
+    "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number",
+    "REGISTERNOW": "You are not registered. Register Now.",
+    "EMPTYUSERNAME": "Please Enter Value For Username."
   }
 }
