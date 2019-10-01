@@ -429,5 +429,10 @@
     "INVITE_MESSAGE_RETAILER": "Hi! I am using Pharmarack app, with this app you can do anytime and anywhere ordering. Download it is free - https://play.google.com/store/apps/details?id=com.growthaccel.pharmarack_retailer",
     "DISTRIBUTOR": "DISTRIBUTOR",
     "RETAILER": "RETAILER"
+  },
+
+  "VALIDATIONS": {
+    "MOBILEREQUIRED": "Mobile number is required",
+    "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number"
   }
 }
