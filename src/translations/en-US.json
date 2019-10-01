@@ -92,8 +92,8 @@
   "FORGOT_PASSWORD": {
     "TITLE": "Forgot Password?",
     "SENDOTPMESSAGE": "We will send you an OTP to your mobile number to enable you to login",
-    "VERIFY": "Verify Otp",
-    "RESEND": "Resend Otp",
+    "VERIFY": "Verify OTP",
+    "RESEND": "Resend OTP",
     "VERIFYOTPMESSAGE": "Please enter the OTP code which has been sent to your Mobile number",
     "VALIDATION_MESSAGES": {
       "mobile": [
@@ -404,7 +404,7 @@
     "VALIDATIONS": {
       "MOBILEREQUIRED": "Mobile number is required",
       "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number",
-      "OTPREQUIRED": "Otp is required",
+      "OTPREQUIRED": "OTP is required",
       "FEEDBACK": {
         "message": [
           { "type": "required", "message": "Value is required for Remarks" }
@@ -435,6 +435,7 @@
     "MOBILEREQUIRED": "Mobile number is required",
     "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number",
     "REGISTERNOW": "You are not registered. Register Now.",
-    "EMPTYUSERNAME": "Please Enter Value For Username."
+    "EMPTYUSERNAME": "Please Enter Value For Username.",
+    "REGISTERED": "Mobile Number Already Registered"
   }
 }

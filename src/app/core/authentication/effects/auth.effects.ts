@@ -134,35 +134,34 @@ export class AuthEffects {
     }));
 
 
-  @Effect()
-  UserExists: Observable<any> = this.actions.pipe(
-    ofType(AuthActionTypes.USEREXISTS),
-    map((action: UserExists) => action.payload),
-    switchMap(payload => {
-      return this.authService.userExists(payload.cred).pipe(
-        map((user) => {
-          if (user['success']) {
-          return new UserExistsSuccess(user['success']);
-          } else {
-            return new UserExistsFailure(user);
+    @Effect()
+    UserExists: Observable<any> = this.actions.pipe(
+      ofType(AuthActionTypes.USEREXISTS),
+      map((action: UserExists) => action.payload),
+      switchMap(payload => {
+        return this.authService.userExists(payload.cred).pipe(
+          map((user) => {
+            if (user['data']['exist']) {
+            return new UserExistsSuccess(true);
+            } else {
+              return new UserExistsFailure(user);
+            }
+          }), catchError((error) => {
+            return of({
+              type: AuthActionTypes.USEREXISTS_FAILURE,
+              payload: { error }
+            });
           }
-        }), catchError((error) => {
-          return of({
-            type: AuthActionTypes.USEREXISTS_FAILURE,
-            payload: { error }
-          });
-        }
-          // of(new SignUpFailure({ error }))
-      ));
-    })
-    );
+            // of(new SignUpFailure({ error }))
+        ));
+      })
+      );
 
   @Effect({ dispatch: false })
   UserExistsSuccess: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.USEREXISTS_SUCCESS),
     tap((user) => {
       if (user && user.payload) {
-        console.log(user);
       }
     })
   );
@@ -171,7 +170,6 @@ export class AuthEffects {
   UserExistsFailure: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.USEREXISTS_FAILURE),
     tap((user) => {
-      console.log(user);
     })
   );
 
