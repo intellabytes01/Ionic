@@ -97,10 +97,20 @@
       </ng-container>
     </div>
 
+    <div
+      *ngIf="loginForm.value.username && loginForm.value.password"
+      class="validation-errors"
+    >
+      <div class="error-message">
+        {{ "VALIDATIONS.TERMS" | translate }}
+      </div>
+    </div>
+
     <br />
     <ion-row>
       <ion-col>
         <ion-label
+          class="hyperlink"
           [routerLink]="['/forgot-password']"
           style="font-size: 0.9rem;"
           >&nbsp;{{ "LOGIN.FP" | translate }}</ion-label

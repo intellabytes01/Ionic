@@ -58,7 +58,7 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
     };
     if (!sendOtpBody.mobile) {
       this.alert.presentToast(
-        'danger', this.translateService.instant('VALIDATIONS.MOBILEREQUIRED')
+        'danger', this.translateService.instant('VALIDATIONS.MOBILEPATTERN')
       );
       return;
     }

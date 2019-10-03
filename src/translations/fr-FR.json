@@ -1,19 +1,443 @@
 {
-  "APP_NAME": "Pharmarack",
-  "About": "A propos",
-  "Hello world !": "Bonjour le monde !",
-  "Home": "Accueil",
-  "Cancel": "Annuler",
-  "Change language": "Changer la langue",
-  "Language": "Langue",
-  "Ok": "Ok",
-  "Login": "Connexion",
-  "Logout": "Déconnexion",
-  "Password": "Mot de passe",
-  "Password is required": "Mot de passe requis",
-  "Username": "Identifiant",
-  "Username is required": "Identifiant requis",
-  "Username or password incorrect.": "Identifiant ou mot de passe incorrect.",
-  "Remember me": "Rester connecté",
-  "Version": "Version"
+  "NO_INTERNET_CONNECTION": "No Internet Connection",
+  
+  
+  "SIDEMENU": {
+    "DASHBOARD_TITLE": "Home",
+    "LOGOUT_TITLE": "Logout",
+    "REGISTER_TITLE": "Register",
+    "FORGOT_PASSWORD_TITLE": "Forgot Password",
+    "CHANGE_PASSWORD_TITLE": "Change Password",
+    "PROFILE_TITLE": "My Profile",
+    "REFER_TITLE": "Refer and Earn",
+    "FEEDBACK_TITLE": "Feedback",
+    "NOTIFICATION_TITLE": "Notification",
+    "TERMS_TITLE": "Terms & Conditions",
+    "TERMS_URL": "http://oldfish.ragabh.com/termsandconditions",
+    "PRIVACY_POLICY": "Privacy Policy",
+    "PRIVACY_URL": "https://www.pharmarack.com/privacypolicy",
+    "DASHBOARD_ROUTE": "dashboard",
+    "LOGIN_ROUTE": "login",
+    "REGISTER_ROUTE": "register",
+    "FORGOT_PASSWORD_ROUTE": "forgot-password",
+    "CHANGE_PASSWORD_ROUTE": "change-password",
+    "PROFILE_ROUTE": "profile",
+    "REFER_ROUTE": "refer-earn",
+    "FEEDBACK_ROUTE": "feedback",
+    "PRODUCT_SEARCH_ROUTE": "product-search",
+    "LANGUAGE_TITLE": "Language",
+    "LANGUAGE_ROUTE": "language",
+    "CALL_US": "Call us",
+    "EMAIL_US": "Email us"
+  },
+
+  "DASHBOARD": {
+    "SUBMIT": "Submit",
+    "NEWORDER": "New Order",
+    "PAYMENTS": "Payments",
+    "MYORDER": "My Order",
+    "INVOICE": "My Invoice",
+    "TRACKER": "Delivery Tracker",
+    "MALL": "Pharma Mall",
+    "DRAFTORDER": "Draft Order",
+    "NEWSALESRETURN": "New Sales Return",
+    "VIEWSALESRETURN": "View Sales Return",
+    "ADDDISTRIBUTOR": "Add Distributor",
+    "PRODUCTSEARCH": "Product Search",
+    "SCHEMES": "Schemes",
+    "PRLOGO": "assets/icon/logo.png",
+    "USER_ACTIVATION": "Your account shall be activated once details are verified. Please call 02067660011 between 9.30am to 7pm",
+    "EXIT_APP": "Are you sure you want to exit the app?",
+    "UPDATE_PROFILE_MODAL_TITLE": "Update Your Profile",
+    "UPDATE_PROFILE_MODAL_MESSAGE": "We are glad to serve you. Kindly update your profile details for a seamless experience"
+  },
+
+  "ADD_DISTRIBUTOR": {
+    "REQUEST_TAB_MESSAGE_1": "Please enter Party Code for faster Mapping",
+    "NOTE": "Note:",
+    "REQUEST_TAB_MESSAGE_2": "Party code can be found in Distributor's Sales Inovoice / Bill",
+    "ADD_TAB_MESSAGE": "Distributor you would like to see on Pharmarack",
+    "SEARCH_PLACEHOLDER": "Search Distributor",
+    "NOTFOUND": "No Distributor Found",
+    "STORE": "Store name",
+    "PARTY_CODE": "Party code",
+    "OPTIONAL_PLACEHOLDER": "Optional",
+    "DISTRIBUTOR_NAME": "Distributor Name",
+    "CONTACT": "Contact Number",
+    "STATUS": "Status",
+    "FILTER_TEXT": "Click here to filter Status",
+    "REQUEST_TAB_MESSAGE_3": "Please select atleast one store",
+    "VALIDATIONS": {
+      "DISTRIBUTOR_NAME": "Distributor name is required"
+    },
+    "RM": "Request Mapping",
+    "SELECTSTATUS": "Select Status",
+    "VALIDATION_MESSAGES": {
+      "mobile": [
+        { "type": "required", "message": "VALIDATIONS.MOBILEPATTERN" },
+        {
+          "type": "pattern",
+          "message": "VALIDATIONS.MOBILEPATTERN"
+        }
+      ],
+      "storeName": [
+        {
+          "type": "required",
+          "message": "ADD_DISTRIBUTOR.VALIDATIONS.DISTRIBUTOR_NAME"
+        }
+      ]
+    }
+  },  
+
+  "FORGOT_PASSWORD": {
+    "TITLE": "Forgot Password?",
+    "SENDOTPMESSAGE": "We will send you an OTP to your mobile number to enable you to login",
+    "VERIFY": "Verify OTP",
+    "RESEND": "Resend OTP",
+    "VERIFYOTPMESSAGE": "Please enter the OTP code which has been sent to your Mobile number",
+    "VALIDATION_MESSAGES": {
+      "mobile": [
+        { "type": "required", "message": "VALIDATIONS.MOBILEPATTERN" },
+        {
+          "type": "pattern",
+          "message": "VALIDATIONS.MOBILEPATTERN"
+        }
+      ]
+    }
+  },
+
+  "CHANGE_PASSWORD": {
+    "CURRENT_PASSWORD": "Current Password",
+    "NEW_PASSWORD": "New Password",
+    "SAME_PASSWORD": "Current & New Password Can Not Be Same",
+    "PASSWORD_MISMATCH": "Confirm & New Password Did Not Match",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "CHANGE_BUTTON": "Change",
+    "BACK_BUTTON": "Back",
+    "VALIDATION_MESSAGES": {
+      "password": [
+        {
+          "type": "required",
+          "message": "Please Enter Value, Field's Shouldn't Be Empty"
+        },
+        {
+          "type": "minlength",
+          "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
+        }
+      ],
+      "matchPasswordError": [
+        {
+          "message": "Passwords do not match"
+        }
+      ]
+    },
+    "SUCCESS_MSG": "Password updated successfully",
+    "ERROR_MSG": "Something went wrong, please try again later"
+  },
+
+  "PROFILE": {
+    "LOGIN_ID": "Login Id",
+    "BUSINESS_TYPE": "Business Type",
+    "SHOP_FULL_NAME": "Shop/Firm Full Name",
+    "NAME": "Name",
+    "ADDRESS": "Address",
+    "PINCODE": "Pincode",
+    "REGION": "Region",
+    "EMAIL": "Email",
+    "MOBILE_NUMBER": "Mobile Number",
+    "TELEPHONE": "Telephone",
+    "DRUG_LICENSE_NUMBER": "Drug License Number",
+    "GSTIN_NUMBER": "GSTIN Number",
+    "CST_NUMBER": "CST Number",
+    "BACK_BUTTON": "Back",
+    "CANCEL_BUTTON": "Cancel",
+    "UPDATE_BUTTON": "Update Profile",
+    "EDIT_PROFILE": "Edit Profile",
+    "UPLOAD_TEXT": "Upload / Capture Drug License or Bill Copy",
+    "GSTIN_TEXT": "eg: XX-XXXXXXXXXX-XZX"
+  },
+
+  "NEW_ORDER": {
+    "STORE_PLACEHOLDER": "Select Store",
+    "SEARCH_PRODUCT_PLACEHOLDER": "Search Product",
+    "NOTFOUND": "No Products Found",
+    "DELIVERY_PLACEHOLDER": "Select Delivery Mode",
+    "PRIORITY_PLACEHOLDER": "Select Delivery Priority",
+    "REMARKS_PLACEHOLDER": "Remarks",
+    "TOTAL_BAL": "TOTAL BAL:",
+    "ORDER": "ORDER HISTORY >",
+    "IN_STOCK": "In Stock",
+    "LOW_STOCK": "Low Stock",
+    "NO_STOCK": "No Stock",
+    "QTY": "Qty",
+    "FREE": "Free",
+    "HS": "HS",
+    "ADD": "ADD >",
+    "STOCK": "Stock",
+    "PKG": "Pkg",
+    "CASE": "Case",
+    "BOX": "Box",
+    "MRP": "MRP",
+    "PTR": "PTR",
+    "GRAND_TOTAL": "Grand Total",
+    "TOTAL": "Total",
+    "DELETE": "DELETE >",
+    "DRAFT_PO": "DRAFT PO >",
+    "CONFIRM": "CONFIRM >",
+    "SUCCESS_TEXT": "Order created successfully",
+    "ERROR_TEXT": "Order creation failed",
+    "STORE_CONFIG_ERR": "Error while getting store configuration",
+    "ATTENTION": "Attention",
+    "QTY_GREATER_TEXT": "Quantity must be greater than zero.",
+    "QTY_ENTER_TEXT": "Please enter quantity of",
+    "CONFIRM_TEXT": "Order sent to Distributor",
+    "QTY_VALID_TEXT": "Please enter quantity of all the added products.",
+    "DRAFT_TEXT": "Save order as draft?",
+    "DELETE_TEXT": "Are you sure you want to delete this order?"
+  },
+
+  "MY_ORDER": {
+    "ORDERID": "OrderId",
+    "PLACED": "Placed",
+    "UPLOADED": "Uploaded",
+    "PROCESSED": "Processed",
+    "CALL": "Call Now",
+    "REMARKS": "Remarks",
+    "MODE": "Delivery Mode",
+    "PRIORITY": "Delivery Priority",
+    "FILTER": "Order Filter",
+    "FROMDATE": "From Date",
+    "TODATE": "To Date",
+    "STATUS": "Status",
+    "OPERATION": "Operation",
+    "CLOSE": "Close",
+    "FILTERORDER": "Filter Order",
+    "AMOUNT": "Amount | Order",
+    "VALIDATION_MESSAGES": {
+      "fromDate": [{ "type": "required", "message": "It's required" }],
+      "toDate": [{ "type": "required", "message": "It's required" }]
+    }
+  },
+
+  "LOGIN": {
+    "UM": "Username / Mobile Number",
+    "PASSWORD": "Password",
+    "FP": "Forgot Password",
+    "SI": "Sign In",
+    "CA": "Create Account",
+    "VALIDATION_MESSAGES": {
+      "username": [
+        { "type": "required", "message": "Username is required" },
+        {
+          "type": "minlength",
+          "message": "Username must be at least 5 characters long"
+        },
+        {
+          "type": "maxlength",
+          "message": "Username cannot be more than 25 characters long"
+        }
+      ],
+      "password": [
+        {
+          "type": "required",
+          "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
+        },
+        {
+          "type": "minlength",
+          "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
+        }
+      ]
+    }
+  },
+
+  "REGISTER": {
+    "BT": "Type of Business",
+    "MOBILE": "Mobile Number",
+    "REGIONS": "Regions",
+    "AGREE": "I Agree to",
+    "tnc": "Terms & Conditions",
+    "ofPR": "of Pharmarack",
+    "REGISTER": "Register",
+    "VALIDATION_MESSAGES": {
+      "mobile": [
+        { "type": "required", "message": "Mobile number is required" },
+        {
+          "type": "pattern",
+          "message": "Please Enter Valid 10 Digit Mobile Number"
+        }
+      ],
+      "password": [
+        {
+          "type": "required",
+          "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
+        },
+        {
+          "type": "minlength",
+          "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
+        }
+      ],
+      "region": [{ "type": "validValue", "message": "Please Select Region" }],
+      "businessType": [
+        { "type": "validValue", "message": "Please Select Business Type" }
+      ],
+      "tnc": [
+        {
+          "message": "Please Agree Terms & Conditions"
+        }
+      ]
+    }
+  },
+
+  "PRODUCT_SEARCH": {
+    "PLACEHOLDER_PRODUCT": "Product name",
+    "PLACEHOLDER_GENERIC": "Generic name",
+    "PLACEHOLDER_COMPANY": "Company name",
+    "PLACEHOLDER_DISTRIBUTOR": "Distributor name",
+    "MINCHAR_TEXT": "Please enter minimum 3 characters to search",
+    "NOTFOUND": "Not Found",
+    "NOTMAPPED_TEXT": "Distributor not mapped, Would you like to send mapping request now?",
+    "REQUEST": "Request now"
+  },
+
+  "PAYMENT": {
+    "VO": "View Outstanding",
+    "FP": "Filter Payment",
+    "AP": "Amount | Payment",
+    "INVOICE_TEXT": "Invoice Pending Total Amount",
+    "PH_TEXT": "Pharmex HealthCare",
+    "NOTIFY": "Notify"
+  },
+
+  "SCHEMES": {
+    "SCHEME_TEXT": "Note: These schemes may or may not be available in your area. Kindly check with the authorized company distributor",
+    "FEEDBACK": "Feedback"
+  },
+
+  "REFER": {
+    "VALIDATION_MESSAGES": {
+      "mobile": [
+        { "type": "required", "message": "Mobile number is required" },
+        {
+          "type": "pattern",
+          "message": "Please Enter Valid 10 Digit Mobile Number"
+        }
+      ],
+      "name": [{ "type": "required", "message": "Name is required" }]
+    },
+    "RETAILER": "Retailer Name",
+    "CONTACT": "Contact Number",
+    "AGREE": "I Agree to Terms & Conditions of Pharmarack",
+    "TERMS": "Terms & Conditions",
+    "ACCEPT": "Please accept terms and conditions",
+    "TERMS_POINTS": {
+      "1": "1. Place an order of minimum Rs.15000 to atleast 3 distributors between 11th Oct to 16th Oct",
+      "2": "2. The order should be valid and processed by the Distributor",
+      "3": "3. The order should be placed via Pharmarack platform",
+      "4": "4. If the delivery, made by the Distributor, is denied by the Retailer then that order will not be considered to be eligible for the campaign",
+      "5": "5. Winners will be chosen via lucky draw carried out by Pharmarack. Valid for 500 users only",
+      "6": "6. The decisions of Pharmarack Technologies in relation to this Campaign will be final and binding on all entrants. Pharmarack Technologies reserves the right to cancel, terminate, or suspend this Campaign, at its sole discretion"
+    }
+  },
+
+  "DRAFT_ORDER": {
+    "RESTORE": "Restore"
+  },
+  "CONFIRM_ORDER": {
+    "REORDER": "Reorder"
+  },
+  "DELETE_ORDER": {
+    "RESTORE": "Restore"
+  },
+
+  "INVOICE": {
+    "FILTER": "Filter Invoice",
+    "AI": "Amount | Invoice",
+    "HEADER": "Invoice Filter",
+    "DETAILS": "Details",
+    "ALL": "Select all",
+    "DOWNLOAD": "Download",
+    "CT": "Change Template",
+    "DOWNLOAD_TEXT": "Please select atleast one invoice to download.",
+    "ATTENTION": "Attention",
+    "DATE_VALIDATION_DAYS": "Maximum 31 Days date range can be selected.",
+    "DATE_VALIDATION_VALID": "To Date should be greater than From Date.",
+    "DOWNLOAD_INVOICE": "Download Invoice",
+    "DOWNLOADED_TEXT": "File saved to download folder.",
+    "DISCOUNT_AMOUNT": "Discount Amount",
+    "GST_AMOUNT": "GST Amount",
+    "ROUNDOFF": "Round off"
+  },
+
+  "DELIVERY": {
+    "FILTER": "Click here to filter notifications"
+  },
+
+  "NOTIFICATION": {
+    "TITLE": "Notification",
+    "FILTER": "Notification Filter",
+    "FILTER_TEXT": "Click here to filter notifications"
+  },
+
+  "SALESRETURN": {
+    "PLACEHOLDER": "Please Select Return Type",
+    "QTY": "Qty",
+    "BATCH": "Batch",
+    "EXPIRY": "Expiry",
+    "MRP": "MRP",
+    "FILTERORDER": "Filter Sales Return",
+    "SR": "Sales Return",
+    "SELECTRETURN": "Select Return Type",
+    "SRN": "Sales Return No.",
+    "RETURN_TEXT": "* Sales Return settlement is not guaranteed by Pharmarack",
+    "SRD": "Sales Return Date",
+    "AP": "Awaiting Pickup",
+    "STATUS": "Status",
+    "RT": "Return Type",
+    "REMARKS": "Remarks",
+    "DO": "Delivery Option",
+    "PLACEHOLDER_STATUS": "Please Select Status",
+    "UPDATE": "Update",
+    "CONFIRM_TEXT": "CONFIRM SALES RETURN >"
+  },
+
+  "FEEDBACK": {
+    "VALIDATIONS": {
+      "MOBILEREQUIRED": "Mobile number is required",
+      "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number",
+      "OTPREQUIRED": "OTP is required",
+      "FEEDBACK": {
+        "message": [
+          { "type": "required", "message": "Value is required for Remarks" }
+        ],
+        "feedbackType": [{ "type": "validValue", "message": "It's required" }],
+        "feedbackTo": [{ "type": "validValue", "message": "It's required" }],
+        "toStoreId": [{ "type": "validValue", "message": "It's required" }]
+      }
+    },
+    "FEEDBACKTYPE_PLACEHOLDER": "Select feedback type",
+    "FEEDBACKTO_PLACEHOLDER": "Select type",
+    "FEEDBACKSTORE_PLACEHOLDER": "Select Store",
+    "FEEDBACKSTATUS_PLACEHOLDER": "Select Status",
+    "MESSAGE_PLACEHOLDER": "Type your message",
+    "FEEDBACK_TEXT": "We value your feedback. Please send your feedback in the below form"
+  },
+
+  "TOOLBAR": {
+    "POPUP_HEADER": "Invite a Chemist / Stockist",
+    "POPUP_MESSAGE": "Invite your chemist friends & distributors to join Pharmarack platform.",
+    "INVITE_MESSAGE_DISTRIBUTOR": "Hi! I am using Pharmarack app, with this app you can do anytime and anywhere ordering. Download it is free - https://play.google.com/store/apps/details?id=com.growthaccel.pharmarack",
+    "INVITE_MESSAGE_RETAILER": "Hi! I am using Pharmarack app, with this app you can do anytime and anywhere ordering. Download it is free - https://play.google.com/store/apps/details?id=com.growthaccel.pharmarack_retailer",
+    "DISTRIBUTOR": "DISTRIBUTOR",
+    "RETAILER": "RETAILER"
+  },
+
+  "VALIDATIONS": {
+    "MOBILEREQUIRED": "Mobile number is required",
+    "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number",
+    "REGISTERNOW": "You are not registered. Register Now.",
+    "EMPTYUSERNAME": "Please Enter Value For Username.",
+    "REGISTERED": "Mobile Number Already Registered",
+    "OTPREQUIRED": "Please Enter OTP",
+    "TERMS": "By clicking Sign In you agree to the Terms and Conditions of Pharmarack message should be displayed on Login page."
+  }
 }

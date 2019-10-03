@@ -74,7 +74,7 @@
     "SELECTSTATUS": "Select Status",
     "VALIDATION_MESSAGES": {
       "mobile": [
-        { "type": "required", "message": "VALIDATIONS.MOBILEREQUIRED" },
+        { "type": "required", "message": "VALIDATIONS.MOBILEPATTERN" },
         {
           "type": "pattern",
           "message": "VALIDATIONS.MOBILEPATTERN"
@@ -118,7 +118,7 @@
       "password": [
         {
           "type": "required",
-          "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
+          "message": "Please Enter Value, Field's Shouldn't Be Empty"
         },
         {
           "type": "minlength",
@@ -369,7 +369,7 @@
   },
 
   "DELIVERY": {
-    "FILTER": "Filter List"
+    "FILTER": "Click here to filter notifications"
   },
 
   "NOTIFICATION": {
@@ -436,6 +436,8 @@
     "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number",
     "REGISTERNOW": "You are not registered. Register Now.",
     "EMPTYUSERNAME": "Please Enter Value For Username.",
-    "REGISTERED": "Mobile Number Already Registered"
+    "REGISTERED": "Mobile Number Already Registered",
+    "OTPREQUIRED": "Please Enter OTP",
+    "TERMS": "By clicking Sign In you agree to the Terms and Conditions of Pharmarack message should be displayed on Login page."
   }
 }
