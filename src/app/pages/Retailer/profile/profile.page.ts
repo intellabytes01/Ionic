@@ -18,19 +18,23 @@ import {
 import { IProfileInterface } from './profile.interface';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { ModalPopupPage } from '@app/shared/modal-popup/modal-popup.page';
 import {
   getUserId,
   getRegionId,
   getRetailerId,
-  isUserAuthorized
+  isUserAuthorized,
+  AuthState,
+  getUserImage
 } from '@app/core/authentication/auth.states';
 import { untilDestroyed } from '@app/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
 import { AlertService } from '@app/shared/services/alert.service';
 import { Storage } from '@ionic/storage';
+import { ImageUpload } from '@app/core/authentication/actions/auth.actions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile',
@@ -64,6 +68,9 @@ export class ProfilePage implements OnInit, OnDestroy {
     { id: 5, name: 'I am not eligible', selected: false }
   ];
   licenseImage = '';
+  imageUploadModal = false;
+  imgUrl: string;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -73,7 +80,10 @@ export class ProfilePage implements OnInit, OnDestroy {
     public modalController: ModalController,
     private updates$: Actions,
     private alert: AlertService,
-    private storage: Storage
+    private storage: Storage,
+    private storeAuth: Store<AuthState>,
+    private alertController: AlertController,
+    private translateService: TranslateService
   ) {
     this.getBusinessTypes();
     this.getRegions();
@@ -119,6 +129,21 @@ export class ProfilePage implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+
+    this.storeAuth
+      .pipe(
+        select(getUserImage),
+        untilDestroyed(this)
+      )
+      .subscribe(imgUrl => {
+        console.log(imgUrl);
+        this.imgUrl = imgUrl;
+        if (this.imgUrl) {
+        }
+      }, err => {
+        console.log(err);
+        this.imgUrl = '';
+      });
   }
 
   ngOnInit() {
@@ -344,24 +369,24 @@ export class ProfilePage implements OnInit, OnDestroy {
     // this.profileForm.value.RegionName = value.RegionName;
   }
 
-  async openModal() {
-    const modal = await this.modalController.create({
-      component: ModalPopupPage,
-      componentProps: {
-        paramID: 123,
-        paramTitle: 'Test Title',
-        paramUserImageType: 'DL'
-      }
-    });
+  // async openModal() {
+  //   const modal = await this.modalController.create({
+  //     component: ModalPopupPage,
+  //     componentProps: {
+  //       paramID: 123,
+  //       paramTitle: 'Test Title',
+  //       paramUserImageType: 'DL'
+  //     }
+  //   });
 
-    modal.onDidDismiss().then(dataReturned => {
-      console.log(dataReturned);
-      if (dataReturned.data) {
-        this.photo = dataReturned.data['imageUrl']['data'];
-      }
-    });
-    return await modal.present();
-  }
+  //   modal.onDidDismiss().then(dataReturned => {
+  //     console.log(dataReturned);
+  //     if (dataReturned.data) {
+  //       this.photo = dataReturned.data['imageUrl']['data'];
+  //     }
+  //   });
+  //   return await modal.present();
+  // }
 
   setGstinStatus(event) {
     if (event.detail.value === 'I have GSTIN Number') {
@@ -369,6 +394,75 @@ export class ProfilePage implements OnInit, OnDestroy {
     } else {
       this.profileForm.get('gstinNumber').disable();
     }
+  }
+
+  async openModal() {
+    const alert = await this.alertController.create({
+      header: this.translateService.instant('IMAGE_UPLOAD.PROFILE_IMAGE_TITLE'),
+      message: this.translateService.instant('IMAGE_UPLOAD.PROFILE_IMAGE_SUBTITLE'),
+      buttons: [
+        {
+          text: 'Upload',
+          role: null,
+          handler: () => {
+            this.takePhoto(0);
+          }
+        }, {
+          text: 'Capture',
+          role: null,
+          handler: () => {
+            this.takePhoto(1);
+          }
+        }
+      ]
+    });
+
+    // this.alertController.dismiss().then(() => {
+    //   console.log(this.imgUrl);
+    // });
+
+    await alert.present();
+  }
+
+  takePhoto(sourceType) {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType,
+      targetWidth: 500,
+      targetHeight: 500
+    };
+
+    this.camera.getPicture(options).then(
+      imageData => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        const base64Image = 'data:image/jpeg;base64,' + imageData;
+        console.log('*' + base64Image);
+        this.uploadMedia(base64Image);
+        this.photo = this.imgUrl;
+      },
+      err => {
+        console.log('#' + err);
+        // Handle error
+      }
+    );
+  }
+
+  uploadMedia(imageData) {
+    const payload = {
+      file: {
+        name: this.retailerId + '_DL.jpeg',
+        data: imageData
+      },
+      type: 'DL',
+      retailerId: Number(this.retailerId)
+    };
+    console.log('payload: ', payload);
+    this.store.dispatch(new ImageUpload(payload));
   }
 
   ngOnDestroy() {}

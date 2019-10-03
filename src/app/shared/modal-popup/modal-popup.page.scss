@@ -1,8 +1,25 @@
 ion-modal {
-    --height: 8rem !important;
-    --width: 75% !important;
+    --height: 6rem !important;
+    --width: 60% !important;
+    --border-radius: 4px !important;
 }
 
 .modal-wrapper.sc-ion-modal-md {
     border-radius: 4% !important;
+}
+
+.lable-font-weight600 {
+    font-weight: 600;
+}
+
+.border-top-row {
+    border-top: 1px solid gray;
+}
+
+.border-right-col {
+    border-right: 1px solid gray;
+}
+
+.border-radius4 {
+    border-radius: 4px;
 }
