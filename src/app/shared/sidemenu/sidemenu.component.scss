@@ -2,3 +2,11 @@
     height: 100%; 
     flex-direction: column;
 }
+
+.modalClass {
+    border-radius: 4px;
+}
+
+::ng-deep .alert-button.sc-ion-alert-ios:last-child {
+    font-weight: 100;
+}

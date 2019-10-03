@@ -44,8 +44,6 @@ export class ModalPopupPage implements OnInit {
       this.closeModal();
     });
 
-
-
     this.store
       .pipe(
         select(getUserImage),

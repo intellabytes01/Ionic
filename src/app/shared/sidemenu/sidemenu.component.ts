@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { MenuController, ModalController, Platform } from '@ionic/angular';
+import { MenuController, ModalController, Platform, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,11 +12,14 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import {
   AuthState,
   getUserImage,
-  getRetailerName
+  getRetailerName,
+  getRetailerId
 } from '@app/core/authentication/auth.states';
 import { Store, select } from '@ngrx/store';
 import { untilDestroyed } from '@app/core/index.js';
 import { AppVersion } from '@ionic-native/app-version/ngx';
+import { ImageUpload } from '@app/core/authentication/actions/auth.actions.js';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-sidemenu',
@@ -32,6 +35,10 @@ export class SidemenuComponent implements OnInit, OnDestroy {
   userImage: string;
   retailerName = 'N/A';
   appVer = '0.0.1';
+  imageUploadModal = false;
+  imgUrl: string;
+  retailerId: string;
+  
   constructor(
     private router: Router,
     private menuCtrl: MenuController,
@@ -43,7 +50,10 @@ export class SidemenuComponent implements OnInit, OnDestroy {
     public iab: InAppBrowser,
     private authStore: Store<AuthState>,
     private appVersion: AppVersion,
-    public platform: Platform
+    public platform: Platform,
+    private store: Store<AuthState>,
+    private alertController: AlertController,
+    private camera: Camera
   ) {}
 
   ngOnInit() {
@@ -59,6 +69,33 @@ export class SidemenuComponent implements OnInit, OnDestroy {
         this.getRetailerName();
       }
     });
+
+    this.store
+    .pipe(
+      select(getRetailerId),
+      untilDestroyed(this)
+    )
+    .subscribe(retId => {
+      this.retailerId = retId;
+    }, err => {
+      console.log(err);
+      this.imgUrl = '';
+    });
+
+    this.store
+      .pipe(
+        select(getUserImage),
+        untilDestroyed(this)
+      )
+      .subscribe(imgUrl => {
+        console.log(imgUrl);
+        this.imgUrl = imgUrl;
+        if (this.imgUrl) {
+        }
+      }, err => {
+        console.log(err);
+        this.imgUrl = '';
+      });
   }
 
   ngOnDestroy() {}
@@ -120,21 +157,92 @@ export class SidemenuComponent implements OnInit, OnDestroy {
   }
 
   async openModal() {
-    const modal = await this.modalController.create({
-      component: ModalPopupPage,
-      componentProps: {
-        paramID: 123,
-        paramTitle: 'Test Title',
-        paramUserImageType: 'PP'
-      }
+    const alert = await this.alertController.create({
+      header: this.translateService.instant('IMAGE_UPLOAD.PROFILE_IMAGE_TITLE'),
+      message: this.translateService.instant('IMAGE_UPLOAD.PROFILE_IMAGE_SUBTITLE'),
+      buttons: [
+        {
+          text: 'Upload',
+          role: null,
+          handler: () => {
+            this.takePhoto(0);
+          }
+        }, {
+          text: 'Capture',
+          role: null,
+          handler: () => {
+            this.takePhoto(1);
+          }
+        }
+      ]
     });
 
-    modal.onDidDismiss().then(dataReturned => {
-      console.log(dataReturned);
-      if (dataReturned.data) {
-        this.photo = dataReturned.data['imageUrl']['data'];
-      }
-    });
-    return await modal.present();
+    // this.alertController.dismiss().then(() => {
+    //   console.log(this.imgUrl);
+    // });
+
+    await alert.present();
   }
+
+  takePhoto(sourceType) {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType,
+      targetWidth: 500,
+      targetHeight: 500
+    };
+
+    this.camera.getPicture(options).then(
+      imageData => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64 (DATA_URL):
+        const base64Image = 'data:image/jpeg;base64,' + imageData;
+        console.log('*' + base64Image);
+        this.uploadMedia(base64Image);
+        this.photo = this.imgUrl;
+      },
+      err => {
+        console.log('#' + err);
+        // Handle error
+      }
+    );
+  }
+
+  uploadMedia(imageData) {
+    const payload = {
+      file: {
+        name: this.retailerId + '_PP.jpeg',
+        data: imageData
+      },
+      type: 'PP',
+      retailerId: Number(this.retailerId)
+    };
+    console.log('payload: ', payload);
+    this.store.dispatch(new ImageUpload(payload));
+  }
+
+
+  // async openModal() {
+  //   const modal = await this.modalController.create({
+  //     component: ModalPopupPage,
+  //     componentProps: {
+  //       paramID: 123,
+  //       paramTitle: 'Test Title',
+  //       paramUserImageType: 'PP'
+  //     },
+  //     cssClass: 'modalClass'
+  //   });
+
+  //   modal.onDidDismiss().then(dataReturned => {
+  //     console.log(dataReturned);
+  //     if (dataReturned.data) {
+  //       this.photo = dataReturned.data['imageUrl']['data'];
+  //     }
+  //   });
+  //   return await modal.present();
+  // }
 }

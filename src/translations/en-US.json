@@ -439,5 +439,10 @@
     "REGISTERED": "Mobile Number Already Registered",
     "OTPREQUIRED": "Please Enter OTP",
     "TERMS": "By clicking Sign In you agree to the Terms and Conditions of Pharmarack message should be displayed on Login page."
+  },
+
+  "IMAGE_UPLOAD": {
+    "PROFILE_IMAGE_TITLE": "Capture Profile Image",
+    "PROFILE_IMAGE_SUBTITLE": "Capture / Upload Profile Image"
   }
 }
