@@ -60,6 +60,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   regionId: any;
   retailerId: any;
   isAuthorized = false;
+  gstinOption = '1';
   gstinStatus = [
     { id: 1, name: 'Select GSTIN Option', selected: true },
     { id: 2, name: 'I have GSTIN Number', selected: false },
@@ -150,6 +151,9 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.createForm();
     this.photo = 'assets/icon/gstin.png';
     this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
+    this.store.pipe(select(getProfileDetails)).subscribe(data => {
+      console.log(data);
+    });
     this.store.pipe(select(getProfileDetails)).subscribe(res => {
       console.log(res);
     });
@@ -339,15 +343,18 @@ export class ProfilePage implements OnInit, OnDestroy {
         licenseNumber: this.profileForm.value.licenseNumber
           ? this.profileForm.value.licenseNumber
           : this.profileForm.controls['licenseNumber'].value,
-        gstinNumber: this.profileForm.value.gstinNumber
-          ? this.profileForm.value.gstinNumber
-          : this.profileForm.controls['gstinNumber'].value,
+        gstinOption: this.gstinOption.toString(),
         lastName: 'NoName',
-        gstinOption: 'GSTIN'
       };
 
-      if (!this.profileInterface.gstinNumber || this.profileInterface.gstinNumber == null) {
-        this.profileInterface.gstinNumber = '';
+      if (this.profileForm.value.gstinNumber
+        && this.profileForm.value.gstinNumber !== ''  || this.profileForm.value.gstinNumberr != null) {
+        this.profileInterface.gstinNumber = this.profileForm.value.gstinNumber;
+      }
+      if (this.profileForm.controls['gstinNumber'].value
+      && this.profileForm.controls['gstinNumber'].value == null
+      || this.profileForm.controls['gstinNumber'].value === '') {
+        this.profileInterface.gstinNumber = this.profileForm.controls['gstinNumber'].value;
       }
       const payload = {
         userProfileDetails: this.profileInterface
@@ -390,9 +397,20 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   setGstinStatus(event) {
     if (event.detail.value === 'I have GSTIN Number') {
+      this.gstinOption = '2';
       this.profileForm.get('gstinNumber').enable();
+    } else if (event.detail.value === 'I have applied') {
+      this.gstinOption = '3';
+      this.profileForm.get('gstinNumber').disable();
+    }  else if (event.detail.value === 'I have not applied') {
+      this.profileForm.get('gstinNumber').disable();
+      this.gstinOption = '4';
+    }  else if (event.detail.value === 'I am not eligible') {
+      this.profileForm.get('gstinNumber').disable();
+      this.gstinOption = '5';
     } else {
       this.profileForm.get('gstinNumber').disable();
+      this.gstinOption = '1';
     }
   }
 
