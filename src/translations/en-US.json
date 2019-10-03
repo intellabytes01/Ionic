@@ -74,7 +74,7 @@
     "SELECTSTATUS": "Select Status",
     "VALIDATION_MESSAGES": {
       "mobile": [
-        { "type": "required", "message": "VALIDATIONS.MOBILEREQUIRED" },
+        { "type": "required", "message": "VALIDATIONS.MOBILEPATTERN" },
         {
           "type": "pattern",
           "message": "VALIDATIONS.MOBILEPATTERN"
@@ -92,8 +92,8 @@
   "FORGOT_PASSWORD": {
     "TITLE": "Forgot Password?",
     "SENDOTPMESSAGE": "We will send you an OTP to your mobile number to enable you to login",
-    "VERIFY": "Verify Otp",
-    "RESEND": "Resend Otp",
+    "VERIFY": "Verify OTP",
+    "RESEND": "Resend OTP",
     "VERIFYOTPMESSAGE": "Please enter the OTP code which has been sent to your Mobile number",
     "VALIDATION_MESSAGES": {
       "mobile": [
@@ -118,7 +118,7 @@
       "password": [
         {
           "type": "required",
-          "message": "Please Enter Password Greater Than Or Equal To 6 Characters"
+          "message": "Please Enter Value, Field's Shouldn't Be Empty"
         },
         {
           "type": "minlength",
@@ -369,7 +369,7 @@
   },
 
   "DELIVERY": {
-    "FILTER": "Filter List"
+    "FILTER": "Click here to filter notifications"
   },
 
   "NOTIFICATION": {
@@ -404,7 +404,7 @@
     "VALIDATIONS": {
       "MOBILEREQUIRED": "Mobile number is required",
       "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number",
-      "OTPREQUIRED": "Otp is required",
+      "OTPREQUIRED": "OTP is required",
       "FEEDBACK": {
         "message": [
           { "type": "required", "message": "Value is required for Remarks" }
@@ -433,7 +433,12 @@
 
   "VALIDATIONS": {
     "MOBILEREQUIRED": "Mobile number is required",
-    "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number"
+    "MOBILEPATTERN": "Please Enter Valid 10 Digit Mobile Number",
+    "REGISTERNOW": "You are not registered. Register Now.",
+    "EMPTYUSERNAME": "Please Enter Value For Username.",
+    "REGISTERED": "Mobile Number Already Registered",
+    "OTPREQUIRED": "Please Enter OTP",
+    "TERMS": "By clicking Sign In you agree to the Terms and Conditions of Pharmarack message should be displayed on Login page."
   },
 
   "IMAGE_UPLOAD": {

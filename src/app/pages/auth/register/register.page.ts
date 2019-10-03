@@ -42,7 +42,7 @@ export class RegisterPage implements OnInit, OnDestroy {
   validateuserStore: any;
   firstTimeLoad = true;
   isChecked = true;
-  isUserExists: any;
+  isUserExists: boolean;
 
   constructor(
     private alertService: AlertService,
@@ -185,6 +185,7 @@ export class RegisterPage implements OnInit, OnDestroy {
   }
 
   checkIfUserExists() {
+    this.isUserExists = false;
     const payload = {
       cred: {
         mobile: this.registerForm.value.mobile
@@ -197,8 +198,9 @@ export class RegisterPage implements OnInit, OnDestroy {
   }
 
   async userExists() {
-    await this.store.pipe(select(isUserExists), untilDestroyed(this)).subscribe(userId => {
-      this.isUserExists = userId;
+    this.isUserExists = false;
+    await this.store.pipe(select(isUserExists), untilDestroyed(this)).subscribe(state => {
+      this.isUserExists = state;
     });
   }
 }

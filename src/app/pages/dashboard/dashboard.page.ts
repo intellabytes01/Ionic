@@ -15,6 +15,7 @@ import { AlertService } from '@app/shared/services/alert.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { GetPreviousUrl } from '@app/core/authentication/actions/auth.actions.js';
+import { takeLast } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -116,7 +117,8 @@ export class DashboardPage implements OnInit, OnDestroy {
     await this.store
       .pipe(
         select(getRetailerName),
-        untilDestroyed(this)
+        untilDestroyed(this),
+        takeLast(1)
       )
       .subscribe(retailerName => {
         if (!retailerName || retailerName == null || retailerName === '') {

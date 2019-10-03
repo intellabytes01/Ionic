@@ -72,6 +72,10 @@
           {{ validation.message }}
         </div>
       </ng-container>
+
+      <div class="error-message" *ngIf="isUserExists">
+        {{ "VALIDATIONS.REGISTERED" | translate }}
+      </div>
     </div>
 
     <ion-row>
@@ -158,20 +162,20 @@
         <ion-checkbox formControlName="agree"></ion-checkbox>
         <ion-label class="message"
           >&nbsp;{{ "REGISTER.AGREE" | translate }}
-          <a href="http://www.pharmarack.com/termsandconditions" target="_blank"> <u>{{ "REGISTER.tnc" | translate }}</u></a>
+          <a
+            href="http://www.pharmarack.com/termsandconditions"
+            target="_blank"
+          >
+            <u>{{ "REGISTER.tnc" | translate }}</u></a
+          >
           {{ "REGISTER.ofPR" | translate }}
-        </ion-label
-        >
+        </ion-label>
       </ion-col>
     </ion-row>
-    
 
     <div class="validation-errors">
-        <ng-container
-        *ngFor="
-          let validation of validation_messages.tnc;
-          trackBy: trackByFn
-        "
+      <ng-container
+        *ngFor="let validation of validation_messages.tnc; trackBy: trackByFn"
       >
         <div
           class="error-message"
@@ -180,8 +184,7 @@
           {{ validation.message }}
         </div>
       </ng-container>
-      </div>
-
+    </div>
 
     <br />
     <ion-row>
@@ -199,5 +202,4 @@
       </ion-col>
     </ion-row>
   </form>
-
 </ion-content>

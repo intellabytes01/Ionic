@@ -1,14 +1,23 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { MenuController, ModalController, AlertController } from '@ionic/angular';
+import { MenuController, ModalController, Platform, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import * as fromSideMenuJson from './sidemenu-Data.json';
+import { ModalPopupPage } from '../modal-popup/modal-popup.page';
+import { DomSanitizer } from '@angular/platform-browser';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { AuthState, getUserImage, getRetailerId } from '@app/core/authentication/auth.states';
+import {
+  AuthState,
+  getUserImage,
+  getRetailerName,
+  getRetailerId
+} from '@app/core/authentication/auth.states';
 import { Store, select } from '@ngrx/store';
 import { untilDestroyed } from '@app/core/index.js';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 import { ImageUpload } from '@app/core/authentication/actions/auth.actions.js';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
@@ -24,28 +33,40 @@ export class SidemenuComponent implements OnInit, OnDestroy {
   dataReturned: any;
   photo: any;
   userImage: string;
+  retailerName = 'N/A';
+  appVer = '0.0.1';
   imageUploadModal = false;
   imgUrl: string;
   retailerId: string;
-
+  
   constructor(
     private router: Router,
     private menuCtrl: MenuController,
     private storage: Storage,
     private translateService: TranslateService,
     public modalController: ModalController,
+    private sanitizer: DomSanitizer,
+    private emailComposer: EmailComposer,
     public iab: InAppBrowser,
+    private authStore: Store<AuthState>,
+    private appVersion: AppVersion,
+    public platform: Platform,
     private store: Store<AuthState>,
     private alertController: AlertController,
     private camera: Camera
   ) {}
 
   ngOnInit() {
+    if (this.platform.is('cordova') || this.platform.is('capacitor')) {
+      this.appVer = this.appVersion.getVersionNumber()['__zone_symbol__value'];
+    }
+    console.log(this.appVer);
     this.photo = 'assets/icon/user-default.png';
     this.storage.get('userData').then(data => {
       data = JSON.parse(data);
       if (data && data['userData']) {
         this.userImage = data['userData']['userSummary']['Userimage'];
+        this.getRetailerName();
       }
     });
 
@@ -78,6 +99,22 @@ export class SidemenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {}
+
+  async getRetailerName() {
+    await this.authStore
+      .pipe(
+        select(getRetailerName),
+        untilDestroyed(this)
+      )
+      .subscribe(retailerName => {
+        console.log(retailerName);
+        if (!retailerName || retailerName == null || retailerName === '') {
+          this.retailerName = 'N/A';
+        } else {
+          this.retailerName = retailerName;
+        }
+      });
+  }
 
   callNow(numberToCall) {
     this.iab.create(`tel:${numberToCall}`);
