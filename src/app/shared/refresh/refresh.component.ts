@@ -69,11 +69,11 @@ export class RefreshComponent implements OnInit, OnDestroy {
   doRefresh(event) {
     console.log('Begin async operation: ', this.router.url);
 
-    if (this.router.url === '/profile') {
-      this.getBusinessTypes();
-      this.getRegions();
-      this.getProfileDetails();
-    }
+    // if (this.router.url === '/profile') {
+    //   this.getBusinessTypes();
+    //   this.getRegions();
+    //   this.getProfileDetails();
+    // }
     if (this.router.url === '/add-distributor/tab/request') {
       this.getRetailerId();
       this.getStoresRequestTab();

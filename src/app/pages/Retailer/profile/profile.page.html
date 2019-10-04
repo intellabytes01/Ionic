@@ -1,16 +1,10 @@
 <ion-content padding>
-  <ion-grid>
     <form [formGroup]="profileForm">
       <ion-row>
-        <ion-col width-50>
+        <ion-col>
           <ion-item>
-            <ion-label translate>PROFILE.LOGIN_ID</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col width-50>
-          <ion-item>
+            <ion-label position="stacked" translate>PROFILE.LOGIN_ID<ion-text color="danger">*</ion-text></ion-label>
             <ion-input
-              class="ion-text-right"
               formControlName="loginId"
               type="text"
               [ngModel]="(userProfileDetails$ | async)?.Username"
@@ -19,13 +13,11 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col width-50>
+        <ion-col>
           <ion-item class="disableClick">
-            <ion-label translate>PROFILE.BUSINESS_TYPE</ion-label></ion-item
-          >
-        </ion-col>
-        <ion-col width-50>
-          <ion-item class="ion-text-right select-opacity4 disableClick">
+            <ion-label position="stacked" translate
+              >PROFILE.BUSINESS_TYPE<ion-text color="danger">*</ion-text></ion-label
+            >
             <pr-select
               [placeHolder]="'REGISTER.BT' | translate"
               [ctrName]="'businessType'"
@@ -41,17 +33,14 @@
           </ion-item>
         </ion-col>
       </ion-row>
-
+  
       <ion-row>
-        <ion-col width-50>
+        <ion-col>
           <ion-item>
-            <ion-label translate>PROFILE.SHOP_FULL_NAME</ion-label></ion-item
-          >
-        </ion-col>
-        <ion-col width-50>
-          <ion-item>
+            <ion-label position="stacked" translate
+              >PROFILE.SHOP_FULL_NAME<ion-text color="danger">*</ion-text></ion-label
+            >
             <ion-input
-              class="ion-text-right"
               formControlName="shopName"
               type="text"
               [ngModel]="(userProfileDetails$ | async)?.RetailerName"
@@ -59,17 +48,12 @@
           </ion-item>
         </ion-col>
       </ion-row>
-
+  
       <ion-row>
-        <ion-col width-50>
+        <ion-col>
           <ion-item>
-            <ion-label translate>PROFILE.NAME</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col width-50>
-          <ion-item>
+            <ion-label position="stacked" translate>PROFILE.NAME<ion-text color="danger">*</ion-text></ion-label>
             <ion-input
-              class="ion-text-right"
               formControlName="firstName"
               type="text"
               [ngModel]="(userProfileDetails$ | async)?.FirstName"
@@ -77,17 +61,12 @@
           </ion-item>
         </ion-col>
       </ion-row>
-
+  
       <ion-row>
-        <ion-col width-50>
+        <ion-col>
           <ion-item>
-            <ion-label translate>PROFILE.ADDRESS</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col width-50>
-          <ion-item>
+            <ion-label position="stacked" translate>PROFILE.ADDRESS<ion-text color="danger">*</ion-text></ion-label>
             <ion-input
-              class="ion-text-right"
               formControlName="address1"
               type="text"
               [ngModel]="(userProfileDetails$ | async)?.Address1"
@@ -95,17 +74,12 @@
           </ion-item>
         </ion-col>
       </ion-row>
-
+  
       <ion-row>
-        <ion-col width-50>
+        <ion-col>
           <ion-item>
-            <ion-label translate>PROFILE.PINCODE</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col width-50>
-          <ion-item>
+            <ion-label position="stacked" translate>PROFILE.PINCODE<ion-text color="danger">*</ion-text></ion-label>
             <ion-input
-              class="ion-text-right"
               formControlName="pincode"
               oninput="this.value=this.value.slice(0,6)"
               type="text"
@@ -115,15 +89,11 @@
           </ion-item>
         </ion-col>
       </ion-row>
-
+  
       <ion-row>
-        <ion-col width-50>
+        <ion-col>
           <ion-item class="disableClick">
-            <ion-label translate>PROFILE.REGION</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col width-50>
-          <ion-item class="ion-text-right select-opacity4 disableClick">
+            <ion-label position="stacked" translate>PROFILE.REGION<ion-text color="danger">*</ion-text></ion-label>
             <pr-select
               [placeHolder]="'REGISTER.REGIONS' | translate"
               [ctrName]="'region'"
@@ -139,17 +109,12 @@
           </ion-item>
         </ion-col>
       </ion-row>
-
+  
       <ion-row>
-        <ion-col width-50>
+        <ion-col>
           <ion-item>
-            <ion-label translate>PROFILE.EMAIL</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col width-50>
-          <ion-item>
+            <ion-label position="stacked" translate>PROFILE.EMAIL<ion-text color="danger">*</ion-text></ion-label>
             <ion-input
-              class="ion-text-right"
               formControlName="email"
               type="email"
               [ngModel]="(userProfileDetails$ | async)?.Email"
@@ -157,17 +122,14 @@
           </ion-item>
         </ion-col>
       </ion-row>
-
+  
       <ion-row>
-        <ion-col width-50>
+        <ion-col>
           <ion-item>
-            <ion-label translate>PROFILE.MOBILE_NUMBER</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col width-50>
-          <ion-item>
+            <ion-label position="stacked" translate
+              >PROFILE.MOBILE_NUMBER<ion-text color="danger">*</ion-text></ion-label
+            >
             <ion-input
-              class="ion-text-right"
               formControlName="mobileNumber"
               type="tel"
               maxlength="10"
@@ -177,17 +139,12 @@
           </ion-item>
         </ion-col>
       </ion-row>
-
+  
       <ion-row>
-        <ion-col width-50>
+        <ion-col>
           <ion-item>
-            <ion-label translate>PROFILE.TELEPHONE</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col width-50>
-          <ion-item>
+            <ion-label position="stacked" translate>PROFILE.TELEPHONE</ion-label>
             <ion-input
-              class="ion-text-right"
               formControlName="telephone"
               type="number"
               [ngModel]="(userProfileDetails$ | async)?.Telephone"
@@ -195,17 +152,14 @@
           </ion-item>
         </ion-col>
       </ion-row>
-
+  
       <ion-row>
-        <ion-col width-50>
+        <ion-col>
           <ion-item>
-            <ion-label translate>PROFILE.DRUG_LICENSE_NUMBER</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col width-50>
-          <ion-item>
+            <ion-label position="stacked" translate
+              >PROFILE.DRUG_LICENSE_NUMBER<ion-text color="danger">*</ion-text></ion-label
+            >
             <ion-input
-              class="ion-text-right"
               formControlName="licenseNumber"
               type="text"
               [ngModel]="(userProfileDetails$ | async)?.LicenseNumber"
@@ -213,104 +167,71 @@
           </ion-item>
         </ion-col>
       </ion-row>
-
-      <ion-row *ngIf="
-      (userProfileDetails$ | async)?.GSTINNumber == null ||
-      (userProfileDetails$ | async)?.GSTINNumber == ''
-    ">
-        <ion-col width-50>
-          <ion-item>
-            <ion-label translate>PROFILE.GSTIN_NUMBER</ion-label>
-          </ion-item>
-        </ion-col>
-        <ion-col width-50>
-          <!-- <ion-item> -->
-          <ion-select
-            *ngIf="
-              (userProfileDetails$ | async)?.GSTINNumber == null ||
-              (userProfileDetails$ | async)?.GSTINNumber == ''
-            "
-            (ionChange)="setGstinStatus($event)"
-            [disabled]="disable"
-            interface="popover"
-          >
-            <ion-select-option
-              *ngFor="let status of gstinStatus"
-              [value]="status.name"
-              [selected]="status.selected"
-              >{{ status.name }}</ion-select-option
-            >
-          </ion-select>
-          <!-- </ion-item> -->
-        </ion-col>
-      </ion-row>
-
-      <ion-row
-        *ngIf="
-          (userProfileDetails$ | async)?.GSTINNumber == null ||
-          (userProfileDetails$ | async)?.GSTINNumber == ''
-        "
-      >
+  
+      <ion-row>
         <ion-col>
           <ion-item>
+            <ion-label position="stacked" translate
+              >PROFILE.GSTIN_NUMBER<ion-text color="danger">*</ion-text></ion-label
+            >
+  
+  
+  
+  
+  
+            <ion-select *ngIf="
+            (userProfileDetails$ | async)?.GSTINNumber == null
+            && (userProfileDetails$ | async)?.GSTINNumber == ''"
+              (ionChange)="setGstinStatus($event)"
+              [disabled]="disable"
+              interface="popover"
+            >
+              <ion-select-option
+                *ngFor="let status of gstinStatus"
+                [value]="status.name"
+                [selected]="status.selected"
+                >{{ status.name }}</ion-select-option
+              >
+            </ion-select>
+  
+  
+  
             <ion-input
-              class="ion-text-right"
               formControlName="gstinNumber"
               type="text"
               [ngModel]="(userProfileDetails$ | async)?.GSTINNumber"
               maxlength="15"
             ></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-
-      <ion-row *ngIf="
-      profileForm.value.gstinNumber &&
-      (profileForm.value.gstinNumber.substring(13, 14) !== 'Z' ||
-        profileForm.value.gstinNumber.length < 15)
-    ">
-        <ion-col>
-          <ion-item>
-            <div class="error-message-profile">
-              {{ "PROFILE.GSTIN_TEXT" | translate }}
+  
+            <div
+              class="error-message"
+              *ngIf="
+                profileForm.value.gstinNumber &&
+                (profileForm.value.gstinNumber.substring(13, 14) !== 'Z' ||
+                  profileForm.value.gstinNumber.length < 15)
+              "
+            >
+              {{'PROFILE.GSTIN_TEXT' | translate}}
             </div>
           </ion-item>
         </ion-col>
       </ion-row>
-
-      <ion-row *ngIf="
-      (userProfileDetails$ | async)?.GSTINNumber !== null &&
-      (userProfileDetails$ | async)?.GSTINNumber !== ''
-    ">
-    <ion-col width-50>
-        <ion-item>
-          <ion-label translate>PROFILE.GSTIN_NUMBER</ion-label>
-        </ion-item>
-      </ion-col>
-      <ion-col width-50>
-          <ion-item class="ion-text-right select-opacity4 disableClick">
-            <ion-label>
-                  {{ (userProfileDetails$ | async)?.GSTINNumber }}
-             </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-
+  
       <!-- <ion-row hidden>
-        <ion-col width-50>
-          <ion-item>
-            <ion-label translate
-              >PROFILE.CST_NUMBER</ion-label
-            >
-            <ion-input class="ion-text-right"
-              formControlName="cstNumber"
-              type="text"
-              [ngModel]="(userProfileDetails$ | async) ?.CSTNumber"
-            ></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row> -->
-
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked" translate
+                >PROFILE.CST_NUMBER</ion-label
+              >
+              <ion-input
+                formControlName="cstNumber"
+                type="text"
+                [ngModel]="(userProfileDetails$ | async) ?.CSTNumber"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row> -->
+  
       <ion-row *ngIf="!disable">
         <ion-col>
           <ion-item>
@@ -318,22 +239,19 @@
           </ion-item>
         </ion-col>
       </ion-row>
-
+  
       <ion-row style="height: 100%; flex-direction: column" *ngIf="!disable">
         <ion-item no-lines class="alignSelf-center">
-          <ion-card
-            (click)="openModal()"
-            [ngClass]="licenseImage ? 'height250' : ''"
-          >
+          <ion-card (click)="openModal()" style="height: 200px;">
             <ion-card-content>
-              <img [src]="licenseImage ? licenseImage : photo" />
+              <img [src]="licenseImage ? licenseImage : photo"/>
             </ion-card-content>
           </ion-card>
         </ion-item>
       </ion-row>
-
+  
       <br />
-
+  
       <ion-row *ngIf="disable">
         <ion-col size="6" class="ion-padding">
           <app-back-button [link]="['/dashboard']"></app-back-button>
@@ -350,7 +268,7 @@
           >
         </ion-col>
       </ion-row>
-
+  
       <ion-row *ngIf="!disable">
         <ion-col size="6" class="ion-padding">
           <ion-button
@@ -376,5 +294,5 @@
         </ion-col>
       </ion-row>
     </form>
-  </ion-grid>
-</ion-content>
+  </ion-content>
+  

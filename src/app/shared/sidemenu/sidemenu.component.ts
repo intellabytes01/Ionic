@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { MenuController, ModalController, Platform, AlertController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import * as fromSideMenuJson from './sidemenu-Data.json';
@@ -33,7 +33,7 @@ export class SidemenuComponent implements OnInit, OnDestroy {
   dataReturned: any;
   photo: any;
   userImage: string;
-  retailerName = 'N/A';
+  retailerName$: any;
   appVer = '0.0.1';
   imageUploadModal = false;
   imgUrl: string;
@@ -54,7 +54,15 @@ export class SidemenuComponent implements OnInit, OnDestroy {
     private store: Store<AuthState>,
     private alertController: AlertController,
     private camera: Camera
-  ) {}
+  ) {
+    this.router.events.subscribe(e => {
+      if (e instanceof NavigationEnd) {
+        if (e.url === '/dashboard' || e.url === '/') {
+          this.getRetailerName();
+        }
+      }
+    });
+  }
 
   ngOnInit() {
     if (this.platform.is('cordova') || this.platform.is('capacitor')) {
@@ -66,7 +74,7 @@ export class SidemenuComponent implements OnInit, OnDestroy {
       data = JSON.parse(data);
       if (data && data['userData']) {
         this.userImage = data['userData']['userSummary']['Userimage'];
-        this.getRetailerName();
+        // this.getRetailerName();
       }
     });
 
@@ -100,20 +108,18 @@ export class SidemenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {}
 
-  async getRetailerName() {
-    await this.authStore
+  getRetailerName() {
+    this.retailerName$ = this.authStore
       .pipe(
         select(getRetailerName),
         untilDestroyed(this)
-      )
-      .subscribe(retailerName => {
-        console.log(retailerName);
-        if (!retailerName || retailerName == null || retailerName === '') {
-          this.retailerName = 'N/A';
-        } else {
-          this.retailerName = retailerName;
-        }
-      });
+      );
+      // .subscribe(retailerName => {
+      //   console.log(retailerName);
+      //   if (retailerName && retailerName != null) {
+      //     this.retailerName = retailerName;
+      //   }
+      // });
   }
 
   callNow(numberToCall) {

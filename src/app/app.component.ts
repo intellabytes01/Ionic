@@ -187,7 +187,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   disablePullRefresh() {
     let disable = true;
     if (
-      this.router.url === '/profile' ||
       this.router.url === '/add-distributor/tab/request' ||
       this.router.url === '/add-distributor/tab/status' ||
       this.router.url === '/feedback' ||

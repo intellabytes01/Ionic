@@ -81,3 +81,7 @@ ion-select {
 ::ng-deep .alert-button.sc-ion-alert-ios:last-child {
   font-weight: 100;
 }
+
+.item-interactive-disabled .sc-ion-label-ios-h {
+  opacity: 1;
+}

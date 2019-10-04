@@ -59,7 +59,12 @@ export class AuthEffects {
   LogInFailure: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.LOGIN_FAILURE),
     tap((res) => {
-      this.alert.presentToast('danger', this.translateService.instant('VALIDATIONS.REGISTERNOW'));
+      if (res.payload.error.message === 'PROVIDE_VALID_CREDENTIALS') {
+        this.alert.presentToast('danger', this.translateService.instant('BE_MSSAGE.PROVIDE_VALID_CREDENTIALS'));
+      } else {
+        this.alert.presentToast('danger', this.translateService.instant('VALIDATIONS.REGISTERNOW'));
+      }
+      // this.alert.presentToast('danger', this.translateService.instant('VALIDATIONS.REGISTERNOW'));
     })
   );
 
