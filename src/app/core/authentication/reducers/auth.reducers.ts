@@ -17,6 +17,8 @@ export interface State {
   isUserExists: boolean | null;
 
   imageUrl: string | null;
+
+  userRegistered: boolean | false;
 }
 
 export const initialState: State = {
@@ -26,7 +28,8 @@ export const initialState: State = {
   previousUrl: null,
   userId: null,
   isUserExists: null,
-  imageUrl: null
+  imageUrl: null,
+  userRegistered: null
 };
 
 export function authReducer(state = initialState, action: All): State {
@@ -50,12 +53,14 @@ export function authReducer(state = initialState, action: All): State {
         ...state,
         isAuthenticated: true,
         userData: action.payload,
-        errorMessage: null
+        errorMessage: null,
+        userRegistered: true
       };
     }
     case AuthActionTypes.SIGNUP_FAILURE: {
       return {
         ...state,
+        userRegistered: false,
         errorMessage: 'That email is already in use.'
       };
     }

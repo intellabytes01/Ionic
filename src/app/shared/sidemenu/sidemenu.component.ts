@@ -96,7 +96,6 @@ export class SidemenuComponent implements OnInit, OnDestroy {
         untilDestroyed(this)
       )
       .subscribe(imgUrl => {
-        console.log(imgUrl);
         this.imgUrl = imgUrl;
         if (this.imgUrl) {
         }

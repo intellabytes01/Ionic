@@ -27,7 +27,6 @@
               [canSearch]="true"
               [preSelectedOn]="'BusinessTypeId'"
               [preSelectedValue]="(userProfileDetails$ | async)?.BusinessTypeId"
-              (valueChange)="updateBussinessType()"
               [disableControl]="true"
             ></pr-select>
           </ion-item>
@@ -173,15 +172,11 @@
           <ion-item>
             <ion-label position="stacked" translate
               >PROFILE.GSTIN_NUMBER<ion-text color="danger">*</ion-text></ion-label
-            >
-  
-  
-  
-  
+            >  
   
             <ion-select *ngIf="
             (userProfileDetails$ | async)?.GSTINNumber == null
-            && (userProfileDetails$ | async)?.GSTINNumber == ''"
+            || (userProfileDetails$ | async)?.GSTINNumber == ''"
               (ionChange)="setGstinStatus($event)"
               [disabled]="disable"
               interface="popover"
@@ -196,7 +191,7 @@
   
   
   
-            <ion-input
+            <ion-input *ngIf="gstinOption == '2'"
               formControlName="gstinNumber"
               type="text"
               [ngModel]="(userProfileDetails$ | async)?.GSTINNumber"

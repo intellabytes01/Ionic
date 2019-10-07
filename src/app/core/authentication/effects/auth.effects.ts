@@ -89,8 +89,8 @@ export class AuthEffects {
     ofType(AuthActionTypes.SIGNUP_SUCCESS),
     tap((user) => {
       if (user && user.payload) {
-        this.storage.set('userData', JSON.stringify(user.payload));
-        this.router.navigateByUrl('/dashboard');
+        // this.storage.set('userData', JSON.stringify(user.payload));
+        // this.router.navigateByUrl('/dashboard');
       }
     })
   );

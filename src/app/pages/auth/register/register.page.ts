@@ -8,8 +8,8 @@ import {
 import { MenuController } from '@ionic/angular';
 import { Store, select } from '@ngrx/store';
 import { AlertService } from '@app/shared/services/alert.service';
-import { AuthState, isUserExists } from '@app/core/authentication/auth.states';
-import { SignUp, UserExists } from '@app/core/authentication/actions/auth.actions';
+import { AuthState, isUserExists, isAuthenticated } from '@app/core/authentication/auth.states';
+import { SignUp, UserExists, LogIn } from '@app/core/authentication/actions/auth.actions';
 import { BusinessTypes, Regions } from './store/register.actions';
 import { businessTypesData, regionsData } from './store/register.reducers';
 import { untilDestroyed } from '@app/core';
@@ -58,6 +58,19 @@ export class RegisterPage implements OnInit, OnDestroy {
       this.businessTypes$ = data.sort(
         (a, b) => a.BusinessTypeId - b.BusinessTypeId
       );
+    });
+
+    this.store.pipe(select(isAuthenticated)).subscribe(data => {
+      if (data) {
+        const cred = {
+          username: this.registerForm.value.mobile,
+          password: this.registerForm.value.password
+        };
+        const payload = {
+         cred
+        };
+        this.store.dispatch(new LogIn(payload));
+      }
     });
 
     this.getRegions();

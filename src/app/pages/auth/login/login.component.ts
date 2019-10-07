@@ -73,10 +73,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.utilityService.cleverTapInit();
-    document.addEventListener('onCleverTapProfileSync', this.utilityService.onCleverTapProfileSync, false);
-    document.addEventListener('onCleverTapProfileDidInitialize', this.utilityService.onCleverTapProfileDidInitialize, false);
-    document.addEventListener('onCleverTapInAppNotificationDismissed', this.utilityService.onCleverTapInAppNotificationDismissed, false);
+    if (this.platform.is('cordova')) {
+      this.utilityService.cleverTapInit();
+      document.addEventListener(
+        'onCleverTapProfileSync',
+        this.utilityService.onCleverTapProfileSync,
+        false
+      );
+      document.addEventListener(
+        'onCleverTapProfileDidInitialize',
+        this.utilityService.onCleverTapProfileDidInitialize,
+        false
+      );
+      document.addEventListener(
+        'onCleverTapInAppNotificationDismissed',
+        this.utilityService.onCleverTapInAppNotificationDismissed,
+        false
+      );
+    }
   }
 
   ngOnDestroy() {}

@@ -80,7 +80,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-item color="transparent" class="white-border white-color">
+        <ion-item class="white-border white-color">
           <ion-input
             type="password"
             [placeholder]="'LOGIN.PASSWORD' | translate"
@@ -89,17 +89,17 @@
             clearOnEdit="false"
           ></ion-input>
 
-          <button
+          <!-- <button
             class="showhidePass"
             color="light"
             ion-button
             type="button"
             item-end
-            prShowHideInput
-            [targetInput]="userPassword"
-          >
-            <ion-icon name="eye"></ion-icon>
-          </button>
+            
+          > -->
+            <ion-icon name="eye" prShowHideInput
+            [targetInput]="userPassword"></ion-icon>
+          <!-- </button> -->
         </ion-item>
       </ion-col>
     </ion-row>

@@ -61,9 +61,13 @@ export const getRetailerStatus = createSelector(
 export const getRetailerId = createSelector(
   selectAuthState,
   userData => {
-    return userData['userData']['userData']['retailerSummary']['retailerInfo'][
-      'RetailerId'
-    ];
+    if (userData && userData['userData']) {
+      return userData['userData']['userData']['retailerSummary'][
+        'retailerInfo'
+      ]['RetailerId'];
+    } else {
+      return null;
+    }
   }
 );
 
@@ -95,7 +99,9 @@ export const mappedParties = createSelector(
 export const getUserImage = createSelector(
   selectAuthState,
   userData => {
-    return userData['userData']['userData']['userSummary']['Userimage'];
+    if (userData && userData['userData']) {
+      return userData['userData']['userData']['userSummary']['Userimage'];
+    }
   }
 );
 
@@ -103,5 +109,12 @@ export const drugLicenseImage = createSelector(
   selectAuthState,
   userData => {
     return userData['userData']['userData']['userSummary']['Druglicenseimage'];
+  }
+);
+
+export const isAuthenticated = createSelector(
+  selectAuthState,
+  userData => {
+    return userData['userRegistered'];
   }
 );

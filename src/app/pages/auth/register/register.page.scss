@@ -20,9 +20,14 @@ ion-content {
   }
 
   ion-item {
-    --background: transparent
+    --background: transparent;
+    --background-focused: transparent;
   }
 
   .ionic-selectable {
     height: 2.5rem;
+}
+
+.sc-ion-input-md-h .sc-ion-input-ios-h {
+  --placeholder-color: white !important;
 }

@@ -11,3 +11,12 @@ ion-label {
 ion-icon {
   color: white;
 }
+
+.sc-ion-input-md-h .sc-ion-input-ios-h {
+  --placeholder-color: white !important;
+}
+
+ion-item {
+  --background: transparent;
+  --background-focused: transparent;
+}

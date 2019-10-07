@@ -16,6 +16,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { GetPreviousUrl } from '@app/core/authentication/actions/auth.actions.js';
 import { takeLast } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,6 +28,8 @@ export class DashboardPage implements OnInit, OnDestroy {
   userData: object;
   backButton: any;
   permissions: object;
+  routerSub = Subscription.EMPTY;
+
   constructor(
     public menuCtrl: MenuController,
     private translateService: TranslateService,
@@ -38,7 +41,7 @@ export class DashboardPage implements OnInit, OnDestroy {
     private socialSharing: SocialSharing,
     private alertCtrl: AlertController
   ) {
-    this.router.events.subscribe(e => {
+    this.routerSub = this.router.events.subscribe(e => {
       if (e instanceof NavigationEnd) {
         if (e.url === '/dashboard') {
           this.getRetailerName();
@@ -113,13 +116,9 @@ export class DashboardPage implements OnInit, OnDestroy {
     );
   }
 
-  async getRetailerName() {
-    await this.store
-      .pipe(
-        select(getRetailerName),
-        untilDestroyed(this),
-        takeLast(1)
-      )
+  getRetailerName() {
+    this.store
+        .select(getRetailerName)
       .subscribe(retailerName => {
         if (!retailerName || retailerName == null || retailerName === '') {
           this.showUpdateProfileModal();
@@ -210,6 +209,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.routerSub.unsubscribe();
     // Called once, before the instance is destroyed.
     // Add 'implements OnDestroy' to the class.
   }

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router, ResolveStart } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
-import { AlertController } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { UtilityService } from '../services/utility.service';
@@ -23,7 +23,8 @@ export class ToolbarPage implements OnInit {
     private alertCtrl: AlertController,
     private socialSharing: SocialSharing,
     private translateService: TranslateService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private platform: Platform
   ) {}
 
   async share() {
@@ -79,7 +80,9 @@ export class ToolbarPage implements OnInit {
         let data = null;
         let route = event['state'].root;
 
+        if (this.platform.is('cordova')) {
         this.utilityService.setCleverTapPageView(event['url']);
+        }
 
         // Back Button Url
         if (event['url'].split('?')[0] === '/myorder/my-order-details') {

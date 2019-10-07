@@ -18,12 +18,15 @@
   <form [formGroup]="loginForm">
     <ion-row>
       <ion-col>
-        <ion-label position="floating">{{ "LOGIN.UM" | translate }}</ion-label>
-        <ion-input
-          formControlName="username"
-          class="white-border white-color"
-          type="text"
-        ></ion-input>
+        <ion-item color="transparent" class="white-border white-color">
+          <ion-icon name="person"></ion-icon>&nbsp;
+          <!-- <ion-label position="floating">{{ "LOGIN.UM" | translate }}</ion-label> -->
+          <ion-input
+            placeholder="{{ 'LOGIN.UM' | translate }}"
+            formControlName="username"
+            type="text"
+          ></ion-input>
+        </ion-item>
       </ion-col>
     </ion-row>
 
@@ -49,11 +52,12 @@
 
     <ion-row>
       <ion-col>
-        <ion-label position="floating">{{
+        <!-- <ion-label position="floating">{{
           "LOGIN.PASSWORD" | translate
-        }}</ion-label>
+        }}</ion-label> -->
 
         <ion-item color="transparent" class="white-border white-color">
+          <ion-icon name="lock"></ion-icon>&nbsp;
           <ion-input
             type="password"
             placeholder="{{ 'LOGIN.PASSWORD' | translate }}"
@@ -62,7 +66,7 @@
             clearOnEdit="false"
           ></ion-input>
 
-          <button
+          <!-- <button
             class="showhidePass"
             color="light"
             ion-button
@@ -70,9 +74,10 @@
             item-end
             prShowHideInput
             [targetInput]="password"
-          >
-            <ion-icon name="eye"></ion-icon>
-          </button>
+          > -->
+            <ion-icon name="eye" prShowHideInput
+            [targetInput]="password"></ion-icon>
+          <!-- </button> -->
         </ion-item>
       </ion-col>
     </ion-row>
@@ -109,6 +114,7 @@
     <br />
     <ion-row>
       <ion-col>
+        <ion-icon name="key"></ion-icon>
         <ion-label
           class="hyperlink"
           [routerLink]="['/forgot-password']"

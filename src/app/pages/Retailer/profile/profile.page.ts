@@ -154,9 +154,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.store.pipe(select(getProfileDetails)).subscribe(data => {
       console.log(data);
     });
-    this.store.pipe(select(getProfileDetails)).subscribe(res => {
-      console.log(res);
-    });
     this.storage.get('userData').then(data => {
       data = JSON.parse(data);
       if (data && data['userData']) {
@@ -364,11 +361,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     } else {
       // this.alertService.presentToast('danger', 'Please accept terms and conditions.');
     }
-  }
-
-  updateBussinessType() {
-    // this.profileForm.value.BusinessTypeId = value.BusinessTypeId;
-    // this.profileForm.value.BusinessTypeName = value.BusinessTypeName;
   }
 
   updateRegion(value) {

@@ -16,10 +16,18 @@
   <form [formGroup]="notificationFilterForm">
     <ion-row>
       <ion-col>
-        <pr-select [placeHolder]="'Select Store'" [ctrName]="'status'" [items]="statusList" [id]="'id'" [name]="'name'"
-          [canSearch]="true" (valueChange)="updateStatus($event)"></pr-select>
+          <pr-select
+          [placeHolder]="'NEW_ORDER.STORE_PLACEHOLDER' | translate"
+          [ctrName]="'store'"
+          [items]="storeList"
+          [id]="'PartyCode'"
+          [name]="'StoreName'"
+          [canSearch]="true"
+          [preSelectedOn]="'StoreId'"
+          (valueChange)="changeStore($event)"
+        ></pr-select>
       </ion-col>
-    </ion-row>
+  </ion-row>
 
     <ion-row>
       <ion-col>
@@ -31,7 +39,7 @@
     <ion-row>
       <ion-col>
         <ion-datetime [placeholder]="notificationFilterForm.value.date" pickerFormat="DD/MM/YY"
-          display-format="DD/MM/YY" formControlName="date"></ion-datetime>
+          display-format="DD/MM/YY" [min]="minDate" formControlName="date"></ion-datetime>
       </ion-col>
     </ion-row>
 
