@@ -2,9 +2,7 @@
   <ion-row>
     <ion-col>
       <ion-label>
-        <b
-          >{{'FEEDBACK.FEEDBACK_TEXT' | translate}}</b
-        >
+        <b>{{ "FEEDBACK.FEEDBACK_TEXT" | translate }}</b>
       </ion-label>
     </ion-col>
   </ion-row>
@@ -26,104 +24,86 @@
 
     <div class="validation-errors">
       <ng-container *ngFor="let validation of validation_messages.feedbackType">
-        <div
-          class="error-message"
-          *ngIf="
-            !feedbackForm.value.feedbackType.Fid
-          "
-        >
+        <div class="error-message" *ngIf="!feedbackForm.value.feedbackType.Fid">
           {{ validation.message }}
         </div>
       </ng-container>
     </div>
 
-    <ion-row>
-      <ion-col>
-        <pr-select
-          [placeHolder]="'FEEDBACK.FEEDBACKTO_PLACEHOLDER' | translate"
-          [ctrName]="'feedbackTo'"
-          [items]="feedbackTos"
-          [id]="'Fid'"
-          [name]="'Types'"
-          [canSearch]="true"
-          (valueChange)="updateFeedbackTo($event)"
-        ></pr-select>
-      </ion-col>
-    </ion-row>
+    <div *ngIf="feedbackForm.value.feedbackType.Types">
+      <ion-row>
+        <ion-col>
+          <pr-select
+            [placeHolder]="'FEEDBACK.FEEDBACKTO_PLACEHOLDER' | translate"
+            [ctrName]="'feedbackTo'"
+            [items]="feedbackTos"
+            [id]="'Fid'"
+            [name]="'Types'"
+            [canSearch]="true"
+            (valueChange)="updateFeedbackTo($event)"
+          ></pr-select>
+        </ion-col>
+      </ion-row>
 
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.feedbackTo">
-        <div
-          class="error-message"
-          *ngIf="
-            !feedbackForm.value.feedbackTo.Fid
-          "
-        >
-          {{ validation.message }}
-        </div>
-      </ng-container>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.feedbackTo">
+          <div class="error-message" *ngIf="!feedbackForm.value.feedbackTo.Fid">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-row>
+        <ion-col>
+          <pr-select
+            [placeHolder]="'FEEDBACK.FEEDBACKSTORE_PLACEHOLDER' | translate"
+            [ctrName]="'toStoreId'"
+            [items]="toStoreIds"
+            [id]="'StoreId'"
+            [name]="'StoreName'"
+            [canSearch]="true"
+            (valueChange)="updateStore($event)"
+          ></pr-select>
+        </ion-col>
+      </ion-row>
+
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.toStoreId">
+          <div class="error-message" *ngIf="!feedbackForm.value.toStoreId.Fid">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-row>
+        <ion-col>
+          <ion-textarea
+            formControlName="message"
+            rows="6"
+            cols="12"
+            [placeholder]="'FEEDBACK.MESSAGE_PLACEHOLDER' | translate"
+          ></ion-textarea>
+        </ion-col>
+      </ion-row>
+
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.message">
+          <div class="error-message" *ngIf="!feedbackForm.get('message')">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+
+      <br />
+
+      <ion-row>
+        <ion-col size="6" class="signin">
+          <app-back-button [link]="['/dashboard']"></app-back-button>
+        </ion-col>
+        <ion-col size="6" class="create">
+          <app-submit-button (click)="sendFeedback()"></app-submit-button>
+        </ion-col>
+      </ion-row>
     </div>
-
-    <ion-row>
-      <ion-col>
-        <pr-select
-          [placeHolder]="'FEEDBACK.FEEDBACKSTORE_PLACEHOLDER' | translate"
-          [ctrName]="'toStoreId'"
-          [items]="toStoreIds"
-          [id]="'StoreId'"
-          [name]="'StoreName'"
-          [canSearch]="true"
-          (valueChange)="updateStore($event)"
-        ></pr-select>
-      </ion-col>
-    </ion-row>
-
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.toStoreId">
-        <div
-          class="error-message"
-          *ngIf="
-            !feedbackForm.value.toStoreId.Fid
-          "
-        >
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-
-    <ion-row>
-      <ion-col>
-        <ion-textarea
-          formControlName="message"
-          rows="6"
-          cols="12"
-          [placeholder]="'FEEDBACK.MESSAGE_PLACEHOLDER' | translate"
-        ></ion-textarea>
-      </ion-col>
-    </ion-row>
-
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of validation_messages.message">
-        <div
-          class="error-message"
-          *ngIf="
-            !feedbackForm.get('message')
-          "
-        >
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-
-    <br />
-
-    <ion-row>
-      <ion-col size="6" class="signin">
-        <app-back-button [link]="['/dashboard']"></app-back-button>
-      </ion-col>
-      <ion-col size="6" class="create">
-        <app-submit-button (click)="sendFeedback()"></app-submit-button>
-      </ion-col>
-    </ion-row>
   </form>
 </ion-content>

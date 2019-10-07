@@ -103,7 +103,8 @@
           "message": "VALIDATIONS.MOBILEPATTERN"
         }
       ]
-    }
+    },
+    "INVALIDOTP": "Invalid/Expired OTP"
   },
 
   "CHANGE_PASSWORD": {
@@ -260,10 +261,10 @@
     "REGISTER": "Register",
     "VALIDATION_MESSAGES": {
       "mobile": [
-        { "type": "required", "message": "Mobile number is required" },
+        { "type": "required", "message": "Please Enter Valid 10 Digit Mobile Number." },
         {
           "type": "pattern",
-          "message": "Please Enter Valid 10 Digit Mobile Number"
+          "message": "Please Enter Valid 10 Digit Mobile Number."
         }
       ],
       "password": [
@@ -419,7 +420,8 @@
     "FEEDBACKSTORE_PLACEHOLDER": "Select Store",
     "FEEDBACKSTATUS_PLACEHOLDER": "Select Status",
     "MESSAGE_PLACEHOLDER": "Type your message",
-    "FEEDBACK_TEXT": "We value your feedback. Please send your feedback in the below form"
+    "FEEDBACK_TEXT": "We value your feedback. Please send your feedback in the below form",
+    "THANKS": "Thank you! We value your feedback. We will get back to you soon."
   },
 
   "TOOLBAR": {

@@ -3,14 +3,6 @@
     {
       "Fid": "1",
       "Types": "Pharmarack"
-    },
-    {
-      "Fid": "2",
-      "Types": "Distributor"
-    },
-    {
-      "Fid": "3",
-      "Types": "Both (Pharmarack / Distributor)"
     }
   ],
   "toStoreIds": [

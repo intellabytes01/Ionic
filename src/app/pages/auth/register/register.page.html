@@ -48,6 +48,7 @@
           class="white-border white-color"
           type="tel"
           maxlength="10"
+          minlength="10"
           clearOnEdit="false"
           (ionChange)="checkIfUserExists()"
         ></ion-input>
@@ -163,6 +164,7 @@
         <ion-label class="message"
           >&nbsp;{{ "REGISTER.AGREE" | translate }}
           <a
+            class="hyperlink"
             href="http://www.pharmarack.com/termsandconditions"
             target="_blank"
           >

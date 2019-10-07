@@ -15,6 +15,7 @@ import { Action } from '@ngrx/store';
 import { FeedbackService } from '../feedback.service';
 import { AlertService } from '@app/shared/services/alert.service';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class FeedbackEffects {
@@ -22,7 +23,8 @@ export class FeedbackEffects {
     private actions: Actions,
     private feedbackService: FeedbackService,
     private alert: AlertService,
-    private router: Router
+    private router: Router,
+    private translateService: TranslateService
   ) {}
 
   // Feedback Types
@@ -57,7 +59,7 @@ export class FeedbackEffects {
   FeedbackSubmit: Observable<Action> = this.actions.pipe(
     ofType(FeedbackAction.FEEDBACKSUBMIT),
     map((action: FeedbackSubmit) => action.payload),
-    switchMap((payload) => {
+    switchMap(payload => {
       return this.feedbackService.submitFeedback(payload).pipe(
         map(data => {
           return new FeedbackSubmitSuccess({ feedbackSubmit: data['data'] });
@@ -70,8 +72,11 @@ export class FeedbackEffects {
   @Effect({ dispatch: false })
   FeedbackSubmitSuccess: Observable<any> = this.actions.pipe(
     ofType(FeedbackAction.FEEDBACKSUBMIT_SUCCESS),
-    tap(() => {
-      this.alert.presentToast('success', 'Thank you! We value your feedback. We will get back to you soon.');
+    tap(data => {
+      this.alert.basicAlert(
+        this.translateService.instant('FEEDBACK.THANKS'),
+        'Attention'
+      );
       this.router.navigateByUrl('/dashboard');
     })
   );
@@ -80,7 +85,10 @@ export class FeedbackEffects {
   FeedbackSubmitFailure: Observable<any> = this.actions.pipe(
     ofType(FeedbackAction.FEEDBACKSUBMIT_FAILURE),
     tap(() => {
-      this.alert.presentToast('danger', 'Something went wrong, Please try again later.');
+      this.alert.presentToast(
+        'danger',
+        'Something went wrong, Please try again later.'
+      );
     })
   );
 }

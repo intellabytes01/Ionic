@@ -14,10 +14,16 @@ import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { Action } from '@ngrx/store';
 import { OtpService } from '../forgot-password.service';
 import { AlertService } from '@app/shared/services/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class OtpEffects {
-  constructor(private actions: Actions, private registerService: OtpService, private alert: AlertService) {}
+  constructor(
+    private actions: Actions,
+    private registerService: OtpService,
+    private alert: AlertService,
+    private translateService: TranslateService
+  ) {}
 
   // Send Otp
 
@@ -44,7 +50,10 @@ export class OtpEffects {
   SendOtpFailure: Observable<any> = this.actions.pipe(
     ofType(OtpActionTypes.SENDOTP_FAILURE),
     tap(() => {
-      this.alert.presentToast('danger', 'Supplied Mobile number does not match in our database.');
+      this.alert.presentToast(
+        'danger',
+        'Supplied Mobile number does not match in our database.'
+      );
     })
   );
 
@@ -73,7 +82,10 @@ export class OtpEffects {
   VerifyOtpFailure: Observable<any> = this.actions.pipe(
     ofType(OtpActionTypes.VERIFYOTP_FAILURE),
     tap(() => {
-      this.alert.presentToast('danger', 'Invalid otp, please request again');
+      this.alert.presentToast(
+        'danger',
+        this.translateService.instant('FORGOT_PASSWORD.INVALIDOTP')
+      );
     })
   );
 }

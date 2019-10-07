@@ -132,6 +132,12 @@ export class RegisterPage implements OnInit, OnDestroy {
     ) {
       this.registerForm.get('mobile').markAsTouched();
       this.registerForm.get('password').markAsTouched();
+      if (this.registerForm.value.mobile.length < 10) {
+        this.alertService.presentToast(
+          'danger',
+          'Please enter Valid 10 digits number.'
+        );
+      }
       return;
     }
     if (this.registerForm.value.agree) {

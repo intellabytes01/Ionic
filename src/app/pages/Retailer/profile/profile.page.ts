@@ -270,8 +270,9 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.disable = val;
     // this.profileForm.get('firstName').enable();
     if (!val) {
+      console.log(this.isAuthorized);
       Object.keys(this.profileForm.controls).forEach(key => {
-        if (key !== 'loginId' && key !== 'mobileNumber' && key !== 'gstinNumber') {
+        if (key !== 'loginId' && key !== 'mobileNumber') {
           // && key !== 'businessType'
           this.profileForm.get(key).enable();
         } else {
@@ -282,6 +283,8 @@ export class ProfilePage implements OnInit, OnDestroy {
         this.profileForm.get('shopName').disable();
         this.profileForm.get('licenseNumber').disable();
         this.profileForm.get('gstinNumber').disable();
+      } else {
+        this.profileForm.get('gstinNumber').enable();
       }
     } else {
       this.getProfileDetails(this.userId);
@@ -309,9 +312,9 @@ export class ProfilePage implements OnInit, OnDestroy {
 
       this.profileInterface = {
         // cstNumber: this.profileForm.value.cstNumber.toString(),
-        pincode: this.profileForm.value.pincode.toString()
-          ? this.profileForm.value.pincode.toString()
-          : this.profileForm.controls['pincode'].value.toString(),
+        pincode: this.profileForm.value.pincode
+          ? this.profileForm.value.pincode
+          : this.profileForm.controls['pincode'].value,
         // regionId: this.profileForm.controls.region.value.regionId
         //   ? this.profileForm.controls.region.value.regionId
         //   : this.profileForm.value.regionId,
@@ -345,11 +348,11 @@ export class ProfilePage implements OnInit, OnDestroy {
       };
 
       if (this.profileForm.value.gstinNumber
-        && this.profileForm.value.gstinNumber !== ''  || this.profileForm.value.gstinNumberr != null) {
+        && this.profileForm.value.gstinNumber !== ''  || this.profileForm.value.gstinNumber != null) {
         this.profileInterface.gstinNumber = this.profileForm.value.gstinNumber;
       }
-      if (this.profileForm.controls['gstinNumber'].value
-      && this.profileForm.controls['gstinNumber'].value == null
+      if (!this.profileForm.controls['gstinNumber'].value
+      || this.profileForm.controls['gstinNumber'].value == null
       || this.profileForm.controls['gstinNumber'].value === '') {
         this.profileInterface.gstinNumber = this.profileForm.controls['gstinNumber'].value;
       }
@@ -388,6 +391,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   // }
 
   setGstinStatus(event) {
+    console.log(event.detail.value);
     if (event.detail.value === 'I have GSTIN Number') {
       this.gstinOption = '2';
       this.profileForm.get('gstinNumber').enable();
