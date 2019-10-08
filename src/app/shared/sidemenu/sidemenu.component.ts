@@ -20,6 +20,7 @@ import { untilDestroyed } from '@app/core/index.js';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { ImageUpload } from '@app/core/authentication/actions/auth.actions.js';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { AlertService } from '../services/alert.service.js';
 
 @Component({
   selector: 'app-sidemenu',
@@ -53,7 +54,8 @@ export class SidemenuComponent implements OnInit, OnDestroy {
     public platform: Platform,
     private store: Store<AuthState>,
     private alertController: AlertController,
-    private camera: Camera
+    private camera: Camera,
+    private alertService: AlertService
   ) {
     this.router.events.subscribe(e => {
       if (e instanceof NavigationEnd) {
@@ -129,6 +131,7 @@ export class SidemenuComponent implements OnInit, OnDestroy {
     this.menuCtrl.close();
     if (page.title === 'SIDEMENU.LOGOUT_TITLE') {
       this.logout();
+      return true;
     }
     if (page.title === 'SIDEMENU.TERMS_TITLE') {
       window.open(
@@ -152,9 +155,11 @@ export class SidemenuComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.storage.clear();
-    localStorage.clear();
-    this.router.dispose();
+    this.alertService.logoutModal(this.translateService.instant('SIDEMENU.LOGOUT_TITLE'),
+    this.translateService.instant('DASHBOARD.LOGOUTAPP'));
+    // this.storage.clear();
+    // localStorage.clear();
+    // this.router.dispose();
   }
 
   trackByFn(index) {

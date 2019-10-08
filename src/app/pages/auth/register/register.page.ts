@@ -87,7 +87,7 @@ export class RegisterPage implements OnInit, OnDestroy {
       mobile: [
         '',
         Validators.compose([
-          // Validators.pattern(this.mobnumPattern),
+          Validators.pattern(this.mobnumPattern),
           Validators.pattern(this.numberOnly),
           Validators.required
         ])

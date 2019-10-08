@@ -121,7 +121,11 @@ export class DashboardPage implements OnInit, OnDestroy {
         .select(getRetailerName)
       .subscribe(retailerName => {
         if (!retailerName || retailerName == null || retailerName === '') {
-          this.showUpdateProfileModal();
+          this.storage.get('retailerName').then(val => {
+            if (val && val === '' || val == null) {
+              this.showUpdateProfileModal();
+            }
+          });
         }
       });
   }

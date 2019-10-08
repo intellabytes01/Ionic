@@ -35,6 +35,10 @@ import { AlertService } from '@app/shared/services/alert.service';
 import { Storage } from '@ionic/storage';
 import { ImageUpload } from '@app/core/authentication/actions/auth.actions';
 import { TranslateService } from '@ngx-translate/core';
+import {
+  ImageResizer,
+  ImageResizerOptions
+} from '@ionic-native/image-resizer/ngx';
 
 @Component({
   selector: 'app-profile',
@@ -53,8 +57,6 @@ export class ProfilePage implements OnInit, OnDestroy {
   regionStore: any;
   profileInterface: Partial<IProfileInterface>;
   userProfileDetails$: any;
-
-  photo: SafeResourceUrl;
   dataReturned: any;
   userId: any;
   regionId: any;
@@ -68,10 +70,9 @@ export class ProfilePage implements OnInit, OnDestroy {
     { id: 4, name: 'I have not applied', selected: false },
     { id: 5, name: 'I am not eligible', selected: false }
   ];
-  licenseImage = '';
+  licenseImage: SafeResourceUrl = '';
   imageUploadModal = false;
   imgUrl: string;
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -84,7 +85,8 @@ export class ProfilePage implements OnInit, OnDestroy {
     private storage: Storage,
     private storeAuth: Store<AuthState>,
     private alertController: AlertController,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private imageResizer: ImageResizer
   ) {
     this.getBusinessTypes();
     this.getRegions();
@@ -114,11 +116,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     );
 
     this.regions$ = this.store.pipe(select(regionsData));
-    // this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
-
-    // .subscribe(data => {
-    //   this.userProfileDetails$ = data;
-    // });
 
     this.updates$
       .pipe(
@@ -136,20 +133,23 @@ export class ProfilePage implements OnInit, OnDestroy {
         select(getUserImage),
         untilDestroyed(this)
       )
-      .subscribe(imgUrl => {
-        console.log(imgUrl);
-        this.imgUrl = imgUrl;
-        if (this.imgUrl) {
+      .subscribe(
+        imgUrl => {
+          console.log(imgUrl);
+          this.imgUrl = imgUrl;
+          if (this.imgUrl) {
+          }
+        },
+        err => {
+          console.log(err);
+          this.imgUrl = '';
         }
-      }, err => {
-        console.log(err);
-        this.imgUrl = '';
-      });
+      );
   }
 
   ngOnInit() {
     this.createForm();
-    this.photo = 'assets/icon/gstin.png';
+    this.licenseImage = 'assets/icon/gstin.png';
     this.userProfileDetails$ = this.store.pipe(select(getProfileDetails));
     this.store.pipe(select(getProfileDetails)).subscribe(data => {
       console.log(data);
@@ -159,6 +159,15 @@ export class ProfilePage implements OnInit, OnDestroy {
       if (data && data['userData']) {
         console.log('data: ', data['userData']['userSummary']);
         this.licenseImage = data['userData']['userSummary']['Druglicenseimage'];
+        this.resizeImage();
+      }
+    });
+
+    this.gstinStatus.forEach(element => {
+      if (element.id.toString() === this.gstinOption) {
+        element.selected = true;
+      } else {
+        element.selected = false;
       }
     });
   }
@@ -225,7 +234,7 @@ export class ProfilePage implements OnInit, OnDestroy {
       ],
       licenseNumber: [
         { value: '', disabled: this.disable },
-        Validators.compose([Validators.required])
+        Validators.compose([])
       ],
       gstinNumber: [
         { value: '', disabled: this.disable },
@@ -270,9 +279,12 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.disable = val;
     // this.profileForm.get('firstName').enable();
     if (!val) {
-      console.log(this.isAuthorized);
       Object.keys(this.profileForm.controls).forEach(key => {
-        if (key !== 'loginId' && key !== 'mobileNumber') {
+        if (
+          key !== 'loginId' &&
+          key !== 'mobileNumber' &&
+          key !== 'gstinNumber'
+        ) {
           // && key !== 'businessType'
           this.profileForm.get(key).enable();
         } else {
@@ -283,8 +295,6 @@ export class ProfilePage implements OnInit, OnDestroy {
         this.profileForm.get('shopName').disable();
         this.profileForm.get('licenseNumber').disable();
         this.profileForm.get('gstinNumber').disable();
-      } else {
-        this.profileForm.get('gstinNumber').enable();
       }
     } else {
       this.getProfileDetails(this.userId);
@@ -312,9 +322,9 @@ export class ProfilePage implements OnInit, OnDestroy {
 
       this.profileInterface = {
         // cstNumber: this.profileForm.value.cstNumber.toString(),
-        pincode: this.profileForm.value.pincode
-          ? this.profileForm.value.pincode
-          : this.profileForm.controls['pincode'].value,
+        pincode: this.profileForm.value.pincode.toString()
+          ? this.profileForm.value.pincode.toString()
+          : this.profileForm.controls['pincode'].value.toString(),
         // regionId: this.profileForm.controls.region.value.regionId
         //   ? this.profileForm.controls.region.value.regionId
         //   : this.profileForm.value.regionId,
@@ -344,23 +354,31 @@ export class ProfilePage implements OnInit, OnDestroy {
           ? this.profileForm.value.licenseNumber
           : this.profileForm.controls['licenseNumber'].value,
         gstinOption: this.gstinOption.toString(),
-        lastName: 'NoName',
+        lastName: 'NoName'
       };
 
-      if (this.profileForm.value.gstinNumber
-        && this.profileForm.value.gstinNumber !== ''  || this.profileForm.value.gstinNumber != null) {
+      if (
+        (this.profileForm.value.gstinNumber &&
+          this.profileForm.value.gstinNumber !== '') ||
+        this.profileForm.value.gstinNumberr != null
+      ) {
         this.profileInterface.gstinNumber = this.profileForm.value.gstinNumber;
       }
-      if (!this.profileForm.controls['gstinNumber'].value
-      || this.profileForm.controls['gstinNumber'].value == null
-      || this.profileForm.controls['gstinNumber'].value === '') {
-        this.profileInterface.gstinNumber = this.profileForm.controls['gstinNumber'].value;
+      if (
+        (this.profileForm.controls['gstinNumber'].value &&
+          this.profileForm.controls['gstinNumber'].value !== null) ||
+        this.profileForm.controls['gstinNumber'].value !== ''
+      ) {
+        this.profileInterface.gstinNumber = this.profileForm.controls[
+          'gstinNumber'
+        ].value;
       }
       const payload = {
         userProfileDetails: this.profileInterface
         // businessTypeId: this.profileForm.value.businessType.BusinessTypeId
       };
       this.store.dispatch(new SaveProfileDetails(payload.userProfileDetails));
+      this.storage.set('retailerName', this.profileInterface.firstName);
     } else {
       // this.alertService.presentToast('danger', 'Please accept terms and conditions.');
     }
@@ -391,17 +409,16 @@ export class ProfilePage implements OnInit, OnDestroy {
   // }
 
   setGstinStatus(event) {
-    console.log(event.detail.value);
     if (event.detail.value === 'I have GSTIN Number') {
       this.gstinOption = '2';
       this.profileForm.get('gstinNumber').enable();
     } else if (event.detail.value === 'I have applied') {
       this.gstinOption = '3';
       this.profileForm.get('gstinNumber').disable();
-    }  else if (event.detail.value === 'I have not applied') {
+    } else if (event.detail.value === 'I have not applied') {
       this.profileForm.get('gstinNumber').disable();
       this.gstinOption = '4';
-    }  else if (event.detail.value === 'I am not eligible') {
+    } else if (event.detail.value === 'I am not eligible') {
       this.profileForm.get('gstinNumber').disable();
       this.gstinOption = '5';
     } else {
@@ -413,7 +430,9 @@ export class ProfilePage implements OnInit, OnDestroy {
   async openModal() {
     const alert = await this.alertController.create({
       header: this.translateService.instant('IMAGE_UPLOAD.PROFILE_IMAGE_TITLE'),
-      message: this.translateService.instant('IMAGE_UPLOAD.PROFILE_IMAGE_SUBTITLE'),
+      message: this.translateService.instant(
+        'IMAGE_UPLOAD.PROFILE_IMAGE_SUBTITLE'
+      ),
       buttons: [
         {
           text: 'Upload',
@@ -421,7 +440,8 @@ export class ProfilePage implements OnInit, OnDestroy {
           handler: () => {
             this.takePhoto(0);
           }
-        }, {
+        },
+        {
           text: 'Capture',
           role: null,
           handler: () => {
@@ -457,7 +477,8 @@ export class ProfilePage implements OnInit, OnDestroy {
         const base64Image = 'data:image/jpeg;base64,' + imageData;
         console.log('*' + base64Image);
         this.uploadMedia(base64Image);
-        this.photo = this.imgUrl;
+        this.licenseImage = this.imgUrl;
+        // this.resizeImage();
       },
       err => {
         console.log('#' + err);
@@ -477,6 +498,24 @@ export class ProfilePage implements OnInit, OnDestroy {
     };
     console.log('payload: ', payload);
     this.store.dispatch(new ImageUpload(payload));
+  }
+
+  resizeImage() {
+    const options = {
+      uri: this.licenseImage,
+      folderName: 'Protonet',
+      quality: 90,
+      width: 200,
+      height: 200
+    } as ImageResizerOptions;
+
+    this.imageResizer
+      .resize(options)
+      .then((filePath: string) => {
+        console.log('FilePath', filePath);
+        this.licenseImage = filePath;
+      })
+      .catch(e => console.log(e));
   }
 
   ngOnDestroy() {}

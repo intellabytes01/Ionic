@@ -48,6 +48,7 @@
     "PRLOGO": "assets/icon/logo.png",
     "USER_ACTIVATION": "Your account shall be activated once details are verified. Please call 02067660011 between 9.30am to 7pm",
     "EXIT_APP": "Are you sure you want to exit the app?",
+    "LOGOUTAPP": "Do you really want to logout?",
     "UPDATE_PROFILE_MODAL_TITLE": "Update Your Profile",
     "UPDATE_PROFILE_MODAL_MESSAGE": "We are glad to serve you. Kindly update your profile details for a seamless experience"
   },
@@ -140,6 +141,8 @@
     "LOGIN_ID": "Login Id",
     "BUSINESS_TYPE": "Business Type",
     "SHOP_FULL_NAME": "Shop/Firm Full Name",
+    "CLINIC_FULL_NAME": "Clinic Name",
+    "HOSPITAL_FULL_NAME": "Hospital Name",
     "NAME": "Name",
     "ADDRESS": "Address",
     "PINCODE": "Pincode",
@@ -148,6 +151,7 @@
     "MOBILE_NUMBER": "Mobile Number",
     "TELEPHONE": "Telephone",
     "DRUG_LICENSE_NUMBER": "Drug License Number",
+    "REGISTRATION_NUMBER": "Registration Number",
     "GSTIN_NUMBER": "GSTIN Number",
     "CST_NUMBER": "CST Number",
     "BACK_BUTTON": "Back",
@@ -228,7 +232,7 @@
     "CA": "Create Account",
     "VALIDATION_MESSAGES": {
       "username": [
-        { "type": "required", "message": "Username is required" },
+        { "type": "required", "message": "Please Enter Value For Username" },
         {
           "type": "minlength",
           "message": "Username must be at least 5 characters long"
@@ -448,6 +452,7 @@
     "PROFILE_IMAGE_SUBTITLE": "Capture / Upload Profile Image"
   },
   "BE_MSSAGE" : {
-    "PROVIDE_VALID_CREDENTIALS" : "Invalid Username/Password"
+    "PROVIDE_VALID_CREDENTIALS": "Invalid Username/Password",
+    "USER_NOT_FOUND": "No registration found. For help, please call 02067660011"
   }
 }

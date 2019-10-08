@@ -11,6 +11,7 @@ import { untilDestroyed, AuthenticationService } from '@app/core';
 import { TranslateService } from '@ngx-translate/core';
 import { GetPreviousUrl, LogIn } from '@app/core/authentication/actions/auth.actions';
 import { Storage } from '@ionic/storage';
+import { UtilityService } from '@app/shared/services/utility.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -31,7 +32,8 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
     private alert: AlertService,
     private translateService: TranslateService,
     private authenticationService: AuthenticationService,
-    private storage: Storage
+    private storage: Storage,
+    private utilityService: UtilityService
   ) {}
 
   ionViewWillEnter() {
@@ -57,15 +59,17 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
       mobile: this.forgotPasswordForm.value.mobile
     };
     if (!sendOtpBody.mobile) {
-      this.alert.presentToast(
-        'danger', this.translateService.instant('VALIDATIONS.MOBILEPATTERN')
-      );
+      this.utilityService.markFormGroupTouched(this.forgotPasswordForm);
+      // this.alert.presentToast(
+      //   'danger', this.translateService.instant('VALIDATIONS.MOBILEPATTERN')
+      // );
       return;
     }
     if (sendOtpBody.mobile.length < 10) {
-      this.alert.presentToast(
-        'danger', this.translateService.instant('VALIDATIONS.MOBILEPATTERN')
-      );
+      this.utilityService.markFormGroupTouched(this.forgotPasswordForm);
+      // this.alert.presentToast(
+      //   'danger', this.translateService.instant('VALIDATIONS.MOBILEPATTERN')
+      // );
       return;
     }
     this.store.dispatch(new SendOtp(sendOtpBody));

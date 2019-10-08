@@ -6,6 +6,7 @@ import { getUserId } from '@app/core/authentication/auth.states';
 import { untilDestroyed } from '@app/core';
 import { GetProfileDetails } from '@app/pages/Retailer/profile/store/profile.actions';
 import { AppVersion } from '@ionic-native/app-version/ngx';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -319,5 +320,15 @@ export class UtilityService {
     const obj = {};
     obj['Identity'] = name;
     this.cleverTap.onUserLogin(obj);
+  }
+
+  markFormGroupTouched(formGroup: FormGroup) {
+    (Object as any).values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
+    });
   }
 }

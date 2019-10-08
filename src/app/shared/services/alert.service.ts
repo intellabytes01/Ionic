@@ -5,6 +5,7 @@ import {
   AlertController
 } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class AlertService {
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private router: Router
+    private router: Router,
+    private storage: Storage
   ) {}
 
   async basicAlert(message, header) {
@@ -81,6 +83,33 @@ export class AlertService {
           text: 'Okay',
           handler: () => {
             navigator['app'].exitApp();
+          }
+        }
+      ]
+    });
+
+    alert.present();
+  }
+
+  async logoutModal(hdr: string, msg: string) {
+    const alert = await this.alertCtrl.create({
+      header: hdr,
+      message: msg,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: blah => {}
+        },
+        {
+          text: 'Okay',
+          handler: () => {
+            this.storage.clear();
+            localStorage.clear();
+            this.router.dispose();
+            this.router.navigate(['/login']);
+            // navigator['app'].exitApp();
           }
         }
       ]

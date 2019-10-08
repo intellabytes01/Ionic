@@ -39,6 +39,11 @@ export class FeedbackPage implements OnInit {
     this.getRetailerStoreParties();
     this.getFeedbackTypes();
     this.feedbackTypes$ = this.store.pipe(select(feedbackTypesData));
+    this.store.pipe(select(feedbackTypesData)).subscribe(data => {
+      console.log(data);
+    });
+
+
   }
 
   ngOnInit() {

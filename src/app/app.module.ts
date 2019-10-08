@@ -31,6 +31,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { CleverTap } from '@ionic-native/clevertap/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { ChangePasswordPageModule } from './pages/auth/change-password/change-password.module';
+import { ImageResizer } from '@ionic-native/image-resizer/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -69,7 +70,8 @@ import { ChangePasswordPageModule } from './pages/auth/change-password/change-pa
     EmailComposer,
     SocialSharing,
     CleverTap,
-    AppVersion
+    AppVersion,
+    ImageResizer
   ],
   bootstrap: [AppComponent]
 })

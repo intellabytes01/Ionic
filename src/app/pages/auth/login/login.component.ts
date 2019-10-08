@@ -93,7 +93,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.loginForm.reset();
+  }
 
   private createForm() {
     this.loginForm = this.formBuilder.group({
@@ -119,16 +121,18 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   async login() {
     if (!this.loginForm.value.username) {
-      this.alert.presentToast(
-        'danger',
-        this.translateService.instant('VALIDATIONS.EMPTYUSERNAME')
-      );
+      // this.alert.presentToast(
+      //   'danger',
+      //   this.translateService.instant('VALIDATIONS.EMPTYUSERNAME')
+      // );
+      this.utilityService.markFormGroupTouched(this.loginForm);
       return;
     }
     const payload = {
       cred: this.loginForm.value
     };
     this.store.dispatch(new LogIn(payload));
+    this.loginForm.reset();
   }
 
   setLanguage(language: string) {

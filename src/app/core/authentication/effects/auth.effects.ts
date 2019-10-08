@@ -75,15 +75,16 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   LogInFailure: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.LOGIN_FAILURE),
-    tap(res => {
-      // if (res.payload.error.message === 'PROVIDE_VALID_CREDENTIALS') {
-      this.alert.presentToast(
-        'danger',
-        this.translateService.instant('BE_MSSAGE.PROVIDE_VALID_CREDENTIALS')
-      );
-      // } else {
-      // this.alert.presentToast('danger', this.translateService.instant('VALIDATIONS.REGISTERNOW'));
-      // }
+    tap((res) => {
+      if (res.payload.error.message === 'PROVIDE_VALID_CREDENTIALS') {
+        this.alert.presentToast('danger', this.translateService.instant('BE_MSSAGE.PROVIDE_VALID_CREDENTIALS'));
+      } else if (res.payload.error.message === 'PROVIDE_VALID_DATA') {
+          this.alert.presentToast('danger', this.translateService.instant('BE_MSSAGE.PROVIDE_VALID_CREDENTIALS'));
+      } else if (res.payload.error.message === 'USER_NOT_FOUND') {
+        this.alert.presentToast('danger', this.translateService.instant('BE_MSSAGE.USER_NOT_FOUND'));
+      } else {
+        this.alert.presentToast('danger', this.translateService.instant('VALIDATIONS.REGISTERNOW'));
+      }
       // this.alert.presentToast('danger', this.translateService.instant('VALIDATIONS.REGISTERNOW'));
     })
   );
