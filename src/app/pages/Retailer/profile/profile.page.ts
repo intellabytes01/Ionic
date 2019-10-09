@@ -39,6 +39,7 @@ import {
   ImageResizer,
   ImageResizerOptions
 } from '@ionic-native/image-resizer/ngx';
+import { UtilityService } from '@app/shared/services/utility.service';
 
 @Component({
   selector: 'app-profile',
@@ -90,7 +91,8 @@ export class ProfilePage implements OnInit, OnDestroy {
     private storeAuth: Store<AuthState>,
     private alertController: AlertController,
     private translateService: TranslateService,
-    private imageResizer: ImageResizer
+    private imageResizer: ImageResizer,
+    private utilityService: UtilityService
   ) {
     this.getBusinessTypes();
     this.getRegions();
@@ -312,6 +314,8 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   updateProfile() {
+
+    this.utilityService.markFormGroupTouched(this.profileForm);
     // stop here if form is invalid
     if (this.profileForm.invalid) {
       return;

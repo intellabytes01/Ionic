@@ -105,7 +105,8 @@
         }
       ]
     },
-    "INVALIDOTP": "Invalid/Expired OTP"
+    "INVALIDOTP": "Invalid/Expired OTP",
+    "RETRY": "OTP limit reached. Please try after 15 minutes."
   },
 
   "CHANGE_PASSWORD": {

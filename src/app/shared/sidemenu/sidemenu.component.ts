@@ -85,7 +85,7 @@ export class SidemenuComponent implements OnInit, OnDestroy {
       select(getRetailerId),
       untilDestroyed(this)
     )
-    .subscribe(retId => {
+    .subscribe((retId: any) => {
       this.retailerId = retId;
     }, err => {
       console.log(err);
@@ -97,7 +97,7 @@ export class SidemenuComponent implements OnInit, OnDestroy {
         select(getUserImage),
         untilDestroyed(this)
       )
-      .subscribe(imgUrl => {
+      .subscribe((imgUrl: any) => {
         this.imgUrl = imgUrl;
         if (this.imgUrl) {
         }

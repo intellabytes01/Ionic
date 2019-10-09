@@ -9,9 +9,13 @@ import { sendOtpData, verifyOtpData } from './store/forgot-password.reducers';
 import { AlertService } from '@app/shared/services/alert.service';
 import { untilDestroyed, AuthenticationService } from '@app/core';
 import { TranslateService } from '@ngx-translate/core';
-import { GetPreviousUrl, LogIn } from '@app/core/authentication/actions/auth.actions';
+import {
+  GetPreviousUrl,
+  LogIn
+} from '@app/core/authentication/actions/auth.actions';
 import { Storage } from '@ionic/storage';
 import { UtilityService } from '@app/shared/services/utility.service';
+import { differenceInMinutes, addMinutes } from 'date-fns';
 
 @Component({
   selector: 'app-forgot-password',
@@ -22,7 +26,9 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
   showVerify = false;
   public forgotPasswordForm: FormGroup;
   // tslint:disable-next-line: variable-name
-  validation_messages = this.translateService.instant('FORGOT_PASSWORD.VALIDATION_MESSAGES');
+  validation_messages = this.translateService.instant(
+    'FORGOT_PASSWORD.VALIDATION_MESSAGES'
+  );
   mobnumPattern = '^((\\+91-?)|0)?[0-9]{10}$';
   constructor(
     public formBuilder: FormBuilder,
@@ -73,12 +79,16 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
       return;
     }
     this.store.dispatch(new SendOtp(sendOtpBody));
-    this.store.pipe(select(sendOtpData),
-    untilDestroyed(this)).subscribe(data => {
-      if (data && data.otp) {
-        this.showVerify = true;
-      }
-    });
+    this.store
+      .pipe(
+        select(sendOtpData),
+        untilDestroyed(this)
+      )
+      .subscribe(data => {
+        if (data && data.otp) {
+          this.showVerify = true;
+        }
+      });
   }
 
   verifyOtp() {
@@ -88,43 +98,73 @@ export class ForgotPasswordPage implements OnInit, OnDestroy {
     };
     if (!verifyOtpBody.otp) {
       this.alert.presentToast(
-        'danger', this.translateService.instant('VALIDATIONS.OTPREQUIRED')
+        'danger',
+        this.translateService.instant('VALIDATIONS.OTPREQUIRED')
       );
       return;
     }
-    this.store.dispatch(new VerifyOtp(verifyOtpBody));
+
+    // Retry check
+
+    if (
+      localStorage.getItem('errorOtp') &&
+      differenceInMinutes(
+        new Date(),
+        JSON.parse(localStorage.getItem('errorOtp')).exp
+      ) >= 15
+    ) {
+      const obj = { exp: addMinutes(new Date(), 15), count: 0 };
+      localStorage.setItem('errorOtp', JSON.stringify(obj));
+      this.store.dispatch(new VerifyOtp(verifyOtpBody));
+    }
+
+    if (
+      localStorage.getItem('errorOtp') &&
+      JSON.parse(localStorage.getItem('errorOtp')).count > 4
+    ) {
+      this.alert.basicAlert(
+        this.translateService.instant('FORGOT_PASSWORD.RETRY'),
+        'Attention'
+      );
+    } else {
+      this.store.dispatch(new VerifyOtp(verifyOtpBody));
+    }
 
     const payload = {
       previousUrl: this.router.url
     };
     this.store.dispatch(new GetPreviousUrl(payload));
 
-    this.store.pipe(select(verifyOtpData),
-    untilDestroyed(this)).subscribe(data => {
-      if (data && data.password) {
-        // this.alert.presentToast('success', 'Password has been sent on your register mobile number');
-        // this.authenticationService.logout();
-        this.storage.set('tempPwd', data.password);
-        this.storage.set('fromForgetPassword', true);
+    this.store
+      .pipe(
+        select(verifyOtpData),
+        untilDestroyed(this)
+      )
+      .subscribe(data => {
+        if (data && data.password) {
+          // this.alert.presentToast('success', 'Password has been sent on your register mobile number');
+          // this.authenticationService.logout();
+          this.storage.set('tempPwd', data.password);
+          this.storage.set('fromForgetPassword', true);
 
-        let cred;
-        if (data.password && data.password !== '') {
-          cred = {
-            password: data.password,
-            username: this.forgotPasswordForm.value.mobile
+          let cred;
+          if (data.password && data.password !== '') {
+            cred = {
+              password: data.password,
+              username: this.forgotPasswordForm.value.mobile
+            };
+          }
+
+          // tslint:disable-next-line: no-shadowed-variable
+          const payload = {
+            cred
           };
+          this.store.dispatch(new LogIn(payload));
+
+          this.router.navigate(['/change-password']);
+          // this.router.navigate(['/login']);
         }
-
-        // tslint:disable-next-line: no-shadowed-variable
-        const payload = {
-          cred
-        };
-        this.store.dispatch(new LogIn(payload));
-
-        this.router.navigate(['/change-password']);
-        // this.router.navigate(['/login']);
-      }
-    });
+      });
   }
 
   // Custom validation for Mobile

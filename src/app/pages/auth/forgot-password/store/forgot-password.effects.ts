@@ -15,6 +15,7 @@ import { Action } from '@ngrx/store';
 import { OtpService } from '../forgot-password.service';
 import { AlertService } from '@app/shared/services/alert.service';
 import { TranslateService } from '@ngx-translate/core';
+import { addMinutes, differenceInMinutes } from 'date-fns';
 
 @Injectable()
 export class OtpEffects {
@@ -85,6 +86,18 @@ export class OtpEffects {
       this.alert.presentToast(
         'danger',
         this.translateService.instant('FORGOT_PASSWORD.INVALIDOTP')
+      );
+      const obj = { exp: addMinutes(new Date(), 15), count: 1 };
+
+      if (localStorage.getItem('errorOtp')) {
+        obj.count = JSON.parse(localStorage.getItem('errorOtp')).count;
+        obj.count += 1;
+        obj.exp = JSON.parse(localStorage.getItem('errorOtp')).exp;
+      }
+
+      localStorage.setItem(
+        'errorOtp',
+        JSON.stringify(obj)
       );
     })
   );
