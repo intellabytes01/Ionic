@@ -100,6 +100,11 @@ export class FeedbackPage implements OnInit {
   updateFeedbackTypes(value) {
     this.feedbackForm.value.feedbackType.Fid = value.Fid;
     this.feedbackForm.value.feedbackType.Types = value.Types;
+    if (value.Fid === 5 || value.Fid === 6 || value.Fid === 8) {
+      this.feedbackTos = fromModel.feedbackTosMultiple;
+    } else {
+      this.feedbackTos = fromModel.feedbackTos;
+    }
   }
 
   updateFeedbackTo(value) {
