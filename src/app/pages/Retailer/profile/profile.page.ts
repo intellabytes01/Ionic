@@ -73,6 +73,10 @@ export class ProfilePage implements OnInit, OnDestroy {
   licenseImage: SafeResourceUrl = '';
   imageUploadModal = false;
   imgUrl: string;
+  // tslint:disable-next-line: variable-name
+  validation_messages = this.translateService.instant(
+    'PROFILE.VALIDATION_MESSAGES'
+  );
 
   constructor(
     private formBuilder: FormBuilder,
@@ -230,7 +234,7 @@ export class ProfilePage implements OnInit, OnDestroy {
       ],
       telephone: [
         { value: '', disabled: this.disable },
-        Validators.compose([Validators.required])
+        Validators.compose([])
       ],
       licenseNumber: [
         { value: '', disabled: this.disable },

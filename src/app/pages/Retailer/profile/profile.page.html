@@ -1,242 +1,460 @@
 <ion-content padding>
-    <form [formGroup]="profileForm">
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label position="stacked" translate>PROFILE.LOGIN_ID<ion-text color="danger">*</ion-text></ion-label>
-            <ion-input
-              formControlName="loginId"
-              type="text"
-              [ngModel]="(userProfileDetails$ | async)?.Username"
-            ></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-item class="disableClick">
-            <ion-label position="stacked" translate
-              >PROFILE.BUSINESS_TYPE<ion-text color="danger">*</ion-text></ion-label
-            >
-            <pr-select
-              [placeHolder]="'REGISTER.BT' | translate"
-              [ctrName]="'businessType'"
-              [items]="businessTypes$ | async"
-              [id]="'BusinessTypeId'"
-              [name]="'BusinessTypeName'"
-              [canSearch]="true"
-              [preSelectedOn]="'BusinessTypeId'"
-              [preSelectedValue]="(userProfileDetails$ | async)?.BusinessTypeId"
-              [disableControl]="true"
-            ></pr-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-  
-      <ion-row>
-        <ion-col>
-          <ion-item>
-              <ion-label position="stacked" translate
-              *ngIf="(userProfileDetails$ | async)?.BusinessTypeId == 4"
-              >PROFILE.CLINIC_FULL_NAME<ion-text color="danger">*</ion-text></ion-label
-            >
-            <ion-label position="stacked" translate
-              *ngIf="(userProfileDetails$ | async)?.BusinessTypeId == 3"
-              >PROFILE.HOSPITAL_FULL_NAME<ion-text color="danger">*</ion-text></ion-label
-            >
-            <ion-label position="stacked" translate
+  <form [formGroup]="profileForm">
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked" translate
+            >PROFILE.LOGIN_ID<ion-text color="danger">*</ion-text></ion-label
+          >
+          <ion-input
+            formControlName="loginId"
+            type="text"
+            [ngModel]="(userProfileDetails$ | async)?.Username"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.LOGIN_ID">
+        <div
+          class="error-message"
+          *ngIf="
+            profileForm.get('loginId').hasError(validation.type) &&
+            (profileForm.get('loginId').dirty ||
+              profileForm.get('loginId').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-item class="disableClick">
+          <ion-label position="stacked" translate
+            >PROFILE.BUSINESS_TYPE<ion-text color="danger"
+              >*</ion-text
+            ></ion-label
+          >
+          <pr-select
+            [placeHolder]="'REGISTER.BT' | translate"
+            [ctrName]="'businessType'"
+            [items]="businessTypes$ | async"
+            [id]="'BusinessTypeId'"
+            [name]="'BusinessTypeName'"
+            [canSearch]="true"
+            [preSelectedOn]="'BusinessTypeId'"
+            [preSelectedValue]="(userProfileDetails$ | async)?.BusinessTypeId"
+            [disableControl]="true"
+          ></pr-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <div class="validation-errors">
+      <ng-container
+        *ngFor="let validation of validation_messages.BUSINESS_TYPE"
+      >
+        <div
+          class="error-message"
+          *ngIf="
+            profileForm.get('businessType').hasError(validation.type) &&
+            (profileForm.get('businessType').dirty ||
+              profileForm.get('businessType').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label
+            position="stacked"
+            translate
+            *ngIf="(userProfileDetails$ | async)?.BusinessTypeId == 4"
+            >PROFILE.CLINIC_FULL_NAME<ion-text color="danger"
+              >*</ion-text
+            ></ion-label
+          >
+          <ion-label
+            position="stacked"
+            translate
+            *ngIf="(userProfileDetails$ | async)?.BusinessTypeId == 3"
+            >PROFILE.HOSPITAL_FULL_NAME<ion-text color="danger"
+              >*</ion-text
+            ></ion-label
+          >
+          <ion-label
+            position="stacked"
+            translate
             *ngIf="(userProfileDetails$ | async)?.BusinessTypeId == 1"
-              >PROFILE.SHOP_FULL_NAME<ion-text color="danger">*</ion-text></ion-label
-            >
-            <ion-input
-              placeHolder="Shop Name"
-              formControlName="shopName"
-              type="text"
-              [ngModel]="(userProfileDetails$ | async)?.RetailerName"
-            ></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-  
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label position="stacked" translate>PROFILE.NAME<ion-text color="danger">*</ion-text></ion-label>
-            <ion-input
-              placeHolder="Name"
-              formControlName="firstName"
-              type="text"
-              [ngModel]="(userProfileDetails$ | async)?.FirstName"
-            ></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-  
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label position="stacked" translate>PROFILE.ADDRESS<ion-text color="danger">*</ion-text></ion-label>
-            <ion-input
+            >PROFILE.SHOP_FULL_NAME<ion-text color="danger"
+              >*</ion-text
+            ></ion-label
+          >
+          <ion-input
+            placeHolder="Shop Name"
+            formControlName="shopName"
+            type="text"
+            [ngModel]="(userProfileDetails$ | async)?.RetailerName"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <div class="validation-errors">
+      <ng-container
+        *ngFor="let validation of validation_messages.SHOP_FULL_NAME"
+      >
+        <div
+          class="error-message"
+          *ngIf="
+            profileForm.get('shopName').hasError(validation.type) &&
+            (profileForm.get('shopName').dirty ||
+              profileForm.get('shopName').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked" translate
+            >PROFILE.NAME<ion-text color="danger">*</ion-text></ion-label
+          >
+          <ion-input
+            placeHolder="Name"
+            formControlName="firstName"
+            type="text"
+            [ngModel]="(userProfileDetails$ | async)?.FirstName"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.NAME">
+        <div
+          class="error-message"
+          *ngIf="
+            profileForm.get('firstName').hasError(validation.type) &&
+            (profileForm.get('firstName').dirty ||
+              profileForm.get('firstName').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked" translate
+            >PROFILE.ADDRESS<ion-text color="danger">*</ion-text></ion-label
+          >
+          <ion-input
             placeHolder="Complete Address"
-              formControlName="address1"
-              type="text"
-              [ngModel]="(userProfileDetails$ | async)?.Address1"
-            ></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-  
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label position="stacked" translate>PROFILE.PINCODE<ion-text color="danger">*</ion-text></ion-label>
-            <ion-input
+            formControlName="address1"
+            type="text"
+            [ngModel]="(userProfileDetails$ | async)?.Address1"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.ADDRESS">
+        <div
+          class="error-message"
+          *ngIf="
+            profileForm.get('address1').hasError(validation.type) &&
+            (profileForm.get('address1').dirty ||
+              profileForm.get('address1').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked" translate
+            >PROFILE.PINCODE<ion-text color="danger">*</ion-text></ion-label
+          >
+          <ion-input
             placeHolder="Pincode"
-              formControlName="pincode"
-              oninput="this.value=this.value.slice(0,6)"
-              type="text"
-              maxlength="6"
-              [ngModel]="(userProfileDetails$ | async)?.Pincode"
-            ></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-  
-      <ion-row>
-        <ion-col>
-          <ion-item class="disableClick">
-            <ion-label position="stacked" translate>PROFILE.REGION<ion-text color="danger">*</ion-text></ion-label>
-            <pr-select
-              [placeHolder]="'REGISTER.REGIONS' | translate"
-              [ctrName]="'region'"
-              [items]="regions$ | async"
-              [id]="'RegionId'"
-              [name]="'RegionName'"
-              [canSearch]="true"
-              [preSelectedOn]="'RegionId'"
-              [preSelectedValue]="(userProfileDetails$ | async)?.RegionId"
-              (valueChange)="updateRegion($event)"
-              [disableControl]="true"
-            ></pr-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-  
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label position="stacked" translate>PROFILE.EMAIL<ion-text color="danger">*</ion-text></ion-label>
-            <ion-input
+            formControlName="pincode"
+            oninput="this.value=this.value.slice(0,6)"
+            type="text"
+            maxlength="6"
+            [ngModel]="(userProfileDetails$ | async)?.Pincode"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.PINCODE">
+        <div
+          class="error-message"
+          *ngIf="
+            profileForm.get('pincode').hasError(validation.type) &&
+            (profileForm.get('pincode').dirty ||
+              profileForm.get('pincode').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-item class="disableClick">
+          <ion-label position="stacked" translate
+            >PROFILE.REGION<ion-text color="danger">*</ion-text></ion-label
+          >
+          <pr-select
+            [placeHolder]="'REGISTER.REGIONS' | translate"
+            [ctrName]="'region'"
+            [items]="regions$ | async"
+            [id]="'RegionId'"
+            [name]="'RegionName'"
+            [canSearch]="true"
+            [preSelectedOn]="'RegionId'"
+            [preSelectedValue]="(userProfileDetails$ | async)?.RegionId"
+            (valueChange)="updateRegion($event)"
+            [disableControl]="true"
+          ></pr-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.REGION">
+        <div
+          class="error-message"
+          *ngIf="
+            profileForm.get('region').hasError(validation.type) &&
+            (profileForm.get('region').dirty ||
+              profileForm.get('region').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked" translate
+            >PROFILE.EMAIL<ion-text color="danger">*</ion-text></ion-label
+          >
+          <ion-input
             placeHolder="Email Address"
-              formControlName="email"
-              type="email"
-              [ngModel]="(userProfileDetails$ | async)?.Email"
-            ></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-  
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label position="stacked" translate
-              >PROFILE.MOBILE_NUMBER<ion-text color="danger">*</ion-text></ion-label
-            >
-            <ion-input
+            formControlName="email"
+            type="email"
+            [ngModel]="(userProfileDetails$ | async)?.Email"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.EMAIL">
+        <div
+          class="error-message"
+          *ngIf="
+            profileForm.get('email').hasError(validation.type) &&
+            (profileForm.get('email').dirty || profileForm.get('email').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked" translate
+            >PROFILE.MOBILE_NUMBER<ion-text color="danger"
+              >*</ion-text
+            ></ion-label
+          >
+          <ion-input
             placeHolder="Mobile Number"
-              formControlName="mobileNumber"
-              type="tel"
-              maxlength="10"
-              minlength="10"
-              [ngModel]="(userProfileDetails$ | async)?.MobileNumber"
-            ></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-  
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label position="stacked" translate>PROFILE.TELEPHONE</ion-label>
-            <ion-input
+            formControlName="mobileNumber"
+            type="tel"
+            maxlength="10"
+            minlength="10"
+            [ngModel]="(userProfileDetails$ | async)?.MobileNumber"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <div class="validation-errors">
+      <ng-container
+        *ngFor="let validation of validation_messages.MOBILE_NUMBER"
+      >
+        <div
+          class="error-message"
+          *ngIf="
+            profileForm.get('mobileNumber').hasError(validation.type) &&
+            (profileForm.get('mobileNumber').dirty ||
+              profileForm.get('mobileNumber').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked" translate>PROFILE.TELEPHONE</ion-label>
+          <ion-input
             placeHolder="Telephone"
-              formControlName="telephone"
-              type="number"
-              [ngModel]="(userProfileDetails$ | async)?.Telephone"
-            ></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-  
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label position="stacked" translate
-            *ngIf="(userProfileDetails$ | async)?.BusinessTypeId == 4 || (userProfileDetails$ | async)?.BusinessTypeId == 3"
-              >PROFILE.REGISTRATION_NUMBER<ion-text color="danger">*</ion-text></ion-label
-            >
-            <ion-label position="stacked" translate
+            formControlName="telephone"
+            type="number"
+            [ngModel]="(userProfileDetails$ | async)?.Telephone"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label
+            position="stacked"
+            translate
+            *ngIf="
+              (userProfileDetails$ | async)?.BusinessTypeId == 4 ||
+              (userProfileDetails$ | async)?.BusinessTypeId == 3
+            "
+            >PROFILE.REGISTRATION_NUMBER<ion-text color="danger"
+              >*</ion-text
+            ></ion-label
+          >
+          <ion-label
+            position="stacked"
+            translate
             *ngIf="(userProfileDetails$ | async)?.BusinessTypeId !== 4"
-              >PROFILE.DRUG_LICENSE_NUMBER<ion-text color="danger">*</ion-text></ion-label
-            >
-            <ion-input
+            >PROFILE.DRUG_LICENSE_NUMBER<ion-text color="danger"
+              >*</ion-text
+            ></ion-label
+          >
+          <ion-input
             placeHolder="License Number"
-              formControlName="licenseNumber"
-              type="text"
-              [ngModel]="(userProfileDetails$ | async)?.LicenseNumber"
-            ></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-  
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label position="stacked" translate
-              >PROFILE.GSTIN_NUMBER<ion-text color="danger">*</ion-text></ion-label
-            >  
-  
-            <ion-select *ngIf="
-            (userProfileDetails$ | async)?.GSTINNumber == null
-            || (userProfileDetails$ | async)?.GSTINNumber == ''
-            || !isAuthorized"
-              (ionChange)="setGstinStatus($event)"
-              [disabled]="disable"
-              interface="popover"
+            formControlName="licenseNumber"
+            type="text"
+            [ngModel]="(userProfileDetails$ | async)?.LicenseNumber"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <div class="validation-errors">
+      <ng-container
+        *ngFor="let validation of validation_messages.DRUG_LICENSE_NUMBER"
+      >
+        <div
+          class="error-message"
+          *ngIf="
+            profileForm.get('licenseNumber').hasError(validation.type) &&
+            (profileForm.get('licenseNumber').dirty ||
+              profileForm.get('licenseNumber').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked" translate
+            >PROFILE.GSTIN_NUMBER<ion-text color="danger"
+              >*</ion-text
+            ></ion-label
+          >
+
+          <ion-select
+            *ngIf="
+              (userProfileDetails$ | async)?.GSTINNumber == null ||
+              (userProfileDetails$ | async)?.GSTINNumber == '' ||
+              !isAuthorized
+            "
+            (ionChange)="setGstinStatus($event)"
+            [disabled]="disable"
+            interface="popover"
+          >
+            <ion-select-option
+              *ngFor="let status of gstinStatus"
+              [value]="status.name"
+              [selected]="status.selected"
+              >{{ status.name }}</ion-select-option
             >
-              <ion-select-option
-                *ngFor="let status of gstinStatus"
-                [value]="status.name"
-                [selected]="status.selected"
-                >{{ status.name }}</ion-select-option
-              >
-            </ion-select>
-  
-  
-  
-            <ion-input *ngIf="gstinOption == '2' || (userProfileDetails$ | async)?.GSTINNumber ? 
-            (userProfileDetails$ | async)?.GSTINNumber.length > 0: null"
-              formControlName="gstinNumber"
-              type="text"
-              [ngModel]="(userProfileDetails$ | async)?.GSTINNumber"
-              maxlength="15"
-            ></ion-input>
-  
-            <div
-              class="error-message"
-              *ngIf="
-                profileForm.value.gstinNumber &&
-                (profileForm.value.gstinNumber.substring(13, 14) !== 'Z' ||
-                  profileForm.value.gstinNumber.length < 15)
-              "
-            >
-              {{'PROFILE.GSTIN_TEXT' | translate}}
-            </div>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-  
-      <!-- <ion-row hidden>
+          </ion-select>
+
+          <ion-input
+            *ngIf="
+              gstinOption == '2' || (userProfileDetails$ | async)?.GSTINNumber
+                ? (userProfileDetails$ | async)?.GSTINNumber.length > 0
+                : null
+            "
+            formControlName="gstinNumber"
+            type="text"
+            [ngModel]="(userProfileDetails$ | async)?.GSTINNumber"
+            maxlength="15"
+          ></ion-input>
+
+          <div
+            class="error-message"
+            *ngIf="
+              profileForm.value.gstinNumber &&
+              (profileForm.value.gstinNumber.substring(13, 14) !== 'Z' ||
+                profileForm.value.gstinNumber.length < 15)
+            "
+          >
+            {{ "PROFILE.GSTIN_TEXT" | translate }}
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <div class="validation-errors">
+      <ng-container *ngFor="let validation of validation_messages.GSTIN_NUMBER">
+        <div
+          class="error-message"
+          *ngIf="
+            profileForm.get('gstinNumber').hasError(validation.type) &&
+            (profileForm.get('gstinNumber').dirty ||
+              profileForm.get('gstinNumber').touched)
+          "
+        >
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- <ion-row hidden>
           <ion-col>
             <ion-item>
               <ion-label position="stacked" translate
@@ -250,68 +468,67 @@
             </ion-item>
           </ion-col>
         </ion-row> -->
-  
-      <ion-row *ngIf="!disable">
-        <ion-col>
-          <ion-item>
-            <ion-label>{{ "PROFILE.UPLOAD_TEXT" | translate }}</ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-  
-      <ion-row *ngIf="!disable">
-        <ion-item no-lines class="alignSelf-center">
-          <ion-card (click)="openModal()">
-            <ion-card-content>
-              <img [src]="licenseImage"/>
-            </ion-card-content>
-          </ion-card>
+
+    <ion-row *ngIf="!disable">
+      <ion-col>
+        <ion-item>
+          <ion-label>{{ "PROFILE.UPLOAD_TEXT" | translate }}</ion-label>
         </ion-item>
-      </ion-row>
-  
-      <br />
-  
-      <ion-row *ngIf="disable">
-        <ion-col size="6" class="ion-padding">
-          <app-back-button [link]="['/dashboard']"></app-back-button>
-        </ion-col>
-        <ion-col size="6" class="ion-padding">
-          <ion-button
-            (click)="editProfile(false)"
-            *ngIf="disable"
-            color="blue"
-            expand="full"
-            fill="solid"
-            translate
-            >PROFILE.EDIT_PROFILE</ion-button
-          >
-        </ion-col>
-      </ion-row>
-  
-      <ion-row *ngIf="!disable">
-        <ion-col size="6" class="ion-padding">
-          <ion-button
-            (click)="editProfile(true)"
-            color="mustard"
-            expand="full"
-            fill="solid"
-            translate
-          >
-            PROFILE.CANCEL_BUTTON
-          </ion-button>
-        </ion-col>
-        <ion-col size="6" class="ion-padding">
-          <ion-button
-            (click)="updateProfile()"
-            color="blue"
-            expand="full"
-            fill="solid"
-            [disabled]="!profileForm.valid"
-            translate
-            >PROFILE.UPDATE_BUTTON</ion-button
-          >
-        </ion-col>
-      </ion-row>
-    </form>
-  </ion-content>
-  
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!disable">
+      <ion-item no-lines class="alignSelf-center">
+        <ion-card (click)="openModal()">
+          <ion-card-content>
+            <img [src]="licenseImage" />
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-row>
+
+    <br />
+
+    <ion-row *ngIf="disable">
+      <ion-col size="6" class="ion-padding">
+        <app-back-button [link]="['/dashboard']"></app-back-button>
+      </ion-col>
+      <ion-col size="6" class="ion-padding">
+        <ion-button
+          (click)="editProfile(false)"
+          *ngIf="disable"
+          color="blue"
+          expand="full"
+          fill="solid"
+          translate
+          >PROFILE.EDIT_PROFILE</ion-button
+        >
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!disable">
+      <ion-col size="6" class="ion-padding">
+        <ion-button
+          (click)="editProfile(true)"
+          color="mustard"
+          expand="full"
+          fill="solid"
+          translate
+        >
+          PROFILE.CANCEL_BUTTON
+        </ion-button>
+      </ion-col>
+      <ion-col size="6" class="ion-padding">
+        <ion-button
+          (click)="updateProfile()"
+          color="blue"
+          expand="full"
+          fill="solid"
+          [disabled]="!profileForm.valid"
+          translate
+          >PROFILE.UPDATE_BUTTON</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

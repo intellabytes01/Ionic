@@ -159,7 +159,23 @@
     "UPDATE_BUTTON": "Update Profile",
     "EDIT_PROFILE": "Edit Profile",
     "UPLOAD_TEXT": "Upload / Capture Drug License or Bill Copy",
-    "GSTIN_TEXT": "eg: XX-XXXXXXXXXX-XZX"
+    "GSTIN_TEXT": "eg: XX-XXXXXXXXXX-XZX",
+    "VALIDATION_MESSAGES": {
+      "LOGIN_ID": [{ "type": "required", "message": "Please Enter Value for Login Id" }],
+      "BUSINESS_TYPE": [{ "type": "required", "message": "Please Enter Value for Business Type" }],
+      "SHOP_FULL_NAME": [{ "type": "required", "message": "Please Enter Value for Shop Name" }],
+      "CLINIC_FULL_NAME": [{ "type": "required", "message": "Please Enter Value for Clinic Name" }],
+      "HOSPITAL_FULL_NAME": [{ "type": "required", "message": "Please Enter Value for Hospital Name" }],
+      "NAME": [{ "type": "required", "message": "Please Enter Value for Name" }],
+      "ADDRESS": [{ "type": "required", "message": "Please Enter Value for Address" }],
+      "PINCODE": [{ "type": "required", "message": "Please Enter Value for Pincode" }],
+      "REGION": [{ "type": "required", "message": "Please Enter Value for Region" }],
+      "EMAIL": [{ "type": "required", "message": "Please Enter Value for Email" }],
+      "MOBILE_NUMBER": [{ "type": "required", "message": "Please Enter Value for Mobile Number" }],
+      "DRUG_LICENSE_NUMBER": [{ "type": "required", "message": "Please Enter Value for Drug License Number" }],
+      "GSTIN_NUMBER": [{ "type": "required", "message": "Please Enter Value for GSTIN Number" }],
+      "REGISTRATION_NUMBER": [{ "type": "required", "message": "Please Enter Value for Registration Number" }]
+    }
   },
 
   "NEW_ORDER": {
