@@ -49,6 +49,7 @@
               >PROFILE.SHOP_FULL_NAME<ion-text color="danger">*</ion-text></ion-label
             >
             <ion-input
+              placeHolder="Shop Name"
               formControlName="shopName"
               type="text"
               [ngModel]="(userProfileDetails$ | async)?.RetailerName"
@@ -62,6 +63,7 @@
           <ion-item>
             <ion-label position="stacked" translate>PROFILE.NAME<ion-text color="danger">*</ion-text></ion-label>
             <ion-input
+              placeHolder="Name"
               formControlName="firstName"
               type="text"
               [ngModel]="(userProfileDetails$ | async)?.FirstName"
@@ -75,6 +77,7 @@
           <ion-item>
             <ion-label position="stacked" translate>PROFILE.ADDRESS<ion-text color="danger">*</ion-text></ion-label>
             <ion-input
+            placeHolder="Complete Address"
               formControlName="address1"
               type="text"
               [ngModel]="(userProfileDetails$ | async)?.Address1"
@@ -88,6 +91,7 @@
           <ion-item>
             <ion-label position="stacked" translate>PROFILE.PINCODE<ion-text color="danger">*</ion-text></ion-label>
             <ion-input
+            placeHolder="Pincode"
               formControlName="pincode"
               oninput="this.value=this.value.slice(0,6)"
               type="text"
@@ -123,6 +127,7 @@
           <ion-item>
             <ion-label position="stacked" translate>PROFILE.EMAIL<ion-text color="danger">*</ion-text></ion-label>
             <ion-input
+            placeHolder="Email Address"
               formControlName="email"
               type="email"
               [ngModel]="(userProfileDetails$ | async)?.Email"
@@ -138,6 +143,7 @@
               >PROFILE.MOBILE_NUMBER<ion-text color="danger">*</ion-text></ion-label
             >
             <ion-input
+            placeHolder="Mobile Number"
               formControlName="mobileNumber"
               type="tel"
               maxlength="10"
@@ -153,6 +159,7 @@
           <ion-item>
             <ion-label position="stacked" translate>PROFILE.TELEPHONE</ion-label>
             <ion-input
+            placeHolder="Telephone"
               formControlName="telephone"
               type="number"
               [ngModel]="(userProfileDetails$ | async)?.Telephone"
@@ -173,6 +180,7 @@
               >PROFILE.DRUG_LICENSE_NUMBER<ion-text color="danger">*</ion-text></ion-label
             >
             <ion-input
+            placeHolder="License Number"
               formControlName="licenseNumber"
               type="text"
               [ngModel]="(userProfileDetails$ | async)?.LicenseNumber"
