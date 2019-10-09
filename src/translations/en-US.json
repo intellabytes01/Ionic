@@ -87,7 +87,8 @@
           "message": "ADD_DISTRIBUTOR.VALIDATIONS.DISTRIBUTOR_NAME"
         }
       ]
-    }
+    },
+    "SUBMIT": "Submit Request"
   },  
 
   "FORGOT_PASSWORD": {

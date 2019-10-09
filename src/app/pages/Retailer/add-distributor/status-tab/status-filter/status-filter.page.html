@@ -2,7 +2,9 @@
   <ion-toolbar>
     <ion-row>
       <ion-col size="10">
-        <ion-title class="header-title">{{'ADD_DISTRIBUTOR.RM' | translate}}</ion-title>
+        <ion-title class="header-title">{{
+          "ADD_DISTRIBUTOR.RM" | translate
+        }}</ion-title>
       </ion-col>
       <ion-col size="2" text-end>
         <ion-icon
@@ -16,25 +18,34 @@
 </ion-header>
 
 <ion-content padding>
-
-  <ion-row>
-    <ion-col>
-      <ion-label position="floating">{{'ADD_DISTRIBUTOR.SELECTSTATUS' | translate}}</ion-label>
-      <ion-select [(ngModel)]="selectedStatus">
-        <ion-select-option *ngFor="let item of statusList" [value]="item">{{item}}</ion-select-option>
+  <ion-list color="mustard" lines="none" no-padding>
+    <ion-item lines="none" color="mustard">
+      <ion-label
+        ><span>{{
+          "ADD_DISTRIBUTOR.SELECTSTATUS" | translate
+        }}</span></ion-label
+      >
+      <ion-select [(ngModel)]="selectedStatus" interface="popover">
+        <ion-select-option *ngFor="let item of statusList" [value]="item">{{
+          item
+        }}</ion-select-option>
       </ion-select>
-    </ion-col>
-  </ion-row>
+    </ion-item>
+  </ion-list>
 
-    <br />
+  <br />
   <ion-row>
     <ion-col size="6" class="signin">
       <app-back-button (click)="modalController.dismiss()"></app-back-button>
     </ion-col>
     <ion-col size="6" class="create">
-      <ion-button (click)="filterStatus()" color="blue" expand="full" fill="solid">{{
-        "DASHBOARD.SUBMIT" | translate
-      }}</ion-button>
+      <ion-button
+        (click)="filterStatus()"
+        color="blue"
+        expand="full"
+        fill="solid"
+        >{{ "DASHBOARD.SUBMIT" | translate }}</ion-button
+      >
     </ion-col>
   </ion-row>
 </ion-content>

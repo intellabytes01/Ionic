@@ -98,7 +98,11 @@
             ></ion-label
           >
           <ion-input
-            placeHolder="Shop Name"
+            placeHolder="
+              (userProfileDetails$ | async)?.BusinessTypeId == 3
+                ? 'Hospital Name'
+                : 'Shop Name'
+            "
             formControlName="shopName"
             type="text"
             [ngModel]="(userProfileDetails$ | async)?.RetailerName"
@@ -343,10 +347,7 @@
           <ion-label
             position="stacked"
             translate
-            *ngIf="
-              (userProfileDetails$ | async)?.BusinessTypeId == 4 ||
-              (userProfileDetails$ | async)?.BusinessTypeId == 3
-            "
+            *ngIf="(userProfileDetails$ | async)?.BusinessTypeId == 3"
             >PROFILE.REGISTRATION_NUMBER<ion-text color="danger"
               >*</ion-text
             ></ion-label
@@ -354,7 +355,7 @@
           <ion-label
             position="stacked"
             translate
-            *ngIf="(userProfileDetails$ | async)?.BusinessTypeId !== 4"
+            *ngIf="(userProfileDetails$ | async)?.BusinessTypeId !== 3"
             >PROFILE.DRUG_LICENSE_NUMBER<ion-text color="danger"
               >*</ion-text
             ></ion-label
@@ -481,7 +482,10 @@
       <ion-item no-lines class="alignSelf-center">
         <ion-card (click)="openModal()">
           <ion-card-content>
-            <img [src]="licenseImage" />
+            <img
+              [src]="licenseImage"
+              onerror="this.onerror=null;this.src='assets/icon/gstin.png';"
+            />
           </ion-card-content>
         </ion-card>
       </ion-item>
