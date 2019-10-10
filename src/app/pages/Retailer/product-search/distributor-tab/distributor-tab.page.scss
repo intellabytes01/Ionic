@@ -1,5 +1,5 @@
 .item-title{
-    background: lightgrey;
+    background: #DCDCDC;
     padding: 3%;
 }
 
@@ -8,10 +8,26 @@
 }
 
 .products{
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid #DCDCDC;
     padding: 2%;
 }
 
 .green-color{
     color: forestgreen;
+}
+
+.margin12 {
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.size12 {
+    font-size: 1.2rem;
+}
+
+.borderClass {
+    border: 1px solid lightgray;
+    margin-right: 12px;
+    margin-left: 12px;
+    margin-top: 12px;
 }

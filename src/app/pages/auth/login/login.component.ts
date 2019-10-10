@@ -105,7 +105,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         // '8000666878',
         // '5252525202',
         Validators.compose([
-          Validators.minLength(5),
           Validators.maxLength(25),
           Validators.required
         ])

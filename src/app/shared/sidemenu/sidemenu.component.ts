@@ -13,7 +13,8 @@ import {
   AuthState,
   getUserImage,
   getRetailerName,
-  getRetailerId
+  getRetailerId,
+  getUserName
 } from '@app/core/authentication/auth.states';
 import { Store, select } from '@ngrx/store';
 import { untilDestroyed } from '@app/core/index.js';
@@ -112,7 +113,7 @@ export class SidemenuComponent implements OnInit, OnDestroy {
   getRetailerName() {
     this.retailerName$ = this.authStore
       .pipe(
-        select(getRetailerName),
+        select(getUserName),
         untilDestroyed(this)
       );
       // .subscribe(retailerName => {

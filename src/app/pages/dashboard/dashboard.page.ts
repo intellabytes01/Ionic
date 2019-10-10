@@ -5,7 +5,8 @@ import {
   AuthState,
   selectAuthState,
   getRetailerName,
-  getRetailerStatus
+  getRetailerStatus,
+  mappedParties
 } from '@app/core/authentication/auth.states';
 import { Store, select } from '@ngrx/store';
 import { untilDestroyed } from '@app/core';
@@ -29,6 +30,7 @@ export class DashboardPage implements OnInit, OnDestroy {
   backButton: any;
   permissions: object;
   routerSub = Subscription.EMPTY;
+  // mappedParties: string[];
 
   constructor(
     public menuCtrl: MenuController,
@@ -93,7 +95,12 @@ export class DashboardPage implements OnInit, OnDestroy {
           this.userData = data['userData']['userData'];
         }
       });
-    untilDestroyed(this);
+    // this.store.pipe(select(mappedParties), untilDestroyed(this)).subscribe(
+    //     (state: any) => {
+    //       this.mappedParties = state;
+    //     },
+    //     () => {}
+    //   );
   }
 
   presentAlertConfirm() {
@@ -140,9 +147,21 @@ export class DashboardPage implements OnInit, OnDestroy {
         if (
           retailerStatus &&
           retailerStatus != null &&
-          retailerStatus !== 'Authorized'
+          retailerStatus === 'RetailerNotAuthorized'
+          // retailerStatus === 'Authorized' &&
+          // retailerStatus !== 'Retailers Mapping Not Found'
         ) {
           this.showUnAuthrorizedMessage();
+        } else {
+          if (retailerStatus
+            && retailerStatus !== null
+            && retailerStatus === 'Retailers Mapping Not Found') {
+              this.alert.NoDistFoundModal(
+                this.translateService.instant('DASHBOARD.NO_DISTRIBUTOR_FOUND'),
+                this.translateService.instant('DASHBOARD.NO_DISTRIBUTOR_FOUND_CONTENT'),
+                'add-distributor'
+              );
+            }
         }
       });
   }

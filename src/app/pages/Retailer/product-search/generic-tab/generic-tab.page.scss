@@ -1,21 +1,51 @@
-.item-title{
-    background: lightgrey;
-    padding: 3%;
+.item-title {
+  background: #dcdcdc;
+  padding: 3%;
 }
 
-.selected{
-    color: #BDB76B;
+.selected {
+  color: #bdb76b;
 }
 
-.border{
-    border-bottom: 1px solid grey;
-    padding: 1%;
+.borderClass {
+  border-bottom: 1px solid #dcdcdc;
+  padding: 1%;
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
-.distributor{
-    font-size: 0.9rem;
+.distributor {
+  font-size: 0.9rem;
 }
 
-ion-label{
-    white-space: inherit !important;
+ion-label {
+  white-space: inherit !important;
+}
+
+.marginTop12 {
+  margin-top: 12px;
+}
+
+.padding4 {
+  --padding-start: var(--ion-padding, 4px);
+  --padding-end: var(--ion-padding, 4px);
+  --padding-top: var(--ion-padding, 4px);
+  --padding-bottom: var(--ion-padding, 4px);
+  padding-left: var(--ion-padding, 4px);
+  padding-right: var(--ion-padding, 4px);
+  padding-top: var(--ion-padding, 4px);
+  padding-bottom: var(--ion-padding, 4px);
+}
+
+.margin0
+{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.borderClass1 {
+  border: 1px solid lightgray;
+  margin-right: 12px;
+  margin-left: 12px;
+  margin-top: 12px;
 }
