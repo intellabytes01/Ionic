@@ -1,6 +1,6 @@
 <ion-content>
   <ion-row>
-    <ion-col>
+    <ion-col class="borderClass">
       <ion-searchbar
         [(ngModel)]="searchText"
         [placeholder]="'PRODUCT_SEARCH.PLACEHOLDER_COMPANY' | translate"
@@ -19,7 +19,7 @@
   </ion-row>
 
   <div *ngIf="showList">
-    <ion-list *ngIf="companyList.length > 0">
+    <ion-list class="margin12" *ngIf="companyList.length > 0">
       <ion-item
         *ngFor="let company of companyList"
         (click)="companyClick(company)"
@@ -30,7 +30,10 @@
   </div>
 
   <div *ngIf="!showList">
-    <ion-list *ngFor="let store of companyStoreList; let i = index">
+    <ion-list
+      class="margin12"
+      *ngFor="let store of companyStoreList; let i = index"
+    >
       <ion-row
         class="item-title"
         [id]="store.StoreId"
@@ -38,7 +41,7 @@
       >
         <ion-col size="10">
           <ion-label
-            class="product-name"
+            class=""
             [ngClass]="{ selected: subListShow[i] }"
             >{{ store.StoreName }}</ion-label
           >
@@ -73,14 +76,27 @@
           </ion-row>
         </ion-card>
         <div *ngFor="let product of companyProductList[i]">
-          <ion-row class="products">
+          <ion-row class="">
             <ion-col text-start>
-              <ion-label
-                class="product-name"
-                [ngClass]="[ product.TotalStock ? 'green-color' : 'red' ]"
+              
+                <ion-item>
+                    <ion-label
+                    class=""
+                [ngClass]="[product.TotalStock ? 'green-color' : 'red']">
+                      <p>{{ product.StoreProductName }}</p>
+                      <p>{{ product.StoreProductPacking }}</p>
+                      <p class="tagbubble" *ngIf="product.StoreProductScheme">{{ product.StoreProductScheme }}</p>
+                    </ion-label>
+                  </ion-item>
+
+              <!-- <ion-label
+                class=""
+                [ngClass]="[product.TotalStock ? 'green-color' : 'red']"
                 >{{ product.StoreProductName }}</ion-label
               ><br />
               <ion-label>{{ product.StoreProductPacking }}</ion-label>
+              <br />
+              <ion-label *ngIf="product.StoreProductScheme">{{ product.StoreProductScheme }}</ion-label> -->
             </ion-col>
           </ion-row>
         </div>

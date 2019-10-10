@@ -31,6 +31,7 @@ export class ProductTabPage implements OnInit, OnDestroy {
   regionId: number;
   retailerId: number;
   distributorMapping = false;
+  storeList = [];
   constructor(
     private router: Router,
     private alertService: AlertService,
@@ -99,10 +100,14 @@ export class ProductTabPage implements OnInit, OnDestroy {
       query: '',
       page: 1
     };
-    this.productSearchService.getProductDetails(payload).subscribe(
-      (state: any) => {
+    this.productSearchService
+      .getProductDetails(payload)
+      .subscribe((state: any) => {
         this.topLoaderService.norecord.next(false);
         if (state) {
+          state.data.forEach(element => {
+            this.storeList.push({ StoreName: element.StoreName, isMapped: false });
+          });
           this.authStore
             .pipe(
               select(getRetailerStoreParties),
@@ -111,24 +116,31 @@ export class ProductTabPage implements OnInit, OnDestroy {
             .subscribe(stores => {
               if (stores) {
                 stores.map(element1 => {
-                  const storePresent = state.data.some(
-                    element2 => element2.StoreName.toLowerCase() === element1.StoreName.toLowerCase()
-                  );
-                  if (storePresent) {
-                    this.distributorMapping = true;
+                  // tslint:disable-next-line: align
+                  // tslint:disable-next-line: prefer-for-of
+                  for (let i = 0; i < state.data.length; i++) {
+                    if (
+                      state.data[i].StoreName.toLowerCase() ===
+                      element1.StoreName.toLowerCase()
+                    ) {
+                      const foundIndex = this.storeList.findIndex(
+                        x =>
+                          x.StoreName.toLowerCase() ===
+                          element1.StoreName.toLowerCase()
+                      );
+                      this.storeList[foundIndex] = {
+                        name: element1.StoreName,
+                        isMapped: true
+                      };
+                    }
                   }
-                  return element1;
                 });
               }
             });
         }
-      },
-      e => {}
-    ),
+      }),
       untilDestroyed(this);
   }
 
-  ngOnDestroy() {
-
-  }
+  ngOnDestroy() {}
 }

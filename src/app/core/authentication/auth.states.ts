@@ -49,6 +49,13 @@ export const getRetailerName = createSelector(
   }
 );
 
+export const getUserName = createSelector(
+  selectAuthState,
+  userData => {
+    return userData['userData']['userData']['userSummary']['Username'];
+  }
+);
+
 export const getRetailerStatus = createSelector(
   selectAuthState,
   userData => {
@@ -92,7 +99,9 @@ export const mappedParties = createSelector(
   userData => {
     return userData['userData']['userData']['retailerSummary'][
       'retailerStoreParties'
-    ];
+    ] ? userData['userData']['userData']['retailerSummary'][
+      'retailerStoreParties'
+    ] : [];
   }
 );
 

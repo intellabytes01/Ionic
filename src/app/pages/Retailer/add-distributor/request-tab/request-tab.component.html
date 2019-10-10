@@ -49,44 +49,80 @@
     </ion-item>
   </ion-list>
 
-  <ion-row class="grey-bg">
-    <ion-col size="2" text-start>
-      <ion-checkbox
-        [(ngModel)]="masterCheck"
-        (ionChange)="checkMaster()"
-        color="mustard"
-      ></ion-checkbox>
-    </ion-col>
-    <ion-col size="6" text-start>
-      <ion-label
-        ><b>{{ "ADD_DISTRIBUTOR.STORE" | translate }}</b></ion-label
-      >
-    </ion-col>
-    <ion-col size="4" text-center>
-      <ion-label
-        ><b>{{ "ADD_DISTRIBUTOR.PARTY_CODE" | translate }}</b></ion-label
-      >
-    </ion-col>
-  </ion-row>
+  
 
-  <ion-row *ngFor="let store of stores$ | async">
-    <ion-col class="padding" size="2" text-start>
-      <ion-checkbox
-        [(ngModel)]="store.isChecked"
-        [value]="store.StoreId"
-        (ionChange)="selectStore($event)"
-        color="mustard"
-      ></ion-checkbox>
-    </ion-col>
-    <ion-col class="padding" size="6" text-start>
-      <ion-label>{{ store.StoreName }}</ion-label>
-    </ion-col>
-    <ion-col size="4" text-center>
-      <ion-input
-        [placeholder]="'ADD_DISTRIBUTOR.OPTIONAL_PLACEHOLDER' | translate"
-      ></ion-input>
-    </ion-col>
-  </ion-row>
+  <ion-card>
+
+
+    <ion-list>
+      <ion-list-header>
+          <ion-row class="grey-bg width96">
+              <ion-col size="2" text-start>
+                <ion-checkbox
+                  [(ngModel)]="masterCheck"
+                  (ionChange)="checkMaster()"
+                  color="mustard"
+                ></ion-checkbox>
+              </ion-col>
+              <ion-col size="6" text-start>
+                <ion-label
+                  ><b>{{ "ADD_DISTRIBUTOR.STORE" | translate }}</b></ion-label
+                >
+              </ion-col>
+              <ion-col size="4" text-center>
+                <ion-label
+                  ><b>{{ "ADD_DISTRIBUTOR.PARTY_CODE" | translate }}</b></ion-label
+                >
+              </ion-col>
+            </ion-row>
+      </ion-list-header>
+
+      <!-- <ion-item >         -->
+          <ion-row *ngFor="let store of stores$ | async" class="paddingStart12">
+              <ion-col class="padding" size="2" text-start>
+                <ion-checkbox
+                  [(ngModel)]="store.isChecked"
+                  [value]="store.StoreId"
+                  (ionChange)="selectStore($event)"
+                  color="mustard"
+                ></ion-checkbox>
+              </ion-col>
+              <ion-col class="padding" size="6" text-start>
+                <ion-label>{{ store.StoreName }}</ion-label>
+              </ion-col>
+              <ion-col size="4" text-center>
+                <ion-input
+                  [placeholder]="'ADD_DISTRIBUTOR.OPTIONAL_PLACEHOLDER' | translate"
+                ></ion-input>
+              </ion-col>
+            </ion-row>
+
+
+        
+      <!-- </ion-item> -->
+    </ion-list>
+
+
+
+    <!-- <ion-row *ngFor="let store of stores$ | async">
+      <ion-col class="padding" size="2" text-start>
+        <ion-checkbox
+          [(ngModel)]="store.isChecked"
+          [value]="store.StoreId"
+          (ionChange)="selectStore($event)"
+          color="mustard"
+        ></ion-checkbox>
+      </ion-col>
+      <ion-col class="padding" size="6" text-start>
+        <ion-label>{{ store.StoreName }}</ion-label>
+      </ion-col>
+      <ion-col size="4" text-center>
+        <ion-input
+          [placeholder]="'ADD_DISTRIBUTOR.OPTIONAL_PLACEHOLDER' | translate"
+        ></ion-input>
+      </ion-col>
+    </ion-row> -->
+  </ion-card>
 
   <br />
   <ion-row>

@@ -3,5 +3,14 @@ ion-label{
 }
 
 ion-list {
-    padding: 1rem !important;
+    border: 1px solid lightgray;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.borderClass {
+    border: 1px solid lightgray;
+    margin-right: 12px;
+    margin-left: 12px;
+    margin-top: 12px;
 }

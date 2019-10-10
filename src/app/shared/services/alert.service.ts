@@ -140,4 +140,27 @@ export class AlertService {
 
     alert.present();
   }
+
+  async NoDistFoundModal(title: string, msg: string, navigateTo?: string) {
+    const alert = await this.alertCtrl.create({
+      header: title,
+      message: msg,
+      buttons: [
+        {
+          text: 'CANCEL',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: blah => {}
+        },
+        {
+          text: 'REQUEST MAPPING',
+          handler: () => {
+            this.router.navigate([navigateTo]);
+          }
+        }
+      ]
+    });
+
+    alert.present();
+  }
 }

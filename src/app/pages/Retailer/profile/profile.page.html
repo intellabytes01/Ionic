@@ -92,7 +92,7 @@
           <ion-label
             position="stacked"
             translate
-            *ngIf="(userProfileDetails$ | async)?.BusinessTypeId == 1"
+            *ngIf="(userProfileDetails$ | async)?.BusinessTypeId == 1 || (userProfileDetails$ | async)?.BusinessTypeId == null"
             >PROFILE.SHOP_FULL_NAME<ion-text color="danger"
               >*</ion-text
             ></ion-label
@@ -202,7 +202,7 @@
             oninput="this.value=this.value.slice(0,6)"
             type="text"
             maxlength="6"
-            [ngModel]="(userProfileDetails$ | async)?.Pincode"
+            [ngModel]="(userProfileDetails$ | async)?.Pincode == 0 ? '' : (userProfileDetails$ | async)?.Pincode"
           ></ion-input>
         </ion-item>
       </ion-col>

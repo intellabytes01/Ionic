@@ -49,7 +49,9 @@
     "EXIT_APP": "Are you sure you want to exit the app?",
     "LOGOUTAPP": "Do you really want to logout?",
     "UPDATE_PROFILE_MODAL_TITLE": "Update Your Profile",
-    "UPDATE_PROFILE_MODAL_MESSAGE": "We are glad to serve you. Kindly update your profile details for a seamless experience"
+    "UPDATE_PROFILE_MODAL_MESSAGE": "We are glad to serve you. Kindly update your profile details for a seamless experience",
+    "NO_DISTRIBUTOR_FOUND": "No distributor found",
+    "NO_DISTRIBUTOR_FOUND_CONTENT": "Would you like to map your distributor?"
   },
 
   "ADD_DISTRIBUTOR": {
