@@ -1,7 +1,6 @@
 {
   "NO_INTERNET_CONNECTION": "No Internet Connection",
-  
-  
+
   "SIDEMENU": {
     "DASHBOARD_TITLE": "Home",
     "LOGOUT_TITLE": "Logout",
@@ -89,8 +88,9 @@
       ]
     },
     "SUBMIT": "Submit Request",
-    "SELECTDIS": "Distributor Selected"
-  },  
+    "SELECTDIS": "Distributor Selected",
+    "THANKS": "Thank you for your information, we will get back to you once the Distributor is on Pharmarack."
+  },
 
   "FORGOT_PASSWORD": {
     "TITLE": "Forgot Password?",
@@ -164,20 +164,63 @@
     "UPLOAD_TEXT": "Upload / Capture Drug License or Bill Copy",
     "GSTIN_TEXT": "eg: XX-XXXXXXXXXX-XZX",
     "VALIDATION_MESSAGES": {
-      "LOGIN_ID": [{ "type": "required", "message": "Please Enter Value for Login Id" }],
-      "BUSINESS_TYPE": [{ "type": "required", "message": "Please Enter Value for Business Type" }],
-      "SHOP_FULL_NAME": [{ "type": "required", "message": "Please Enter Value for Shop Name" }],
-      "CLINIC_FULL_NAME": [{ "type": "required", "message": "Please Enter Value for Clinic Name" }],
-      "HOSPITAL_FULL_NAME": [{ "type": "required", "message": "Please Enter Value for Hospital Name" }],
-      "NAME": [{ "type": "required", "message": "Please Enter Value for Name" }],
-      "ADDRESS": [{ "type": "required", "message": "Please Enter Value for Address" }],
-      "PINCODE": [{ "type": "required", "message": "Please Enter Value for Pincode" }],
-      "REGION": [{ "type": "required", "message": "Please Enter Value for Region" }],
-      "EMAIL": [{ "type": "required", "message": "Please Enter Value for Email" }],
-      "MOBILE_NUMBER": [{ "type": "required", "message": "Please Enter Value for Mobile Number" }],
-      "DRUG_LICENSE_NUMBER": [{ "type": "required", "message": "Please Enter Value for Drug License Number" }],
-      "GSTIN_NUMBER": [{ "type": "required", "message": "Please Enter Value for GSTIN Number" }],
-      "REGISTRATION_NUMBER": [{ "type": "required", "message": "Please Enter Value for Registration Number" }]
+      "LOGIN_ID": [
+        { "type": "required", "message": "Please Enter Value for Login Id" }
+      ],
+      "BUSINESS_TYPE": [
+        {
+          "type": "required",
+          "message": "Please Enter Value for Business Type"
+        }
+      ],
+      "SHOP_FULL_NAME": [
+        { "type": "required", "message": "Please Enter Value for Shop Name" }
+      ],
+      "CLINIC_FULL_NAME": [
+        { "type": "required", "message": "Please Enter Value for Clinic Name" }
+      ],
+      "HOSPITAL_FULL_NAME": [
+        {
+          "type": "required",
+          "message": "Please Enter Value for Hospital Name"
+        }
+      ],
+      "NAME": [
+        { "type": "required", "message": "Please Enter Value for Name" }
+      ],
+      "ADDRESS": [
+        { "type": "required", "message": "Please Enter Value for Address" }
+      ],
+      "PINCODE": [
+        { "type": "required", "message": "Please Enter Value for Pincode" }
+      ],
+      "REGION": [
+        { "type": "required", "message": "Please Enter Value for Region" }
+      ],
+      "EMAIL": [
+        { "type": "required", "message": "Please Enter Value for Email" }
+      ],
+      "MOBILE_NUMBER": [
+        {
+          "type": "required",
+          "message": "Please Enter Value for Mobile Number"
+        }
+      ],
+      "DRUG_LICENSE_NUMBER": [
+        {
+          "type": "required",
+          "message": "Please Enter Value for Drug License Number"
+        }
+      ],
+      "GSTIN_NUMBER": [
+        { "type": "required", "message": "Please Enter Value for GSTIN Number" }
+      ],
+      "REGISTRATION_NUMBER": [
+        {
+          "type": "required",
+          "message": "Please Enter Value for Registration Number"
+        }
+      ]
     }
   },
 
@@ -284,7 +327,10 @@
     "REGISTER": "Register",
     "VALIDATION_MESSAGES": {
       "mobile": [
-        { "type": "required", "message": "Please Enter Valid 10 Digit Mobile Number." },
+        {
+          "type": "required",
+          "message": "Please Enter Valid 10 Digit Mobile Number."
+        },
         {
           "type": "pattern",
           "message": "Please Enter Valid 10 Digit Mobile Number."
@@ -470,7 +516,7 @@
     "PROFILE_IMAGE_TITLE": "Capture Profile Image",
     "PROFILE_IMAGE_SUBTITLE": "Capture / Upload Profile Image"
   },
-  "BE_MSSAGE" : {
+  "BE_MSSAGE": {
     "PROVIDE_VALID_CREDENTIALS": "Invalid Username/Password",
     "USER_NOT_FOUND": "No registration found. For help, please call 02067660011"
   }

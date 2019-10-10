@@ -20,13 +20,17 @@ import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { Action } from '@ngrx/store';
 import { AddDistributorService } from '../add-distributor.service';
 import { AlertService } from '@app/shared/services/alert.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AddDistributorEffects {
   constructor(
     private actions: Actions,
     private addDistributorService: AddDistributorService,
-    private alert: AlertService
+    private alert: AlertService,
+    private router: Router,
+    private translateService: TranslateService
   ) {}
 
   // Get Request
@@ -133,7 +137,11 @@ export class AddDistributorEffects {
   DistributorSubmitSuccess: Observable<any> = this.actions.pipe(
     ofType(AddDistributorAction.DISTRIBUTORSUBMIT_SUCCESS),
     tap(() => {
-      this.alert.presentToast('success', 'Distributor submitted successfully.');
+      this.alert.basicAlert(
+        this.translateService.instant('ADD_DISTRIBUTOR.THANKS'),
+        'Attention'
+      );
+      this.router.navigateByUrl('/dashboard');
     })
   );
 
