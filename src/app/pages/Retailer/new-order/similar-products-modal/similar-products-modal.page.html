@@ -18,7 +18,7 @@
 <ion-content>
   <br />
 
-  <ion-row class="bottom-border">
+  <ion-row class="bottom-border sticky">
     <ion-col size="4" text-center>
       <ion-label>Product</ion-label>
     </ion-col>
@@ -33,7 +33,7 @@
     </ion-col>
   </ion-row>
 
-  <br />
+  <br><br>
 
   <ion-row class="bottom-border" *ngFor="let product of similarProducts">
     <ion-col size="4" text-center>
@@ -55,8 +55,10 @@
       <ion-label>{{product['Scheme'] ? product['Scheme'] : ''}}</ion-label>
     </ion-col>
   </ion-row>
+  
+</ion-content>
 
-  <br />
+<ion-footer>
   <ion-row>
     <ion-col size="6" class="signin">
         <ion-button (click)="modalController.dismiss()" color="mustard" expand="full" fill="solid">
@@ -71,4 +73,4 @@
       >
     </ion-col>
   </ion-row>
-</ion-content>
+</ion-footer>

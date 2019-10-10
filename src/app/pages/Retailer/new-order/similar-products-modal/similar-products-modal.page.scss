@@ -1,11 +1,22 @@
-.bottom-border{
-    border-bottom: 1px solid grey;
+.bottom-border {
+  border-bottom: 1px solid grey;
 }
 
-ion-icon{
+ion-icon {
+  color: white;
+}
+
+.mt {
+  margin-top: -0.6rem;
+}
+
+.sticky {
+    margin-top: -1rem;
+    position: fixed;
+    width: 100%;
+    background: #fca43a;
     color: white;
-}
-
-.mt{
-    margin-top: -0.6rem;
+    z-index: 999;
+    height: 9%;
+    padding-top: 0.4rem;
 }
